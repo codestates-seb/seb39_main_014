@@ -22,7 +22,7 @@
 
 #  Members
 
-|나여주(팀장)|신승윤(BE)|김은철(BE)|박상호(FE)|신상오(FE)|
+|나여주(BE팀장)|신승윤(BE)|김은철(BE)|박상호(FE)|신상오(FE)|
 |:-:|:-:|:-:|:-:|:-:|
 |이미지|이미지|이미지|이미지|이미지|
 |[@yeojoo1224](https://github.com/yeojoo1224)|[@Shaa-code](https://github.com/Shaa-code)|[@euncheol-kim](https://github.com/euncheol-kim)|[@hopak-e](https://github.com/hopak-e)|[@so0112](https://github.com/so0112?tab=following)|
