@@ -15,8 +15,7 @@
 기술스택별로 쉽게 찾는
 스터디 / 프로젝트 정보
 
-지금 나에게 적합한 스터디를
-쉽고 간편하게 찾아보세요
+지금 나에게 적합한 스터디를 쉽고 간편하게 찾아보세요
 
 원하시는 스터디나 프로젝트가 없으신가요? 
 직접 개설해 열정적인 스터디원을 모집해보세요!
@@ -24,13 +23,14 @@
 #  Members
 
 |나여주(팀장)|신승윤(BE)|김은철(BE)|박상호(FE)|신상오(FE)|
-|:-:|:-:|:-:|:-:|:-:|:-:|
+|:-:|:-:|:-:|:-:|:-:|
 |이미지|이미지|이미지|이미지|이미지|
-|[@yeojoo1224](https://github.com/yeojoo1224)
-[@Shaa-code](https://github.com/Shaa-code)
-|[@euncheol-kim](https://github.com/euncheol-kim)
+|[@yeojoo1224](https://github.com/yeojoo1224)|[@Shaa-code](https://github.com/Shaa-code)|[@euncheol-kim](https://github.com/euncheol-kim)
 |[@hopak-e](https://github.com/hopak-e)
-|[@so0112](https://github.com/so0112?tab=following)
+|[@so0112](https://github.com/so0112?tab=following)|
+
+
+
 
 
 ## 📝 팀 깃 커밋 컨벤션
