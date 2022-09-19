@@ -1,19 +1,14 @@
-//.eslintrc.js
-
 module.exports = {
   env: {
     browser: true,
-    es6: true,
-    node: true,
+    es2021: true,
   },
-  extends: [
-    'airbnb',
-    'prettier/react',
-    'eslint:recommended',
-    'plugin:prettier/recommended',
-  ],
-  // prettier/react 추가
-  rules: {
-    'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
+  extends: ['airbnb-base', 'plugin:prettier/recommended'],
+  overrides: [],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
+  plugins: ['react'],
+  rules: {},
 };
