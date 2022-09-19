@@ -10,6 +10,7 @@ const Footer = () => {
 };
 
 const FooterContainer = styled.div`
+  background-color: #595959;
   display: flex;
   min-height: 6.5rem;
 `;
