@@ -81,7 +81,7 @@ public class Board extends BaseTimeEntity {
     @OneToMany(mappedBy = "boardId")
     private List<Bookmark> bookmarks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "boardId")
+    @OneToMany(mappedBy = "boardId", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "boardId")
