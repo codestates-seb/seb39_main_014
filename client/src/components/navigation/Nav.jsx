@@ -30,7 +30,9 @@ function Nav() {
           <Link to="/board/write" style={{ textDecoration: "none" }}>
             <div>작성하기</div>
           </Link>
-          <div>로그인</div>
+          <Link to="/login" style={{ textDecoration: "none" }}>
+            <div>로그인</div>
+          </Link>
         </RightMenu>
       </NavContainer>
     </NavFrame>
