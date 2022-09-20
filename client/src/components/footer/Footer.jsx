@@ -88,6 +88,7 @@ const FooterContainer = styled.footer`
   display: flex;
   min-height: 7rem;
   position: relative;
+  justify-content: center;
 `;
 
 const FooterWrap = styled.div`
@@ -97,6 +98,7 @@ const FooterWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: 1280px;
   @media screen and (max-width: 768px) {
     padding: 0;
   }
