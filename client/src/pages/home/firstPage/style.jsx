@@ -27,6 +27,27 @@ const FirstPageStyle = styled.div`
     object-fit: cover;
     opacity: 0.4;
   }
+
+  .content-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    height: 80%;
+    z-index: 2;
+
+    h1 {
+      font-size: 80px;
+      color: black;
+    }
+
+    .body {
+      margin-top: 100px;
+      margin-bottom: 100px;
+      font-size: 30px;
+      color: black;
+    }
+  }
 `;
 
 export default FirstPageStyle;
