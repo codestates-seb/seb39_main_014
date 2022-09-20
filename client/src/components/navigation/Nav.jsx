@@ -27,7 +27,7 @@ function Nav() {
           </Menu>
         </LeftMenu>
         <RightMenu>
-          <Link to="/board/write">
+          <Link to="/board/write" style={{ textDecoration: "none" }}>
             <div>작성하기</div>
           </Link>
           <div>로그인</div>
@@ -91,6 +91,7 @@ const RightMenu = styled.div`
   display: flex;
   align-items: center;
   div {
+    color: #5f5f5f;
     margin-right: 50px;
   }
 `;
