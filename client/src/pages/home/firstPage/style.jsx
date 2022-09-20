@@ -7,7 +7,6 @@ const FirstPageStyle = styled.div`
   padding: 0 30px;
   height: 95vh;
   position: relative;
-  z-index: 1;
 
   .video-section {
     position: absolute;
@@ -39,6 +38,7 @@ const FirstPageStyle = styled.div`
     h1 {
       font-size: 80px;
       color: black;
+      white-space: nowrap;
     }
 
     .body {
