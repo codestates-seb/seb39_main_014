@@ -1,6 +1,7 @@
 package com.server.soopool.comment.entity;
 
 import com.server.soopool.board.entity.Board;
+import com.server.soopool.member.entity.Member;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,6 +30,10 @@ public class Comment {
     @JoinColumn(name = "board_id")
     private Board boardId;
 
+    @ManyToOne(targetEntity = Member.class)
+    @JoinColumn(name = "member_id")
+    private Member memberId;
+
     // 기본컬럼 설정
     @Column(nullable = false)
     private Integer group;
@@ -40,5 +45,5 @@ public class Comment {
     private boolean group_depth;
 
     @Column(nullable = false)
-    private Integer content;
+    private String content;
 }

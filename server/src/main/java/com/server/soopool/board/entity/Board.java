@@ -15,14 +15,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 작성자 : 김은철
- * 작성핵심 : Entity 연관관계 매핑, 양방향 또는 단방향의 정의
- * 작성일자 : 2022-09-19
- * 최신 수정자 :
- * 최신 수정일자 :
- * email : klmeuncheol@kakao.com
- */
 
 @Entity
 @Getter
@@ -43,10 +35,6 @@ public class Board extends BaseTimeEntity {
     private Member memberId;
 
     // enum 컬럼설정
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private RecruitCategory recruitCategory = RecruitCategory.NO_CHOICE;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private RecruitMethod recruitMethod = RecruitMethod.ONLINE;
@@ -102,25 +90,6 @@ public class Board extends BaseTimeEntity {
     @OneToMany(mappedBy = "boardId")
     private List<BoardTechStack> boardTechStacks = new ArrayList<>();
 
-
-    // enum 설정
-    // enum상수값의 정의가 더 필요합니다.
-    private enum RecruitCategory {
-        FRONT_END("프론트엔드"),
-        BACK_END("백엔드"),
-        ETC("기타"),
-        NO_CHOICE("선택안함");
-
-        private final String category;
-
-        RecruitCategory(String category) {
-            this.category = category;
-        }
-
-        public String getCategoryName() {
-            return category;
-        }
-    }
     private enum RecruitMethod{
         ONLINE("온라인"),
         OFFLINE("오프라인");

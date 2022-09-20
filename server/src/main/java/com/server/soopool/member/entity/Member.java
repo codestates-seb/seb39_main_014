@@ -1,8 +1,11 @@
 package com.server.soopool.member.entity;
 
+import com.server.soopool.board.entity.Board;
+import com.server.soopool.bookmark.entity.Bookmark;
 import com.server.soopool.careerMember.entity.CareerMember;
+import com.server.soopool.comment.entity.Comment;
 import com.server.soopool.global.baseTime.BaseTimeEntity;
-import com.server.soopool.techstack.entity.TechStack;
+import com.server.soopool.memberTechstack.entity.MemberTechStack;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -48,18 +51,20 @@ public class Member extends BaseTimeEntity {
 
     @Column(nullable = false)
     private boolean isDeleted;
-/* 질문
-    @Column
-    private String provider;
-
-    @Column
-    String provider_id;
- */
 
     //OneToMany 컬럼설정
-    @OneToMany(mappedBy = "careerId")
+    @OneToMany(mappedBy = "memberId")
     private List<CareerMember> careerMembers;
 
     @OneToMany(mappedBy = "memberId")
-    private List<TechStack> techStacks;
+    private List<MemberTechStack> memberTechStacks;
+
+    @OneToMany(mappedBy = "memberId")
+    private List<Bookmark> bookmarks;
+
+    @OneToMany(mappedBy = "memeberId")
+    private List<Board> boards;
+
+    @OneToMany(mappedBy = "memberId")
+    private List<Comment> comments;
 }
