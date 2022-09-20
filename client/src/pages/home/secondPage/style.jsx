@@ -8,6 +8,7 @@ const SecondPageStyle = styled.div`
   height: 95vh;
   position: relative;
   z-index: 1;
+  background-color: #bacfc3;
 `;
 
 export default SecondPageStyle;
