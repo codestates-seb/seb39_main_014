@@ -29,7 +29,9 @@ const ThirdContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+
   height: 100vh;
+
 `;
 
 const ContentWrapper = styled.section`
@@ -56,6 +58,7 @@ const ContentLeft = styled.div`
     }
   }
   @media screen and (max-width: 838px) {
+
     justify-content: center;
   }
 `;
@@ -71,7 +74,9 @@ const ContentRight = styled.div`
     font-size: 2rem;
     font-weight: 700;
   }
+
   @media screen and (max-width: 838px) {
+
     padding: 0;
   }
 `;

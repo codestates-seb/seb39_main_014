@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 function LastPage() {
+
   return (
     <LastContainer>
       <ContentWraper>
@@ -25,6 +26,7 @@ function LastPage() {
       </ContentWraper>
     </LastContainer>
   );
+
 }
 
 const LastContainer = styled.div`
@@ -32,6 +34,7 @@ const LastContainer = styled.div`
   height: 100vh;
   display: flex;
   justify-content: center;
+
   background-color: #f2f4f8;
   @media screen and (max-width: 838px) {
     flex-direction: column-reverse;
@@ -102,5 +105,6 @@ const StartSoopool = styled.div`
     border-radius: 40px;
   }
 `;
+
 
 export default LastPage;
