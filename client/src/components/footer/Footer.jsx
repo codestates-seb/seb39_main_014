@@ -98,7 +98,7 @@ const FooterWrap = styled.div`
   justify-content: center;
   align-items: center;
   @media screen and (max-width: 768px) {
-    padding: 1rem;
+    padding: 0;
   }
 `;
 
@@ -134,6 +134,7 @@ const FooterLeft = styled.div`
     @media screen and (max-width: 768px) {
       display: flex;
       font-size: 0.8em;
+      padding-top: 0.4rem;
     }
   }
 `;
@@ -147,7 +148,7 @@ const Repository = styled.a`
   color: white;
   justify-content: flex-end;
   @media screen and (max-width: 768px) {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     justify-content: center;
   }
 `;
@@ -158,7 +159,7 @@ const GithubLinkWrap = styled.div`
   @media screen and (max-width: 768px) {
     justify-content: center;
     > a {
-      padding: 0.5rem 0.5rem;
+      padding: 0.3rem 0.3rem;
     }
   }
 `;
@@ -174,7 +175,7 @@ const GithubIcon = styled.div`
   justify-content: center;
   font-size: 1.5rem;
   @media screen and (max-width: 768px) {
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
 `;
 
@@ -183,7 +184,8 @@ const TeamMember = styled.div`
   margin-top: 0.6rem;
   margin-bottom: 0;
   @media screen and (max-width: 768px) {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
+    margin-top: 0.4rem;
   }
 `;
 export default Footer;
