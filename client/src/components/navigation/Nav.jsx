@@ -4,8 +4,8 @@ import NavFrame from "./style";
 function Nav() {
   return (
     <NavFrame>
-      <div className="logo">
-        <div>logo</div>
+      <div className="nav-container">
+        <div className="logo">logo</div>
         <div className="left">
           <div>전체</div>
           <div>스터디</div>
