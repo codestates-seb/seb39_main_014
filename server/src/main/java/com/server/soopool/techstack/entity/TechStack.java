@@ -1,9 +1,11 @@
 package com.server.soopool.techstack.entity;
 
+import com.server.soopool.memberTechstack.entity.MemberTechStack;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * 작성자 : 김은철
@@ -23,6 +25,23 @@ public class TechStack {
     private Long id;
 
     //기본컬럼 설정
-    @Column(nullable = false, length = 20)
-    private String techStackName;
+    @Enumerated(EnumType.STRING)
+    private TechStackName techStackName;
+
+    //enum 정의
+    private enum TechStackName {
+        JAVA("자바"),
+        PYTHON("파이썬"),
+        JAVASCRIPT("자바스크립트");
+
+        private final String name;
+
+        TechStackName(String name) {
+            this.name = name;
+        }
+
+        String getName() {
+            return this.name;
+        }
+    }
 }
