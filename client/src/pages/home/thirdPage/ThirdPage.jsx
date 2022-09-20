@@ -29,7 +29,7 @@ const ThirdContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 50rem;
+  height: 100vh;
 `;
 
 const ContentWrapper = styled.section`
@@ -37,23 +37,25 @@ const ContentWrapper = styled.section`
   justify-content: space-around;
   width: 100%;
   max-width: 1170px;
-  max-height: 840px;
   height: 100%;
-  @media screen and (max-width: 768px) {
+
+  @media screen and (max-width: 838px) {
     flex-direction: column-reverse;
+    align-items: center;
+    max-height: 840px;
   }
 `;
 
 const ContentLeft = styled.div`
   display: flex;
+  max-width: 480px;
   .Three-post {
-    width: 30rem;
-    @media screen and (max-width: 768px) {
-      width: 25rem;
+    width: 90%;
+    @media screen and (max-width: 838px) {
       padding: 0;
     }
   }
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 838px) {
     justify-content: center;
   }
 `;
@@ -69,7 +71,7 @@ const ContentRight = styled.div`
     font-size: 2rem;
     font-weight: 700;
   }
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 838px) {
     padding: 0;
   }
 `;
