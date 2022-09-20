@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 
@@ -9,12 +10,14 @@ function Nav() {
         <LeftMenu>
           <Logo>
             <div>
-              <img
-                src="/assets/logo/logo_black.png"
-                alt="asd.png"
-                width={100}
-                height={50}
-              />
+              <Link to="/">
+                <img
+                  src="/assets/logo/logo_black.png"
+                  alt="asd.png"
+                  width={100}
+                  height={50}
+                />
+              </Link>
             </div>
           </Logo>
           <Menu>
@@ -24,7 +27,9 @@ function Nav() {
           </Menu>
         </LeftMenu>
         <RightMenu>
-          <div>작성하기</div>
+          <Link to="/board/write">
+            <div>작성하기</div>
+          </Link>
           <div>로그인</div>
         </RightMenu>
       </NavContainer>
