@@ -60,9 +60,8 @@ const ContentLeft = styled.div`
   justify-content: center;
   .People {
     display: flex;
-    min-width: 600px;
     width: 90%;
-    padding-right: 10rem;
+
     @media screen and (max-width: 838px) {
       padding: 0;
     }
@@ -77,7 +76,7 @@ const ContentRight = styled.div`
   flex-direction: column;
   color: #4a5e75;
   min-width: 420px;
-  padding-right: 4rem;
+  /* padding-right: 2rem; */
   align-items: center;
   > h1 {
     font-size: 2.5rem;
