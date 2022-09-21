@@ -20,7 +20,11 @@ function Footer() {
             </div>
           </FooterLeft>
           <FooterRight>
-            <Repository href="https://github.com/codestates-seb/seb39_main_014">
+            <Repository
+              href="https://github.com/codestates-seb/seb39_main_014"
+              target="_blank"
+              aria-label="Github"
+            >
               Repository&nbsp;
               <AiFillGithub />
             </Repository>
