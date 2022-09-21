@@ -28,7 +28,7 @@ function CkEditor() {
 const EditorForm = styled.div`
   .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
     min-height: 200px;
-    min-width: 400px;
+    min-width: 100%;
   }
 `;
 
