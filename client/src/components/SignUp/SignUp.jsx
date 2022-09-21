@@ -2,27 +2,28 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-function Login() {
+function SignUp() {
   return (
     <LoginFrame>
       <div className="container" id="container">
         <div className="form-container sign-in-container">
           <form action="#">
-            <h1>로그인</h1>
+            <h1>회원가입</h1>
             <div className="social-container">
               <a href className="social">
-                구글 아이디로 로그인
+                구글 아이디로 가입하기
               </a>
             </div>
             <hr />
             <span />
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
-            <button type="button">Sign In</button>
+            <input type="email" placeholder="아이디" />
+            <input type="password" placeholder="비밀번호" />
+            <input type="password" placeholder="비밀번호 확인" />
+            <button type="button">Sign up</button>
             <div className="sign-up">
-              <div>수풀이 처음이신가요?</div>
+              <div>이미 아이디가 있으신가요?</div>
               <div className="move-sign-up">
-                <Link to="/sign_up">회원가입</Link>
+                <Link to="/login">로그인</Link>
               </div>
             </div>
           </form>
@@ -178,4 +179,4 @@ const LoginFrame = styled.div`
   }
 `;
 
-export default Login;
+export default SignUp;
