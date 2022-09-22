@@ -1,4 +1,3 @@
-// json server 더미 데이터
 {
   "board": [
     {
@@ -11,7 +10,7 @@
       "nickname": "매칭왕",
       "views_cnt": "155",
       "comment_amount": "3",
-      "is_bookmarked": "False", // 로그인 후 표시
+      "is_bookmarked": "False",
       "bookmark_count": "3"
     },
     {
@@ -24,7 +23,7 @@
       "nickname": "호팍",
       "views_cnt": "341",
       "comment_amount": "4",
-      "is_bookmarked": "True", // 로그인 후 표시
+      "is_bookmarked": "True",
       "bookmark_count": "5"
     }
   ]
