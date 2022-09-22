@@ -18,7 +18,7 @@ function Login() {
             <span />
             <input type="email" placeholder="Email" />
             <input type="password" placeholder="Password" />
-            <button type="button">Sign In</button>
+            <button type="button">로그인</button>
             <div className="sign-up">
               <div>수풀이 처음이신가요?</div>
               <div className="move-sign-up">

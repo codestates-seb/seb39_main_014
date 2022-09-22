@@ -1,66 +1,108 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import InputGroup from "../../components/SignUp/InputGroup";
+
+// 회원가입 : 이메일, 이름, 닉네임 비밀번호, 비밀번호 확인
+// 로그인 :
 
 function SignUp() {
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [nick, setNick] = useState("");
+  const [password, setPassword] = useState("");
+
+  //** SignUp 회원가입 POST 버튼 */
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    console.log({ email, username, nick, password });
+
+    try {
+      const res = await axios.post("/auth/register", {
+        email,
+        username,
+        nick,
+        password,
+      });
+      console.log("res", res);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
   return (
     <LoginFrame>
-      <div className="container" id="container">
-        <div className="form-container sign-in-container">
-          <form action="#">
-            <h1>회원가입</h1>
-            <div className="social-container">
-              <a href className="social">
-                구글 아이디로 가입하기
-              </a>
+      <FormContainer>
+        <form onSubmit={handleSubmit}>
+          <h1>회원가입</h1>
+          <div className="social-container">
+            <a className="social">구글 아이디로 가입하기</a>
+          </div>
+          <hr />
+          <span />
+          <InputGroup
+            placeholder="이메일"
+            value={email}
+            setValue={setEmail}
+            // error={errors.email}
+          />
+
+          <InputGroup
+            placeholder="이름"
+            value={username}
+            setValue={setUsername}
+            // error={errors.username}
+          />
+
+          <InputGroup
+            placeholder="닉네임"
+            value={nick}
+            setValue={setNick}
+            // error={errors.username}
+          />
+
+          <InputGroup
+            placeholder="비밀번호"
+            value={password}
+            setValue={setPassword}
+            // error={errors.password}
+          />
+          <button type="button">가입하기</button>
+          <div className="sign-up">
+            <div>이미 아이디가 있으신가요?</div>
+            <div className="move-sign-up">
+              <Link to="/login">로그인</Link>
             </div>
-            <hr />
-            <span />
-            <input type="email" placeholder="아이디" />
-            <input type="password" placeholder="비밀번호" />
-            <input type="password" placeholder="비밀번호 확인" />
-            <button type="button">Sign up</button>
-            <div className="sign-up">
-              <div>이미 아이디가 있으신가요?</div>
-              <div className="move-sign-up">
-                <Link to="/login">로그인</Link>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
+          </div>
+        </form>
+      </FormContainer>
     </LoginFrame>
   );
 }
 
 const LoginFrame = styled.div`
-  /* margin: 10px;
-  max-width: 800px;
-  min-width: 700px;
-  max-height: 1000px;
-  width: 40%;
-  height: 70%;
-  border: 2px solid #5f5f5f;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.22);
+  position: relative;
+  overflow: hidden;
+  width: 500px;
+  max-width: 100%;
+  min-height: 550px;
+  height: 600px;
+`;
+
+const FormContainer = styled.div`
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
 
   h1 {
     font-weight: bold;
     margin-right: auto;
-  }
-
-  h2 {
-    text-align: center;
-  }
-
-  p {
-    font-size: 14px;
-    font-weight: 100;
-    line-height: 20px;
-    letter-spacing: 0.5px;
-    margin: 20px 0 30px;
   }
 
   hr {
@@ -129,24 +171,6 @@ const LoginFrame = styled.div`
     padding: 12px 15px;
     margin: 8px 0;
     width: 400px;
-  }
-
-  .container {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-    position: relative;
-    overflow: hidden;
-    width: 500px;
-    max-width: 100%;
-    min-height: 480px;
-  }
-
-  .form-container {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    transition: all 0.6s ease-in-out;
   }
 
   .social-container {
