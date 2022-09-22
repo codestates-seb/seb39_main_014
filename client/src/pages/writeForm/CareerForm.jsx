@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { careerLists } from "./WriteFormData";
-import { Career } from "./styled";
+import { Career, Crew } from "./styled";
 function CareerForm() {
   const [career, setCareer] = useState("웹 프론트엔드");
   const [count, setCount] = useState(1);
   const [crew, setCrew] = useState([]);
 
+  const idCount = useRef(0);
+
   const onCountHandler = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
     if (e.target.value === "-") {
       if (count === 1) {
         setCount(1);
@@ -22,9 +23,14 @@ function CareerForm() {
 
   const onCrewAdditionHandler = (e) => {
     e.preventDefault();
-    setCrew([...crew, { id: new Date(), career: career, count: count }]);
+    setCrew([...crew, { id: idCount.current, career: career, count: count }]);
     setCount(1);
     setCareer("웹 프론트엔드");
+    idCount.current = idCount.current + 1;
+  };
+
+  const onDeleteHandler = (e) => {
+    setCrew(crew.filter((prev) => prev.id !== e));
   };
 
   return (
@@ -52,9 +58,14 @@ function CareerForm() {
       </div>
       {crew
         ? crew.map((el) => (
-            <div key={el.id} className="crew">
-              {el.career} : {el.count}명
-            </div>
+            <Crew key={el.id}>
+              <div>
+                {el.career} : {el.count}명
+              </div>
+              <button crew={crew} onClick={() => onDeleteHandler(el.id)}>
+                삭제
+              </button>
+            </Crew>
           ))
         : null}
     </Career>

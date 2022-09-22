@@ -2,110 +2,29 @@ import React, { useEffect, useState } from "react";
 import {
   WriteFormContainer,
   FormContainer,
-  FirstDivision,
-  FirstLeft,
-  FirstRight,
-  SecondLeft,
-  SecondRight,
   Contact,
   Title,
   Content,
-  SecondDivision,
 } from "./styled";
 import CkEditor from "../../components/ckEditor/CKEditor";
-import { stackLists, regionLists, periodLists } from "./WriteFormData";
+import PostButtonForm from "../../components/writeForm/PostButton";
 import CareerForm from "./CareerForm";
+import DivisionForm from "./DivisionForm";
 
 function WriteForm() {
   const [state, setState] = useState({
     editor: null,
   });
-  const [isMethod, setIsMethod] = useState("study");
-  const [isChecked, setIsChecked] = useState("online");
 
   useEffect(() => {
     const editor = <CkEditor />;
     setState({ ...state, editor: editor });
   }, []);
 
-  const onMethodChangeHandler = (e) => {
-    setIsMethod(e.target.value);
-  };
-
-  const onRecruitmentHandler = (e) => {
-    setIsChecked(e.target.value);
-  };
-
   return (
     <WriteFormContainer>
       <FormContainer>
-        <FirstDivision>
-          <FirstLeft>
-            <label htmlFor="repo">모집 구분</label>
-            <div className="Check-box">
-              <input
-                id="study"
-                type="radio"
-                value="study"
-                checked={isMethod === "study"}
-                onChange={onMethodChangeHandler}
-              />
-              <label htmlFor="study">스터디</label>
-              <input
-                id="project"
-                type="radio"
-                value="project"
-                checked={isMethod === "project"}
-                onChange={onMethodChangeHandler}
-              />
-              <label htmlFor="project">프로젝트</label>
-            </div>
-          </FirstLeft>
-          <FirstRight>
-            <label htmlFor="online">모임 방식</label>
-            <div className="Check-box">
-              <input
-                id="online"
-                type="radio"
-                value="online"
-                checked={isChecked === "online"}
-                onChange={onRecruitmentHandler}
-              />
-              <label htmlFor="online">온라인</label>
-              <input
-                id="offline"
-                type="radio"
-                value="offline"
-                checked={isChecked === "offline"}
-                onChange={onRecruitmentHandler}
-              />
-              <label htmlFor="offline">오프라인</label>
-              <select id="region">
-                {regionLists.map((el) => (
-                  <option key={el.id}>{el.region}</option>
-                ))}
-              </select>
-            </div>
-          </FirstRight>
-        </FirstDivision>
-        <SecondDivision>
-          <SecondLeft>
-            <label htmlFor="classification">기술 스택</label>
-            <select id="classification">
-              {stackLists.map((el) => (
-                <option key={el.id}>{el.stack}</option>
-              ))}
-            </select>{" "}
-          </SecondLeft>
-          <SecondRight>
-            <label htmlFor="period">기간</label>
-            <select id="period">
-              {periodLists.map((el) => (
-                <option key={el.id}>{el.period}</option>
-              ))}
-            </select>
-          </SecondRight>
-        </SecondDivision>
+        <DivisionForm />
         <CareerForm />
         <Contact>
           <label htmlFor="input">연락 방법</label>
@@ -123,10 +42,10 @@ function WriteForm() {
           <label htmlFor="input">내용</label>
           {state.editor}
         </Content>
+        <PostButtonForm />
       </FormContainer>
     </WriteFormContainer>
   );
 }
 
 export default WriteForm;
-
