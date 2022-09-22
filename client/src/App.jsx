@@ -1,7 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import Footer from "./components/footer/Footer";
 import Nav from "./components/navigation/Nav";
 import Home from "./pages/home/Home";
 import WriteForm from "./pages/writeForm/WriteForm";
@@ -18,7 +17,6 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/board" element={<BoardPage />} />
       </Routes>
-      <Footer />
     </>
   );
 }
