@@ -6,8 +6,12 @@ import {
   SecondDivision,
   SecondLeft,
   SecondRight,
-} from "./styled";
-import { regionLists, stackLists, periodLists } from "./WriteFormData";
+} from "../../pages/writeForm/styled";
+import {
+  regionLists,
+  stackLists,
+  periodLists,
+} from "../../pages/writeForm/WriteFormData";
 
 function DivisionForm() {
   const [isMethod, setIsMethod] = useState("study");
