@@ -1,0 +1,30 @@
+{
+  "board": [
+    {
+      "board_id": "1",
+      "title": "스터디원 모집합니다!",
+      "total_recruit": "5",
+      "current_recruit": "3",
+      "tech_stack_name": ["Java", "Spring"],
+      "created_at": "2022-09-22",
+      "nickname": "매칭왕",
+      "views_cnt": "155",
+      "comment_amount": "3",
+      "is_bookmarked": "False",
+      "bookmark_count": "3"
+    },
+    {
+      "board_id": "2",
+      "title": "스터디 같이 하실 분들 구해용 ~",
+      "total_recruit": "3",
+      "current_recruit": "2",
+      "tech_stack_name": ["JavaScript", "React"],
+      "created_at": "2022-09-22",
+      "nickname": "호팍",
+      "views_cnt": "341",
+      "comment_amount": "4",
+      "is_bookmarked": "True",
+      "bookmark_count": "5"
+    }
+  ]
+}

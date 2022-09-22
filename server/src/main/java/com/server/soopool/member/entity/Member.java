@@ -59,10 +59,11 @@ public class Member extends BaseTimeEntity {
     @OneToMany(mappedBy = "memberId")
     private List<MemberTechStack> memberTechStacks;
 
+    // 북마크 테이블과는 memberId가 아닌 userId와 mapping 되어있음.
     @OneToMany(mappedBy = "memberId")
     private List<Bookmark> bookmarks;
 
-    @OneToMany(mappedBy = "memeberId")
+    @OneToMany(mappedBy = "memberId")
     private List<Board> boards;
 
     @OneToMany(mappedBy = "memberId")

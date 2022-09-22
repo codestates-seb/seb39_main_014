@@ -36,13 +36,13 @@ public class Comment {
 
     // 기본컬럼 설정
     @Column(nullable = false)
-    private Integer group;
+    private Integer groupNumber;
 
     @Column(nullable = false)
-    private Integer group_seq;
+    private Integer groupSeq;
 
     @Column(nullable = false)
-    private boolean group_depth;
+    private boolean groupDepth;
 
     @Column(nullable = false)
     private String content;
