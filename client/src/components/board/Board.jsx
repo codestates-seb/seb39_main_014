@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { BsFillChatDotsFill } from "react-icons/bs";
+import { AiOutlineEye, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 /** 게시글 컴포넌트 */
 function Board({ data }) {
@@ -42,15 +44,25 @@ function Board({ data }) {
           </div>
           <div className="cnt">
             <div className="view-cnt">
-              <div>ㅁ</div>
+              <div>
+                <AiOutlineEye />
+              </div>
               <div>{data.views_cnt}</div>
             </div>
             <div className="comment-cnt">
-              <div>ㅁ</div>
+              <div>
+                <BsFillChatDotsFill className="chat-icon" />
+              </div>
               <div>{data.comment_amount}</div>
             </div>
             <div className="bookmark-cnt">
-              <div>ㅁ</div>
+              <div className="heart-div">
+                {data.is_bookmarked === "True" ? (
+                  <AiFillHeart className="fill-heart-icon" />
+                ) : (
+                  <AiOutlineHeart className="out-line-heart-icon" />
+                )}
+              </div>
               <div>{data.bookmark_count}</div>
             </div>
           </div>
@@ -152,6 +164,7 @@ const Boundary = styled.div`
 `;
 
 /** div - 프로필, 닉네임, 조회수, 댓글 수, 북마크 수 */
+// 리팩토링 화면 구성 마치고 나서 리팩토링 필요
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
@@ -180,6 +193,37 @@ const Bottom = styled.div`
 
   .cnt > div {
     display: flex;
+  }
+
+  .comment-cnt {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    font-size: 15px;
+  }
+  .chat-icon {
+    color: gray;
+    font-size: 20px;
+  }
+
+  .bookmark-cnt {
+    display: flex;
+    font-size: 15px;
+  }
+
+  .heart-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .fill-heart-icon {
+    justify-self: center;
+    color: red;
+    font-size: 20px;
+  }
+  .out-line-heart-icon {
+    color: gray;
+    font-size: 20px;
   }
 `;
 
