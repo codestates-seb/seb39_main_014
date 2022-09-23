@@ -7,7 +7,7 @@ import WriteForm from "./pages/writeForm/WriteForm";
 import LoginPage from "./pages/loginpage/LoginPage";
 import BoardPage from "./pages/boardpage/BoardPage";
 import SignUpPage from "./pages/singupPage/SignUpPage";
-import BoardInquiry from "./pages/boardInquiry/BoardInquiry";
+import BoardInquiryPage from "./pages/boardInquiryPage/BoardInquiryPage";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/board" element={<BoardPage />} />
         <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/board/inquiry" element={<BoardInquiry />} />
+        <Route path="/board/inquiry" element={<BoardInquiryPage />} />
       </Routes>
     </>
   );
