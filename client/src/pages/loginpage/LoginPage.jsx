@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Login from "../../components/Login/Login";
+import Login from "../../components/login/Login";
 
 function LoginPage() {
   return (
