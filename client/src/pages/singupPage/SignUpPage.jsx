@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import SignUp from "../../components/signUp/SignUp";
+import SignUp from "../../components/SignUp/SignUp";
 
 function SignUpPage() {
   return (
