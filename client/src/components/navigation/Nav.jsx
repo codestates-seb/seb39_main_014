@@ -21,7 +21,9 @@ function Nav() {
             </div>
           </Logo>
           <Menu>
-            <div>전체</div>
+            <Link to="/board" style={{ textDecoration: "none" }}>
+              <div>전체</div>
+            </Link>
             <div>스터디</div>
             <div>프로젝트</div>
           </Menu>
@@ -50,6 +52,10 @@ const NavFrame = styled.nav`
   z-index: 10;
   /* margin-top: 0.5rem;
   margin-bottom: 0.5rem; */
+
+  div {
+    color: 5f5f5f;
+  }
 
   font-size: 20px;
   font-weight: bold;
@@ -86,6 +92,7 @@ const Menu = styled.div`
   justify-content: center;
   div {
     margin-left: 40px;
+    color: #5f5f5f;
   }
 `;
 
