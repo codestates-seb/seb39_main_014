@@ -54,7 +54,6 @@ function CareerForm() {
             추가
           </button>
         </div>
-        {/* <button className="Delete">삭제</button> */}
       </div>
       {crew
         ? crew.map((el) => (
