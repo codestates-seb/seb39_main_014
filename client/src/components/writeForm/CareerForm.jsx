@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
-import { careerLists } from "./WriteFormData";
-import { Career, Crew } from "./styled";
+import { careerLists } from "../../pages/writeForm/WriteFormData";
+import { Career, Crew } from "../../pages/writeForm/styled";
 function CareerForm() {
   const [career, setCareer] = useState("웹 프론트엔드");
   const [count, setCount] = useState(1);
@@ -54,7 +54,6 @@ function CareerForm() {
             추가
           </button>
         </div>
-        {/* <button className="Delete">삭제</button> */}
       </div>
       {crew
         ? crew.map((el) => (

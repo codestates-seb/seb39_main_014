@@ -8,8 +8,8 @@ import {
 } from "./styled";
 import CkEditor from "../../components/ckEditor/CKEditor";
 import PostButtonForm from "../../components/writeForm/PostButton";
-import CareerForm from "./CareerForm";
-import DivisionForm from "./DivisionForm";
+import CareerForm from "../../components/writeForm/CareerForm";
+import DivisionForm from "../../components/writeForm/DivisionForm";
 
 function WriteForm() {
   const [state, setState] = useState({
