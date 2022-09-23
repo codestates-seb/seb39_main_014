@@ -6,7 +6,6 @@ function BoardPage() {
 }
 
 const BoardPageLayout = styled.div`
-  background-color: gray;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,7 +14,7 @@ const BoardPageLayout = styled.div`
 `;
 
 const LeftSide = styled.div`
-  background-color: gray;
+  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,8 +22,12 @@ const LeftSide = styled.div`
   height: 80vh;
 `;
 
-const RightSide = styled.div`
+const CenterSide = styled.div`
   background-color: gray;
+`;
+
+const RightSide = styled.div`
+  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;

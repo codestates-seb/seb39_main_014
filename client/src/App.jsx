@@ -4,9 +4,9 @@ import { Routes, Route } from "react-router-dom";
 import Nav from "./components/navigation/Nav";
 import Home from "./pages/home/Home";
 import WriteForm from "./pages/writeForm/WriteForm";
-import LoginPage from "./pages/loginpage/LoginPage";
-import BoardPage from "./pages/boardpage/BoardPage";
-import SignUpPage from "./pages/singupPage/SignUpPage";
+import LoginPage from "./pages/loginPage/LoginPage";
+import BoardPage from "./pages/boardPage/BoardPage";
+import SignUpPage from "./pages/singUpPage/SignUpPage";
 
 function App() {
   return (

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import InputGroup from "../../components/SignUp/InputGroup";
+import InputGroup from "./InputGroup";
 
 // 회원가입 : 이메일, 이름, 닉네임 비밀번호, 비밀번호 확인
 // 로그인 :
