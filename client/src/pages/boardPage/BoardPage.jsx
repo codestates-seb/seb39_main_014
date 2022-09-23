@@ -1,38 +1,58 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import Footer from "../../components/footer/Footer";
+import Board from "../../components/board/Board";
+import axios from "axios";
 
 function BoardPage() {
-  return <BoardPageLayout>BoardPage</BoardPageLayout>;
+  const [datas, setDatas] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:4000/board/").then((res) => {
+      setDatas(res.data);
+    });
+  }, []);
+
+  console.log(datas);
+  return (
+    <>
+      <BoardPageLayout>
+        <Side />
+        <Content>
+          {datas.map((data) => (
+            <Board data={data} key={data.board_id} />
+          ))}
+        </Content>
+        <Side />
+      </BoardPageLayout>
+      <Footer />
+    </>
+  );
 }
 
 const BoardPageLayout = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
   width: 100%;
-  height: 80vh;
 `;
 
-const LeftSide = styled.div`
+const Content = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 80vh;
+  min-width: 1280px;
+
+  @media screen and (max-width: 820px) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+  }
 `;
 
-const CenterSide = styled.div`
+const Side = styled.div`
   background-color: gray;
-`;
-
-const RightSide = styled.div`
-  background-color: white;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 80vh;
 `;
 
 export default BoardPage;

@@ -25,6 +25,97 @@
       "comment_amount": "4",
       "is_bookmarked": "True",
       "bookmark_count": "5"
+    },
+    {
+      "board_id": "3",
+      "title": "테스트용 더미 데이터",
+      "total_recruit": "5",
+      "current_recruit": "2",
+      "tech_stack_name": ["React", "Spring"],
+      "created_at": "2022-09-26",
+      "nickname": "newo",
+      "views_cnt": "5985",
+      "comment_amount": "152",
+      "is_bookmarked": "True",
+      "bookmark_count": "5"
+    },
+    {
+      "board_id": "4",
+      "title": "테스트용 더미 데이터",
+      "total_recruit": "5",
+      "current_recruit": "2",
+      "tech_stack_name": ["React", "Spring"],
+      "created_at": "2022-09-26",
+      "nickname": "newo",
+      "views_cnt": "5985",
+      "comment_amount": "152",
+      "is_bookmarked": "True",
+      "bookmark_count": "5"
+    },
+    {
+      "board_id": "5",
+      "title": "테스트용 더미 데이터",
+      "total_recruit": "5",
+      "current_recruit": "2",
+      "tech_stack_name": ["React", "Spring"],
+      "created_at": "2022-09-26",
+      "nickname": "newo",
+      "views_cnt": "5985",
+      "comment_amount": "152",
+      "is_bookmarked": "True",
+      "bookmark_count": "5"
+    },
+    {
+      "board_id": "6",
+      "title": "테스트용 더미 데이터",
+      "total_recruit": "5",
+      "current_recruit": "2",
+      "tech_stack_name": ["React", "Spring"],
+      "created_at": "2022-09-26",
+      "nickname": "newo",
+      "views_cnt": "5985",
+      "comment_amount": "152",
+      "is_bookmarked": "True",
+      "bookmark_count": "5"
+    },
+    {
+      "board_id": "7",
+      "title": "테스트용 더미 데이터",
+      "total_recruit": "5",
+      "current_recruit": "2",
+      "tech_stack_name": ["React", "Spring"],
+      "created_at": "2022-09-26",
+      "nickname": "newo",
+      "views_cnt": "5985",
+      "comment_amount": "152",
+      "is_bookmarked": "True",
+      "bookmark_count": "5"
+    },
+    {
+      "board_id": "8",
+      "title": "테스트용 더미 데이터",
+      "total_recruit": "5",
+      "current_recruit": "2",
+      "tech_stack_name": ["React", "Spring"],
+      "created_at": "2022-09-26",
+      "nickname": "newo",
+      "views_cnt": "5985",
+      "comment_amount": "152",
+      "is_bookmarked": "True",
+      "bookmark_count": "5"
+    },
+    {
+      "board_id": "9",
+      "title": "테스트용 더미 데이터",
+      "total_recruit": "5",
+      "current_recruit": "2",
+      "tech_stack_name": ["React", "Spring"],
+      "created_at": "2022-09-26",
+      "nickname": "newo",
+      "views_cnt": "5985",
+      "comment_amount": "152",
+      "is_bookmarked": "True",
+      "bookmark_count": "5"
     }
   ]
 }
