@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Board from "../../components/board/Board";
+import Stack from "../../components/stack/Stack";
 import axios from "axios";
 
 function BoardPage() {
@@ -18,11 +19,17 @@ function BoardPage() {
     <>
       <BoardPageLayout>
         <Side />
-        <Content>
-          {datas.map((data) => (
-            <Board data={data} key={data.board_id} />
-          ))}
-        </Content>
+        <Center>
+          <StackArea>
+            <Stack />
+          </StackArea>
+          <Content>
+            {datas.map((data) => (
+              <Board data={data} key={data.board_id} />
+            ))}
+          </Content>
+          <PageNationArea>페이지네이션 자리</PageNationArea>
+        </Center>
         <Side />
       </BoardPageLayout>
       <Footer />
@@ -34,6 +41,17 @@ const BoardPageLayout = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   width: 100%;
+`;
+
+const StackArea = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Center = styled.div`
+  display: grid;
+  grid-template-rows: 1fr 10fr 1fr;
 `;
 
 const Content = styled.div`
@@ -50,6 +68,11 @@ const Content = styled.div`
   }
 `;
 
+const PageNationArea = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 const Side = styled.div`
   background-color: gray;
   align-items: center;
