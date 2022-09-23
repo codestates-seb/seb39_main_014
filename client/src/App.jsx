@@ -18,7 +18,7 @@ function App() {
         <Route path="/board/write" element={<WriteForm />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/board" element={<BoardPage />} />
-        <Route path="/sign_up" element={<SignUpPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
         <Route path="/board/inquiry" element={<BoardInquiry />} />
       </Routes>
     </>
