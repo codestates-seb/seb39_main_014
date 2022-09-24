@@ -39,7 +39,7 @@ function BoardPage() {
 
 const BoardPageLayout = styled.div`
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr 5fr 1fr;
   width: 100%;
 `;
 
@@ -49,15 +49,18 @@ const StackArea = styled.div`
 `;
 
 const Center = styled.div`
-  display: grid;
-  grid-template-rows: 1fr 5fr 1fr;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  grid-template-rows: 1fr 1fr 1fr;
 `;
 
 const Content = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
   background-color: white;
-  min-width: 1280px;
+  // 전체 레이아웃 너비에 영향
+  min-width: 1200px;
 
   @media screen and (max-width: 820px) {
     display: flex;
@@ -73,8 +76,7 @@ const PageNationArea = styled.div`
   align-items: center;
 `;
 const Side = styled.div`
-  background-color: gray;
-  align-items: center;
+  /* background-color: gray; */
 `;
 
 export default BoardPage;

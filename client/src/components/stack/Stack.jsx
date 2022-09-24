@@ -34,10 +34,10 @@ function Stack() {
   return (
     <StackLayout>
       <StackPick>
-        <div>전체</div>
-        <div>프론트엔드</div>
-        <div>백엔드</div>
-        <div>기타</div>
+        <h2>전체</h2>
+        <h2>프론트엔드</h2>
+        <h2>백엔드</h2>
+        <h2>기타</h2>
       </StackPick>
       <StackLogo>
         {stackList.map((el) => (
@@ -54,18 +54,23 @@ const StackLayout = styled.div``;
 /** div - 전체, 프론트엔드, 백엔드, 기타 */
 const StackPick = styled.div`
   display: flex;
-  margin-left: 10px;
   margin-top: 20px;
 
-  div {
-    margin-left: 10px;
+  h2 {
+    margin-left: 40px;
   }
 `;
 
+/** div - 스택 로고 레이아웃 */
 const StackLogo = styled.div`
+  margin-left: 10px;
+  margin-bottom: 20px;
   display: flex;
   flex-wrap: wrap;
-  width: 1280px;
+
+  // 전체 레이아웃 너비
+  width: 1150px;
+
   img {
     margin-left: 10px;
     margin-top: 10px;

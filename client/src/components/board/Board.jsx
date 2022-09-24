@@ -76,11 +76,21 @@ function Board({ data }) {
 const PostLayout = styled.div`
   display: grid;
   grid-template-rows: 2fr 4fr 1.5fr 2fr 1fr 0.1fr 2fr;
-  margin: 30px;
-  border: 1px solid black;
+  /* 
+  
   border-radius: 10px;
-  width: 350px;
+  
+  */
   height: 400px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  width: 350px;
+  max-width: 100%;
+  min-height: 1px;
+  border-radius: 16px;
+  margin: 20px;
+  padding: 5px;
+
+  cursor: pointer;
 
   div {
     margin: 5px;
