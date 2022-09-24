@@ -46,12 +46,11 @@ const BoardPageLayout = styled.div`
 const StackArea = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
 `;
 
 const Center = styled.div`
   display: grid;
-  grid-template-rows: 1fr 10fr 1fr;
+  grid-template-rows: 1fr 5fr 1fr;
 `;
 
 const Content = styled.div`

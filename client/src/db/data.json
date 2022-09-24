@@ -25,6 +25,97 @@
       "comment_amount": "4",
       "is_bookmarked": "True",
       "bookmark_count": "5"
+    },
+    {
+      "board_id": "3",
+      "title": "스터디 같이 하실 분들 구해용 ~",
+      "total_recruit": "3",
+      "current_recruit": "2",
+      "tech_stack_name": ["JavaScript", "React"],
+      "created_at": "2022-09-22",
+      "nickname": "호팍",
+      "views_cnt": "341",
+      "comment_amount": "4",
+      "is_bookmarked": "True",
+      "bookmark_count": "5"
+    },
+    {
+      "board_id": "4",
+      "title": "스터디 같이 하실 분들 구해용 ~",
+      "total_recruit": "3",
+      "current_recruit": "2",
+      "tech_stack_name": ["JavaScript", "React"],
+      "created_at": "2022-09-22",
+      "nickname": "호팍",
+      "views_cnt": "341",
+      "comment_amount": "4",
+      "is_bookmarked": "True",
+      "bookmark_count": "5"
+    },
+    {
+      "board_id": "5",
+      "title": "스터디 같이 하실 분들 구해용 ~",
+      "total_recruit": "3",
+      "current_recruit": "2",
+      "tech_stack_name": ["JavaScript", "React"],
+      "created_at": "2022-09-22",
+      "nickname": "호팍",
+      "views_cnt": "341",
+      "comment_amount": "4",
+      "is_bookmarked": "True",
+      "bookmark_count": "5"
+    },
+    {
+      "board_id": "6",
+      "title": "스터디 같이 하실 분들 구해용 ~",
+      "total_recruit": "3",
+      "current_recruit": "2",
+      "tech_stack_name": ["JavaScript", "React"],
+      "created_at": "2022-09-22",
+      "nickname": "호팍",
+      "views_cnt": "341",
+      "comment_amount": "4",
+      "is_bookmarked": "True",
+      "bookmark_count": "5"
+    },
+    {
+      "board_id": "7",
+      "title": "스터디 같이 하실 분들 구해용 ~",
+      "total_recruit": "3",
+      "current_recruit": "2",
+      "tech_stack_name": ["JavaScript", "React"],
+      "created_at": "2022-09-22",
+      "nickname": "호팍",
+      "views_cnt": "341",
+      "comment_amount": "4",
+      "is_bookmarked": "True",
+      "bookmark_count": "5"
+    },
+    {
+      "board_id": "8",
+      "title": "스터디 같이 하실 분들 구해용 ~",
+      "total_recruit": "3",
+      "current_recruit": "2",
+      "tech_stack_name": ["JavaScript", "React"],
+      "created_at": "2022-09-22",
+      "nickname": "호팍",
+      "views_cnt": "341",
+      "comment_amount": "4",
+      "is_bookmarked": "True",
+      "bookmark_count": "5"
+    },
+    {
+      "board_id": "9",
+      "title": "스터디 같이 하실 분들 구해용 ~",
+      "total_recruit": "3",
+      "current_recruit": "2",
+      "tech_stack_name": ["JavaScript", "React"],
+      "created_at": "2022-09-22",
+      "nickname": "호팍",
+      "views_cnt": "341",
+      "comment_amount": "4",
+      "is_bookmarked": "True",
+      "bookmark_count": "5"
     }
   ]
 }
