@@ -8,6 +8,7 @@ import LoginPage from "./pages/loginpage/LoginPage";
 import BoardPage from "./pages/boardpage/BoardPage";
 import SignUpPage from "./pages/singupPage/SignUpPage";
 import BoardInquiryPage from "./pages/boardInquiryPage/BoardInquiryPage";
+import MyPage from "./pages/myPage/MyPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/board" element={<BoardPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/board/inquiry" element={<BoardInquiryPage />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </>
   );
