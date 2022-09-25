@@ -151,6 +151,14 @@ const TopLayout = styled.div`
 const TitleLayout = styled.div`
   h1 {
     margin-left: 10px;
+    width: 300px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-word;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2; // 원하는 라인수
+    -webkit-box-orient: vertical;
   }
 `;
 
