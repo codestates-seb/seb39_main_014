@@ -98,8 +98,13 @@ const PostLayout = styled.div`
   border-radius: 16px;
   margin: 20px;
   padding: 5px;
+  transition: 0.2s;
 
   cursor: pointer;
+  &:hover {
+    transform: translate(0, -10px);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
 
   div {
     margin: 5px;
