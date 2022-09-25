@@ -39,8 +39,10 @@ function BoardPage() {
 
 const BoardPageLayout = styled.div`
   display: grid;
+  place-items: center;
   grid-template-columns: 1fr 5fr 1fr;
   width: 100%;
+  background-color: #f9fafb;
 `;
 
 const StackArea = styled.div`
@@ -51,16 +53,21 @@ const StackArea = styled.div`
 const Center = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   grid-template-rows: 1fr 1fr 1fr;
+  max-width: 1280px;
 `;
 
 const Content = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  background-color: white;
+  display: grid;
+  place-items: center;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   // 전체 레이아웃 너비에 영향
-  min-width: 1200px;
+  background-color: #f9fafb;
+  max-width: 1280px;
 
   @media screen and (max-width: 820px) {
     display: flex;

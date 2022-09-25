@@ -111,7 +111,7 @@ const Top = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: green;
+    background-color: #69d06f;
     font-weight: bold;
     color: white;
     width: 70px;
