@@ -233,6 +233,8 @@ const CntArea = styled.div`
 
   div {
     display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .view-cnt {
     font-size: 15px;
