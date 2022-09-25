@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const stackList = [
+export const stackList = [
   "aws",
   "docker",
   "express",

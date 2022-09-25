@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import { AiOutlineEye, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { stackList } from "../stack/Stack";
 
 /** 게시글 컴포넌트 */
 function Board({ data }) {
@@ -23,7 +24,15 @@ function Board({ data }) {
         </Title>
         <Tag>{/* advanced */}</Tag>
         <Stack>
-          <div>{data.tech_stack_name}</div>
+          <div>
+            {data.tech_stack_name.map((el) => (
+              <img
+                className="stack-logo"
+                src={`/assets/stack/${el}.svg`}
+                alt={`${el}`}
+              />
+            ))}
+          </div>
         </Stack>
         <Recruitment>
           <div className="recruitment">
@@ -81,7 +90,7 @@ const PostLayout = styled.div`
   border-radius: 10px;
   
   */
-  height: 400px;
+  height: 420px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   width: 350px;
   max-width: 100%;
@@ -147,6 +156,10 @@ const Tag = styled.div``;
 const Stack = styled.div`
   div {
     margin-left: 10px;
+  }
+
+  .stack-logo {
+    margin-left: 3px;
   }
 `;
 
