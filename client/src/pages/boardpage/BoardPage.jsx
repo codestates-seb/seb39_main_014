@@ -81,6 +81,8 @@ const PageNationArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 1280px;
+  height: 200px;
 `;
 const Side = styled.div`
   /* background-color: gray; */

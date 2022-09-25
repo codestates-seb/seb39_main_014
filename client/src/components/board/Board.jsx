@@ -8,8 +8,8 @@ import { stackList } from "../stack/Stack";
 function Board({ data }) {
   return (
     <>
-      <PostLayout>
-        <Top>
+      <PostFrame>
+        <TopLayout>
           <div className="info">
             <div>지역무관</div>
             <div>온라인</div>
@@ -18,12 +18,12 @@ function Board({ data }) {
           <div className="info-deadline">
             <div>모집마감</div>
           </div>
-        </Top>
-        <Title>
+        </TopLayout>
+        <TitleLayout>
           <h1>{data.title}</h1>
-        </Title>
-        <Tag>{/* advanced */}</Tag>
-        <Stack>
+        </TitleLayout>
+        <TagLayout>{/* advanced */}</TagLayout>
+        <StackLayout>
           <div>
             {data.tech_stack_name.map((el) => (
               <img
@@ -33,8 +33,8 @@ function Board({ data }) {
               />
             ))}
           </div>
-        </Stack>
-        <Recruitment>
+        </StackLayout>
+        <RecruitmentLayout>
           <div className="recruitment">
             <p>모집인원</p>
             <p> {data.current_recruit} </p>
@@ -42,18 +42,18 @@ function Board({ data }) {
             <p> {data.total_recruit} </p>
             <p>▿</p>
           </div>
-        </Recruitment>
+        </RecruitmentLayout>
         <Boundary>
           <div className="boundary-line" />
         </Boundary>
-        <Bottom>
-          <div className="profile">
+        <BottomLayout>
+          <ProfileArea>
             <div className="profile-img">{data.nickname[0]}</div>
             <div className="nickname">{data.nickname}</div>
-          </div>
-          <div className="cnt">
+          </ProfileArea>
+          <CntArea>
             <div className="view-cnt">
-              <div>
+              <div className="view-icon">
                 <AiOutlineEye />
               </div>
               <div>{data.views_cnt}</div>
@@ -74,15 +74,15 @@ function Board({ data }) {
               </div>
               <div>{data.bookmark_count}</div>
             </div>
-          </div>
-        </Bottom>
-      </PostLayout>
+          </CntArea>
+        </BottomLayout>
+      </PostFrame>
     </>
   );
 }
 
 /** div - 게시글 레이아웃 */
-const PostLayout = styled.div`
+const PostFrame = styled.div`
   display: grid;
   grid-template-rows: 2fr 4fr 1.5fr 2fr 1fr 0.1fr 2fr;
   /* 
@@ -112,7 +112,7 @@ const PostLayout = styled.div`
 `;
 
 /** div - 지역, 활동 기간, 모집 기한 */
-const Top = styled.div`
+const TopLayout = styled.div`
   display: flex;
   align-items: center;
 
@@ -148,17 +148,17 @@ const Top = styled.div`
 `;
 
 /** div - 제목 */
-const Title = styled.div`
+const TitleLayout = styled.div`
   h1 {
     margin-left: 10px;
   }
 `;
 
 /** div - Advanced : 태그 기능 */
-const Tag = styled.div``;
+const TagLayout = styled.div``;
 
 /** div - 기술 스택 */
-const Stack = styled.div`
+const StackLayout = styled.div`
   div {
     margin-left: 10px;
   }
@@ -169,7 +169,7 @@ const Stack = styled.div`
 `;
 
 /** div - 모집인원 */
-const Recruitment = styled.div`
+const RecruitmentLayout = styled.div`
   display: flex;
   .recruitment {
     display: flex;
@@ -193,13 +193,16 @@ const Boundary = styled.div`
 
 /** div - 프로필, 닉네임, 조회수, 댓글 수, 북마크 수 */
 // 리팩토링 화면 구성 마치고 나서 리팩토링 필요
-const Bottom = styled.div`
+const BottomLayout = styled.div`
   display: flex;
   justify-content: space-between;
-  .profile {
-    display: flex;
-    align-items: center;
-  }
+`;
+
+/** div - (Bottom) 프로필사진, 닉네임  */
+const ProfileArea = styled.div`
+  display: flex;
+  align-items: center;
+
   .nickname {
     white-space: nowrap;
   }
@@ -214,15 +217,22 @@ const Bottom = styled.div`
     height: 30px;
     border-radius: 50%;
   }
+`;
 
-  .cnt {
+/** div - (BottomLayout) 조회수, 댓글수, 북마크수 */
+const CntArea = styled.div`
+  display: flex;
+
+  div {
     display: flex;
   }
-
-  .cnt > div {
-    display: flex;
+  .view-cnt {
+    font-size: 15px;
   }
-
+  .view-icon {
+    color: gray;
+    font-size: 20px;
+  }
   .comment-cnt {
     display: flex;
     align-items: center;
