@@ -1,10 +1,9 @@
 package com.server.soopool.board.service;
 
-import com.server.soopool.board.dto.BoardPostDto;
 import com.server.soopool.board.entity.Board;
 import com.server.soopool.board.repository.BoardRepository;
-import com.server.soopool.exception.BusinessLogicException;
-import com.server.soopool.exception.ExceptionCode;
+import com.server.soopool.global.exception.BusinessLogicException;
+import com.server.soopool.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

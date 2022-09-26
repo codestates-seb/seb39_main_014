@@ -85,7 +85,7 @@ public class Member extends BaseTimeEntity {
         getBookmarks().add(bookmark);
     }
 
-    @OneToMany(mappedBy = "memeberId")
+    @OneToMany(mappedBy = "memberId")
     private List<Board> boards;
 
     public void add(Board board) {

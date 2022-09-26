@@ -17,7 +17,7 @@ public class ErrorResponse {
     }
     public static ErrorResponse of(ExceptionCode exceptionCode){
         Map<String, String> group = new HashMap<>();
-        group.put("status", String.valueOf(exceptionCode.getStauts()));
+        group.put("status", String.valueOf(exceptionCode.getStatus()));
         group.put("reason", exceptionCode.getMessage());
 
         fieldErrors.add(group);
