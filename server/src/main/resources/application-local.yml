@@ -16,7 +16,8 @@ spring:
     password:  # H2 접속 시 입력할 password 정보 (원하는 것으로 입력
 
   jpa:
-    hiberante:
+    defer-datasource-initialization: true
+    hibernate:
       ddl-auto: create
     show-sql: true
     properties:
