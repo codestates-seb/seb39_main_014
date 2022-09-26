@@ -7,8 +7,8 @@ import { AiOutlineEye, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 function Board({ data }) {
   return (
     <>
-      <PostLayout>
-        <Top>
+      <PostFrame>
+        <TopLayout>
           <div className="info">
             <div>지역무관</div>
             <div>온라인</div>
@@ -17,34 +17,43 @@ function Board({ data }) {
           <div className="info-deadline">
             <div>모집마감</div>
           </div>
-        </Top>
-        <Title>
-          <h1>{data.title}</h1>
-        </Title>
-        <Tag>{/* advanced */}</Tag>
-        <Stack>
-          <div>{data.tech_stack_name}</div>
-        </Stack>
-        <Recruitment>
+        </TopLayout>
+        <TitleLayout>
+          <h3>{data.title}</h3>
+        </TitleLayout>
+        <TagLayout>{/* advanced */}</TagLayout>
+        <StackLayout>
+          <div>
+            {data.tech_stack_name.map((el) => (
+              <img
+                className="stack-logo"
+                src={`/assets/stack/${el}.svg`}
+                alt={`${el}`}
+              />
+            ))}
+          </div>
+        </StackLayout>
+        <RecruitmentLayout>
           <div className="recruitment">
             <p>모집인원</p>
             <p> {data.current_recruit} </p>
             <p> / </p>
             <p> {data.total_recruit} </p>
             <p>▿</p>
+            <div className="created-at">{data.created_at}</div>
           </div>
-        </Recruitment>
+        </RecruitmentLayout>
         <Boundary>
           <div className="boundary-line" />
         </Boundary>
-        <Bottom>
-          <div className="profile">
+        <BottomLayout>
+          <ProfileArea>
             <div className="profile-img">{data.nickname[0]}</div>
             <div className="nickname">{data.nickname}</div>
-          </div>
-          <div className="cnt">
+          </ProfileArea>
+          <CntArea>
             <div className="view-cnt">
-              <div>
+              <div className="view-icon">
                 <AiOutlineEye />
               </div>
               <div>{data.views_cnt}</div>
@@ -65,22 +74,39 @@ function Board({ data }) {
               </div>
               <div>{data.bookmark_count}</div>
             </div>
-          </div>
-        </Bottom>
-      </PostLayout>
+          </CntArea>
+        </BottomLayout>
+      </PostFrame>
     </>
   );
 }
 
 /** div - 게시글 레이아웃 */
-const PostLayout = styled.div`
+const PostFrame = styled.div`
+  box-sizing: content-box;
+  width: 100%;
   display: grid;
-  grid-template-rows: 2fr 4fr 1.5fr 2fr 1fr 0.1fr 2fr;
-  margin: 30px;
-  border: 1px solid black;
+  grid-template-rows: 2fr 4fr 1.5fr 2fr 1fr 0.1fr 1fr;
+  /* 
+  
   border-radius: 10px;
-  width: 350px;
-  height: 400px;
+  
+  */
+  height: 340px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  width: 280px;
+  max-width: 100%;
+  min-height: 1px;
+  border-radius: 40px;
+  margin: 20px;
+  padding: 20px;
+  transition: 0.2s;
+
+  cursor: pointer;
+  &:hover {
+    transform: translate(0, -10px);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
 
   div {
     margin: 5px;
@@ -88,10 +114,14 @@ const PostLayout = styled.div`
 `;
 
 /** div - 지역, 활동 기간, 모집 기한 */
-const Top = styled.div`
+const TopLayout = styled.div`
   display: flex;
   align-items: center;
+  width: 250px;
 
+  div {
+    font-size: 10px;
+  }
   .info {
     display: flex;
   }
@@ -101,77 +131,105 @@ const Top = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: green;
-    font-weight: bold;
+    background-color: #69d06f;
     color: white;
-    width: 70px;
-    height: 30px;
-    border-radius: 10px;
+    width: 40px;
+    height: 23px;
+    border-radius: 50px;
+    font-weight: bold;
   }
 
+  /* 모집기한 */
   .info-deadline {
-    margin-left: auto;
+    margin-left: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: gray;
+    background-color: #d9d9d9;
     font-weight: bold;
-    color: white;
-    width: 70px;
-    height: 30px;
-    border-radius: 10px;
+    color: black;
+    width: auto;
+    height: 23px;
+    border-radius: 50px;
   }
 `;
 
 /** div - 제목 */
-const Title = styled.div`
-  h1 {
+const TitleLayout = styled.div`
+  h3 {
+    font-weight: 400;
     margin-left: 10px;
+    width: 250px;
+    text-overflow: ellipsis;
+    font-size: 17px;
+    overflow: hidden;
+    word-break: break-word;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3; // 원하는 라인수
+    -webkit-box-orient: vertical;
   }
 `;
 
 /** div - Advanced : 태그 기능 */
-const Tag = styled.div``;
+const TagLayout = styled.div``;
 
 /** div - 기술 스택 */
-const Stack = styled.div`
+const StackLayout = styled.div`
   div {
     margin-left: 10px;
+    margin-bottom: -10px;
+  }
+
+  .stack-logo {
+    margin-left: 3px;
   }
 `;
 
 /** div - 모집인원 */
-const Recruitment = styled.div`
+const RecruitmentLayout = styled.div`
   display: flex;
+  align-items: center;
+  width: 280px;
+  font-size: 13px;
   .recruitment {
     display: flex;
   }
   p {
     margin-left: 5px;
   }
+
+  .created-at {
+    opacity: 0.4;
+    margin-left: 75px;
+    display: flex;
+    align-items: center;
+  }
 `;
 
 /** div - 경계선 */
 const Boundary = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  align-self: center;
   .boundary-line {
-    border-top: 0.5px solid gray;
-    border-radius: 50%;
-    width: 300px;
+    margin-top: -10px;
+    opacity: 0.2;
+    border-top: 1px solid gray;
+    width: 265px;
   }
 `;
 
 /** div - 프로필, 닉네임, 조회수, 댓글 수, 북마크 수 */
 // 리팩토링 화면 구성 마치고 나서 리팩토링 필요
-const Bottom = styled.div`
+const BottomLayout = styled.div`
   display: flex;
   justify-content: space-between;
-  .profile {
-    display: flex;
-    align-items: center;
-  }
+  height: 30px;
+`;
+
+/** div - (Bottom) 프로필사진, 닉네임  */
+const ProfileArea = styled.div`
+  display: flex;
+  align-items: center;
   .nickname {
     white-space: nowrap;
   }
@@ -181,34 +239,48 @@ const Bottom = styled.div`
     color: white;
     align-items: center;
     justify-content: center;
-    border: 1px black solid;
     width: 30px;
     height: 30px;
     border-radius: 50%;
   }
+`;
 
-  .cnt {
+/** div - (BottomLayout) 조회수, 댓글수, 북마크수 */
+const CntArea = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  div {
     display: flex;
+    align-items: center;
+    justify-content: center;
   }
-
-  .cnt > div {
-    display: flex;
+  .view-cnt {
+    font-size: 13px;
+    margin-right: -5px;
   }
-
+  .view-icon {
+    color: gray;
+    font-size: 23px;
+    margin-right: -3px;
+  }
   .comment-cnt {
     display: flex;
     align-items: center;
     justify-items: center;
-    font-size: 15px;
+    font-size: 13px;
+    margin-right: -5px;
   }
   .chat-icon {
     color: gray;
-    font-size: 20px;
+    font-size: 18px;
+    margin-right: -5px;
   }
 
   .bookmark-cnt {
     display: flex;
-    font-size: 15px;
+    font-size: 13px;
   }
 
   .heart-div {
@@ -220,10 +292,14 @@ const Bottom = styled.div`
     justify-self: center;
     color: red;
     font-size: 20px;
+    margin-left: -5px;
+    margin-right: -5px;
   }
   .out-line-heart-icon {
     color: gray;
     font-size: 20px;
+    margin-left: -5px;
+    margin-right: -5px;
   }
 `;
 

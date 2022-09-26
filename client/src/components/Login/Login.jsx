@@ -22,7 +22,7 @@ function Login() {
             <div className="sign-up">
               <div>수풀이 처음이신가요?</div>
               <div className="move-sign-up">
-                <Link to="/register">회원가입</Link>
+                <Link to="/signup">회원가입</Link>
               </div>
             </div>
           </form>
