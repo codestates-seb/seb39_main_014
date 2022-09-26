@@ -25,6 +25,11 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.H2Dialect
 
+# 초기 테이블 설정을 위해 추가
+  sql:
+    init:
+      mode: always
+
 logging:
   level:
     org:

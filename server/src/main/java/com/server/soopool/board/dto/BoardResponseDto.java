@@ -17,7 +17,7 @@ public class BoardResponseDto {
     private String period;
     private String recruitMethod;
     private String location;
-    private List<String> techStackName;
+    private List<String> techStackNames;
     private String contact;
     private List<String> careerList;
     private String title;
