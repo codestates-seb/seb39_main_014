@@ -46,4 +46,13 @@ public class BoardService {
         Board board = findVerifiedBoard(boardId);
         boardRepository.delete(board);
     }
+
+    /*  작성자 : 김은철
+
+           board table의 comment_amount의 값을 설정하기 위한 메소드를 작성하려고 했습니다.
+           필요 없으시다고 판단이 들면 지우시면 됩니다.
+    */
+//    public void commentCount(Board board) {
+//        boardRepository.modifyCommentCountColumn();
+//    }
 }
