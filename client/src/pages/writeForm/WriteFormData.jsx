@@ -1,5 +1,5 @@
 export const stackLists = [
-  { id: 0, stack: "- 프로젝트 사용 스택 -" },
+  // { id: 0, stack: "- 프로젝트 사용 스택 -" },
   { id: 1, stack: "Java" },
   { id: 2, stack: "JavaScript" },
   { id: 3, stack: "React" },

@@ -239,6 +239,8 @@ export const BoardInfo = styled.ul`
 export const Body = styled.span`
   padding: 1rem 0 0 0.6rem;
   min-height: 300px;
+  color: #4b5563;
+  letter-spacing: 0.1rem;
   @media screen and (max-width: 476px) {
     font-size: 0.8rem;
   }
