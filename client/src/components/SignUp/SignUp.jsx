@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import InputGroup from "./InputGroup";
+import InputGroup from "../inputGroup/InputGroup";
 import { FcGoogle } from "react-icons/fc";
+import useCheck from "../../hooks/useCheck";
 
 // 회원가입 : 이메일, 이름, 닉네임 비밀번호, 비밀번호 확인
-// 로그인 :
 
 /** 이메일 정합성 체크 함수 */
 function checkEmail(email) {
@@ -52,38 +52,10 @@ function SignUp() {
   const [passwordCheck, setPasswordCheck] = useState(false);
   const [PasswordConfirm, setPassWordConfirm] = useState(false);
 
-  useEffect(() => {
-    if (checkEmail(email) === false) {
-      setEmailCheck(false);
-    } else if (checkEmail(email) === true) {
-      setEmailCheck(true);
-    }
-  }, [email]);
-
-  useEffect(() => {
-    console.log(checkUsername(username));
-    if (checkUsername(username) === false) {
-      setUsernameCheck(false);
-    } else if (checkEmail(username) === true) {
-      setUsernameCheck(true);
-    }
-  }, [username]);
-
-  useEffect(() => {
-    if (checkNick(nick) === false) {
-      setNickCheck(false);
-    } else if (checkNick(nick) === true) {
-      setNickCheck(true);
-    }
-  }, [nick]);
-
-  useEffect(() => {
-    if (checkPassword(password) === false) {
-      setPasswordCheck(false);
-    } else if (checkPassword(password) === true) {
-      setPasswordCheck(true);
-    }
-  }, [password]);
+  useCheck(checkEmail, email, setEmailCheck);
+  useCheck(checkUsername, username, setUsernameCheck);
+  useCheck(checkNick, nick, setNickCheck);
+  useCheck(checkPassword, password, setPasswordCheck);
 
   useEffect(() => {
     if (cofirmPassword(password, password2) === false) {
@@ -97,6 +69,7 @@ function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // 회원가입 값 확인용
     console.log({ email, username, nick, password });
 
     try {

@@ -6,21 +6,38 @@ import {
   Title,
   Content,
 } from "./styled";
-import CkEditor from "../../components/ckEditor/CKEditor";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import PostButtonForm from "../../components/writeForm/PostButton";
 import CareerForm from "../../components/writeForm/CareerForm";
 import DivisionForm from "../../components/writeForm/DivisionForm";
 
 function WriteForm() {
+  const [content, setContent] = useState({
+    body: "",
+  });
   const [state, setState] = useState({
     editor: null,
   });
 
   useEffect(() => {
-    const editor = <CkEditor />;
+    const editor = (
+      <CKEditor
+        id={"ck-editor-text"}
+        editor={ClassicEditor}
+        data={state.data}
+        onChange={(event, editor) => {
+          const data = editor.getData();
+          // console.log({ event, editor, data });
+          setContent({
+            ...content,
+            body: data,
+          });
+        }}
+      />
+    );
     setState({ ...state, editor: editor });
-  }, []);
-
+  }, [content]);
   return (
     <WriteFormContainer>
       <FormContainer>
