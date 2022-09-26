@@ -117,7 +117,7 @@ const PostFrame = styled.div`
 const TopLayout = styled.div`
   display: flex;
   align-items: center;
-  width: 250px;
+  width: 280px;
 
   div {
     font-size: 10px;
@@ -141,7 +141,7 @@ const TopLayout = styled.div`
 
   /* 모집기한 */
   .info-deadline {
-    margin-left: 40px;
+    margin-left: 60px;
     display: flex;
     align-items: center;
     justify-content: center;

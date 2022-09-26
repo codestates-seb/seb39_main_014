@@ -71,7 +71,7 @@ const StackLogo = styled.div`
   flex-wrap: wrap;
 
   // 전체 레이아웃 너비
-  width: 900px;
+  width: 1024px;
 
   img {
     margin-left: 10px;
