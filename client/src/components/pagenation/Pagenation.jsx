@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import Pagination from "react-js-pagination";
 import styled from "styled-components";
 
-const Paging = ({ page, count, setPage }) => {
+const Paging = ({ count }) => {
+  const [page, setPage] = useState(1);
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
   return (
     <PaginationStyle>
       <Pagination
         activePage={page}
-        totalItemsCount={count}
+        totalItemsCount={100}
         pageRangeDisplayed={5}
         prevPageText={"‹"}
         nextPageText={"›"}
-        onChange={setPage}
+        onChange={handlePageChange}
       />
     </PaginationStyle>
   );
@@ -65,7 +70,6 @@ const PaginationStyle = styled.div`
 
     ul.pagination li a:hover,
     ul.pagination li a.active {
-      color: blue;
     }
 
     .page-selection {

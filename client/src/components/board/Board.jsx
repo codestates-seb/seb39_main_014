@@ -19,7 +19,7 @@ function Board({ data }) {
           </div>
         </TopLayout>
         <TitleLayout>
-          <h1>{data.title}</h1>
+          <h3>{data.title}</h3>
         </TitleLayout>
         <TagLayout>{/* advanced */}</TagLayout>
         <StackLayout>
@@ -40,6 +40,7 @@ function Board({ data }) {
             <p> / </p>
             <p> {data.total_recruit} </p>
             <p>▿</p>
+            <div className="created-at">{data.created_at}</div>
           </div>
         </RecruitmentLayout>
         <Boundary>
@@ -82,21 +83,23 @@ function Board({ data }) {
 
 /** div - 게시글 레이아웃 */
 const PostFrame = styled.div`
+  box-sizing: content-box;
+  width: 100%;
   display: grid;
-  grid-template-rows: 2fr 4fr 1.5fr 2fr 1fr 0.1fr 2fr;
+  grid-template-rows: 2fr 4fr 1.5fr 2fr 1fr 0.1fr 1fr;
   /* 
   
   border-radius: 10px;
   
   */
-  height: 420px;
+  height: 340px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  width: 350px;
+  width: 280px;
   max-width: 100%;
   min-height: 1px;
-  border-radius: 16px;
+  border-radius: 40px;
   margin: 20px;
-  padding: 5px;
+  padding: 20px;
   transition: 0.2s;
 
   cursor: pointer;
@@ -114,7 +117,11 @@ const PostFrame = styled.div`
 const TopLayout = styled.div`
   display: flex;
   align-items: center;
+  width: 250px;
 
+  div {
+    font-size: 10px;
+  }
   .info {
     display: flex;
   }
@@ -125,38 +132,41 @@ const TopLayout = styled.div`
     align-items: center;
     justify-content: center;
     background-color: #69d06f;
-    font-weight: bold;
     color: white;
-    width: 70px;
-    height: 30px;
-    border-radius: 10px;
+    width: 40px;
+    height: 23px;
+    border-radius: 50px;
+    font-weight: bold;
   }
 
+  /* 모집기한 */
   .info-deadline {
-    margin-left: auto;
+    margin-left: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: gray;
+    background-color: #d9d9d9;
     font-weight: bold;
-    color: white;
-    width: 70px;
-    height: 30px;
-    border-radius: 10px;
+    color: black;
+    width: auto;
+    height: 23px;
+    border-radius: 50px;
   }
 `;
 
 /** div - 제목 */
 const TitleLayout = styled.div`
-  h1 {
+  h3 {
+    font-weight: 400;
     margin-left: 10px;
-    width: 300px;
+    width: 250px;
     text-overflow: ellipsis;
+    font-size: 17px;
     overflow: hidden;
     word-break: break-word;
 
     display: -webkit-box;
-    -webkit-line-clamp: 2; // 원하는 라인수
+    -webkit-line-clamp: 3; // 원하는 라인수
     -webkit-box-orient: vertical;
   }
 `;
@@ -168,6 +178,7 @@ const TagLayout = styled.div``;
 const StackLayout = styled.div`
   div {
     margin-left: 10px;
+    margin-bottom: -10px;
   }
 
   .stack-logo {
@@ -178,23 +189,32 @@ const StackLayout = styled.div`
 /** div - 모집인원 */
 const RecruitmentLayout = styled.div`
   display: flex;
+  align-items: center;
+  width: 280px;
+  font-size: 13px;
   .recruitment {
     display: flex;
   }
   p {
     margin-left: 5px;
   }
+
+  .created-at {
+    opacity: 0.4;
+    margin-left: 75px;
+    display: flex;
+    align-items: center;
+  }
 `;
 
 /** div - 경계선 */
 const Boundary = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  align-self: center;
   .boundary-line {
-    border-top: 0.5px solid gray;
-    border-radius: 50%;
-    width: 300px;
+    margin-top: -10px;
+    opacity: 0.2;
+    border-top: 1px solid gray;
+    width: 265px;
   }
 `;
 
@@ -203,6 +223,7 @@ const Boundary = styled.div`
 const BottomLayout = styled.div`
   display: flex;
   justify-content: space-between;
+  height: 30px;
 `;
 
 /** div - (Bottom) 프로필사진, 닉네임  */
@@ -219,7 +240,6 @@ const ProfileArea = styled.div`
     color: white;
     align-items: center;
     justify-content: center;
-    border: 1px black solid;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -229,6 +249,8 @@ const ProfileArea = styled.div`
 /** div - (BottomLayout) 조회수, 댓글수, 북마크수 */
 const CntArea = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
 
   div {
     display: flex;
@@ -236,26 +258,30 @@ const CntArea = styled.div`
     justify-content: center;
   }
   .view-cnt {
-    font-size: 15px;
+    font-size: 13px;
+    margin-right: -5px;
   }
   .view-icon {
     color: gray;
-    font-size: 20px;
+    font-size: 23px;
+    margin-right: -3px;
   }
   .comment-cnt {
     display: flex;
     align-items: center;
     justify-items: center;
-    font-size: 15px;
+    font-size: 13px;
+    margin-right: -5px;
   }
   .chat-icon {
     color: gray;
-    font-size: 20px;
+    font-size: 18px;
+    margin-right: -5px;
   }
 
   .bookmark-cnt {
     display: flex;
-    font-size: 15px;
+    font-size: 13px;
   }
 
   .heart-div {
@@ -267,10 +293,14 @@ const CntArea = styled.div`
     justify-self: center;
     color: red;
     font-size: 20px;
+    margin-left: -5px;
+    margin-right: -5px;
   }
   .out-line-heart-icon {
     color: gray;
     font-size: 20px;
+    margin-left: -5px;
+    margin-right: -5px;
   }
 `;
 

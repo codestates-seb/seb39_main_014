@@ -49,7 +49,9 @@ function Stack() {
 }
 
 /** div - Stack 레이아웃 */
-const StackLayout = styled.div``;
+const StackLayout = styled.div`
+  width: 1024px;
+`;
 
 /** div - 전체, 프론트엔드, 백엔드, 기타 */
 const StackPick = styled.div`
@@ -69,7 +71,7 @@ const StackLogo = styled.div`
   flex-wrap: wrap;
 
   // 전체 레이아웃 너비
-  width: 1150px;
+  width: 900px;
 
   img {
     margin-left: 10px;

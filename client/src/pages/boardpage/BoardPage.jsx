@@ -51,6 +51,7 @@ const BoardPageLayout = styled.div`
 const StackArea = styled.div`
   display: flex;
   align-items: center;
+  width: 1024px;
 `;
 
 const Center = styled.div`
@@ -60,7 +61,7 @@ const Center = styled.div`
   justify-content: center;
   width: 100%;
   grid-template-rows: 1fr 1fr 1fr;
-  max-width: 1280px;
+  max-width: 1024px;
 `;
 
 const Content = styled.div`
@@ -70,7 +71,7 @@ const Content = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   // 전체 레이아웃 너비에 영향
   background-color: #f9fafb;
-  max-width: 1280px;
+  max-width: 1024px;
 
   @media screen and (max-width: 820px) {
     display: flex;
@@ -84,7 +85,7 @@ const PageNationArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1280px;
+  width: 1024px;
   height: 200px;
 `;
 const Side = styled.div`
