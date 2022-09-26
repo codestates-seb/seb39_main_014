@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import { AiOutlineEye, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { stackList } from "../stack/Stack";
 
 /** 게시글 컴포넌트 */
 function Board({ data }) {

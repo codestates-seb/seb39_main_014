@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Footer from "../../components/footer/Footer";
 import Board from "../../components/board/Board";
 import Stack from "../../components/stack/Stack";
+import Paging from "../../components/pagenation/Pagenation";
 import axios from "axios";
 
 function BoardPage() {
@@ -28,7 +29,9 @@ function BoardPage() {
               <Board data={data} key={data.board_id} />
             ))}
           </Content>
-          <PageNationArea>페이지네이션 자리</PageNationArea>
+          <PageNationArea>
+            <Paging page={1} count={9} setPage={1} />
+          </PageNationArea>
         </Center>
         <Side />
       </BoardPageLayout>
