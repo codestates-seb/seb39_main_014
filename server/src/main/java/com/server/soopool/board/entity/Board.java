@@ -86,15 +86,34 @@ public class Board extends BaseTimeEntity {
     @OneToMany(mappedBy = "boardId")
     private List<Bookmark> bookmarks = new ArrayList<>();
 
+    public void add(Bookmark bookmark) {
+        bookmark.setBoardId(this);
+        getBookmarks().add(bookmark);
+    }
+
     @OneToMany(mappedBy = "boardId", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
+
+    public void add(Comment comment) {
+        comment.setBoardId(this);
+        getComments().add(comment);
+    }
 
     @OneToMany(mappedBy = "boardId")
     private List<BoardCareer> boardCareers = new ArrayList<>();
 
+    public void add(BoardCareer boardCareer) {
+        boardCareer.setBoardId(this);
+        getBoardCareers().add(boardCareer);
+    }
+
     @OneToMany(mappedBy = "boardId")
     private List<BoardTechStack> boardTechStacks = new ArrayList<>();
 
+    public void add(BoardTechStack boardTechStack) {
+        boardTechStack.setBoardId(this);
+        getBoardTechStacks().add(boardTechStack);
+    }
     @Getter
     public enum RecruitCategory{
 
