@@ -9,18 +9,29 @@ const InputGroup = ({
   setValue,
 }) => {
   return (
-    <div>
+    <InputLayout>
       <div>
-        <input
-          type={type}
-          placeholder={placeholder}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-        {/* <small> {error} </small> */}
+        <div>
+          <input
+            type={type}
+            placeholder={placeholder}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            className="input"
+          />
+          <small> {error} </small>
+        </div>
       </div>
-    </div>
+    </InputLayout>
   );
 };
+
+const InputLayout = styled.div`
+  input {
+    margin-top: 15px;
+    height: 50px;
+    border-radius: 5px;
+  }
+`;
 
 export default InputGroup;
