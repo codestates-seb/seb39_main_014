@@ -1,8 +1,12 @@
 import React, { useState, useRef } from "react";
 import { careerLists } from "../../pages/writeForm/WriteFormData";
 import { Career, Crew } from "../../pages/writeForm/styled";
+import { AiOutlineDown } from "react-icons/ai";
+
 function CareerForm() {
   const [career, setCareer] = useState("웹 프론트엔드");
+  const [isCareer, setIsCareer] = useState(false);
+
   const [count, setCount] = useState(1);
   const [crew, setCrew] = useState([]);
 
@@ -36,12 +40,44 @@ function CareerForm() {
   return (
     <Career>
       <label htmlFor="categorization">모집 분류 / 인원</label>
+
       <div className="Bundle">
-        <select onChange={(e) => setCareer(e.target.value)} value={career}>
-          {careerLists.map((el) => (
-            <option key={el.id}>{el.career}</option>
-          ))}
-        </select>
+        <div className="Select-option">
+          <div className="Career-select">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setIsCareer(!isCareer);
+              }}
+            >
+              {career}
+            </button>
+
+            <AiOutlineDown
+              className="AiOutlineDown"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsCareer(!isCareer);
+              }}
+            />
+          </div>
+          {isCareer ? (
+            <ul className="Careerlists" value={career}>
+              {careerLists.map((el) => (
+                <li
+                  key={el.id}
+                  value={el.career}
+                  onClick={() => {
+                    setIsCareer(!isCareer);
+                    setCareer(el.career);
+                  }}
+                >
+                  {el.career}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
         <div className="BundleButton">
           <button className="Count minus" value="-" onClick={onCountHandler}>
             -
