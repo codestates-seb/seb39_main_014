@@ -19,9 +19,5 @@ public class OAuth2 {
     private Member memberId;
 
     //기본컬럼 설정
-    @Column(nullable = false)
-    private String provider; // OAuth 제공자에 대한 구분
 
-    @Column(nullable = false)
-    private String provider_id;
 }

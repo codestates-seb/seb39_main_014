@@ -5,10 +5,8 @@ import com.server.soopool.boardTechstack.entity.BoardTechStack;
 import com.server.soopool.bookmark.entity.Bookmark;
 import com.server.soopool.comment.entity.Comment;
 import com.server.soopool.global.baseTime.BaseTimeEntity;
-import com.server.soopool.location.entity.Location;
 import com.server.soopool.member.entity.Member;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,20 +17,23 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Board extends BaseTimeEntity {
     //Todo : 컬럼의 제약조건 & 레이지 로딩 설정하기
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // ManyToOne & OneToOne 관계설정
-    @OneToOne(targetEntity = Location.class)
-    @JoinColumn(name = "location_id", nullable = false)
-    private Location locationId;
-
     @ManyToOne(targetEntity = Member.class)
-    @JoinColumn(name = "member_id", nullable = false)
+    // 로그인 구현 후 nullable = false 처리 해야 함.
+    @JoinColumn(name = "member_id")
     private Member memberId;
+
+    // 모집글 분류 추가
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private RecruitCategory recruitCategory = RecruitCategory.STUDY;
 
     // enum 컬럼설정
     @Enumerated(EnumType.STRING)
@@ -40,7 +41,11 @@ public class Board extends BaseTimeEntity {
     private RecruitMethod recruitMethod = RecruitMethod.ONLINE;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "period_name", nullable = false)
+    @Column(nullable = false)
+    private Location location = Location.NO_CHOICE;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Period period = Period.NO_CHOICE;
 
     // 기본컬럼 설정
@@ -48,7 +53,7 @@ public class Board extends BaseTimeEntity {
     private String contact;
 
     @Column(nullable = false)
-    private Integer totalRecruit;
+    private Integer totalRecruit = 0;
 
     @Column(nullable = false)
     private Integer currentRecruit = 0;
@@ -81,16 +86,49 @@ public class Board extends BaseTimeEntity {
     @OneToMany(mappedBy = "boardId")
     private List<Bookmark> bookmarks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "boardId")
+    public void add(Bookmark bookmark) {
+        bookmark.setBoardId(this);
+        getBookmarks().add(bookmark);
+    }
+
+    @OneToMany(mappedBy = "boardId", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
+
+    public void add(Comment comment) {
+        comment.setBoardId(this);
+        getComments().add(comment);
+    }
 
     @OneToMany(mappedBy = "boardId")
     private List<BoardCareer> boardCareers = new ArrayList<>();
 
+    public void add(BoardCareer boardCareer) {
+        boardCareer.setBoardId(this);
+        getBoardCareers().add(boardCareer);
+    }
+
     @OneToMany(mappedBy = "boardId")
     private List<BoardTechStack> boardTechStacks = new ArrayList<>();
 
-    private enum RecruitMethod{
+    public void add(BoardTechStack boardTechStack) {
+        boardTechStack.setBoardId(this);
+        getBoardTechStacks().add(boardTechStack);
+    }
+    @Getter
+    public enum RecruitCategory{
+
+        STUDY("스터디"),
+        PROJECT("프로젝트");
+
+        @Getter
+        private final String value;
+
+        RecruitCategory(String value) {
+            this.value = value;
+        }
+    }
+
+    public enum RecruitMethod{
         ONLINE("온라인"),
         OFFLINE("오프라인");
 
@@ -102,7 +140,7 @@ public class Board extends BaseTimeEntity {
 
         public String getMethodName() {return method;}
     }
-    private enum Period{
+    public enum Period{
         THREE_MONTHS("3개월"),
         SIX_MONTHS("6개월"),
         NINE_MONTHS("9개월"),
@@ -115,5 +153,20 @@ public class Board extends BaseTimeEntity {
         }
 
         public String getMonth() {return month;}
+    }
+
+    public enum Location{
+        SEOUL("서울"),
+        GYEONGGI("경기"),
+        GANWON("강원"),
+        NO_CHOICE("미정");
+
+        private final String loc;
+
+        Location(String loc) {
+            this.loc = loc;
+        }
+
+        public String getMonth() {return loc;}
     }
 }

@@ -59,6 +59,7 @@ const ContentLeft = styled.div`
     justify-content: center;
   }
 `;
+
 const ContentRight = styled.div`
   display: flex;
   flex-direction: column;
