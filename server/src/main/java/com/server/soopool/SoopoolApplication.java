@@ -9,23 +9,21 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.security.authentication.TestingAuthenticationToken;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.security.Principal;
-
-
-// JPA Auditing 활성화
 @Slf4j
 @EnableJpaAuditing
-@SpringBootApplication()
+@SpringBootApplication
 public class SoopoolApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SoopoolApplication.class, args);
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder(){
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 
 	@Bean
@@ -35,12 +33,12 @@ public class SoopoolApplication {
 			public void run(String... args) throws Exception {
 				Member member = memberRepository.save(
 						Member.builder()
-							.name("홍길동")
-							.userId("hgd2022")
-							.password("123456789")
-							.email("hgd2022@naver.com")
-							.nickname("MrHong")
-							.build()
+								.name("홍길동")
+								.userId("hgd2022")
+								.password("123456789")
+								.email("hgd2022@naver.com")
+								.nickname("MrHong")
+								.build()
 				);
 			}
 		};
