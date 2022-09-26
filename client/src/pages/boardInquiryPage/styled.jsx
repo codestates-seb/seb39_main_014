@@ -20,7 +20,6 @@ export const ContentContainer = styled.div`
 export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-
   width: 100%;
 `;
 
@@ -29,6 +28,9 @@ export const Title = styled.div`
   flex-direction: column;
   width: 100%;
   margin-bottom: 2rem;
+  @media screen and (max-width: 476px) {
+    margin-bottom: 0.5rem;
+  }
   > p {
     margin: 0;
     padding-left: 0.5rem;
@@ -60,7 +62,7 @@ export const Buttons = styled.div`
   }
 `;
 
-export const Information = styled.div`
+export const InformationContainer = styled.div`
   display: flex;
   padding-left: 0.5rem;
   flex-direction: column;
@@ -72,7 +74,9 @@ export const UserInfo = styled.div`
   align-items: center;
   width: 100%;
   padding-bottom: 0.5rem;
-
+  @media screen and (max-width: 487px) {
+    padding: 0;
+  }
   .User-info {
     display: flex;
     align-items: center;
@@ -81,7 +85,7 @@ export const UserInfo = styled.div`
       border: 1px solid #d9d9d9;
       border-radius: 50%;
       @media screen and (max-width: 476px) {
-        width: 3rem;
+        width: 2rem;
       }
     }
 
@@ -93,6 +97,13 @@ export const UserInfo = styled.div`
       &:nth-child(3) {
         font-size: 0.8rem;
         color: #9d9d9d;
+      }
+      @media screen and (max-width: 476px) {
+        padding: 0 0.4rem;
+        font-size: 0.5rem;
+        &:nth-child(3) {
+          font-size: 0.6rem;
+        }
       }
     }
   }

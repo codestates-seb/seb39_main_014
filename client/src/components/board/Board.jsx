@@ -230,7 +230,6 @@ const BottomLayout = styled.div`
 const ProfileArea = styled.div`
   display: flex;
   align-items: center;
-
   .nickname {
     white-space: nowrap;
   }

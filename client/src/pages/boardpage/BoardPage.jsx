@@ -71,7 +71,7 @@ const Content = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   // 전체 레이아웃 너비에 영향
   background-color: #f9fafb;
-  max-width: 1024px;
+  max-width: 1024px;280px;
 
   @media screen and (max-width: 820px) {
     display: flex;
