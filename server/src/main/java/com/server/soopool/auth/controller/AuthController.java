@@ -37,10 +37,10 @@ public class AuthController {
         return new ResponseEntity<>("회원가입이 완료되었습니다 !", HttpStatus.CREATED);
     }
 
-    @PostMapping("auth/refresh")
+    @PostMapping("refresh")
     public ResponseEntity refresh(HttpServletRequest request, HttpServletResponse response){
         jwtService.refresh(request,response);
-        return ResponseEntity.ok("토큰을 재발급 하였습니다 !");
+        return new ResponseEntity("토큰을 재발급 하였습니다 !", HttpStatus.OK);
     }
 
     @GetMapping("authtest")

@@ -25,4 +25,5 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
             "SET b.commentAmount = :commentAmount " +
             "WHERE b.memberId = :memberId")
     public void modifyCommentCountColumn();
+
 }

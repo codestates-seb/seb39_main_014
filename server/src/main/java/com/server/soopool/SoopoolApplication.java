@@ -32,13 +32,13 @@ public class SoopoolApplication {
 			@Override
 			public void run(String... args) throws Exception {
 				Member member = memberRepository.save(
-						Member.builder()
+						Member.generalBuilder()
 								.name("홍길동")
 								.userId("hgd2022")
 								.password("123456789")
 								.email("hgd2022@naver.com")
 								.nickname("MrHong")
-								.build()
+								.buildGeneralMember()
 				);
 			}
 		};
