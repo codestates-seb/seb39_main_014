@@ -1,7 +1,7 @@
 package com.server.soopool.comment.controller;
 
+import com.server.soopool.auth.PrincipalDetails;
 import com.server.soopool.board.entity.Board;
-import com.server.soopool.board.mapper.BoardMapper;
 import com.server.soopool.board.service.BoardService;
 import com.server.soopool.comment.dto.*;
 import com.server.soopool.comment.entity.Comment;
@@ -18,7 +18,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -30,10 +29,9 @@ public class CommentController {
     private final CommentMapper commentMapper;
     private final MemberService memberService;
     private final BoardService boardService;
-    private final BoardMapper boardMapper;
 
     @GetMapping("board/{board_id}/comment")
-        public ResponseEntity getCommentsMatchingBoardId(@AuthenticationPrincipal Principal principal,
+        public ResponseEntity getCommentsMatchingBoardId(@AuthenticationPrincipal PrincipalDetails principal,
                                                          @PathVariable("board_id") @Positive Long boardId) {
         // principal.getName()으로 로그인한 사용자의 아이디를 구합니다.
         Member member = memberService.findByUserId("hgd2022");
@@ -48,7 +46,7 @@ public class CommentController {
 
     // 댓글 생성
     @PostMapping("board/{board_id}/comment")
-    public ResponseEntity postComment(@AuthenticationPrincipal Principal principal,
+    public ResponseEntity postComment(@AuthenticationPrincipal PrincipalDetails principal,
                                       @PathVariable("board_id") @Positive Long boardId,
                                       @Validated @RequestBody CommentPostDto commentPostDto){
         // PathVariable RequestParam 차이 알아보기 (RequestParam 오류 나는듯합니다.)
@@ -67,7 +65,7 @@ public class CommentController {
 
     // 댓글 수정
     @PatchMapping("/board/{board_id}/comment")
-    public ResponseEntity patchComment(@AuthenticationPrincipal Principal principal,
+    public ResponseEntity patchComment(@AuthenticationPrincipal PrincipalDetails principal,
                                        @PathVariable("board_id") @Positive Long boardId,
                                        @Validated @RequestBody CommentPatchDto commentPatchDto) {
         // principal.getName()으로 로그인한 사용자의 아이디를 구합니다.
@@ -84,7 +82,7 @@ public class CommentController {
 
     // 댓글 삭제
     @DeleteMapping("board/{board_id}/comment")
-    public ResponseEntity deleteComment(@AuthenticationPrincipal Principal principal,
+    public ResponseEntity deleteComment(@AuthenticationPrincipal PrincipalDetails principal,
                                         @PathVariable("board_id") @Positive Long boardId,
                                         @Validated @RequestBody CommentDeleteDto commentDeleteDto) {
         Member member = memberService.findByUserId("hgd2022");
