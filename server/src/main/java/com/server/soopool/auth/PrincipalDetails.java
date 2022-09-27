@@ -3,20 +3,29 @@ package com.server.soopool.auth;
 import com.server.soopool.member.entity.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
-public class PrincipalDetails implements UserDetails {
+public class PrincipalDetails implements UserDetails , OAuth2User , Serializable {
 
     private final Member member;
+    private Map<String, Object> attributes;
 
-    private PrincipalDetails(Member member){
+    private PrincipalDetails(Member member, Map<String, Object> attributes){
         this.member = member;
+        this.attributes = attributes;
     }
 
     public static PrincipalDetails general(Member member) {
-        return new PrincipalDetails(member);
+        return new PrincipalDetails(member,null);
+    }
+
+    public static PrincipalDetails oauth2(Member member, Map<String, Object> attributes){
+        return new PrincipalDetails(member,attributes);
     }
 
     public Long getMemberId() {return member.getId();}
@@ -57,4 +66,11 @@ public class PrincipalDetails implements UserDetails {
     public boolean isEnabled() { // 계정이 사용가능한 계정인지를 리턴한다. (true는 사용가능을 의미.)
         return true;
     } // 계정이 사용가능한 계정인지를 리턴한다. (true는 사용가능을 의미.)
+
+    //OAuth2User
+    @Override
+    public Map<String, Object> getAttributes() {return null;}
+
+    @Override
+    public String getName() {return null;}
 }

@@ -12,4 +12,9 @@ public class AppAuthenticationException extends AuthenticationException {
         super(exceptionCode.getMessage());
         this.exceptionCode = exceptionCode;
     }
+
+    public AppAuthenticationException(AppAuthExceptionCode exceptionCode, String message){
+        super(message);
+        this.exceptionCode = exceptionCode;
+    }
 }
