@@ -6,12 +6,14 @@ import {
   Title,
   Content,
 } from "./styled";
+
 import Editor from "../../components/reactQuill/ReactQuill";
 import PostButtonForm from "../../components/writeForm/PostButton";
 import CareerForm from "../../components/writeForm/CareerForm";
 import DivisionForm from "../../components/writeForm/DivisionForm";
 import Footer from "../../components/footer/Footer";
 function WriteForm() {
+
   return (
     <>
       <WriteFormContainer>
