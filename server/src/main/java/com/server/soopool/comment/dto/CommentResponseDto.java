@@ -11,7 +11,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 public class CommentResponseDto {
-//    private Long boardId;
     private String nickname;
     private String content;
     private Integer groupNumber;
