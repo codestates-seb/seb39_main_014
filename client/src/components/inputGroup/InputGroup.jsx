@@ -18,6 +18,7 @@ const InputGroup = ({
             value={value}
             onChange={(e) => setValue(e.target.value)}
             className="input"
+            atuocomplete="off"
           />
           <small> {error} </small>
         </div>

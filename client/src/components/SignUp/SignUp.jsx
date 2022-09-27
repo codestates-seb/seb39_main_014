@@ -16,15 +16,15 @@ function checkEmail(email) {
 }
 
 /** 이름 정합성 체크 함수 */
-function checkUsername(username) {
+function checkUsername(name) {
   let usernameReg = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
-  return usernameReg.test(username);
+  return usernameReg.test(name);
 }
 
 /** 닉네임 정합성 체크 함수 */
-function checkNick(nick) {
+function checkNick(nickname) {
   let nickReg = /^[0-9a-zA-Zㄱ-ㅎ가-힣 ]{2,6}$/;
-  return nickReg.test(nick);
+  return nickReg.test(nickname);
 }
 
 /** 비밀번호 정합성 체크 함수 */
@@ -39,9 +39,12 @@ function cofirmPassword(password, password2) {
 }
 
 function SignUp() {
+  const SIGNUP_URL = "http://183.106.239.239:8080/api/v1/sign-up";
+
+  const [userId, setUserId] = useState("");
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [nick, setNick] = useState("");
+  const [name, setUsername] = useState("");
+  const [nickname, setNick] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
@@ -53,8 +56,8 @@ function SignUp() {
   const [PasswordConfirm, setPassWordConfirm] = useState(false);
 
   useCheck(checkEmail, email, setEmailCheck);
-  useCheck(checkUsername, username, setUsernameCheck);
-  useCheck(checkNick, nick, setNickCheck);
+  useCheck(checkUsername, name, setUsernameCheck);
+  useCheck(checkNick, nickname, setNickCheck);
   useCheck(checkPassword, password, setPasswordCheck);
 
   useEffect(() => {
@@ -69,16 +72,22 @@ function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // 회원가입 값 확인용
-    console.log({ email, username, nick, password });
+    console.log({ userId, email, name, nickname, password });
 
     try {
-      const res = await axios.post("/auth/register", {
-        email,
-        username,
-        nick,
-        password,
-      });
+      const res = await axios.post(
+        SIGNUP_URL,
+        {
+          userId,
+          email,
+          name,
+          nickname,
+          password,
+        }
+        // {
+        //   withCredentials: true, // 쿠키 cors 통신 설정
+        // }
+      );
       console.log("res", res);
     } catch (error) {
       console.log("error", error);
@@ -99,6 +108,12 @@ function SignUp() {
           <hr />
           <span />
           <InputGroup
+            placeholder="아이디"
+            value={userId}
+            setValue={setUserId}
+            // error={error.email}
+          />
+          <InputGroup
             placeholder="이메일"
             value={email}
             setValue={setEmail}
@@ -112,9 +127,9 @@ function SignUp() {
 
           <InputGroup
             placeholder="이름"
-            value={username}
+            value={name}
             setValue={setUsername}
-            // error={errors.username}
+            // error={errors.name}
           />
 
           {usernameCheck === true ? (
@@ -125,9 +140,9 @@ function SignUp() {
 
           <InputGroup
             placeholder="닉네임"
-            value={nick}
+            value={nickname}
             setValue={setNick}
-            // error={errors.username}
+            // error={errors.name}
           />
           {nickCheck === true ? (
             <></>
