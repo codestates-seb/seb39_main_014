@@ -169,6 +169,15 @@ export const SecondLeft = styled.div`
       }
     }
   }
+  .Added-stack-list {
+    display: flex;
+    width: 100%;
+    border: none;
+    > div {
+      display: flex;
+      padding: 0.2rem;
+    }
+  }
 `;
 
 export const SecondRight = styled.div`

@@ -13,7 +13,7 @@ import {
   periodLists,
 } from "../../pages/writeForm/WriteFormData";
 import { AiOutlineDown } from "react-icons/ai";
-
+import { GoX } from "react-icons/go";
 function DivisionForm() {
   const [isMethod, setIsMethod] = useState("study");
   const [isChecked, setIsChecked] = useState("online");
@@ -23,6 +23,7 @@ function DivisionForm() {
   const [newStackList, setNewStackList] = useState(stackLists);
   const [stackList, setStackList] = useState([]);
   const stackRef = useRef(0);
+  const newStackRef = useRef(9);
 
   const [period, setPeriod] = useState("미정");
   const [isPeriod, setIsPeriod] = useState(false);
@@ -39,6 +40,17 @@ function DivisionForm() {
     setNewStackList(
       newStackList.filter((prev) => prev.stack !== e.target.innerText)
     );
+  };
+
+  const handleDeleteStackListRemove = (id) => {
+    // target의 id
+    const hi = stackList.filter((prev) => prev.id === id);
+    setNewStackList([
+      ...newStackList,
+      { id: newStackRef.current, stack: hi[0].techStackName },
+    ]);
+    newStackRef.current = newStackRef.current + 1;
+    setStackList(stackList.filter((prev) => prev.id !== id));
   };
 
   return (
@@ -117,22 +129,30 @@ function DivisionForm() {
           </div>
           {isStack ? (
             <ul className="Stacklists" value={stack}>
-              {newStackList.map((el, idx) => {
+              {newStackList.map((el) => {
                 return (
-                  <li key={idx} onClick={handleStackListClick}>
+                  <li key={el.id} onClick={handleStackListClick}>
                     {el.stack}
                   </li>
                 );
               })}
             </ul>
           ) : null}
-          {stackList
-            ? stackList.map((el) => (
-                <span className="Added-stack-list" key={el.id}>
-                  {el.techStackName}
-                </span>
-              ))
-            : null}
+          {stackList ? (
+            <span className="Added-stack-list">
+              {stackList.map((el) => (
+                <div key={el.id}>
+                  <img
+                    src={`/assets/stack/${el.techStackName}.svg`}
+                    alt={`${el.techStackName}`}
+                  />
+                  <span onClick={() => handleDeleteStackListRemove(el.id)}>
+                    <GoX className="Gox" />
+                  </span>
+                </div>
+              ))}
+            </span>
+          ) : null}
         </SecondLeft>
         <SecondRight>
           <label htmlFor="period">기간</label>
