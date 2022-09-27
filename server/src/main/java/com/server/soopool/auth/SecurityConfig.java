@@ -2,11 +2,10 @@ package com.server.soopool.auth;
 
 import com.server.soopool.auth.filter.JwtAuthenticationFilter;
 import com.server.soopool.auth.filter.JwtExceptionHandlingFilter;
-import com.server.soopool.auth.handler.AuthenticationExceptionEntryPoint;
-import com.server.soopool.auth.handler.JwtAuthenticationFailureHandler;
+import com.server.soopool.auth.handler.*;
 import com.server.soopool.auth.filter.JwtAuthorizationFilter;
-import com.server.soopool.auth.handler.JwtLogoutHandler;
 import com.server.soopool.auth.service.JwtService;
+import com.server.soopool.auth.service.OAuth2UserService;
 import com.server.soopool.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +36,8 @@ public class SecurityConfig {
     private final JwtService jwtService;
     private final JwtAuthenticationFailureHandler jwtAuthenticationFailureHandler;
     private final MemberService memberService;
+    private final OAuth2UserService oAuth2UserService;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -66,6 +67,13 @@ public class SecurityConfig {
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(authenticationExceptionEntryPoint);
+
+        http.oauth2Login()
+                .userInfoEndpoint()// OAuth2 로그인 성공 후 가져올 설정들
+                .userService(oAuth2UserService) // 서버에서 사용자 정보를 가져온 상태에서 추가로 진행하고자 하는 기능 명시
+                .and()
+                .successHandler(oAuth2SuccessHandler)
+                .failureHandler(new OAuth2FailureHandler());
 
         http.logout()
             .permitAll()
