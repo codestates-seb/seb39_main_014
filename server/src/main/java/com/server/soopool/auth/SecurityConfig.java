@@ -7,7 +7,6 @@ import com.server.soopool.auth.handler.JwtAuthenticationFailureHandler;
 import com.server.soopool.auth.filter.JwtAuthorizationFilter;
 import com.server.soopool.auth.handler.JwtLogoutHandler;
 import com.server.soopool.auth.service.JwtService;
-import com.server.soopool.auth.service.PrincipalDetailsService;
 import com.server.soopool.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -19,11 +18,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.http.HttpServletResponse;
-import java.security.Principal;
-
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity(debug = true)
@@ -54,7 +55,7 @@ public class SecurityConfig {
                 .disable();
 
         http.cors()
-                .disable();
+                .configurationSource(corsConfigurationSource());
 
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -92,5 +93,17 @@ public class SecurityConfig {
                     .addFilter(jwtAuthorizationFilter)
                     .addFilterBefore(jwtExceptionHandlingFilter, JwtExceptionHandlingFilter.class);
         }
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
+        configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
