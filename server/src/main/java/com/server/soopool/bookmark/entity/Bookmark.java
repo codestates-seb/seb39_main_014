@@ -19,10 +19,10 @@ public class Bookmark {
 
     //ManyToone 컬럼설정
     @ManyToOne(targetEntity = Member.class)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id", nullable = false)
     public Member memberId;
 
     @ManyToOne(targetEntity = Board.class)
-    @JoinColumn(name = "board_id")
+    @JoinColumn(name = "board_id", nullable = false)
     public Board boardId;
 }

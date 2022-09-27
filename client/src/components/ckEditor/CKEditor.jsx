@@ -5,14 +5,13 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 function CkEditor() {
   const [content, setContent] = useState("");
+
   return (
     <EditorForm>
       <CKEditor
+        id={"ck-editor-text"}
         editor={ClassicEditor}
         data=""
-        onReady={(editor) => {
-          // console.log('Editor is ready to use!', editor);
-        }}
         onChange={(event, editor) => {
           const data = editor.getData();
           setContent({
