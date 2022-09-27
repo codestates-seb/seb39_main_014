@@ -25,6 +25,13 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // const data = { userId, password };
+
+    // axios.post(LOGIN_URL, data).then((res) => {
+    //   const { token } = res.data;
+    //   console.log(token);
+    // });
+
     try {
       const res = await axios.post(
         LOGIN_URL,
@@ -39,8 +46,9 @@ function Login() {
           // withCredentials: true,
         }
       );
-      console.log(res.headers);
+      console.log(res);
       dispatch("LOGIN", res.data?.user);
+      localStorage.setItem("token", res.headers["access-token"]);
     } catch (error) {
       console.log(error);
       setErrors(error?.response?.data || {});
