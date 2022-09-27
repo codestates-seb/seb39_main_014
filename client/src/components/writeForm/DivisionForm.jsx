@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import {
   FirstDivision,
   FirstLeft,
@@ -20,8 +20,26 @@ function DivisionForm() {
 
   const [stack, setStack] = useState("");
   const [isStack, setIsStack] = useState(false);
+  const [newStackList, setNewStackList] = useState(stackLists);
+  const [stackList, setStackList] = useState([]);
+  const stackRef = useRef(0);
+
   const [period, setPeriod] = useState("미정");
   const [isPeriod, setIsPeriod] = useState(false);
+
+  const handleStackListClick = (e) => {
+    e.preventDefault();
+    setStack(e.target.innerText);
+    setStackList([
+      ...stackList,
+      { id: stackRef.current, techStackName: e.target.innerText },
+    ]);
+    stackRef.current = stackRef.current + 1;
+    setIsStack(!isStack);
+    setNewStackList(
+      newStackList.filter((prev) => prev.stack !== e.target.innerText)
+    );
+  };
 
   return (
     <>
@@ -98,21 +116,23 @@ function DivisionForm() {
             />
           </div>
           {isStack ? (
-            <ul className="Stacklists">
-              {stackLists.map((el) => (
-                <li
-                  key={el.id}
-                  value={el.stack}
-                  onClick={() => {
-                    setIsStack(!isStack);
-                    setStack(el.stack);
-                  }}
-                >
-                  {el.stack}
-                </li>
-              ))}
+            <ul className="Stacklists" value={stack}>
+              {newStackList.map((el, idx) => {
+                return (
+                  <li key={idx} onClick={handleStackListClick}>
+                    {el.stack}
+                  </li>
+                );
+              })}
             </ul>
           ) : null}
+          {stackList
+            ? stackList.map((el) => (
+                <span className="Added-stack-list" key={el.id}>
+                  {el.techStackName}
+                </span>
+              ))
+            : null}
         </SecondLeft>
         <SecondRight>
           <label htmlFor="period">기간</label>

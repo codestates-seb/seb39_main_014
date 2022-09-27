@@ -10,7 +10,7 @@ export const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 1280px;
+  max-width: 1024px;
   padding: 1rem 3rem;
   label {
     font-size: 1.5rem;
