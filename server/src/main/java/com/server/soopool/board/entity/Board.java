@@ -83,7 +83,7 @@ public class Board extends BaseTimeEntity {
     private Integer viewCount = 0;
 
     // 양방향 연관관계 설정
-    @OneToMany(mappedBy = "boardId")
+    @OneToMany(mappedBy = "boardId", cascade = CascadeType.ALL)
     private List<Bookmark> bookmarks = new ArrayList<>();
 
     public void add(Bookmark bookmark) {

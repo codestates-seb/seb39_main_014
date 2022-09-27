@@ -77,7 +77,7 @@ public class Member extends BaseTimeEntity {
         getMemberTechStacks().add(memberTechStack);
     }
 
-    @OneToMany(mappedBy = "memberId")
+    @OneToMany(mappedBy = "memberId", cascade = CascadeType.ALL)
     private List<Bookmark> bookmarks;
 
     public void add(Bookmark bookmark) {
@@ -85,7 +85,7 @@ public class Member extends BaseTimeEntity {
         getBookmarks().add(bookmark);
     }
 
-    @OneToMany(mappedBy = "memberId")
+    @OneToMany(mappedBy = "memberId", cascade = CascadeType.ALL)
     private List<Board> boards;
 
     public void add(Board board) {
