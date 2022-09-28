@@ -158,7 +158,7 @@ function SignUp() {
             <ContentCheck>비밀번호가 일치하지 않습니다.</ContentCheck>
           )}
 
-          <button type="button" onSubmit={handleSubmit}>
+          <button type="button" onClick={handleSubmit}>
             가입하기
           </button>
           <div className="sign-up">
