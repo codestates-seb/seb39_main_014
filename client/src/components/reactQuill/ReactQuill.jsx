@@ -2,6 +2,13 @@ import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import styled from "styled-components";
 import "react-quill/dist/quill.snow.css";
+import { useNavigate } from "react-router-dom";
+import {
+  Contact,
+  Title,
+  Content,
+  PostButton,
+} from "../../pages/writeForm/styled";
 
 const toolbarOptions = [
   ["link"],
@@ -40,20 +47,60 @@ const modules = {
   },
 };
 
-function Editor() {
+function Editor({ newObject }) {
   const [contents, setContents] = useState("");
+  const [contact, setContact] = useState("");
+  const [title, setTitle] = useState("");
+
+  const navigate = useNavigate();
+  const onCancelHandler = (e) => {
+    e.preventDefault();
+    if (window.confirm("정말로 취소 하시겠습니까?")) {
+      navigate(-1);
+    }
+  };
 
   return (
-    <QuillContainer>
-      <ReactQuill
-        placeholder={"글을 작성 해주세요."}
-        value={contents}
-        onChange={setContents}
-        theme="snow"
-        modules={modules}
-        formats={formats}
-      ></ReactQuill>
-    </QuillContainer>
+    <>
+      <Contact>
+        <label htmlFor="input">연락 방법</label>
+        <input
+          id="input"
+          type="text"
+          value={contact}
+          placeholder="이메일이나 카카오톡 오픈 채팅 주소를 남겨주세요."
+          onChange={(e) => setContact(e.target.value)}
+        />
+      </Contact>
+      <Title>
+        <label htmlFor="input">제목</label>
+        <input
+          id="input"
+          type="text"
+          value={title}
+          placeholder="제목을 입력하세요."
+          onChange={(e) => setTitle(e.target.value)}
+        />
+      </Title>
+      <Content>
+        <QuillContainer>
+          <ReactQuill
+            placeholder={"글을 작성 해주세요."}
+            value={contents}
+            onChange={setContents}
+            theme="snow"
+            modules={modules}
+            formats={formats}
+          ></ReactQuill>
+        </QuillContainer>
+      </Content>
+      <PostButton>
+        <button className="Post cancel" onClick={onCancelHandler}>
+          취소
+        </button>
+        <button className="Post complete">완료</button>
+      </PostButton>
+    </>
   );
 }
 
