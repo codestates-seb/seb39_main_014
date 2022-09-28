@@ -99,7 +99,7 @@ public class Board extends BaseTimeEntity {
         getComments().add(comment);
     }
 
-    @OneToMany(mappedBy = "boardId")
+    @OneToMany(mappedBy = "boardId", cascade = CascadeType.ALL)
     private List<BoardCareer> boardCareers = new ArrayList<>();
 
     public void add(BoardCareer boardCareer) {
@@ -107,7 +107,7 @@ public class Board extends BaseTimeEntity {
         getBoardCareers().add(boardCareer);
     }
 
-    @OneToMany(mappedBy = "boardId")
+    @OneToMany(mappedBy = "boardId", cascade = CascadeType.ALL)
     private List<BoardTechStack> boardTechStacks = new ArrayList<>();
 
     public void add(BoardTechStack boardTechStack) {
@@ -116,15 +116,18 @@ public class Board extends BaseTimeEntity {
     }
     @Getter
     public enum RecruitCategory{
-
         STUDY("스터디"),
         PROJECT("프로젝트");
 
         @Getter
-        private final String value;
+        private final String category;
 
-        RecruitCategory(String value) {
-            this.value = value;
+        RecruitCategory(String category) {
+            this.category = category;
+        }
+
+        public String getCategory(){
+            return category;
         }
     }
 
@@ -140,10 +143,14 @@ public class Board extends BaseTimeEntity {
 
         public String getMethodName() {return method;}
     }
-    public enum Period{
-        THREE_MONTHS("3개월"),
-        SIX_MONTHS("6개월"),
-        NINE_MONTHS("9개월"),
+    public enum Period {
+        ONE_MONTH("1개월"),
+        TWO_MONTH("2개월"),
+        THREE_MONTH("3개월"),
+        FOUR_MONTH("4개월"),
+        FIVE_MONTH("5개월"),
+        SIX_MONTH("6개월"),
+        LONG_TERM("장기"),
         NO_CHOICE("미정");
 
         private final String month;
@@ -157,16 +164,21 @@ public class Board extends BaseTimeEntity {
 
     public enum Location{
         SEOUL("서울"),
+        INCHEON("인천"),
         GYEONGGI("경기"),
-        GANWON("강원"),
+        GANGWON("강원"),
+        GYEONGSANG("경상"),
+        JEOLLA("전라"),
+        CHUNGCHEONG("충청"),
+        JEJU("제주"),
         NO_CHOICE("미정");
 
-        private final String loc;
+        private final String locationName;
 
-        Location(String loc) {
-            this.loc = loc;
+        Location(String locationName) {
+            this.locationName = locationName;
         }
 
-        public String getMonth() {return loc;}
+        public String getLocationName() {return locationName;}
     }
 }
