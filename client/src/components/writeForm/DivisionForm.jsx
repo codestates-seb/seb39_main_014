@@ -14,6 +14,7 @@ import {
 } from "../../pages/writeForm/WriteFormData";
 import { AiOutlineDown } from "react-icons/ai";
 import { GoX } from "react-icons/go";
+import CareerForm from "./CareerForm";
 
 function DivisionForm() {
   const [isMethod, setIsMethod] = useState("study");
@@ -31,6 +32,13 @@ function DivisionForm() {
 
   const [period, setPeriod] = useState("미정");
   const [isPeriod, setIsPeriod] = useState(false);
+
+  const object = {
+    isMethod: isMethod,
+    isChecked: isChecked,
+    selectedStackList: selectedStackList,
+    period: period,
+  };
 
   const handleStackListClick = (e) => {
     e.preventDefault();
@@ -204,6 +212,7 @@ function DivisionForm() {
           ) : null}
         </SecondRight>
       </SecondDivision>
+      <CareerForm object={object} />
     </>
   );
 }
