@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<BoardIdAndGroupNumberMapping> findByBoardId(Board boardId);
@@ -19,7 +18,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Query(value = "SELECT c " +
             "FROM Comment c " +
             "WHERE c.boardId = :boardId")
-    List<Comment> getComments(@Param("boardId") Board boardId);
+    List<Comment> getComments(@Param("boardId") Board board);
 
     // boardId, memberId, groupNumber의 조건에 부합하는 contentColumn을 수정합니다.
     @Modifying(clearAutomatically = true)
@@ -28,8 +27,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
             "SET c.content = :content " +
             "WHERE c.boardId = :boardId AND c.memberId = :memberId AND c.groupNumber = :groupNumber")
     void updateComment(@Param("content") String content,
-                       @Param("boardId") Board boardId,
-                       @Param("memberId") Member memberId,
+                       @Param("boardId") Board board,
+                       @Param("memberId") Member member,
                        @Param("groupNumber") Integer groupNumber);
 
     // boardId, memberId, groupNumber의 조건에 부합하는 Comment table의 row들을 조회합니다.
@@ -37,15 +36,15 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
             "FROM Comment c " +
             "WHERE c.boardId = :boardId AND c.memberId = :memberId AND c.groupNumber = :groupNumber")
     Comment getCommentMatchingMemberIdAndBoardIdAAndGroupNumber(@Param("boardId") Board boardId,
-               @Param("memberId") Member memberId,
+               @Param("memberId") Member member,
                @Param("groupNumber") Integer groupNumber);
 
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query(value = "DELETE FROM Comment c " +
             "WHERE c.boardId = :boardId AND c.memberId = :memberId AND c.groupNumber = :groupNumber")
-    void deleteComment(@Param("boardId") Board boardId,
-                       @Param("memberId") Member memberId,
+    void deleteComment(@Param("boardId") Board board,
+                       @Param("memberId") Member member,
                        @Param("groupNumber") Integer groupNumber);
 
 }
