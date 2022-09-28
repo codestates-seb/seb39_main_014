@@ -74,7 +74,7 @@ public interface BoardMapper {
                                                           List<String> techStackNames, List<String> careerNames, List<Integer> boardCareers){
         BoardResponseDto.BoardResponseDtoBuilder boardResponseDtoBuilder = BoardResponseDto.builder();
         List<BoardResponseDto> list = new ArrayList<>();
-        for(Board boa가rd : boards) {
+        for(Board board : boards) {
             list.add(boardToBoardResponse(board, member, techStackNames, careerNames, boardCareers));
         }
         return list;
