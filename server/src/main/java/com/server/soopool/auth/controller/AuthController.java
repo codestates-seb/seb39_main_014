@@ -37,7 +37,7 @@ public class AuthController {
         return new ResponseEntity<>("회원가입이 완료되었습니다 !", HttpStatus.CREATED);
     }
 
-    @PostMapping("refresh")
+    @PostMapping("auth/refresh")
     public ResponseEntity refresh(HttpServletRequest request, HttpServletResponse response){
         jwtService.refresh(request,response);
         return new ResponseEntity("토큰을 재발급 하였습니다 !", HttpStatus.OK);

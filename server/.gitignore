@@ -38,4 +38,4 @@ out/
 .vscode/
 
 ###Secret###
-application-local.yml
+*.yml
