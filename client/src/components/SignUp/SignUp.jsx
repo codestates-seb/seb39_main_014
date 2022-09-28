@@ -8,6 +8,12 @@ import handleSignup from "../../api/handleSignup";
 
 // 회원가입 : 이메일, 이름, 닉네임 비밀번호, 비밀번호 확인
 
+/** 아이디 정합성 체크 함수 */
+function checkId(userId) {
+  let idReg = /^[0-9a-zA-Z]$/;
+  return idReg.test(userId);
+}
+
 /** 이메일 정합성 체크 함수 */
 function checkEmail(email) {
   let emailReg =
@@ -49,12 +55,14 @@ function SignUp() {
   const [password2, setPassword2] = useState("");
 
   // 정합성 검사 state (emailCheck && usernameCheck && nickCheck && passwordCheck && confirmPassword)
+  const [idCheck, setIdCheck] = useState(false);
   const [emailCheck, setEmailCheck] = useState(false);
   const [usernameCheck, setUsernameCheck] = useState(false);
   const [nickCheck, setNickCheck] = useState(false);
   const [passwordCheck, setPasswordCheck] = useState(false);
   const [PasswordConfirm, setPassWordConfirm] = useState(false);
 
+  useCheck(checkId, userId, setIdCheck);
   useCheck(checkEmail, email, setEmailCheck);
   useCheck(checkUsername, name, setUsernameCheck);
   useCheck(checkNick, nickname, setNickCheck);
@@ -68,6 +76,7 @@ function SignUp() {
     }
   }, [password2]);
 
+  /** 회원가입 axios 요청 버튼 */
   const handleSubmit = (e) => {
     handleSignup(SIGNUP_URL, userId, email, name, nickname, password);
   };
@@ -91,6 +100,12 @@ function SignUp() {
             setValue={setUserId}
             // error={error.email}
           />
+          {idCheck === true ? (
+            <></>
+          ) : (
+            <ContentCheck>아이디는 영어와 숫자 조합만 가능합니다.</ContentCheck>
+          )}
+
           <InputGroup
             placeholder="이메일"
             value={email}
@@ -158,7 +173,7 @@ function SignUp() {
             <ContentCheck>비밀번호가 일치하지 않습니다.</ContentCheck>
           )}
 
-          <button type="button" onClick={handleSubmit}>
+          <button type="button" onClick={() => setTimeout(handleSubmit, 1000)}>
             가입하기
           </button>
           <div className="sign-up">
@@ -177,23 +192,17 @@ const LoginFrame = styled.div`
   display: flex;
   text-align: center;
   justify-content: center;
-  background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.22);
   position: relative;
-  overflow: hidden;
   width: 500px;
   max-width: 100%;
   min-height: 550px;
-  height: 800px;
+  height: auto;
+  padding: 15px;
 `;
 
 const FormContainer = styled.div`
-  position: absolute;
-  top: 0;
-  height: 100%;
-  transition: all 0.6s ease-in-out;
-
   h1 {
     font-weight: bold;
     margin-right: auto;
@@ -249,7 +258,6 @@ const FormContainer = styled.div`
   }
 
   form {
-    background-color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
