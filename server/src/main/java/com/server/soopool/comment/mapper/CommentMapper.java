@@ -1,6 +1,5 @@
 package com.server.soopool.comment.mapper;
 
-import com.server.soopool.board.dto.BoardResponseDto;
 import com.server.soopool.board.entity.Board;
 import com.server.soopool.comment.dto.CommentResponseDto;
 import com.server.soopool.comment.entity.Comment;
@@ -16,8 +15,6 @@ import java.util.List;
 public class CommentMapper {
 
     public List<CommentResponseDto> commentToCommentResponse(List<Comment> comments, Member member, Board board) {
-        CommentResponseDto.CommentResponseDtoBuilder commentResponseDto = CommentResponseDto.builder();
-//        commentResponseDto.boardId(board.getId());
 
         List<CommentResponseDto> list = new ArrayList<>();
         for(Comment comment : comments) {
