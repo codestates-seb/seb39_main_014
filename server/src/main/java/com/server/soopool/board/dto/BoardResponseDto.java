@@ -2,6 +2,7 @@ package com.server.soopool.board.dto;
 
 import com.server.soopool.board.entity.Board;
 import com.server.soopool.boardTechstack.entity.BoardTechStack;
+import com.server.soopool.member.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Getter
 public class BoardResponseDto {
     private Long id;
+    private String nickName;
     private Integer viewCount;
     private String recruitCategory;
     private String period;
@@ -19,7 +21,8 @@ public class BoardResponseDto {
     private String location;
     private List<String> techStackNames;
     private String contact;
-    private List<String> careerList;
+    private List<String> careerNames;
+    private List<Integer> careerTotalRecruit;
     private String title;
     private String contents;
     private LocalDateTime createdAt;
