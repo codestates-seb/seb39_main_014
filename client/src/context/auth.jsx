@@ -1,5 +1,9 @@
 import { createContext, useContext, useReducer } from "react";
 
+/* 멘토링 변수명 명시적으로 작성하기
+   boolean 변수일 경우 -> is
+   user -> userName */
+
 const StateContext = createContext({
   authenticated: false,
   user: undefined,
