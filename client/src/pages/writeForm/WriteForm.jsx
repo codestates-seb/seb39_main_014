@@ -13,7 +13,6 @@ import CareerForm from "../../components/writeForm/CareerForm";
 import DivisionForm from "../../components/writeForm/DivisionForm";
 import Footer from "../../components/footer/Footer";
 function WriteForm() {
-
   return (
     <>
       <WriteFormContainer>
