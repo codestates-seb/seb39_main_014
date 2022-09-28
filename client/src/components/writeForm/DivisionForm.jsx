@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef } from "react";
 import {
   FirstDivision,
   FirstLeft,
@@ -14,6 +14,7 @@ import {
 } from "../../pages/writeForm/WriteFormData";
 import { AiOutlineDown } from "react-icons/ai";
 import { GoX } from "react-icons/go";
+
 function DivisionForm() {
   const [isMethod, setIsMethod] = useState("study");
   const [isChecked, setIsChecked] = useState("online");
@@ -21,7 +22,10 @@ function DivisionForm() {
   const [stack, setStack] = useState("");
   const [isStack, setIsStack] = useState(false);
   const [newStackList, setNewStackList] = useState(stackLists);
-  const [stackList, setStackList] = useState([]);
+  const [selectedStackList, setSelectedStackList] = useState([]);
+
+  const [search, setSearch] = useState("");
+
   const stackRef = useRef(0);
   const newStackRef = useRef(9);
 
@@ -31,8 +35,8 @@ function DivisionForm() {
   const handleStackListClick = (e) => {
     e.preventDefault();
     setStack(e.target.innerText);
-    setStackList([
-      ...stackList,
+    setSelectedStackList([
+      ...selectedStackList,
       { id: stackRef.current, techStackName: e.target.innerText },
     ]);
     stackRef.current = stackRef.current + 1;
@@ -42,16 +46,22 @@ function DivisionForm() {
     );
   };
 
-  const handleDeleteStackListRemove = (id) => {
+  const handleStackListRemove = (id) => {
     // target의 id
-    const hi = stackList.filter((prev) => prev.id === id);
+    const hi = selectedStackList.filter((prev) => prev.id === id);
     setNewStackList([
       ...newStackList,
       { id: newStackRef.current, stack: hi[0].techStackName },
     ]);
     newStackRef.current = newStackRef.current + 1;
-    setStackList(stackList.filter((prev) => prev.id !== id));
+    setSelectedStackList(selectedStackList.filter((prev) => prev.id !== id));
   };
+
+  const searchStack = newStackList.filter((prev) => {
+    if (search === "") {
+      return prev;
+    } else return prev.stack.toLowerCase().includes(search.toLowerCase());
+  });
 
   return (
     <>
@@ -109,15 +119,18 @@ function DivisionForm() {
       <SecondDivision>
         <SecondLeft>
           <label htmlFor="classification">기술 스택</label>
-          <div>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setIsStack(!isStack);
-              }}
-            >
-              프로젝트 사용 스택
-            </button>
+          <div
+            onClick={(e) => {
+              e.preventDefault();
+              setIsStack(!isStack);
+            }}
+          >
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="프로젝트 사용 스택"
+            />
 
             <AiOutlineDown
               className="AiOutlineDown"
@@ -129,7 +142,7 @@ function DivisionForm() {
           </div>
           {isStack ? (
             <ul className="Stacklists" value={stack}>
-              {newStackList.map((el) => {
+              {searchStack.map((el) => {
                 return (
                   <li key={el.id} onClick={handleStackListClick}>
                     {el.stack}
@@ -138,15 +151,15 @@ function DivisionForm() {
               })}
             </ul>
           ) : null}
-          {stackList ? (
+          {selectedStackList ? (
             <span className="Added-stack-list">
-              {stackList.map((el) => (
+              {selectedStackList.map((el) => (
                 <div key={el.id}>
                   <img
                     src={`/assets/stack/${el.techStackName}.svg`}
                     alt={`${el.techStackName}`}
                   />
-                  <span onClick={() => handleDeleteStackListRemove(el.id)}>
+                  <span onClick={() => handleStackListRemove(el.id)}>
                     <GoX className="Gox" />
                   </span>
                 </div>

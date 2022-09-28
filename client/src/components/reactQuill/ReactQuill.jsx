@@ -63,6 +63,9 @@ const QuillContainer = styled.div`
   .ql-container {
     min-height: 200px;
   }
+  .ql-editor {
+    min-height: 200px;
+  }
 `;
 
 export default Editor;

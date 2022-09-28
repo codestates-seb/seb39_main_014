@@ -136,12 +136,13 @@ export const SecondLeft = styled.div`
     &:hover {
       border: 1px solid #69d06f;
     }
-    > button {
+    > input {
       width: 100%;
       height: 2.3rem;
       border: none;
       background-color: white;
       text-align: left;
+      outline: none;
       cursor: pointer;
     }
     .AiOutlineDown {
@@ -176,6 +177,9 @@ export const SecondLeft = styled.div`
     > div {
       display: flex;
       padding: 0.2rem;
+      .Gox {
+        cursor: pointer;
+      }
     }
   }
 `;
