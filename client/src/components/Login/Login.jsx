@@ -41,10 +41,7 @@ function Login() {
           password,
         },
         {
-          /*로그인 시 아이디와 비밀번호 서버로 넘어오면 유저의 정보 맞는지 확인 -> cookie에 token 발급
-            이후 token을 통해 다른 페이지 인증 이뤄짐
-            client, server의 URI가 다른 경우에도 쿠키 전송 가능하게하는 헤더 */
-          // withCredentials: true,
+          // 헤더자리
         }
       );
       console.log(res);
@@ -55,48 +52,6 @@ function Login() {
       setErrors(error?.response?.data || {});
     }
   };
-
-  // useEffect(() => {
-  //   setErr("");
-  // }, [userId, password]);
-
-  /* 로그인 제출 함수 2
-  const handleSubmit = async (event) => {
-    // form 제출시 새로고침 방지
-    event.preventDefault();
-
-    // 아이디, 비밀번호 값 확인용
-    console.log({ userId, password });
-    try {
-      const res = await axios.post(
-        LOGIN_URL,
-        JSON.stringify({ userId, password }),
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
-
-      console.log(JSON.stringify(res?.date));
-
-      const accessToken = res?.data?.accessToken;
-      const roles = res?.data?.roles;
-      setAuth({});
-      setuserId("");
-      setPassword("");
-      setSuccess(true);
-    } catch (err) {
-      if (!err?.res) {
-        setErr("No Server Response");
-      } else if (err.response?.status === 400) {
-        setErr("Missing Username or Password");
-      } else if (err.response?.status === 401) {
-        setErr("Unauthorized");
-      } else {
-        setErr("Login Failed");
-      }
-    }
-  };*/
 
   return (
     <LoginFrame>

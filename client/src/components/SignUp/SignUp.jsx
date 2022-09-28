@@ -82,127 +82,130 @@ function SignUp() {
   };
 
   return (
-    <LoginFrame>
-      <FormContainer>
-        <form>
-          <h1>회원가입</h1>
-          <div className="social-container">
-            <a className="social">
-              <FcGoogle className="goggle-icon" />
-              <p>구글 아이디로 가입하기</p>
-            </a>
-          </div>
-          <hr />
-          <span />
-          <InputGroup
-            placeholder="아이디"
-            value={userId}
-            setValue={setUserId}
-            // error={error.email}
-          />
-          {idCheck === true ? (
-            <></>
-          ) : (
-            <ContentCheck>아이디는 영어와 숫자 조합만 가능합니다.</ContentCheck>
-          )}
+    <SignupContainer>
+      <h1>회원가입</h1>
+      <div className="social-container">
+        <a className="social">
+          <FcGoogle className="goggle-icon" />
+          <p>구글 아이디로 가입하기</p>
+        </a>
+      </div>
+      <hr />
+      <form>
+        <InputGroup
+          placeholder="아이디"
+          value={userId}
+          setValue={setUserId}
+          // error={error.email}
+        />
+        {idCheck === true ? (
+          <></>
+        ) : (
+          <ContentCheck>아이디는 영어와 숫자 조합만 가능합니다.</ContentCheck>
+        )}
 
-          <InputGroup
-            placeholder="이메일"
-            value={email}
-            setValue={setEmail}
-            // error={error.email}
-          />
-          {emailCheck === true ? (
-            <></>
-          ) : (
-            <ContentCheck>올바른 형식의 이메일을 입력해주세요.</ContentCheck>
-          )}
+        <InputGroup
+          placeholder="이메일"
+          value={email}
+          setValue={setEmail}
+          // error={error.email}
+        />
 
-          <InputGroup
-            placeholder="이름"
-            value={name}
-            setValue={setUsername}
-            // error={errors.name}
-          />
+        {emailCheck === true ? (
+          <></>
+        ) : (
+          <ContentCheck>올바른 형식의 이메일을 입력해주세요.</ContentCheck>
+        )}
 
-          {usernameCheck === true ? (
-            <></>
-          ) : (
-            <ContentCheck>한글만 입력가능합니다.</ContentCheck>
-          )}
+        <InputGroup
+          placeholder="이름"
+          value={name}
+          setValue={setUsername}
+          // error={errors.name}
+        />
 
-          <InputGroup
-            placeholder="닉네임"
-            value={nickname}
-            setValue={setNick}
-            // error={errors.name}
-          />
-          {nickCheck === true ? (
-            <></>
-          ) : (
-            <ContentCheck>
-              6글자 이내의 한글, 영어, 숫자 조합만 가능합니다.
-            </ContentCheck>
-          )}
-          <InputGroup
-            placeholder="비밀번호"
-            value={password}
-            setValue={setPassword}
-            type="password"
-            // error={errors.password}
-          />
-          {passwordCheck === true ? (
-            <></>
-          ) : (
-            <ContentCheck>
-              8~16자 영문 대 소문자, 숫자를 사용하세요.
-            </ContentCheck>
-          )}
+        {usernameCheck === true ? (
+          <></>
+        ) : (
+          <ContentCheck>한글만 입력가능합니다.</ContentCheck>
+        )}
 
-          <InputGroup
-            placeholder="비밀번호 확인"
-            type="password"
-            value={password2}
-            setValue={setPassword2}
-            // error={errors.password}
-          />
+        <InputGroup
+          placeholder="닉네임"
+          value={nickname}
+          setValue={setNick}
+          // error={errors.name}
+        />
 
-          {PasswordConfirm === true ? (
-            <></>
-          ) : (
-            <ContentCheck>비밀번호가 일치하지 않습니다.</ContentCheck>
-          )}
+        {nickCheck === true ? (
+          <></>
+        ) : (
+          <ContentCheck>
+            6글자 이내의 한글, 영어, 숫자 조합만 가능합니다.
+          </ContentCheck>
+        )}
 
-          <button type="button" onClick={() => setTimeout(handleSubmit, 1000)}>
-            가입하기
-          </button>
-          <div className="sign-up">
-            <div>이미 아이디가 있으신가요?</div>
-            <div className="move-sign-up">
-              <Link to="/login">로그인</Link>
-            </div>
-          </div>
-        </form>
-      </FormContainer>
-    </LoginFrame>
+        <InputGroup
+          placeholder="비밀번호"
+          value={password}
+          setValue={setPassword}
+          type="password"
+          // error={errors.password}
+        />
+
+        {passwordCheck === true ? (
+          <></>
+        ) : (
+          <ContentCheck>8~16자 영문 대 소문자, 숫자를 사용하세요.</ContentCheck>
+        )}
+
+        <InputGroup
+          placeholder="비밀번호 확인"
+          type="password"
+          value={password2}
+          setValue={setPassword2}
+          // error={errors.password}
+        />
+
+        {PasswordConfirm === true ? (
+          <></>
+        ) : (
+          <ContentCheck>비밀번호가 일치하지 않습니다.</ContentCheck>
+        )}
+
+        <button type="button" onClick={() => setTimeout(handleSubmit, 1000)}>
+          가입하기
+        </button>
+      </form>
+      <div className="sign-up">
+        <div>이미 아이디가 있으신가요?</div>
+        <div className="move-sign-up">
+          <Link to="/login">로그인</Link>
+        </div>
+      </div>
+    </SignupContainer>
   );
 }
 
-const LoginFrame = styled.div`
+const SignupContainer = styled.div`
   display: flex;
-  text-align: center;
+  flex-direction: column;
   justify-content: center;
   border-radius: 10px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.22);
   position: relative;
   width: 500px;
-  max-width: 100%;
-  min-height: 550px;
-  height: auto;
+  height: 80%;
   padding: 15px;
-`;
+  form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0px;
+    text-align: center;
+  }
 
-const FormContainer = styled.div`
   h1 {
     font-weight: bold;
     margin-right: auto;
@@ -255,16 +258,6 @@ const FormContainer = styled.div`
 
   button:hover {
     opacity: 0.93;
-  }
-
-  form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 50px;
-    height: 100%;
-    text-align: center;
   }
 
   input {
