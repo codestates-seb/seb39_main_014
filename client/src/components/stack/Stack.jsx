@@ -15,9 +15,9 @@ export const stackList = [
   "kotlin",
   "mongoDB",
   "mySQL",
-  "nextjs",
-  "nestjs",
-  "nodejs",
+  "next",
+  "nest",
+  "node",
   "php",
   "python",
   "react",
@@ -74,6 +74,8 @@ const StackLogo = styled.div`
   width: 1024px;
 
   img {
+    // 클릭시 Opacity 제거예정
+    opacity: 0.5;
     margin-left: 10px;
     margin-top: 10px;
     width: 50px;

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import InputGroup from "../inputGroup/InputGroup";
 import { FcGoogle } from "react-icons/fc";
 import useCheck from "../../hooks/useCheck";
+import handleSignup from "../../api/handleSignup";
 
 // 회원가입 : 이메일, 이름, 닉네임 비밀번호, 비밀번호 확인
 
@@ -68,36 +68,14 @@ function SignUp() {
     }
   }, [password2]);
 
-  //** SignUp 회원가입 POST 버튼 */
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    console.log({ userId, email, name, nickname, password });
-
-    try {
-      const res = await axios.post(
-        SIGNUP_URL,
-        {
-          userId,
-          email,
-          name,
-          nickname,
-          password,
-        }
-        // {
-        //   withCredentials: true, // 쿠키 cors 통신 설정
-        // }
-      );
-      console.log("res", res);
-    } catch (error) {
-      console.log("error", error);
-    }
+  const handleSubmit = (e) => {
+    handleSignup(SIGNUP_URL, userId, email, name, nickname, password);
   };
 
   return (
     <LoginFrame>
       <FormContainer>
-        <form onSubmit={handleSubmit}>
+        <form>
           <h1>회원가입</h1>
           <div className="social-container">
             <a className="social">
@@ -180,7 +158,7 @@ function SignUp() {
             <ContentCheck>비밀번호가 일치하지 않습니다.</ContentCheck>
           )}
 
-          <button type="button" onClick={handleSubmit}>
+          <button type="button" onSubmit={handleSubmit}>
             가입하기
           </button>
           <div className="sign-up">
