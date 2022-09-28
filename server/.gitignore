@@ -19,6 +19,7 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
+application-local.yml
 .idea
 *.iws
 *.iml
@@ -36,6 +37,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-###Secret###
-*.yml
