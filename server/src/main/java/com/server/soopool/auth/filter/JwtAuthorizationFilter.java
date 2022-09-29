@@ -71,6 +71,4 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
-    //shouldNotFilter 안적음.
-
 }
