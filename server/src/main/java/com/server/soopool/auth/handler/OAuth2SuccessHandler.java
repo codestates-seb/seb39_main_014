@@ -22,23 +22,14 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     private final JwtService jwtService;
 
-//    @Value("${app.auth.oauth.front-redirect-uri}")
-    private String redirectUri = "http://localhost:8080/login/oauth2/code/google";
-
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         Long memberId = principal.getMemberId();
         String accessToken = jwtService.issueAccessToken(memberId);
+        response.setHeader(ACCESS_TOKEN, accessToken);
         jwtService.issueRefreshToken(response,accessToken);
-        getRedirectStrategy().sendRedirect(request,response,createRedirectUri(accessToken,memberId));
-    }
-
-    private String createRedirectUri(String accessToken, Long memberId){
-        return UriComponentsBuilder.fromUriString(redirectUri)
-                .queryParam(ACCESS_TOKEN,accessToken)
-                .queryParam(MEMBER_ID,memberId)
-                .build()
-                .toUriString();
+        super.onAuthenticationSuccess(request, response, authentication);
     }
 }
+
