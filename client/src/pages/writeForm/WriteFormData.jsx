@@ -118,3 +118,9 @@ export const careerLists = [
   { id: 4, career: "모바일", value: 4 },
   { id: 5, career: "기타", value: 5 },
 ];
+
+export const levelLists = [
+  { id: 1, level: "초보" },
+  { id: 2, level: "중수" },
+  { id: 3, level: "고수" },
+];
