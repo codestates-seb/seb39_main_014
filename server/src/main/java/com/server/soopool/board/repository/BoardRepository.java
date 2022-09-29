@@ -4,12 +4,14 @@ import com.server.soopool.board.entity.Board;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
     Optional<Board> findById(Long id);
+    List<Board> findAllById(Long id);
 
     /*  작성자 : 김은철
 
