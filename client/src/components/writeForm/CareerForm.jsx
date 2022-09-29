@@ -3,7 +3,7 @@ import { careerLists } from "../../pages/writeForm/WriteFormData";
 import { Career, Crew } from "../../pages/writeForm/styled";
 
 import { AiOutlineDown } from "react-icons/ai";
-import ReactQuill from "../reactQuill/ReactQuill";
+import SubmitForm from "./SubmitForm";
 
 function CareerForm({ object }) {
   const [career, setCareer] = useState({
@@ -123,7 +123,7 @@ function CareerForm({ object }) {
             ))
           : null}
       </Career>
-      <ReactQuill newObject={newObject} />
+      <SubmitForm newObject={newObject} />
     </>
   );
 }

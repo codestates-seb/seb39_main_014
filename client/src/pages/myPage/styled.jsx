@@ -28,7 +28,7 @@ export const UserInfoWrapper = styled.div`
   display: grid;
   align-items: center;
   grid-template-columns: 2fr 1fr 2fr 2fr;
-  grid-template-rows: 0.5fr repeat(3, 1fr);
+  grid-template-rows: auto repeat(3, 1fr);
   width: 100%;
   gap: 1rem;
   grid-template-areas:
@@ -38,7 +38,7 @@ export const UserInfoWrapper = styled.div`
     "img stack-label submit-stack stack";
   @media screen and (max-width: 760px) {
     grid-template-columns: 1.5fr 0.8fr 1.5fr;
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-rows: auto repeat(4, auto);
     gap: 0.5rem;
     grid-template-areas:
       "career career career"
@@ -94,11 +94,45 @@ export const UserInfoWrapper = styled.div`
       margin: 0;
       padding: 0.8rem;
       width: 20%;
-      min-width: 130px;
+      min-width: 140px;
       font-size: 0.8rem;
       color: #009f47;
       border-radius: 10px;
       background-color: #e5f8ed;
+      cursor: pointer;
+    }
+    .Career-level-lists {
+      display: grid;
+      grid-template-columns: 1fr 0.6fr;
+      justify-self: right;
+      width: 20%;
+      min-width: 140px;
+
+      > ul {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        border: 1px solid #a6a6a6;
+        border-radius: 10px;
+        width: 100%;
+        padding: 0;
+
+        > li {
+          display: flex;
+          font-size: 0.7rem;
+          justify-content: center;
+          list-style: none;
+          width: 100%;
+          margin: 0;
+          padding: 0.4rem 0.6rem;
+          cursor: pointer;
+          &:hover {
+            border-radius: 10px;
+            background-color: #e5f8ed;
+          }
+        }
+      }
     }
   }
 
@@ -109,17 +143,72 @@ export const UserInfoWrapper = styled.div`
       width: 80%;
     }
   }
-  .Registration {
+  .Registration-box {
     grid-area: submit-stack;
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 1px solid #c7c7c7;
+    border-radius: 10px;
+    padding: 1rem 0 1rem 0.5rem;
+    > input {
+      width: 100%;
+      border: none;
+      outline: none;
+    }
+    .AiOutlineDown {
+      justify-self: right;
+      margin-right: 1rem;
+    }
+  }
+  .Stacklist {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: 200px;
+    right: 0px;
+    top: 40px;
+    border: 1px solid #c7c7c7;
+    border-radius: 10px;
+    padding: 0;
+    background-color: white;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      background-color: white;
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #c7c7c7;
+      border-radius: 10px;
+    }
+
+    > li {
+      padding: 0.3rem 0 0.3rem 0.5rem;
+      list-style: none;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #e5f8ed;
+        border-radius: 10px;
+      }
+    }
   }
   .Stack {
     display: flex;
     grid-area: stack;
+    padding: 1rem 0;
     @media screen and (max-width: 760px) {
       display: flex;
       align-self: flex-start;
     }
-    .BsXCircle {
+    > div {
+      display: flex;
+    }
+    .Gox {
+      margin: 0 0.2rem;
+      cursor: pointer;
     }
   }
 `;

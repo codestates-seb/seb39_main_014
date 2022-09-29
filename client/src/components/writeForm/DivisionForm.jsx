@@ -48,7 +48,7 @@ function DivisionForm() {
   const object = {
     recruitCategory: recruitCategory,
     recruitMethod: recruitMethod,
-    location: location,
+    location: location.value,
     techStacks: techStacks,
     period: periodValue.value,
   };
@@ -72,6 +72,7 @@ function DivisionForm() {
     );
   };
 
+  /** 선택된 스택 추가 및 선택된 스택 기존 목록에서 제거*/
   const handleStackListRemove = (id) => {
     // target의 id
     const newSelectedStackList = selectedStackList.filter(
@@ -88,6 +89,7 @@ function DivisionForm() {
     setSelectedStackList(selectedStackList.filter((prev) => prev.id !== id));
   };
 
+  /** 기간 변경 */
   const handlePeriodClick = (e) => {
     setIsPeriod(!isPeriod);
     setPeriodValue((prev) => {
@@ -95,6 +97,7 @@ function DivisionForm() {
     });
   };
 
+  /** 검색으로 스택 찾기 */
   const searchStack = newStackList.filter((prev) => {
     if (search === "") {
       return prev;
