@@ -86,7 +86,7 @@ const PostFrame = styled.div`
 
   box-shadow: rgba(149, 157, 165, 0.2) 1px 1px 6px 1px;
   height: 320px;
-  width: 270px;
+  width: 280px;
 
   border-radius: 25px;
 

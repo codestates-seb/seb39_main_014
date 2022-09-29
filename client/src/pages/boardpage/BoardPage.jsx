@@ -5,6 +5,7 @@ import Board from "../../components/board/Board";
 import Stack from "../../components/stack/Stack";
 import Paging from "../../components/pagenation/Pagenation";
 import axios from "axios";
+import PopStack from "../../components/popStack/PopStack";
 
 function BoardPage() {
   const [datas, setDatas] = useState([]);
@@ -18,21 +19,25 @@ function BoardPage() {
   return (
     <>
       <BoardPageLayout>
-        <Side />
-        <Center>
-          <StackArea>
-            <Stack />
-          </StackArea>
-          <Content>
-            {datas.map((data) => (
-              <Board data={data} key={data.board_id} />
-            ))}
-          </Content>
-          <PageNationArea>
-            <Paging page={1} setPage={1} />
-          </PageNationArea>
-        </Center>
-        <Side />
+        <Main>
+          <Side className="side-visible">
+            <PopStack />
+          </Side>
+          <Center>
+            <StackArea>
+              <Stack />
+            </StackArea>
+            <Content>
+              {datas.map((data) => (
+                <Board data={data} key={data.board_id} />
+              ))}
+            </Content>
+            <PageNationArea>
+              <Paging page={1} setPage={1} />
+            </PageNationArea>
+          </Center>
+          <Side className="side-visible">2</Side>
+        </Main>
       </BoardPageLayout>
       <Footer />
     </>
@@ -40,9 +45,9 @@ function BoardPage() {
 }
 
 const BoardPageLayout = styled.div`
-  display: grid;
-  place-items: center;
-  grid-template-columns: 1fr 5fr 1fr;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
 `;
 
@@ -51,12 +56,27 @@ const StackArea = styled.div`
   align-items: center;
 `;
 
+const Main = styled.div`
+  width: 1600px;
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
+
+  @media screen and (max-width: 1500px) {
+    display: flex;
+    justify-content: center;
+    .side-visible {
+      /* display: none; */
+    }
+  }
+`;
+
 const Center = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%;
   grid-template-rows: 1fr 1fr 1fr;
-  max-width: 1200px;
+  max-width: 1100px;
 `;
 
 const Content = styled.div`
@@ -84,6 +104,7 @@ const PageNationArea = styled.div`
 `;
 const Side = styled.div`
   /* background-color: gray; */
+  display: flex;
 `;
 
 export default BoardPage;
