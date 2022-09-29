@@ -117,5 +117,12 @@
       "is_bookmarked": "False",
       "bookmark_count": "2"
     }
-  ]
+  ],
+  "popstack": {
+    "java": 5555,
+    "javascript": 4444,
+    "python": 3333,
+    "ruby": 2222,
+    "go": 1111
+  }
 }

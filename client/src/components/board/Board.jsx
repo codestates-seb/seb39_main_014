@@ -6,32 +6,26 @@ import { AiOutlineEye, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 /** 게시글 컴포넌트 */
 function Board({ data }) {
   return (
-    <>
-      <PostFrame>
+    <PostFrame>
+      <PostLayout>
         <TopLayout>
-          <div className="info">
-            <div>지역무관</div>
-            <div>온라인</div>
-            <div>6개월</div>
-          </div>
-          <div className="info-deadline">
-            <div>모집마감</div>
-          </div>
+          <div>지역무관</div>
+          <div>온라인</div>
+          <div>6개월</div>
+          <div className="info-deadline">D-14</div>
         </TopLayout>
         <TitleLayout>
           <h3>{data.title}</h3>
         </TitleLayout>
         <TagLayout>{/* advanced */}</TagLayout>
         <StackLayout>
-          <div>
-            {data.tech_stack_name.map((el) => (
-              <img
-                className="stack-logo"
-                src={`/assets/stack/${el}.svg`}
-                alt={`${el}`}
-              />
-            ))}
-          </div>
+          {data.tech_stack_name.map((el) => (
+            <img
+              className="stack-logo"
+              src={`/assets/stack/${el}.svg`}
+              alt={`${el}`}
+            />
+          ))}
         </StackLayout>
         <RecruitmentLayout>
           <div className="recruitment">
@@ -76,30 +70,26 @@ function Board({ data }) {
             </div>
           </CntArea>
         </BottomLayout>
-      </PostFrame>
-    </>
+      </PostLayout>
+    </PostFrame>
   );
 }
 
-/** div - 게시글 레이아웃 */
+/** div - 각 게시글의 프레임 */
 const PostFrame = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-sizing: content-box;
-  width: 100%;
-  display: grid;
-  grid-template-rows: 2fr 4fr 1.5fr 2fr 1fr 0.1fr 1fr;
-  /* 
-  
-  border-radius: 10px;
-  
-  */
-  height: 340px;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  width: 280px;
-  max-width: 100%;
-  min-height: 1px;
-  border-radius: 40px;
-  margin: 20px;
+  margin: 15px;
   padding: 20px;
+
+  box-shadow: rgba(149, 157, 165, 0.2) 1px 1px 6px 1px;
+  height: 320px;
+  width: 270px;
+
+  border-radius: 25px;
+
   transition: 0.2s;
 
   cursor: pointer;
@@ -112,28 +102,29 @@ const PostFrame = styled.div`
     margin: 5px;
   }
 `;
+/** div - board 요소 정렬용 레이아웃*/
+const PostLayout = styled.div`
+  display: grid;
+  grid-template-rows: 2fr 4fr 1.5fr 2fr 1fr 0.1fr 1fr;
+  height: 300px;
+`;
 
 /** div - 지역, 활동 기간, 모집 기한 */
 const TopLayout = styled.div`
   display: flex;
   align-items: center;
-  width: 280px;
-
-  div {
-    font-size: 10px;
-  }
-  .info {
-    display: flex;
-  }
+  justify-content: space-between;
+  width: 270px;
+  font-size: 12px;
 
   /* 지역 | 온 / 오프라인 | 기간 */
-  .info > div {
+  div {
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #69d06f;
     color: white;
-    width: 40px;
+    width: 60px;
     height: 23px;
     border-radius: 50px;
     font-weight: bold;
@@ -141,14 +132,12 @@ const TopLayout = styled.div`
 
   /* 모집기한 */
   .info-deadline {
-    margin-left: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #d9d9d9;
     font-weight: bold;
     color: black;
-    width: auto;
     height: 23px;
     border-radius: 50px;
   }
@@ -159,7 +148,7 @@ const TitleLayout = styled.div`
   h3 {
     font-weight: 400;
     margin-left: 10px;
-    width: 250px;
+    width: 270px;
     text-overflow: ellipsis;
     font-size: 17px;
     overflow: hidden;
@@ -176,11 +165,7 @@ const TagLayout = styled.div``;
 
 /** div - 기술 스택 */
 const StackLayout = styled.div`
-  div {
-    margin-left: 10px;
-    margin-bottom: -10px;
-  }
-
+  padding-left: 10px;
   .stack-logo {
     margin-left: 3px;
   }
@@ -190,7 +175,8 @@ const StackLayout = styled.div`
 const RecruitmentLayout = styled.div`
   display: flex;
   align-items: center;
-  width: 280px;
+  justify-content: space-around;
+  width: 270px;
   font-size: 13px;
   .recruitment {
     display: flex;
@@ -222,8 +208,9 @@ const Boundary = styled.div`
 // 리팩토링 화면 구성 마치고 나서 리팩토링 필요
 const BottomLayout = styled.div`
   display: flex;
-  justify-content: space-between;
+  width: 290px;
   height: 30px;
+  justify-content: space-around;
 `;
 
 /** div - (Bottom) 프로필사진, 닉네임  */
@@ -254,7 +241,6 @@ const CntArea = styled.div`
   div {
     display: flex;
     align-items: center;
-    justify-content: center;
   }
   .view-cnt {
     font-size: 13px;
