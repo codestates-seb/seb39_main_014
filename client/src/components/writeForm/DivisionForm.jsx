@@ -217,7 +217,7 @@ function DivisionForm() {
             />
           </div>
           {isStack ? (
-            <ul className="Stacklists" value={stack}>
+            <ul className="Stacklists">
               {searchStack.map((el) => {
                 return (
                   <li key={el.id} onClick={handleStackListClick}>

@@ -80,14 +80,17 @@ export const FirstRight = styled.div`
     .Location-box {
       display: flex;
       flex-direction: column;
+      position: relative;
     }
     .Location-button {
       display: flex;
       align-items: center;
+
       width: 100%;
       border: 1px solid #a6a6a6;
       padding-left: 1rem;
       border-radius: 10px;
+
       &:hover {
         border: 1px solid #69d06f;
       }
@@ -105,14 +108,19 @@ export const FirstRight = styled.div`
       }
     }
     .location {
-      position: relative;
+      position: absolute;
       list-style: none;
+      width: 100%;
+      z-index: 3;
+      background-color: white;
+      top: 40px;
       margin: 0;
       padding: 0;
       border: 1px solid #a6a6a6;
       border-radius: 10px;
       > li {
         padding: 0.8rem 0 0.8rem 1rem;
+        font-size: 0.8rem;
         cursor: pointer;
         &:hover {
           background-color: #e5f8ed;
@@ -120,12 +128,6 @@ export const FirstRight = styled.div`
         }
       }
     }
-    /* > ul {
-      height: 1.5rem;
-      width: 23%;
-      margin-left: 2rem;
-      padding-left: 0.5rem;
-    } */
 
     > label {
       font-weight: 400;
@@ -162,6 +164,7 @@ export const SecondLeft = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
   padding-right: 0.5rem;
   @media screen and (max-width: 710px) {
     padding-right: 0rem;
@@ -197,12 +200,28 @@ export const SecondLeft = styled.div`
   }
 
   .Stacklists {
-    position: relative;
+    position: absolute;
+    z-index: 4;
     list-style: none;
+    width: 100%;
+    height: 14rem;
+    overflow-y: auto;
+    top: 90px;
     margin: 0;
     padding: 0;
+    background-color: white;
     border: 1px solid #a6a6a6;
     border-radius: 10px;
+    &::-webkit-scrollbar {
+      background-color: white;
+      border-radius: 10px;
+      border-left: 1px solid #a6a6a6;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #c7c7c7;
+      border-radius: 10px;
+    }
+
     > li {
       padding: 0.8rem 0 0.8rem 1rem;
       cursor: pointer;
@@ -212,6 +231,7 @@ export const SecondLeft = styled.div`
       }
     }
   }
+
   .Added-stack-list {
     display: flex;
     width: 100%;
@@ -229,8 +249,8 @@ export const SecondLeft = styled.div`
 export const SecondRight = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
   width: 100%;
-  padding-right: 0.5rem;
   > div {
     margin: 1rem 0 0.5rem 0;
     display: flex;
@@ -256,8 +276,12 @@ export const SecondRight = styled.div`
     }
   }
   .Periodlists {
-    position: relative;
+    position: absolute;
     list-style: none;
+    width: 100%;
+    top: 90px;
+    background-color: white;
+    z-index: 3;
     margin: 0;
     padding: 0;
     border: 1px solid #a6a6a6;
@@ -288,6 +312,7 @@ export const Career = styled.div`
     width: 49%;
     display: flex;
     flex-direction: column;
+    position: relative;
   }
   .Career-select {
     display: flex;
@@ -314,10 +339,14 @@ export const Career = styled.div`
   }
 
   .Careerlists {
-    position: relative;
+    position: absolute;
     list-style: none;
+    width: 100%;
+    top: 50px;
+    z-index: 3;
     margin: 0;
     padding: 0;
+    background-color: white;
     border: 1px solid #a6a6a6;
     border-radius: 10px;
     > li {
@@ -417,6 +446,8 @@ export const Contact = styled.div`
 
   > input {
     width: 49%;
+    border: 1px solid #a6a6a6;
+    border-radius: 10px;
     @media screen and (max-width: 710px) {
       width: 100%;
     }
@@ -440,6 +471,8 @@ export const Title = styled.div`
   > input {
     width: 100%;
     padding: 0.5rem 0;
+    border: 1px solid #a6a6a6;
+    border-radius: 10px;
     margin: 0.7rem 0 1rem 0;
     &::placeholder {
       padding-left: 0.5rem;
@@ -455,12 +488,16 @@ export const Title = styled.div`
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
+  > label {
+    padding-bottom: 0.5rem;
+  }
 `;
 
 export const PostButton = styled.div`
   display: flex;
   justify-content: flex-end;
   margin: 1rem 0;
+
   .Post {
     width: 15%;
     max-width: 110px;
