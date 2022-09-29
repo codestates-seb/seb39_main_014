@@ -8,11 +8,12 @@ import axios from "axios";
 import PopStack from "../../components/popStack/PopStack";
 
 function BoardPage() {
+  const [stackFilter, setStackFilter] = useState([]);
   const [datas, setDatas] = useState([]);
 
   useEffect(() => {
     axios.get("http://localhost:4000/board/").then((res) => {
-      console.log(res.data[0]);
+      // console.log(res.data[0]);
       setDatas(res.data);
     });
   }, []);
@@ -26,7 +27,7 @@ function BoardPage() {
           </Side>
           <Center>
             <StackArea>
-              <Stack />
+              <Stack selected={stackFilter} setSelected={setStackFilter} />
             </StackArea>
             <Content>
               {datas.map((el) => (
@@ -55,6 +56,7 @@ const BoardPageLayout = styled.div`
 const StackArea = styled.div`
   display: flex;
   align-items: center;
+  margin-left: 30px;
 `;
 
 const Main = styled.div`
