@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface TechStackRepository extends JpaRepository<TechStack, Long> {
 //    @Query(value = "SELECT c FROM TECHSTACK WHERE c.techStackId = :techStackId")
-//    Optional<TechStack> findByTechStackId(long techStackId);
+    Optional<TechStack> findById(Long id);
 }
 
 

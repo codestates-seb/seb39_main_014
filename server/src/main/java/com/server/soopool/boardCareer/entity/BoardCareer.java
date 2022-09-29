@@ -28,9 +28,9 @@ public class BoardCareer {
 
     //기본컬럼 설정
     @Column(nullable = false)
-    private Integer careerTotalRecruit;
+    private Integer careerTotalRecruit = 0;
 
     @Column(nullable = false)
-    private Integer careerCurrentRecruit;
+    private Integer careerCurrentRecruit = 0;
 
 }
