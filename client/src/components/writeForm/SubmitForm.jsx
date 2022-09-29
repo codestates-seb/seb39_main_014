@@ -63,8 +63,10 @@ function Editor({ newObject }) {
       navigate(-1);
     }
   };
+  console.log(contents);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     handleBoardSubmit(
       WIRTEBOARD_URL,
       newObject.recruitCategory,
@@ -79,6 +81,7 @@ function Editor({ newObject }) {
       contents
     );
   };
+
   return (
     <>
       <Contact>
