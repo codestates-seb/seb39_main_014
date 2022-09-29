@@ -58,7 +58,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Long id = principal.getMemberId();
         String accessToken = jwtService.issueAccessToken(id);
 
-        response.addHeader(ACCESS_TOKEN, accessToken);
+        response.setHeader(ACCESS_TOKEN, accessToken);
 
         System.out.println(accessToken);
 
