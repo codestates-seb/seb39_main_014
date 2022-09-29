@@ -30,7 +30,7 @@ function Stack() {
       <StackLogo>
         {/* 스택 로고 */}
         {stackList[jobGroup].map((el) => (
-          <img src={`/assets/stack/${el}.svg`} alt={`${el}`} />
+          <img src={`/assets/stack/${el}.svg`} alt={`${el}`} key={el.id} />
         ))}
       </StackLogo>
     </StackLayout>
@@ -49,7 +49,13 @@ const StackPick = styled.div`
   transition: 0.2s;
 
   h2 {
+    cursor: pointer;
+    opacity: 0.8;
     margin-left: 60px;
+  }
+
+  h2:hover {
+    opacity: 1;
   }
 `;
 
@@ -62,10 +68,11 @@ const StackLogo = styled.div`
   align-items: center;
 
   // 전체 레이아웃 너비
-  width: 900px;
+  max-width: 1050px;
 
   img {
     // 클릭시 Opacity 제거예정
+    cursor: pointer;
     opacity: 0.5;
     margin-left: 10px;
     margin-top: 10px;
