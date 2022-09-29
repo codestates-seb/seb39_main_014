@@ -1,88 +1,3 @@
-/* eslint-disable jsx-a11y/heading-has-content */
-// import React, { useState } from "react";
-// import styled from "styled-components";
-// import { stackList } from "../../lib/stackList";
-
-// /** / */
-// const group = [
-//   { id: 1, category: "전체" },
-//   { id: 2, category: "프론트엔드" },
-//   { id: 3, category: "백엔드" },
-//   { id: 4, category: "기타" },
-// ];
-
-// function Stack() {
-//   const [jobGroup, setJobGroup] = useState("전체");
-
-//   const handleGroup = (el) => {
-//     setJobGroup(el.target.innerText);
-//   };
-
-//   return (
-//     <StackLayout>
-//       <StackPick>
-//         {/* 전체 프론트엔드 백엔드 기타 */}
-//         {group.map((el, idx) => (
-//           <h2 key={el.id} onClick={handleGroup}>
-//             {el.category}
-//           </h2>
-//         ))}
-//       </StackPick>
-//       <StackLogo>
-//         {/* 스택 로고 */}
-//         {stackList[jobGroup].map((el) => (
-//           <img src={`/assets/stack/${el}.svg`} alt={`${el}`} key={el.id} />
-//         ))}
-//       </StackLogo>
-//     </StackLayout>
-//   );
-// }
-
-// /** div - Stack 레이아웃 */
-// const StackLayout = styled.div`
-//   width: 1000px;
-// `;
-
-// /** div - 전체, 프론트엔드, 백엔드, 기타 */
-// const StackPick = styled.div`
-//   display: flex;
-//   margin-top: 10px;
-//   transition: 0.2s;
-
-//   h2 {
-//     cursor: pointer;
-//     opacity: 0.8;
-//     margin-left: 60px;
-//   }
-
-//   h2:hover {
-//     opacity: 1;
-//   }
-// `;
-
-// /** div - 스택 로고 레이아웃 */
-// const StackLogo = styled.div`
-//   margin-left: 40px;
-//   margin-bottom: 20px;
-//   display: flex;
-//   flex-wrap: wrap;
-//   align-items: center;
-
-//   // 전체 레이아웃 너비
-//   max-width: 1050px;
-
-//   img {
-//     // 클릭시 Opacity 제거예정
-//     cursor: pointer;
-//     opacity: 0.5;
-//     margin-left: 10px;
-//     margin-top: 10px;
-//     width: 50px;
-//   }
-// `;
-
-// export default Stack;
-
 import { useState } from "react";
 import styled from "styled-components";
 import { IoCloseCircleOutline } from "react-icons/io5";
@@ -178,13 +93,13 @@ const Stack = ({ selected, setSelected }) => {
           <h2
             onClick={handleJob}
             // eslint-disable-next-line prettier/prettier
-            className={currentJob === el ? "is-click" : ""}>
+            className={currentJob === el ? "selected" : ""}>
             {el}
           </h2>
         ))}
         <h2
           onClick={handleJob}
-          className={currentJob === "전체" ? "is-click" : ""}
+          className={currentJob === "전체" ? "selected" : ""}
         />
       </JobGroup>
       <StackContainer>
@@ -195,7 +110,7 @@ const Stack = ({ selected, setSelected }) => {
                 src={`/assets/stack/${el}.svg`}
                 alt={el}
                 onClick={() => handleStackClick(el)}
-                className={!selected.includes(el) ? "" : "is-click"}
+                className={!selected.includes(el) ? "not-selected" : "selected"}
               />
             ))
           : // 현재탭이 모두보기일 경우
@@ -208,7 +123,7 @@ const Stack = ({ selected, setSelected }) => {
                 className={
                   !selected.includes(el) && selected.length > 0
                     ? "not-selected"
-                    : ""
+                    : "selected"
                 }
               />
             ))}
@@ -216,7 +131,7 @@ const Stack = ({ selected, setSelected }) => {
       {selected.length ? (
         <SelectedContainer>
           {selected.map((el, idx) => (
-            <div key={idx} className="">
+            <div key={idx}>
               {el}
               <IoCloseCircleOutline
                 className="del-icon"
@@ -249,7 +164,7 @@ const JobGroup = styled.div`
     cursor: pointer;
   }
 
-  .is-click {
+  .selected {
     color: black;
     opacity: 1;
   }
@@ -298,7 +213,7 @@ const SelectedContainer = styled.div`
   .del-icon {
     margin-left: 5px;
     width: 15px;
-    opacity: 0.5;
+
     cursor: pointer;
   }
 
