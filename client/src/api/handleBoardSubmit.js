@@ -19,16 +19,16 @@ const handleBoardSubmit = async (
 ) => {
   try {
     const res = await axios.post(WIRTEBOARD_URL, {
-      recruitCategory,
-      recruitMethod,
-      location,
-      techStacks,
-      period,
-      careers,
-      boardCareers,
-      contact,
-      title,
-      contents,
+      recruitCategory: recruitCategory,
+      recruitMethod: recruitMethod,
+      location: location,
+      techStacks: techStacks,
+      period: period,
+      careers: careers,
+      boardCareers: boardCareers,
+      contact: contact,
+      title: title,
+      contents: contents,
     });
     console.log("res :", res);
   } catch (error) {
