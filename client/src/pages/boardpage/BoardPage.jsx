@@ -65,7 +65,7 @@ const Main = styled.div`
     display: flex;
     justify-content: center;
     .side-visible {
-      /* display: none; */
+      display: none;
     }
   }
 `;
