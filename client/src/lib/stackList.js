@@ -39,7 +39,6 @@ export const stackList = {
     "mySQL",
     "mongoDB",
     "python",
-    "django",
     "php",
     "graphQL",
     "firebase",

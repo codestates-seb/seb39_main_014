@@ -15,7 +15,6 @@ function BoardPage() {
     });
   }, []);
 
-  console.log(datas);
   return (
     <>
       <BoardPageLayout>
@@ -30,7 +29,7 @@ function BoardPage() {
             ))}
           </Content>
           <PageNationArea>
-            <Paging page={1} count={9} setPage={1} />
+            <Paging page={1} setPage={1} />
           </PageNationArea>
         </Center>
         <Side />
@@ -45,23 +44,19 @@ const BoardPageLayout = styled.div`
   place-items: center;
   grid-template-columns: 1fr 5fr 1fr;
   width: 100%;
-  background-color: #f9fafb;
 `;
 
 const StackArea = styled.div`
   display: flex;
   align-items: center;
-  width: 1024px;
 `;
 
 const Center = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   width: 100%;
   grid-template-rows: 1fr 1fr 1fr;
-  max-width: 1024px;
+  max-width: 1200px;
 `;
 
 const Content = styled.div`
@@ -70,8 +65,7 @@ const Content = styled.div`
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
   // 전체 레이아웃 너비에 영향
-  background-color: #f9fafb;
-  max-width: 1024px;
+  max-width: 1200px;
 
   @media screen and (max-width: 820px) {
     display: flex;
