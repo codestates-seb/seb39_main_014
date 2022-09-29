@@ -6,15 +6,20 @@ import { AiOutlineDown } from "react-icons/ai";
 import ReactQuill from "../reactQuill/ReactQuill";
 
 function CareerForm({ object }) {
-  const [career, setCareer] = useState("웹 프론트엔드");
+  const [career, setCareer] = useState({
+    career: "웹 프론트엔드",
+    value: 1,
+  });
   const [isCareer, setIsCareer] = useState(false);
 
   const [count, setCount] = useState(1);
   const [crew, setCrew] = useState([]);
+  const [careers, setCareers] = useState([]);
+  const [boardCareers, setBoardCareers] = useState([]);
 
   const idCount = useRef(0);
 
-  const newObject = { ...object, crew: crew };
+  const newObject = { ...object, careers: careers, boardCareers: boardCareers };
 
   const onCountHandler = (e) => {
     e.preventDefault();
@@ -31,9 +36,19 @@ function CareerForm({ object }) {
 
   const onCrewAdditionHandler = (e) => {
     e.preventDefault();
-    setCrew([...crew, { id: idCount.current, career: career, count: count }]);
+    setCrew([
+      ...crew,
+      {
+        id: idCount.current,
+        career: career.career,
+        count: count,
+        value: career.value,
+      },
+    ]);
+    setCareers([...careers, { id: career.value }]);
+    setBoardCareers([...boardCareers, { careerTotalRecruit: count }]);
     setCount(1);
-    setCareer("웹 프론트엔드");
+    setCareer({ career: "웹 프론트엔드", value: 1 });
     idCount.current = idCount.current + 1;
   };
 
@@ -55,7 +70,7 @@ function CareerForm({ object }) {
                   setIsCareer(!isCareer);
                 }}
               >
-                {career}
+                {career.career}
               </button>
 
               <AiOutlineDown
@@ -67,14 +82,13 @@ function CareerForm({ object }) {
               />
             </div>
             {isCareer ? (
-              <ul className="Careerlists" value={career}>
+              <ul className="Careerlists">
                 {careerLists.map((el) => (
                   <li
                     key={el.id}
-                    value={el.career}
                     onClick={() => {
                       setIsCareer(!isCareer);
-                      setCareer(el.career);
+                      setCareer({ career: el.career, value: el.value });
                     }}
                   >
                     {el.career}

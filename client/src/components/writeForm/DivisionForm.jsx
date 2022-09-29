@@ -11,43 +11,61 @@ import {
   regionLists,
   stackLists,
   periodLists,
+  stackNumbers,
+  stackReverse,
 } from "../../pages/writeForm/WriteFormData";
 import { AiOutlineDown } from "react-icons/ai";
 import { GoX } from "react-icons/go";
 import CareerForm from "./CareerForm";
 
 function DivisionForm() {
-  const [isMethod, setIsMethod] = useState("study");
-  const [isChecked, setIsChecked] = useState("online");
+  const [recruitCategory, setRecruitCategory] = useState("STUDY");
+  const [recruitMethod, setRecruitMethod] = useState("ONLINE");
+
+  const [location, setLocation] = useState({
+    region: "미정",
+    value: "NO_CHOICE",
+  });
+  const [isLocation, setIsLocation] = useState(false);
 
   const [stack, setStack] = useState("");
   const [isStack, setIsStack] = useState(false);
   const [newStackList, setNewStackList] = useState(stackLists);
   const [selectedStackList, setSelectedStackList] = useState([]);
+  const [techStacks, setTechStacks] = useState([]);
 
   const [search, setSearch] = useState("");
 
   const stackRef = useRef(0);
   const newStackRef = useRef(9);
 
-  const [period, setPeriod] = useState("미정");
+  const [periodValue, setPeriodValue] = useState({
+    period: "미정",
+    value: "NO_CHOICE",
+  });
   const [isPeriod, setIsPeriod] = useState(false);
 
   const object = {
-    isMethod: isMethod,
-    isChecked: isChecked,
-    selectedStackList: selectedStackList,
-    period: period,
+    recruitCategory: recruitCategory,
+    recruitMethod: recruitMethod,
+    location: location,
+    techStacks: techStacks,
+    period: periodValue.value,
   };
 
   const handleStackListClick = (e) => {
     e.preventDefault();
+
     setStack(e.target.innerText);
     setSelectedStackList([
       ...selectedStackList,
-      { id: stackRef.current, techStackName: e.target.innerText },
+      {
+        id: stackRef.current,
+        techStackName: stackNumbers[0][e.target.innerText],
+      },
     ]);
     stackRef.current = stackRef.current + 1;
+    setTechStacks([...techStacks, { id: stackNumbers[0][e.target.innerText] }]);
     setIsStack(!isStack);
     setNewStackList(
       newStackList.filter((prev) => prev.stack !== e.target.innerText)
@@ -56,13 +74,25 @@ function DivisionForm() {
 
   const handleStackListRemove = (id) => {
     // target의 id
-    const hi = selectedStackList.filter((prev) => prev.id === id);
+    const newSelectedStackList = selectedStackList.filter(
+      (prev) => prev.id === id
+    );
     setNewStackList([
       ...newStackList,
-      { id: newStackRef.current, stack: hi[0].techStackName },
+      {
+        id: newStackRef.current,
+        stack: stackReverse[0][newSelectedStackList[0].techStackName],
+      },
     ]);
     newStackRef.current = newStackRef.current + 1;
     setSelectedStackList(selectedStackList.filter((prev) => prev.id !== id));
+  };
+
+  const handlePeriodClick = (e) => {
+    setIsPeriod(!isPeriod);
+    setPeriodValue((prev) => {
+      return { ...prev, period: e.period, value: e.value };
+    });
   };
 
   const searchStack = newStackList.filter((prev) => {
@@ -78,49 +108,84 @@ function DivisionForm() {
           <label htmlFor="repo">모집 구분</label>
           <div className="Check-box">
             <input
-              id="study"
+              id="STUDY"
               type="radio"
-              value="study"
-              checked={isMethod === "study"}
-              onChange={(e) => setIsMethod(e.target.value)}
+              value="STUDY"
+              checked={recruitCategory === "STUDY"}
+              onChange={(e) => setRecruitCategory(e.target.value)}
             />
             <label htmlFor="study">스터디</label>
             <input
-              id="project"
+              id="PROJECT"
               type="radio"
-              value="project"
-              checked={isMethod === "project"}
-              onChange={(e) => setIsMethod(e.target.value)}
+              value="PROJECT"
+              checked={recruitCategory === "PROJECT"}
+              onChange={(e) => setRecruitCategory(e.target.value)}
             />
-            <label htmlFor="project">프로젝트</label>
+            <label htmlFor="PROJECT">프로젝트</label>
           </div>
         </FirstLeft>
         <FirstRight>
-          <label htmlFor="online">모임 방식</label>
+          <label htmlFor="ONLINE">모임 방식</label>
           <div className="Check-box">
             <input
-              id="online"
+              id="ONLINE"
               type="radio"
-              value="online"
-              checked={isChecked === "online"}
-              onChange={(e) => setIsChecked(e.target.value)}
+              value="ONLINE"
+              checked={recruitMethod === "ONLINE"}
+              onChange={(e) => setRecruitMethod(e.target.value)}
             />
-            <label htmlFor="online">온라인</label>
+            <label htmlFor="OFFLINE">온라인</label>
             <input
-              id="offline"
+              id="OFFLINE"
               type="radio"
-              value="offline"
-              checked={isChecked === "offline"}
-              onChange={(e) => setIsChecked(e.target.value)}
+              value="OFFLINE"
+              checked={recruitMethod === "OFFLINE"}
+              onChange={(e) => setRecruitMethod(e.target.value)}
             />
-            <label htmlFor="offline">오프라인</label>
-            {isChecked === "offline" ? (
-              <select id="region">
-                {regionLists.map((el) => (
-                  <option key={el.id}>{el.region}</option>
-                ))}
-              </select>
-            ) : null}
+            <label htmlFor="OFFLINE">오프라인</label>
+            <div className="Location-box">
+              {recruitMethod === "OFFLINE" ? (
+                <div className="Location-button">
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsLocation(!isLocation);
+                    }}
+                  >
+                    {location.region}
+                  </button>
+                  <AiOutlineDown
+                    className="AiOutlineDown"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsLocation(!isLocation);
+                    }}
+                  />
+                </div>
+              ) : null}
+              {isLocation ? (
+                <ul className="location">
+                  {regionLists.map((el) => (
+                    <li
+                      key={el.id}
+                      onClick={() => {
+                        setIsLocation(!isLocation);
+                        setLocation((prev) => {
+                          return {
+                            ...prev,
+                            region: el.region,
+                            value: el.value,
+                          };
+                        });
+                      }}
+                    >
+                      {el.region}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
           </div>
         </FirstRight>
       </FirstDivision>
@@ -164,7 +229,9 @@ function DivisionForm() {
               {selectedStackList.map((el) => (
                 <div key={el.id}>
                   <img
-                    src={`/assets/stack/${el.techStackName}.svg`}
+                    src={`/assets/stack/${
+                      stackReverse[0][el.techStackName]
+                    }.svg`}
                     alt={`${el.techStackName}`}
                   />
                   <span onClick={() => handleStackListRemove(el.id)}>
@@ -184,7 +251,7 @@ function DivisionForm() {
                 setIsPeriod(!isPeriod);
               }}
             >
-              {period}
+              {periodValue.period}
             </button>
             <AiOutlineDown
               className="AiOutlineDown"
@@ -197,14 +264,7 @@ function DivisionForm() {
           {isPeriod ? (
             <ul className="Periodlists">
               {periodLists.map((el) => (
-                <li
-                  key={el.id}
-                  value={el.period}
-                  onClick={() => {
-                    setIsPeriod(!isPeriod);
-                    setPeriod(el.period);
-                  }}
-                >
+                <li key={el.id} onClick={() => handlePeriodClick(el)}>
                   {el.period}
                 </li>
               ))}

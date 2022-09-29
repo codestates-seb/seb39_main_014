@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   MypageContainer,
   ContentWrapper,
@@ -11,6 +11,8 @@ import {
 import { BsXCircle } from "react-icons/bs";
 
 function MyPage() {
+  const [career, setCareer] = useState({ job: "", proficiency: "" });
+
   return (
     <MypageContainer>
       <ContentWrapper>
