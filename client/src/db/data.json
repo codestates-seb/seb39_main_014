@@ -118,11 +118,11 @@
       "bookmark_count": "2"
     }
   ],
-  "popstack": {
-    "java": 5555,
-    "javascript": 4444,
-    "python": 3333,
-    "ruby": 2222,
-    "go": 1111
-  }
+  "popstack": [
+    { "id": 1, "name": "java", "time": 5555 },
+    { "id": 2, "name": "javascript", "time": 4444 },
+    { "id": 3, "name": "python", "time": 3333 },
+    { "id": 4, "name": "ruby", "time": 2222 },
+    { "id": 5, "name": "go", "time": 1111 }
+  ]
 }
