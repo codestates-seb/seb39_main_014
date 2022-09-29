@@ -29,11 +29,20 @@ public interface BookMarkRepository extends JpaRepository<Bookmark, Long> {
     void deleteByColumns(@Param("memberId") Member member,
                          @Param("boardId") Board board);
 
+    @Modifying(clearAutomatically = true)
+    @Transactional
+    @Query(value = "DELETE FROM Bookmark " +
+            "WHERE member_id = :memberId AND board_id = :boardId"
+            ,nativeQuery = true)
+    void deleteByColumns(@Param("memberId") Member member,
+                         @Param("boardId") Integer id);
+
     @Query(value = "SELECT b " +
             "FROM Bookmark b " +
             "WHERE b.memberId = :memberId AND b.boardId = :boardId")
     Optional<Bookmark> findByBookmark(@Param("memberId") Member member,
                                       @Param("boardId") Board board);
+
 
     @Query(value = "SELECT b " +
             "FROM Bookmark b " +

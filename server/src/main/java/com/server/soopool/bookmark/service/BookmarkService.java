@@ -3,6 +3,7 @@ package com.server.soopool.bookmark.service;
 import com.server.soopool.board.entity.Board;
 import com.server.soopool.bookmark.entity.Bookmark;
 import com.server.soopool.bookmark.repository.BookMarkRepository;
+import com.server.soopool.bookmark.request.BookmarkRequest;
 import com.server.soopool.member.entity.Member;
 import com.server.soopool.member.repository.MemberRepository;
 import lombok.AllArgsConstructor;
@@ -19,16 +20,25 @@ public class BookmarkService {
     private final BookMarkRepository bookMarkRepository;
     private final MemberRepository memberRepository;
 
+    public List<Bookmark> getUserBookmark(Member member) {
+        Member searchMembers = memberRepository.findById(member.getId()).get();
+        List<Bookmark> bookmarks = bookMarkRepository.findByBookmark(searchMembers);
+
+        return bookmarks;
+    }
+
+    public void deleteBookmark(Member member, List<BookmarkRequest> bookmarkRequests) {
+        for(BookmarkRequest e : bookmarkRequests) {
+            bookMarkRepository.deleteByColumns(member, e.getBoardId());
+        }
+    }
+
     public void createBookmark(Member member, Board board) {
         bookMarkRepository.saveByColumns(member,board);
     }
 
     public void deleteBookmark(Member member, Board board) {
         bookMarkRepository.deleteByColumns(member,board);
-    }
-
-    public void deleteBookmark(Member member) {
-
     }
 
     public void howBookmarkService(Member member, Board board) {
@@ -41,12 +51,5 @@ public class BookmarkService {
         } else {
             createBookmark(member,board);
         }
-    }
-
-    public List<Bookmark> getUserBookmark(Member member) {
-        Member searchMembers = memberRepository.findById(member.getId()).get();
-        List<Bookmark> bookmarks = bookMarkRepository.findByBookmark(searchMembers);
-
-        return bookmarks;
     }
 }
