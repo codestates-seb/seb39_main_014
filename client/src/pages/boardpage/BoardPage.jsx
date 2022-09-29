@@ -12,6 +12,7 @@ function BoardPage() {
 
   useEffect(() => {
     axios.get("http://localhost:4000/board/").then((res) => {
+      console.log(res.data[0]);
       setDatas(res.data);
     });
   }, []);
@@ -28,15 +29,15 @@ function BoardPage() {
               <Stack />
             </StackArea>
             <Content>
-              {datas.map((data) => (
-                <Board data={data} key={data.board_id} />
+              {datas.map((el) => (
+                <Board key={el.board_id} data={el} />
               ))}
             </Content>
             <PageNationArea>
-              <Paging page={1} setPage={1} />
+              <Paging page={1} setPage={9} />
             </PageNationArea>
           </Center>
-          <Side className="side-visible">2</Side>
+          <Side className="side-visible"></Side>
         </Main>
       </BoardPageLayout>
       <Footer />

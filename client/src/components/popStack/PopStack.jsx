@@ -22,7 +22,7 @@ function PopStack() {
         </Head>
         <Content>
           {popStack.map((el) => (
-            <div className="content">
+            <div className="content" key={el.id}>
               <p className="rank-color">
                 {el.id}. {el.name}
               </p>

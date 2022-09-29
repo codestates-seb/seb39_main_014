@@ -21,6 +21,7 @@ function Board({ data }) {
         <StackLayout>
           {data.tech_stack_name.map((el) => (
             <img
+              key={el.board_id}
               className="stack-logo"
               src={`/assets/stack/${el}.svg`}
               alt={`${el}`}
@@ -155,7 +156,7 @@ const TitleLayout = styled.div`
     word-break: break-word;
 
     display: -webkit-box;
-    -webkit-line-clamp: 3; // 원하는 라인수
+    -webkit-line-clamp: 2; // 원하는 라인수
     -webkit-box-orient: vertical;
   }
 `;
