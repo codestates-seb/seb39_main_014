@@ -9,6 +9,7 @@ import {
   Content,
   PostButton,
 } from "../../pages/writeForm/styled";
+import handleBoardSubmit from "../../api/handleBoardSubmit";
 
 const toolbarOptions = [
   ["link"],
@@ -48,6 +49,9 @@ const modules = {
 };
 
 function Editor({ newObject }) {
+  const WIRTEBOARD_URL =
+    "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/write";
+
   const [contents, setContents] = useState("");
   const [contact, setContact] = useState("");
   const [title, setTitle] = useState("");
@@ -60,6 +64,21 @@ function Editor({ newObject }) {
     }
   };
 
+  const handleSubmit = () => {
+    handleBoardSubmit(
+      WIRTEBOARD_URL,
+      newObject.recruitCategory,
+      newObject.recruitMethod,
+      newObject.location,
+      newObject.techStacks,
+      newObject.period,
+      newObject.careers,
+      newObject.boardCareers,
+      contact,
+      title,
+      contents
+    );
+  };
   return (
     <>
       <Contact>
@@ -83,6 +102,7 @@ function Editor({ newObject }) {
         />
       </Title>
       <Content>
+        <label htmlFor="input">내용</label>
         <QuillContainer>
           <ReactQuill
             placeholder={"글을 작성 해주세요."}
@@ -98,7 +118,9 @@ function Editor({ newObject }) {
         <button className="Post cancel" onClick={onCancelHandler}>
           취소
         </button>
-        <button className="Post complete">완료</button>
+        <button className="Post complete" onClick={handleSubmit}>
+          완료
+        </button>
       </PostButton>
     </>
   );

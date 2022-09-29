@@ -77,13 +77,55 @@ export const FirstRight = styled.div`
         /* accent-color: #69d06f; */
       }
     }
-
-    > select {
+    .Location-box {
+      display: flex;
+      flex-direction: column;
+    }
+    .Location-button {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      border: 1px solid #a6a6a6;
+      padding-left: 1rem;
+      border-radius: 10px;
+      &:hover {
+        border: 1px solid #69d06f;
+      }
+      > button {
+        width: 100%;
+        height: 2.3rem;
+        border: none;
+        background-color: white;
+        text-align: left;
+        cursor: pointer;
+      }
+      .AiOutlineDown {
+        cursor: pointer;
+        margin-right: 0.5rem;
+      }
+    }
+    .location {
+      position: relative;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border: 1px solid #a6a6a6;
+      border-radius: 10px;
+      > li {
+        padding: 0.8rem 0 0.8rem 1rem;
+        cursor: pointer;
+        &:hover {
+          background-color: #e5f8ed;
+          border-radius: 10px;
+        }
+      }
+    }
+    /* > ul {
       height: 1.5rem;
       width: 23%;
       margin-left: 2rem;
       padding-left: 0.5rem;
-    }
+    } */
 
     > label {
       font-weight: 400;
