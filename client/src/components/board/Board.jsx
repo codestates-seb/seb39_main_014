@@ -19,14 +19,14 @@ function Board({ data }) {
         </TitleLayout>
         <TagLayout>{/* advanced */}</TagLayout>
         <StackLayout>
-          {data.tech_stack_name.map((el) => (
+          {/* {data.techStackName.map((el) => (
             <img
               key={el.board_id}
               className="stack-logo"
               src={`/assets/stack/${el}.svg`}
               alt={`${el}`}
             />
-          ))}
+          ))} */}
         </StackLayout>
         <RecruitmentLayout>
           <div className="recruitment">
@@ -43,7 +43,7 @@ function Board({ data }) {
         </Boundary>
         <BottomLayout>
           <ProfileArea>
-            <div className="profile-img">{data.nickname[0]}</div>
+            <div className="profile-img">{data.nickname}</div>
             <div className="nickname">{data.nickname}</div>
           </ProfileArea>
           <CntArea>
