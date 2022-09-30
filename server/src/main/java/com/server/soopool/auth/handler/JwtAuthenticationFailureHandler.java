@@ -26,6 +26,10 @@ public class JwtAuthenticationFailureHandler implements AuthenticationFailureHan
         if(exception instanceof AppAuthenticationException)
             throw exception;
 
+        if(exception.getCause() instanceof AppAuthenticationException){
+            throw (AppAuthenticationException) exception.getCause();
+        }
+
         log.info("authentication undefined exception", exception);
         throw new AppAuthenticationException(AppAuthExceptionCode.UNDEFINED);
     }

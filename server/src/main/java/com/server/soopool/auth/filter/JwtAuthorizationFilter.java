@@ -10,6 +10,7 @@ import com.server.soopool.auth.service.PrincipalDetailsService;
 import com.server.soopool.member.entity.Member;
 import com.server.soopool.member.service.MemberService;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -69,7 +70,5 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         Authentication authentication = new UsernamePasswordAuthenticationToken(principal, null, principal.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
-
-    //shouldNotFilter 안적음.
 
 }

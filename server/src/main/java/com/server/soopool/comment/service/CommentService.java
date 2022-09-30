@@ -37,7 +37,7 @@ public class CommentService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)); // 사용자 정의 Exception 설정 필요
         Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUNT)); // 사용자 정의 Exception 설정 필요
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND)); // 사용자 정의 Exception 설정 필요
         Comment comment = Comment.builder()
                 .memberId(member)
                 .boardId(board)
@@ -55,7 +55,7 @@ public class CommentService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)); // 사용자 정의 Exception 설정 필요
         Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUNT)); // 사용자 정의 Exception 설정 필요
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND)); // 사용자 정의 Exception 설정 필요
         commentRepository.updateComment(commentPatchDto.getContent(), board, member, commentPatchDto.getGroupNumber());
         Comment comment = commentRepository.getCommentMatchingMemberIdAndBoardIdAAndGroupNumber(board, member, commentPatchDto.getGroupNumber());
         return comment;
@@ -66,7 +66,7 @@ public class CommentService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)); // 사용자 정의 Exception 설정 필요
         Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUNT)); // 사용자 정의 Exception 설정 필요
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND)); // 사용자 정의 Exception 설정 필요
         commentRepository.deleteComment(board, member, commentDeleteDto.getGroupNumber());
     }
 

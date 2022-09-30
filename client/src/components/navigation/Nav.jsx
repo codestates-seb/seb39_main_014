@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 import styled from "styled-components";
 
@@ -7,35 +8,38 @@ function Nav() {
   return (
     <NavFrame>
       <NavContainer>
-        <LeftMenu>
-          <Logo>
-            <div>
-              <Link to="/">
-                <img
-                  src="/assets/logo/logo_black.png"
-                  alt="asd.png"
-                  width={100}
-                  height={50}
-                />
-              </Link>
-            </div>
-          </Logo>
-          <Menu>
-            <Link to="/board" style={{ textDecoration: "none" }}>
+        <Logo>
+          <StyledLink to="/">
+            <img
+              src="/assets/logo/logo_black.png"
+              alt="asd.png"
+              width={100}
+              height={50}
+            />
+          </StyledLink>
+          <LeftMenu>
+            <StyledLink to="/board">
               <div>전체</div>
-            </Link>
-            <div>스터디</div>
-            <div>프로젝트</div>
-          </Menu>
-        </LeftMenu>
+            </StyledLink>
+            <StyledLink>
+              <div>스터디</div>
+            </StyledLink>
+            <StyledLink>
+              <div>프로젝트</div>
+            </StyledLink>
+          </LeftMenu>
+        </Logo>
+
         <RightMenu>
-          <Link to="/board/write" style={{ textDecoration: "none" }}>
+          <StyledLink to="/board/write">
             <div>작성하기</div>
-          </Link>
-          <Link to="/login" style={{ textDecoration: "none" }}>
+          </StyledLink>
+          <StyledLink to="/login">
             <div>로그인</div>
-          </Link>
+          </StyledLink>
         </RightMenu>
+
+        <GiHamburgerMenu className="hambuger" />
       </NavContainer>
     </NavFrame>
   );
@@ -44,64 +48,90 @@ function Nav() {
 const NavFrame = styled.nav`
   background: white;
   height: 5rem;
+
   display: flex;
-  font-size: 1rem;
-  position: sticky;
+  align-items: center;
   justify-content: center;
+
+  position: sticky;
+
   top: 0;
   z-index: 10;
-  /* margin-top: 0.5rem;
-  margin-bottom: 0.5rem; */
-
-  div {
-    color: 5f5f5f;
-  }
 
   font-size: 20px;
   font-weight: bold;
   color: #5f5f5f;
-  @media screen and (max-width: 1280px) {
-    transition: 0.8s all ease;
-  }
 `;
 
 const NavContainer = styled.div`
-  width: 1280px;
-  height: 100%;
+  width: 1100px;
   padding: 2rem;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  @media screen and (max-width: 768px) {
-    padding: 0;
-  }
-`;
 
-const LeftMenu = styled.div`
-  display: flex;
+  .hambuger {
+    display: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    align-items: center;
+
+    .hambuger {
+      display: block;
+      margin-left: auto;
+    }
+  }
 `;
 
 const Logo = styled.div`
   display: flex;
   align-items: center;
-  cursor: pointer;
+
+  img {
+    margin-left: -40px;
+  }
 `;
 
-const Menu = styled.div`
+const LeftMenu = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  div {
-    margin-left: 40px;
-    color: #5f5f5f;
+  cursor: pointer;
+  margin-left: 20px;
+
+  .menu-list {
+    display: flex;
+    align-items: center;
+  }
+
+  @media screen and (max-width: 768px) {
+    align-items: center;
+
+    .menu-list {
+      display: none;
+    }
   }
 `;
 
 const RightMenu = styled.div`
   display: flex;
-  align-items: center;
+  margin-right: 0px;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #5f5f5f;
+  margin-left: 20px;
+
   div {
-    color: #5f5f5f;
-    margin-right: 50px;
+    margin-left: 10px;
+  }
+
+  @media screen and (max-width: 768px) {
+    align-items: center;
+
+    div {
+      display: none;
+    }
   }
 `;
 

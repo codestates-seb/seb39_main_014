@@ -2,15 +2,18 @@ package com.server.soopool.bookmark.entity;
 
 import com.server.soopool.board.entity.Board;
 import com.server.soopool.member.entity.Member;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+
 
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Bookmark {
     //Todo : 컬럼의 제약조건 & 레이지 로딩 설정하기
 

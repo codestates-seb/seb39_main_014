@@ -28,25 +28,25 @@ public class Member extends BaseTimeEntity {
     private Long id;
 
     //기본컬럼 설정
-    @Column(length = 60, nullable = false)
+    @Column(length = 60)
     private String name;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20)
     private String userId;
 
-    @Column(length = 80, nullable = false)
+    @Column(length = 80)
     private String password;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100)
     private String email;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 100)
     private String nickname;
 
     @Column
     private LocalDateTime deletedAt;
 
-    @Column(nullable = false)
+    @Column
     private boolean isDeleted;
 
     @Enumerated(EnumType.STRING)
@@ -59,6 +59,9 @@ public class Member extends BaseTimeEntity {
 
     @Column
     private String providerId;
+
+    @Column
+    private String profileImagePath;
 
     //OneToMany 컬럼설정
     @OneToMany(mappedBy = "member")
@@ -127,12 +130,15 @@ public class Member extends BaseTimeEntity {
 //    }
 
     @Builder(builderMethodName = "oauth2Builder", buildMethodName = "buildOAuth2Member")
-    private static Member createOAuth2Member(String name, String email, String provider, String providerId){
+    private static Member createOAuth2Member(String name, String email, String provider, String providerId, String profileImagePath){
         Member member = new Member();
         member.name = name;
+        member.nickname = name;
+        member.userId = email;
         member.email = email;
         member.provider = provider;
         member.providerId = providerId;
+        member.profileImagePath = profileImagePath;
         return member;
     }
 

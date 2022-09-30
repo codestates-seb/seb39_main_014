@@ -40,7 +40,7 @@ public class AuthController {
     @PostMapping("auth/refresh")
     public ResponseEntity refresh(HttpServletRequest request, HttpServletResponse response){
         jwtService.refresh(request,response);
-        return ResponseEntity.ok("토큰을 재발급 하였습니다 !");
+        return new ResponseEntity("토큰을 재발급 하였습니다 !", HttpStatus.OK);
     }
 
     @GetMapping("authtest")

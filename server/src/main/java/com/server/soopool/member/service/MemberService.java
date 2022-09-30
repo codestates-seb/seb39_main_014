@@ -37,9 +37,26 @@ public class MemberService {
                 .orElseThrow(() -> new IllegalArgumentException("Member not exist. id = " + id));
     }
 
+    public Member findByOAuth2Member(String provider, String providerId){
+        return memberRepository.findByProviderAndProviderId(provider,providerId)
+                .orElseThrow(() -> new IllegalArgumentException("Member not exist. provider = " + provider + " " + "providerId = " + providerId));
+    }
+
     public boolean existsByUserId(String userId){
         return memberRepository.existsByUserId(userId);
     }
 
     public boolean existsById(Long Id) { return memberRepository.existsById(Id); }
+
+    public void singUpOauth2IfNotExists(Member member){
+        String provider = member.getProvider();
+        String providerId = member.getProviderId();
+        if(existOAuth2Member(provider,providerId))
+            return;
+        memberRepository.save(member);
+    }
+
+    public boolean existOAuth2Member(String provider, String providerId){
+        return memberRepository.existsByProviderAndProviderId(provider,providerId);
+    }
 }

@@ -36,7 +36,7 @@ public class Comment extends BaseTimeEntity {
     private Integer groupSeq;
 
     @Column(nullable = true) // 대댓글 구현시 false로 변경필요
-    private boolean groupDepth;
+    private boolean groupDepth = true;
 
     @Column(nullable = false)
     private String content;
