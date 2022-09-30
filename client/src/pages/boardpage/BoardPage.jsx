@@ -8,6 +8,7 @@ import Paging from "../../components/pagenation/Pagenation";
 import axios from "axios";
 import PopStack from "../../components/popStack/PopStack";
 import TopButton from "../../components/topButton/TopButton";
+import IsLoading from "../../components/isLoading/IsLoading";
 
 function BoardPage() {
   const BoardURL =
@@ -21,6 +22,37 @@ function BoardPage() {
       setDatas(res.data.boards);
     });
   }, []);
+
+  if (datas.length !== 0) {
+    return (
+      <>
+        <BoardPageLayout>
+          <Main>
+            <PopSide className="side-visible">
+              <PopStack />
+            </PopSide>
+            <Center>
+              <StackArea>
+                <Stack
+                  selectedList={stackFilter}
+                  setSelectedList={setStackFilter}
+                />
+              </StackArea>
+              <IsLoading />
+              <PageNationArea>
+                {/* 페이지네이션 */}
+                <Paging page={1} setPage={9} />
+              </PageNationArea>
+            </Center>
+            <Side className>
+              <TopButton />
+            </Side>
+          </Main>
+        </BoardPageLayout>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
