@@ -1,16 +1,15 @@
 package com.server.soopool.board.dto;
 
-import com.server.soopool.board.entity.Board;
-import com.server.soopool.boardTechstack.entity.BoardTechStack;
-import com.server.soopool.member.entity.Member;
-import lombok.Builder;
+import com.server.soopool.boardCareer.dto.BoardCareerResponseDto;
+import com.server.soopool.boardTechstack.dto.BoardTechStackResponseDto;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Builder
 @Getter
+@Setter
 public class BoardResponseDto {
     private Long id;
     private String nickName;
@@ -19,15 +18,18 @@ public class BoardResponseDto {
     private String period;
     private String recruitMethod;
     private String location;
-    private List<String> techStackNames;
+    private List<BoardTechStackResponseDto> techStackNames;
     private String contact;
-    private List<String> careerNames;
-    private List<Integer> careerTotalRecruit;
+    private List<BoardCareerResponseDto> boardCareers;
     private String title;
     private String contents;
+    private Integer commentAmount;
+    private Integer totalRecruit;
+    private Integer bookmarkCount;
+    private boolean recruitDone;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
-    private boolean isDeleted;
+    private boolean deleted;
     private LocalDateTime deletedAt;
 }
 
