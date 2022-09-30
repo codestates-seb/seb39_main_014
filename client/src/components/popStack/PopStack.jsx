@@ -41,22 +41,15 @@ const PopStackFrame = styled.div`
   height: 250px;
 
   position: relative;
-  top: 220px;
+  top: 210px;
 
-  display: flex;
-  justify-content: center;
   box-sizing: content-box;
-  margin: 15px;
   padding: 20px;
 
   box-shadow: rgba(149, 157, 165, 0.2) 1px 1px 6px 1px;
 
   border-radius: 25px;
-
   transition: 0.2s;
-
-  @media screen and (max-width: 820px) {
-  }
 `;
 
 const PopStackLayout = styled.div`
