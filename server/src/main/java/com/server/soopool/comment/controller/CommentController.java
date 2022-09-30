@@ -26,9 +26,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
+    private final BoardService boardService;
     private final CommentMapper commentMapper;
     private final MemberService memberService;
-    private final BoardService boardService;
 
     @GetMapping("board/{board_id}/comment")
         public ResponseEntity getCommentsMatchingBoardId(@AuthenticationPrincipal PrincipalDetails principal,
@@ -53,6 +53,9 @@ public class CommentController {
         // principal.getName()으로 로그인한 사용자의 아이디를 구합니다.
         Member member = memberService.findByUserId("hgd2022");
         Board board = boardService.findBoard(boardId);
+
+        // 게시글 댓글 개수 + 1
+        board.setCommentAmount(board.getCommentAmount() + 1);
         commentService.createComment(member.getId(), board.getId(), commentPostDto.getContent());
 //        boardService.commentCount(board);
         List<Comment> comments = commentService.getComments(board);
@@ -71,9 +74,11 @@ public class CommentController {
         // principal.getName()으로 로그인한 사용자의 아이디를 구합니다.
         Member member = memberService.findByUserId("hgd2022");
         Board board = boardService.findBoard(boardId);
+
         commentService.modifyComment(member.getId(), board.getId(), commentPatchDto);
         List<Comment> comments = commentService.getComments(board);
 
+        boardService.save(board);
         return new ResponseEntity<>(
                 new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments, member, board)),
                 HttpStatus.CREATED
@@ -87,9 +92,13 @@ public class CommentController {
                                         @Validated @RequestBody CommentDeleteDto commentDeleteDto) {
         Member member = memberService.findByUserId("hgd2022");
         Board board = boardService.findBoard(boardId);
+        // 게시글 댓글 개수 - 1
+        board.setCommentAmount(board.getCommentAmount() - 1);
+
         commentService.deleteComment(member.getId(), board.getId(), commentDeleteDto);
         List<Comment> comments = commentService.getComments(board);
 
+        boardService.save(board);
         return new ResponseEntity<>(
                 new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments, member, board)),
                 HttpStatus.CREATED
