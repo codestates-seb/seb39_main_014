@@ -26,9 +26,9 @@ function BoardPage() {
     <>
       <BoardPageLayout>
         <Main>
-          <Side className="side-visible">
+          <PopSide className="side-visible">
             <PopStack />
-          </Side>
+          </PopSide>
           <Center>
             <StackArea>
               <Stack
@@ -61,10 +61,9 @@ function BoardPage() {
   );
 }
 
+/** div - boardPage 전체 레이아웃 */
 const BoardPageLayout = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
 `;
 
@@ -75,14 +74,9 @@ const StackArea = styled.div`
 `;
 
 const Main = styled.div`
-  width: 1600px;
+  width: 100%;
   display: grid;
-  grid-template-columns: 1fr 5fr 1fr;
-
-  .top-button {
-    display: flex;
-    justify-content: center;
-  }
+  grid-template-columns: 1fr 1.5fr 1fr;
 
   @media screen and (max-width: 1500px) {
     display: flex;
@@ -128,16 +122,16 @@ const PageNationArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1024px;
   height: 200px;
 `;
-const Side = styled.div`
+const PopSide = styled.div`
   /* background-color: gray; */
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+`;
 
+const Side = styled.div`
   .top-button {
-    padding-left: 50px;
   }
 `;
 
