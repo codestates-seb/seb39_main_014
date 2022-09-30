@@ -20,11 +20,8 @@ function TopButton() {
 const ScrollContainer = styled.div`
   z-index: 1;
   display: flex;
-  align-items: flex-end;
-  margin-bottom: 100px;
   position: relative;
-  top: 1300px;
-
+  top: 1200px;
   #top {
     width: 50px;
     height: 50px;
