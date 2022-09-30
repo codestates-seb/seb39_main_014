@@ -27,7 +27,10 @@ function BoardPage() {
           </Side>
           <Center>
             <StackArea>
-              <Stack selected={stackFilter} setSelected={setStackFilter} />
+              <Stack
+                selectedList={stackFilter}
+                setSelectedList={setStackFilter}
+              />
             </StackArea>
             <Content>
               {datas.map((el) => (

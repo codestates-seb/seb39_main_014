@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { IoCloseCircleOutline } from "react-icons/io5";
 
-const Stack = ({ selected, setSelected }) => {
+const Stack = ({ selectedList, setSelectedList }) => {
   // 모든 스택 이름
   const stacks = {
     전체: [
@@ -65,25 +65,27 @@ const Stack = ({ selected, setSelected }) => {
     setCurrentJob(el.target.innerText);
   };
 
-  /** 스택 선택 */
+  /** 스택 선택 함수
+   * 이미 선택된 값일 경우 : filter로 selectedList에서 삭제
+   * 선택되지 않은 값일 경우 : selectedList에 추가*/
   const handleStackClick = (event) => {
-    if (selected.includes(event)) {
-      const deletedArr = selected.filter((el) => el !== event);
-      setSelected(deletedArr);
+    if (selectedList.includes(event)) {
+      const deletedArr = selectedList.filter((el) => el !== event);
+      setSelectedList(deletedArr);
     } else {
-      setSelected((prev) => [...prev, event]);
+      setSelectedList((prev) => [...prev, event]);
     }
   };
 
   /** 스택 삭제 */
   const handleStackDelete = (index) => {
-    const deletedArr = selected.filter((el, idx) => idx !== index);
-    setSelected(deletedArr);
+    const deletedArr = selectedList.filter((el, idx) => idx !== index);
+    setSelectedList(deletedArr);
   };
 
   /** 스택 초기화 */
   const handleStackReset = () => {
-    setSelected([]);
+    setSelectedList([]);
   };
 
   return (
@@ -93,27 +95,31 @@ const Stack = ({ selected, setSelected }) => {
           <h2
             onClick={handleJob}
             // eslint-disable-next-line prettier/prettier
-            className={currentJob === el ? "selected" : ""}>
+            className={currentJob === el ? "selectedList" : ""}>
             {el}
           </h2>
         ))}
         <h2
           onClick={handleJob}
-          className={currentJob === "전체" ? "selected" : ""}
+          className={currentJob === "전체" ? "selectedList" : ""}
         />
       </JobGroup>
       <StackContainer>
-        {/* 현재탭이 가 아닐 경우 */}
+        {/* 현재탭이 전체가 아닐 경우 */}
         {currentJob !== "전체"
           ? stacks[currentJob].map((el) => (
               <StackImg
                 src={`/assets/stack/${el}.svg`}
                 alt={el}
                 onClick={() => handleStackClick(el)}
-                className={!selected.includes(el) ? "not-selected" : "selected"}
+                className={
+                  !selectedList.includes(el)
+                    ? "not-selectedList"
+                    : "selectedList"
+                }
               />
             ))
-          : // 현재탭이 모두보기일 경우
+          : // 현재탭이 전체일 경우
             [...stacks.전체].map((el, idx) => (
               <StackImg
                 src={`/assets/stack/${el}.svg`}
@@ -121,16 +127,16 @@ const Stack = ({ selected, setSelected }) => {
                 key={idx}
                 onClick={() => handleStackClick(el)}
                 className={
-                  !selected.includes(el) && selected.length > 0
-                    ? "not-selected"
-                    : "selected"
+                  !selectedList.includes(el) && selectedList.length >= 0
+                    ? "not-selectedList"
+                    : "selectedList"
                 }
               />
             ))}
       </StackContainer>
-      {selected.length ? (
+      {selectedList.length ? (
         <SelectedContainer>
-          {selected.map((el, idx) => (
+          {selectedList.map((el, idx) => (
             <div key={idx}>
               {el}
               <IoCloseCircleOutline
@@ -164,7 +170,7 @@ const JobGroup = styled.div`
     cursor: pointer;
   }
 
-  .selected {
+  .selectedList {
     color: black;
     opacity: 1;
   }
@@ -177,9 +183,14 @@ const StackContainer = styled.div`
   div {
     display: flex;
     align-items: center;
+    background-color: gray;
     cursor: pointer;
   }
-  .not-selected {
+  .selectedList {
+    // 선택된 스택 css 변경 필요
+    border: 2px solid black;
+  }
+  .not-selectedList {
     opacity: 0.5;
   }
 `;
@@ -221,7 +232,18 @@ const SelectedContainer = styled.div`
     width: 70px;
     height: 33px;
     margin-left: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: white;
+    box-shadow: rgba(149, 157, 165, 0.2) 1px 1px 6px 1px;
     cursor: pointer;
+  }
+
+  .reset-button:hover {
+    background-color: #ffe3e4;
+    color: #ff7d85;
+    font-weight: bold;
+    transition: 0.15s;
   }
 `;
 
