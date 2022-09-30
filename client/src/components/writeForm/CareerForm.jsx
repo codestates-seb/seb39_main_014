@@ -15,11 +15,10 @@ function CareerForm({ object }) {
   const [count, setCount] = useState(1);
   const [crew, setCrew] = useState([]);
   const [careers, setCareers] = useState([]);
-  const [boardCareers, setBoardCareers] = useState([]);
 
   const idCount = useRef(0);
 
-  const newObject = { ...object, careers: careers, boardCareers: boardCareers };
+  const newObject = { ...object, careers: careers };
 
   const onCountHandler = (e) => {
     e.preventDefault();
@@ -45,13 +44,15 @@ function CareerForm({ object }) {
         value: career.value,
       },
     ]);
-    setCareers([...careers, { id: career.value }]);
-    setBoardCareers([...boardCareers, { careerTotalRecruit: count }]);
+    setCareers([
+      ...careers,
+      { careerId: career.value, careerTotalRecruit: count },
+    ]);
     setCount(1);
     setCareer({ career: "웹 프론트엔드", value: 1 });
     idCount.current = idCount.current + 1;
   };
-
+  console.log(careers);
   const onDeleteHandler = (e) => {
     setCrew(crew.filter((prev) => prev.id !== e));
   };

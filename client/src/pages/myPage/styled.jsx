@@ -105,18 +105,24 @@ export const UserInfoWrapper = styled.div`
       display: grid;
       grid-template-columns: 1fr 0.6fr;
       justify-self: right;
+      position: relative;
       width: 20%;
       min-width: 140px;
 
       > ul {
         display: flex;
         align-items: center;
+        position: absolute;
         justify-content: center;
         flex-direction: column;
         border: 1px solid #a6a6a6;
         border-radius: 10px;
-        width: 100%;
         padding: 0;
+        top: -5px;
+        background-color: white;
+        .Career-list {
+          width: 70%;
+        }
 
         > li {
           display: flex;
@@ -132,6 +138,14 @@ export const UserInfoWrapper = styled.div`
             background-color: #e5f8ed;
           }
         }
+      }
+      .Career-list {
+        width: 70%;
+      }
+      .Level-list {
+        position: absolute;
+        right: 0px;
+        width: 30%;
       }
     }
   }

@@ -113,11 +113,17 @@ export const FirstRight = styled.div`
       width: 100%;
       z-index: 3;
       background-color: white;
-      top: 40px;
+      left: 80px;
       margin: 0;
       padding: 0;
       border: 1px solid #a6a6a6;
       border-radius: 10px;
+      @media screen and (max-width: 710px) {
+        left: 0;
+        top: 40px;
+        height: 130px;
+        overflow-y: auto;
+      }
       > li {
         padding: 0.8rem 0 0.8rem 1rem;
         font-size: 0.8rem;

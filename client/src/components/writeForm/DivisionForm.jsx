@@ -65,13 +65,16 @@ function DivisionForm() {
       },
     ]);
     stackRef.current = stackRef.current + 1;
-    setTechStacks([...techStacks, { id: stackNumbers[0][e.target.innerText] }]);
+    setTechStacks([
+      ...techStacks,
+      { techStackId: stackNumbers[0][e.target.innerText] },
+    ]);
     setIsStack(!isStack);
     setNewStackList(
       newStackList.filter((prev) => prev.stack !== e.target.innerText)
     );
   };
-
+  console.log(techStacks);
   /** 선택된 스택 추가 및 선택된 스택 기존 목록에서 제거*/
   const handleStackListRemove = (id) => {
     // target의 id
