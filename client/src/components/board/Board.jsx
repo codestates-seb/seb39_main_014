@@ -5,13 +5,17 @@ import { AiOutlineEye, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 /** 게시글 컴포넌트 */
 function Board({ data }) {
+  {
+    console.log(data.createdAt.slice(0, 10));
+  }
   return (
     <PostFrame>
       <PostLayout>
         <TopLayout>
-          <div>지역무관</div>
-          <div>온라인</div>
-          <div>6개월</div>
+          <div>{data.location}</div>
+          <div>{data.recruitMethod}</div>
+          <div>{data.period}</div>
+          {/* createdAt으로부터 30일 뒤 */}
           <div className="info-deadline">D-14</div>
         </TopLayout>
         <TitleLayout>
@@ -19,23 +23,27 @@ function Board({ data }) {
         </TitleLayout>
         <TagLayout>{/* advanced */}</TagLayout>
         <StackLayout>
-          {/* {data.techStackName.map((el) => (
-            <img
-              key={el.board_id}
-              className="stack-logo"
-              src={`/assets/stack/${el}.svg`}
-              alt={`${el}`}
-            />
-          ))} */}
+          {data.techStackName ? (
+            data.techStackName.map((el) => (
+              <img
+                key={el.board_id}
+                className="stack-logo"
+                src={`/assets/stack/${el}.svg`}
+                alt={`${el}`}
+              />
+            ))
+          ) : (
+            <></>
+          )}
         </StackLayout>
         <RecruitmentLayout>
           <div className="recruitment">
             <p>모집인원</p>
-            <p> {data.current_recruit} </p>
+            <p> 0 {/* {data.currentRecruit}  */}</p>
             <p> / </p>
-            <p> {data.total_recruit} </p>
+            <p> 0{/* {data.total_recruit}  */}</p>
             <p>▿</p>
-            <div className="created-at">{data.created_at}</div>
+            <div className="created-at">{data.createdAt.slice(0, 10)}</div>
           </div>
         </RecruitmentLayout>
         <Boundary>
@@ -43,15 +51,15 @@ function Board({ data }) {
         </Boundary>
         <BottomLayout>
           <ProfileArea>
-            <div className="profile-img">{data.nickname}</div>
-            <div className="nickname">{data.nickname}</div>
+            <div className="profile-img">{data.nickName[0]}</div>
+            <div className="nickname">{data.nickName}</div>
           </ProfileArea>
           <CntArea>
             <div className="view-cnt">
               <div className="view-icon">
                 <AiOutlineEye />
               </div>
-              <div>{data.views_cnt}</div>
+              <div>{data.viewCount}</div>
             </div>
             <div className="comment-cnt">
               <div>
@@ -61,13 +69,13 @@ function Board({ data }) {
             </div>
             <div className="bookmark-cnt">
               <div className="heart-div">
-                {data.is_bookmarked === "True" ? (
+                {data.isBookmarked === "True" ? (
                   <AiFillHeart className="fill-heart-icon" />
                 ) : (
                   <AiOutlineHeart className="out-line-heart-icon" />
                 )}
               </div>
-              <div>{data.bookmark_count}</div>
+              <div>{data.bookmarkCount}</div>
             </div>
           </CntArea>
         </BottomLayout>
