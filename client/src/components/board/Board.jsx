@@ -5,16 +5,16 @@ import { AiOutlineEye, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 /** 게시글 컴포넌트 */
 function Board({ data }) {
-  {
-    console.log(data.createdAt.slice(0, 10));
-  }
   return (
     <PostFrame>
       <PostLayout>
         <TopLayout>
-          <div>{data.location}</div>
-          <div>{data.recruitMethod}</div>
-          <div>{data.period}</div>
+          {data.location === "지역 무관" ? (
+            <div>{"지역무관"}</div>
+          ) : (
+            <div>{data.location}</div>
+          )}
+          <div className="top-period">{data.period}</div>
           {/* createdAt으로부터 30일 뒤 */}
           <div className="info-deadline">D-14</div>
         </TopLayout>
@@ -65,7 +65,7 @@ function Board({ data }) {
               <div>
                 <BsFillChatDotsFill className="chat-icon" />
               </div>
-              <div>{data.comment_amount}</div>
+              <div>{data.commentAmount}</div>
             </div>
             <div className="bookmark-cnt">
               <div className="heart-div">
@@ -137,6 +137,10 @@ const TopLayout = styled.div`
     height: 23px;
     border-radius: 50px;
     font-weight: bold;
+  }
+
+  .top-period {
+    margin-left: -60px;
   }
 
   /* 모집기한 */
@@ -219,7 +223,7 @@ const BottomLayout = styled.div`
   display: flex;
   width: 290px;
   height: 30px;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 /** div - (Bottom) 프로필사진, 닉네임  */

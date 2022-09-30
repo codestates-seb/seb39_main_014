@@ -7,6 +7,7 @@ import Stack from "../../components/stack/Stack";
 import Paging from "../../components/pagenation/Pagenation";
 import axios from "axios";
 import PopStack from "../../components/popStack/PopStack";
+import TopButton from "../../components/topButton/TopButton";
 
 function BoardPage() {
   const BoardURL =
@@ -46,10 +47,13 @@ function BoardPage() {
               ))}
             </Content>
             <PageNationArea>
+              {/* 페이지네이션 */}
               <Paging page={1} setPage={9} />
             </PageNationArea>
           </Center>
-          <Side className="side-visible"></Side>
+          <Side className>
+            <TopButton />
+          </Side>
         </Main>
       </BoardPageLayout>
       <Footer />
@@ -75,6 +79,11 @@ const Main = styled.div`
   display: grid;
   grid-template-columns: 1fr 5fr 1fr;
 
+  .top-button {
+    display: flex;
+    justify-content: center;
+  }
+
   @media screen and (max-width: 1500px) {
     display: flex;
     justify-content: center;
@@ -87,6 +96,7 @@ const Main = styled.div`
 const Center = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 100%;
   height: 100%;
   grid-template-rows: 1fr 1fr 1fr;
@@ -124,6 +134,11 @@ const PageNationArea = styled.div`
 const Side = styled.div`
   /* background-color: gray; */
   display: flex;
+  justify-content: center;
+
+  .top-button {
+    padding-left: 50px;
+  }
 `;
 
 export default BoardPage;
