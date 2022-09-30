@@ -1,75 +1,249 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import { stackList } from "../../lib/stackList";
+import { IoCloseCircleOutline } from "react-icons/io5";
 
-/** / */
-const group = [
-  { id: 1, category: "전체" },
-  { id: 2, category: "프론트엔드" },
-  { id: 3, category: "백엔드" },
-  { id: 4, category: "기타" },
-];
+const Stack = ({ selectedList, setSelectedList }) => {
+  // 모든 스택 이름
+  const stacks = {
+    전체: [
+      "javascript",
+      "typescript",
+      "react",
+      "vue",
+      "svelte",
+      "next",
+      "graphql",
+      "java",
+      "spring",
+      "node",
+      "nest",
+      "go",
+      "kotlin",
+      "express",
+      "mySQL",
+      "mongoDB",
+      "python",
+      "php",
+      "graphQL",
+      "flutter",
+      "swift",
+      "reactNative",
+      "unity",
+      "aws",
+      "docker",
+    ],
+    프론트엔드: [
+      "javascript",
+      "typescript",
+      "react",
+      "vue",
+      "svelte",
+      "next",
+      "graphql",
+    ],
+    백엔드: [
+      "java",
+      "spring",
+      "node",
+      "nest",
+      "go",
+      "kotlin",
+      "express",
+      "mySQL",
+      "mongoDB",
+      "python",
+      "php",
+      "graphQL",
+    ],
+    기타: ["flutter", "swift", "reactNative", "unity", "aws", "docker"],
+  };
 
-function Stack() {
-  const [jobGroup, setJobGroup] = useState("전체");
+  const [currentJob, setCurrentJob] = useState("전체");
 
-  const handleGroup = (e) => {
-    setJobGroup(e.target.innerText);
+  /**프론트엔드 백엔드 기타 모두보기 탭*/
+  const handleJob = (el) => {
+    setCurrentJob(el.target.innerText);
+  };
+
+  /** 스택 선택 함수
+   * 이미 선택된 값일 경우 : filter로 selectedList에서 삭제
+   * 선택되지 않은 값일 경우 : selectedList에 추가*/
+  const handleStackClick = (event) => {
+    if (selectedList.includes(event)) {
+      const deletedArr = selectedList.filter((el) => el !== event);
+      setSelectedList(deletedArr);
+    } else {
+      setSelectedList((prev) => [...prev, event]);
+    }
+  };
+
+  /** 스택 삭제 */
+  const handleStackDelete = (index) => {
+    const deletedArr = selectedList.filter((el, idx) => idx !== index);
+    setSelectedList(deletedArr);
+  };
+
+  /** 스택 초기화 */
+  const handleStackReset = () => {
+    setSelectedList([]);
   };
 
   return (
-    <StackLayout>
-      <StackPick>
-        {/* 전체 프론트엔드 백엔드 기타 */}
-        {group.map((el, idx) => (
-          <h2 key={el.id} onClick={handleGroup}>
-            {el.category}
+    <StackFrame>
+      <JobGroup className="tab">
+        {Object.keys(stacks).map((el) => (
+          <h2
+            onClick={handleJob}
+            // eslint-disable-next-line prettier/prettier
+            className={currentJob === el ? "selectedList" : ""}>
+            {el}
           </h2>
         ))}
-      </StackPick>
-      <StackLogo>
-        {/* 스택 로고 */}
-        {stackList[jobGroup].map((el) => (
-          <img src={`/assets/stack/${el}.svg`} alt={`${el}`} />
-        ))}
-      </StackLogo>
-    </StackLayout>
+        <h2
+          onClick={handleJob}
+          className={currentJob === "전체" ? "selectedList" : ""}
+        />
+      </JobGroup>
+      <StackContainer>
+        {/* 현재탭이 전체가 아닐 경우 */}
+        {currentJob !== "전체"
+          ? stacks[currentJob].map((el) => (
+              <StackImg
+                src={`/assets/stack/${el}.svg`}
+                alt={el}
+                onClick={() => handleStackClick(el)}
+                className={
+                  !selectedList.includes(el)
+                    ? "not-selectedList"
+                    : "selectedList"
+                }
+              />
+            ))
+          : // 현재탭이 전체일 경우
+            [...stacks.전체].map((el, idx) => (
+              <StackImg
+                src={`/assets/stack/${el}.svg`}
+                alt={`${el}`}
+                key={idx}
+                onClick={() => handleStackClick(el)}
+                className={
+                  !selectedList.includes(el) && selectedList.length >= 0
+                    ? "not-selectedList"
+                    : "selectedList"
+                }
+              />
+            ))}
+      </StackContainer>
+      {selectedList.length ? (
+        <SelectedContainer>
+          {selectedList.map((el, idx) => (
+            <div key={idx}>
+              {el}
+              <IoCloseCircleOutline
+                className="del-icon"
+                // eslint-disable-next-line prettier/prettier
+                onClick={() => handleStackDelete(idx)}
+              />
+            </div>
+          ))}
+          <button className="reset-button" onClick={handleStackReset}>
+            초기화
+          </button>
+        </SelectedContainer>
+      ) : (
+        ""
+      )}
+    </StackFrame>
   );
-}
+};
 
-/** div - Stack 레이아웃 */
-const StackLayout = styled.div`
-  width: 1000px;
+const StackFrame = styled.div`
+  width: 1100px;
 `;
 
-/** div - 전체, 프론트엔드, 백엔드, 기타 */
-const StackPick = styled.div`
+const JobGroup = styled.div`
   display: flex;
-  margin-top: 10px;
-  transition: 0.2s;
-
   h2 {
-    margin-left: 60px;
+    color: gray;
+    opacity: 0.7;
+    padding-right: 20px;
+    cursor: pointer;
+  }
+
+  .selectedList {
+    color: black;
+    opacity: 1;
   }
 `;
 
-/** div - 스택 로고 레이아웃 */
-const StackLogo = styled.div`
-  margin-left: 40px;
-  margin-bottom: 20px;
+const StackContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
 
-  // 전체 레이아웃 너비
-  width: 900px;
-
-  img {
-    // 클릭시 Opacity 제거예정
+  div {
+    display: flex;
+    align-items: center;
+    background-color: gray;
+    cursor: pointer;
+  }
+  .selectedList {
+    // 선택된 스택 css 변경 필요
+    border: 2px solid black;
+  }
+  .not-selectedList {
     opacity: 0.5;
+  }
+`;
+
+const StackImg = styled.img`
+  width: 60px;
+  height: 60px;
+
+  cursor: pointer;
+  border-radius: 50%;
+
+  padding: 2px;
+  margin: 4px;
+`;
+
+const SelectedContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px 0;
+
+  div {
+    display: flex;
+    align-items: center;
     margin-left: 10px;
-    margin-top: 10px;
-    width: 50px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 7px;
+    background-color: #e9e9e9;
+    font-weight: 400;
+  }
+  .del-icon {
+    margin-left: 5px;
+    width: 15px;
+
+    cursor: pointer;
+  }
+
+  .reset-button {
+    width: 70px;
+    height: 33px;
+    margin-left: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: white;
+    box-shadow: rgba(149, 157, 165, 0.2) 1px 1px 6px 1px;
+    cursor: pointer;
+  }
+
+  .reset-button:hover {
+    background-color: #ffe3e4;
+    color: #ff7d85;
+    font-weight: bold;
+    transition: 0.15s;
   }
 `;
 
