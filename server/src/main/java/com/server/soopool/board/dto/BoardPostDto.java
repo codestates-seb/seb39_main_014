@@ -1,10 +1,8 @@
 package com.server.soopool.board.dto;
 
-import com.server.soopool.board.entity.Board;
-import com.server.soopool.boardCareer.entity.BoardCareer;
-import com.server.soopool.boardTechstack.entity.BoardTechStack;
-import com.server.soopool.career.entity.Career;
-import com.server.soopool.techstack.entity.TechStack;
+import com.server.soopool.boardCareer.dto.BoardCareerDto;
+import com.server.soopool.boardTechstack.dto.BoardTechStackDto;
+
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
@@ -23,15 +21,13 @@ public class BoardPostDto {
     private String location;
 
     @NotBlank(message = "사용 기술을 선택해주세요.")
-    private List<TechStack> techStacks;
+    private List<BoardTechStackDto> boardTechStacks;
 
     private String period;
 
-    @NotBlank(message = "모집 분류를 선택해주세요.")
-    private List<Career> careers;
+    @NotBlank(message = "모집 커리어와 모집인원을 선택해주세요")
+    private List<BoardCareerDto> boardCareers;
 
-    @NotBlank(message = "모집 인원수를 선택해주세요.")
-    private List<BoardCareer> boardCareers;
 
     private String contact;
 
