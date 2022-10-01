@@ -6,7 +6,8 @@ function IsLoading() {
 }
 
 const LoadingFrame = styled.div`
-  height: 900px;
+  width: 80%;
+  height: 700px;
   display: flex;
   justify-content: center;
   align-items: center;

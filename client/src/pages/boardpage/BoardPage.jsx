@@ -23,7 +23,7 @@ function BoardPage() {
     });
   }, []);
 
-  if (datas.length !== 0) {
+  if (datas.length === 0) {
     return (
       <>
         <BoardPageLayout>
@@ -44,7 +44,7 @@ function BoardPage() {
                 <Paging page={1} setPage={9} />
               </PageNationArea>
             </Center>
-            <Side className>
+            <Side>
               <TopButton />
             </Side>
           </Main>
@@ -123,6 +123,7 @@ const Center = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
   grid-template-rows: 1fr 1fr 1fr;

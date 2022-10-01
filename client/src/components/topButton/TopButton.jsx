@@ -21,7 +21,7 @@ const ScrollContainer = styled.div`
   z-index: 1;
   display: flex;
   position: relative;
-  top: 1200px;
+  bottom: -1000px;
   #top {
     width: 50px;
     height: 50px;
