@@ -9,7 +9,7 @@ export const InquiryContainer = styled.div`
 export const ContentContainer = styled.div`
   display: flex;
   width: 90%;
-  max-width: 1280px;
+  max-width: 1024px;
   padding: 1rem 0 3rem;
   @media screen and (max-width: 476px) {
     width: 100%;
@@ -49,6 +49,7 @@ export const Buttons = styled.div`
   .BiArrowBack {
     font-size: 2rem;
     color: #959595;
+    cursor: pointer;
   }
   .Patch-delete {
     > button {
@@ -237,7 +238,7 @@ export const BoardInfo = styled.ul`
 `;
 
 export const Body = styled.span`
-  padding: 1rem 0 0 0.6rem;
+  padding: 1rem 0 1rem 0.6rem;
   min-height: 300px;
   color: #4b5563;
   letter-spacing: 0.1rem;
@@ -251,7 +252,7 @@ export const WriteComment = styled.div`
   flex-direction: column;
   width: 100%;
   padding: 0 0.5rem 0.5rem;
-  border-bottom: 1px solid #b1b1b1;
+
   @media screen and (max-width: 476px) {
     font-size: 0.8rem;
   }
@@ -284,10 +285,19 @@ export const Comments = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 0.5rem;
-  margin: 1rem 0;
-  border-bottom: 1px solid #b1b1b1;
+
   @media screen and (max-width: 476px) {
     font-size: 0.8rem;
+  }
+  &:first-child {
+    border-top: 1px solid #b1b1b1;
+  }
+  .Comment-list {
+    padding: 1rem 0;
+    border-bottom: 1px solid #b1b1b1;
+    > p {
+      padding-left: 0.5rem;
+    }
   }
   .Username {
     display: flex;
