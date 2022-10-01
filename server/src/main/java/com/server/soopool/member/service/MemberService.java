@@ -59,4 +59,9 @@ public class MemberService {
     public boolean existOAuth2Member(String provider, String providerId){
         return memberRepository.existsByProviderAndProviderId(provider,providerId);
     }
+
+    public void setMemberNickname(Member member, String nickname) {
+        member.setNickname(nickname);
+        memberRepository.save(member);
+    }
 }
