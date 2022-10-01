@@ -56,34 +56,13 @@ public class BoardService {
                         Sort.by("id").descending()));
     }
 
-    public Board updateBoard(Board board) {
-        Board findBoard = findVerifiedBoard(board.getId());
-
-        Optional.ofNullable(board.getRecruitMethod())
-                .ifPresent(recruitMethod -> findBoard.setRecruitMethod(recruitMethod));
-        Optional.ofNullable(board.getLocation())
-                .ifPresent(location -> findBoard.setLocation(location));
-        Optional.ofNullable(board.getBoardTechStacks())
-                        .ifPresent(boardTechStacks -> findBoard.setBoardTechStacks(boardTechStacks));
-        Optional.ofNullable(board.getPeriod())
-                .ifPresent(period -> findBoard.setPeriod(period));
-        Optional.ofNullable(board.getBoardCareers())
-                .ifPresent(boardCareers -> findBoard.setBoardCareers(boardCareers));
-        Optional.ofNullable(board.getContact())
-                .ifPresent(contact -> findBoard.setContact(contact));
-        Optional.ofNullable(board.getTitle())
-                .ifPresent(title -> findBoard.setTitle(title));
-        Optional.ofNullable(board.getContents())
-                .ifPresent(contents -> findBoard.setContents(contents));
-        return boardRepository.save(findBoard);
-    }
-
     public void viewCntUp(Board board) {
         board.setViewCount(board.getViewCount() + 1);
         boardRepository.save(board);
     }
 
     public void updateBoardTotalRecruit(Board board) {
+        board.setTotalRecruit(0);
         List<BoardCareer> boardCareers = board.getBoardCareers();
         for(BoardCareer boardCareer : boardCareers) {
             board.setTotalRecruit(board.getTotalRecruit() + boardCareer.getCareerTotalRecruit());
@@ -102,13 +81,4 @@ public class BoardService {
         Board board = findVerifiedBoard(boardId);
         boardRepository.delete(board);
     }
-
-    /*  작성자 : 김은철
-
-           board table의 comment_amount의 값을 설정하기 위한 메소드를 작성하려고 했습니다.
-           필요 없으시다고 판단이 들면 지우시면 됩니다.
-    */
-//    public void commentCount(Board board) {
-//        boardRepository.modifyCommentCountColumn();
-//    }
 }
