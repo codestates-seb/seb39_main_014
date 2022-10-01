@@ -1,36 +1,27 @@
 package com.server.soopool.board.controller;
 
+import com.server.soopool.auth.PrincipalDetails;
 import com.server.soopool.board.dto.BoardPatchDto;
 import com.server.soopool.board.dto.BoardPostDto;
-import com.server.soopool.board.dto.BoardResponseDto;
 import com.server.soopool.board.entity.Board;
 import com.server.soopool.board.mapper.BoardMapper;
 import com.server.soopool.board.service.BoardService;
-import com.server.soopool.boardCareer.entity.BoardCareer;
 import com.server.soopool.boardCareer.service.BoardCareerService;
-import com.server.soopool.boardTechstack.entity.BoardTechStack;
 import com.server.soopool.boardTechstack.service.BoardTechStackService;
-import com.server.soopool.career.entity.Career;
-import com.server.soopool.career.service.CareerService;
-import com.server.soopool.comment.service.CommentService;
 import com.server.soopool.global.dto.MultiResponseDto;
 import com.server.soopool.global.dto.SingleResponseDto;
 import com.server.soopool.member.entity.Member;
 import com.server.soopool.member.service.MemberService;
-import com.server.soopool.techstack.entity.TechStack;
-import com.server.soopool.techstack.repository.TechStackRepository;
-import com.server.soopool.techstack.service.TechStackService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/board")
@@ -40,13 +31,14 @@ public class BoardController {
     private final BoardService boardService;
     private final BoardMapper boardMapper;
     private final MemberService memberService;
-    private final CommentService commentService;
-
+    private final BoardCareerService boardCareerService;
+    private final BoardTechStackService boardTechStackService;
 
     // 게시글 등록
     @PostMapping("/write")
-    public ResponseEntity postBoard(@RequestBody BoardPostDto boardDto) {
-        Member member = memberService.findByUserId("hgd2022");
+    public ResponseEntity postBoard(@AuthenticationPrincipal PrincipalDetails principal,
+                                    @RequestBody BoardPostDto boardDto) {
+        Member member = memberService.findByUserId(principal.getUsername());
         Board board = boardService.createBoard(boardMapper.boardPostToBoard(boardDto));
         board.setMember(member);
         boardService.updateBoardTotalRecruit(board);
@@ -62,11 +54,15 @@ public class BoardController {
     public ResponseEntity patchBoard(@PathVariable("board-id") @Positive long boardId,
                                      @RequestBody BoardPatchDto boardPatchDto){
 
-        boardPatchDto.setBoardId(boardId);
-        Board board =
-                boardService.updateBoard(boardMapper.boardPatchToBoard(boardPatchDto));
+        Board board = boardService.findBoard(boardId);
+        boardCareerService.deleteBoardCareers(boardId);
+        boardTechStackService.deleteBoardTechStacks(boardId);
 
-        return new ResponseEntity(boardMapper.boardToBoardResponse(board),HttpStatus.OK);
+        Board newBoard = boardMapper.boardPatchToBoard(boardPatchDto, board);
+        boardService.updateBoardTotalRecruit(newBoard);
+        boardService.save(newBoard);
+
+        return new ResponseEntity(boardMapper.boardToBoardResponse(newBoard),HttpStatus.OK);
     }
 
     // 게시글 조회
@@ -123,8 +119,14 @@ public class BoardController {
 
     // 게시글 삭제
     @DeleteMapping("/{board-id}")
-    public ResponseEntity deleteBoard(@PathVariable("board-id") @Positive long boardId){
+    public ResponseEntity deleteBoard(@AuthenticationPrincipal PrincipalDetails principal,
+                                      @PathVariable("board-id") @Positive long boardId){
         boardService.deleteById(boardId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/popstack")
+    public List<Map.Entry<String, Integer>> popstack() {
+        return boardTechStackService.findPopularTechStack().subList(0, 5);
     }
 }
