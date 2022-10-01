@@ -85,7 +85,7 @@ public class MemberController {
         careerMemberService.setCareerMember(member, careerMember, userInfoDto.getCareer());
 
         // TechStack 추가
-        Optional<MemberTechStack> memberTechStack = memberTechStackService.getMemberTechStack(member);
+        List<MemberTechStack> memberTechStack = memberTechStackService.getMemberTechStack(member);
         memberTechStackService.setMemberTechStack(member, memberTechStack,userInfoDto.getTechStack());
 
         return new ResponseEntity<>(
