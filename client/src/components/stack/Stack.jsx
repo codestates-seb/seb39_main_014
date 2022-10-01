@@ -93,6 +93,7 @@ const Stack = ({ selectedList, setSelectedList }) => {
       <JobGroup className="tab">
         {Object.keys(stacks).map((el) => (
           <h2
+            key={el}
             onClick={handleJob}
             // eslint-disable-next-line prettier/prettier
             className={currentJob === el ? "selectedList" : ""}>
@@ -109,6 +110,7 @@ const Stack = ({ selectedList, setSelectedList }) => {
         {currentJob !== "전체"
           ? stacks[currentJob].map((el) => (
               <StackImg
+                key={el}
                 src={`/assets/stack/${el}.svg`}
                 alt={el}
                 onClick={() => handleStackClick(el)}
@@ -124,7 +126,7 @@ const Stack = ({ selectedList, setSelectedList }) => {
               <StackImg
                 src={`/assets/stack/${el}.svg`}
                 alt={`${el}`}
-                key={idx}
+                key={el}
                 onClick={() => handleStackClick(el)}
                 className={
                   !selectedList.includes(el) && selectedList.length >= 0
@@ -137,9 +139,10 @@ const Stack = ({ selectedList, setSelectedList }) => {
       {selectedList.length ? (
         <SelectedContainer>
           {selectedList.map((el, idx) => (
-            <div key={idx}>
+            <div key={el}>
               {el}
               <IoCloseCircleOutline
+                key={el}
                 className="del-icon"
                 // eslint-disable-next-line prettier/prettier
                 onClick={() => handleStackDelete(idx)}

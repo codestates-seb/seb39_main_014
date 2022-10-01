@@ -12,10 +12,10 @@ import IsLoading from "../../components/isLoading/IsLoading";
 import getBoard from "../../api/getBoard";
 
 function BoardPage() {
-  // const BOARD_URL =
-  //   "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board?page=1&size=9";
+  const BOARD_URL =
+    "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board?page=1&size=9";
 
-  const BOARD_URL = "http://183.106.239.239:8080/api/v1/board?page=1&size=9";
+  // const BOARD_URL = "http://183.106.239.239:8080/api/v1/board?page=1&size=9";
 
   const [stackFilter, setStackFilter] = useState([]);
   const [datas, setDatas] = useState([]);
@@ -72,6 +72,7 @@ function BoardPage() {
             <Content>
               {datas.map((el) => (
                 <Link
+                  key={el.id}
                   to={`/board/${el.id}`}
                   // eslint-disable-next-line prettier/prettier
                   className="board-link">
