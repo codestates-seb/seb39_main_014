@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import { AiOutlineEye, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
+//로컬스토리지 저장된 토큰 사용 -> localStorage.getItem("token");
+//로컬스토리지 저장된
+
 /** 게시글 컴포넌트 */
 function Board({ data }) {
   return (
@@ -15,7 +18,6 @@ function Board({ data }) {
             <div>{data.location}</div>
           )}
           <div className="top-period">{data.period}</div>
-          {/* createdAt으로부터 30일 뒤 */}
           <div className="info-deadline">D-14</div>
         </TopLayout>
         <TitleLayout>

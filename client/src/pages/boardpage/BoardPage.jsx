@@ -5,22 +5,23 @@ import Footer from "../../components/footer/Footer";
 import Board from "../../components/board/Board";
 import Stack from "../../components/stack/Stack";
 import Paging from "../../components/pagenation/Pagenation";
-import axios from "axios";
+// import axios from "axios";
 import PopStack from "../../components/popStack/PopStack";
 import TopButton from "../../components/topButton/TopButton";
 import IsLoading from "../../components/isLoading/IsLoading";
+import getBoard from "../../api/getBoard";
 
 function BoardPage() {
-  const BoardURL =
-    "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board?page=1&size=9";
+  // const BOARD_URL =
+  //   "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board?page=1&size=9";
+
+  const BOARD_URL = "http://183.106.239.239:8080/api/v1/board?page=1&size=9";
+
   const [stackFilter, setStackFilter] = useState([]);
   const [datas, setDatas] = useState([]);
 
   useEffect(() => {
-    axios.get(BoardURL).then((res) => {
-      console.log(res.data.boards);
-      setDatas(res.data.boards);
-    });
+    getBoard(BOARD_URL, setDatas);
   }, []);
 
   if (datas.length === 0) {
