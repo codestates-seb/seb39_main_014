@@ -1,6 +1,7 @@
 package com.server.soopool.career.entity;
 
 import com.server.soopool.boardCareer.entity.BoardCareer;
+import com.server.soopool.careerMember.entity.CareerMember;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,9 @@ public class Career {
     @Column
     private String careerName;
 
+    @OneToMany(mappedBy = "memberId")
+    private List<CareerMember> careerMembers;
+
     @OneToMany(mappedBy = "career")
     private List<BoardCareer> boardCareers = new ArrayList<>();
 
@@ -29,5 +33,4 @@ public class Career {
         boardCareer.setCareer(this);
         getBoardCareers().add(boardCareer);
     }
-
 }
