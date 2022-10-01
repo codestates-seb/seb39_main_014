@@ -64,7 +64,7 @@ function Editor({ newObject }) {
       navigate(-1);
     }
   };
-  console.log(newObject);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     Swal.fire({
