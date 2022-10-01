@@ -23,7 +23,7 @@ public class Career {
     @Column
     private String careerName;
 
-    @OneToMany(mappedBy = "memberId")
+    @OneToMany(mappedBy = "member")
     private List<CareerMember> careerMembers;
 
     @OneToMany(mappedBy = "career")

@@ -11,7 +11,7 @@ import java.util.List;
 public interface MemberTechStackRepository extends JpaRepository<MemberTechStack, Long> {
 
     @Transactional
-    void deleteAllByMemberId(@Param("memberId") Member member);
+    void deleteAllByMember(@Param("member") Member member);
 
-    List<MemberTechStack> findByMemberId(Member member);
+    List<MemberTechStack> findByMember(Member member);
 }

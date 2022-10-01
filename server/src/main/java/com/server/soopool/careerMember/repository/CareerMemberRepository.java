@@ -13,13 +13,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CareerMemberRepository extends JpaRepository<CareerMember, Long> {
-    Optional<CareerMember> findByMemberId(Member memberId);
+    Optional<CareerMember> findByMemberId(Long memberId);
 
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query(value = "UPDATE CareerMember cm " +
-            "SET cm.careerLevelName = :setCareerLevelName, cm.careerId = :setCareer " +
-            "WHERE cm.memberId = :conditionMember AND cm.careerId = :conditionCareer ")
+            "SET cm.careerLevelName = :setCareerLevelName, cm.career = :setCareer " +
+            "WHERE cm.member = :conditionMember AND cm.career = :conditionCareer ")
     // setCareerLevelName String하니까 안 됌
     void updateCareerId(@Param("setCareerLevelName") CareerMember.CareerLevelName setCareerLevelName,
                         @Param("setCareer") Career setCareer,

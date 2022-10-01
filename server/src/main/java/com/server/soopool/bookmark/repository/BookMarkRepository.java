@@ -16,36 +16,36 @@ public interface BookMarkRepository extends JpaRepository<Bookmark, Long> {
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query(value = "INSERT INTO Bookmark(member_id, board_id) " +
-            "VALUES (:memberId, :boardId)"
+            "VALUES (:member, :board)"
             ,nativeQuery = true)
-    void saveByColumns(@Param("memberId") Member member,
-                       @Param("boardId") Board board);
+    void saveByColumns(@Param("member") Member member,
+                       @Param("board") Board board);
 
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query(value = "DELETE FROM Bookmark " +
-            "WHERE member_id = :memberId AND board_id = :boardId"
+            "WHERE member_id = :member AND board_id = :board"
             ,nativeQuery = true)
-    void deleteByColumns(@Param("memberId") Member member,
-                         @Param("boardId") Board board);
+    void deleteByColumns(@Param("member") Member member,
+                         @Param("board") Board board);
 
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query(value = "DELETE FROM Bookmark " +
-            "WHERE member_id = :memberId AND board_id = :boardId"
+            "WHERE member_id = :member AND board_id = :board"
             ,nativeQuery = true)
-    void deleteByColumns(@Param("memberId") Member member,
-                         @Param("boardId") Integer id);
+    void deleteByColumns(@Param("member") Member member,
+                         @Param("board") Integer id);
 
     @Query(value = "SELECT b " +
             "FROM Bookmark b " +
-            "WHERE b.memberId = :memberId AND b.boardId = :boardId")
-    Optional<Bookmark> findByBookmark(@Param("memberId") Member member,
-                                      @Param("boardId") Board board);
+            "WHERE b.member = :member AND b.board = :board")
+    Optional<Bookmark> findByBookmark(@Param("member") Member member,
+                                      @Param("board") Board board);
 
 
     @Query(value = "SELECT b " +
             "FROM Bookmark b " +
-            "WHERE b.memberId = :memberId ")
-    List<Bookmark> findByBookmark(@Param("memberId") Member memberId);
+            "WHERE b.member = :member ")
+    List<Bookmark> findByBookmark(@Param("member") Member member);
 }

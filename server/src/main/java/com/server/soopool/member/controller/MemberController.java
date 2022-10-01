@@ -1,6 +1,5 @@
 package com.server.soopool.member.controller;
 
-import com.nimbusds.openid.connect.sdk.claims.UserInfo;
 import com.server.soopool.auth.PrincipalDetails;
 import com.server.soopool.bookmark.dto.BookmarkDeleteDto;
 import com.server.soopool.bookmark.response.BookmarkListResponse;
@@ -12,15 +11,12 @@ import com.server.soopool.careerMember.entity.CareerMember;
 import com.server.soopool.careerMember.service.CareerMemberService;
 import com.server.soopool.member.dto.UserInfoDto;
 import com.server.soopool.member.entity.Member;
-import com.server.soopool.member.response.UserInfoResponse;
 import com.server.soopool.member.response.UserInfoResponseDto;
 import com.server.soopool.member.service.MemberService;
 import com.server.soopool.memberTechstack.entity.MemberTechStack;
-import com.server.soopool.memberTechstack.service.MemberTechstackService;
-import com.server.soopool.techstack.entity.TechStack;
+import com.server.soopool.memberTechstack.service.MemberTechStackService;
 import com.server.soopool.techstack.request.UserInfoTechStackRequest;
 import lombok.AllArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -41,7 +37,7 @@ public class MemberController {
     private final BookmarkMapper bookmarkMapper;
     private final CareerMemberService careerMemberService;
 
-    private final MemberTechstackService memberTechStackService;
+    private final MemberTechStackService memberTechStackService;
 
     // 마이페이지 북마크 조회
     @GetMapping("my-page/bookmark")
@@ -82,7 +78,7 @@ public class MemberController {
         List<UserInfoCareerRequest> userInfoCareerRequests = new ArrayList<>();
         UserInfoCareerRequest userInfoCareerRequest = new UserInfoCareerRequest();
         if(member.getCareerMembers().size() != 0) {
-            userInfoCareerRequest.setName(member.getCareerMembers().get(0).getCareerId().getCareerName());
+            userInfoCareerRequest.setName(member.getCareerMembers().get(0).getCareer().getCareerName());
         }
         if(member.getCareerMembers().size() != 0) {
             userInfoCareerRequest.setLevel(member.getCareerMembers().get(0).getCareerLevelName().getName());
@@ -92,8 +88,8 @@ public class MemberController {
         List<UserInfoTechStackRequest> userInfoTechStackRequests = new ArrayList<>();
         for(MemberTechStack memberTechStack1 : member.getMemberTechStacks()) {
             UserInfoTechStackRequest userInfoTechStackRequest1 = new UserInfoTechStackRequest();
-            userInfoTechStackRequest1.setName(memberTechStack1.getTechStackId().getTechStackName());
-            userInfoTechStackRequest1.setImageUri(memberTechStack1.getTechStackId().getImageUri());
+            userInfoTechStackRequest1.setName(memberTechStack1.getTechStack().getTechStackName());
+            userInfoTechStackRequest1.setImageUri(memberTechStack1.getTechStack().getImageUri());
             userInfoTechStackRequests.add(userInfoTechStackRequest1);
         }
 
@@ -115,7 +111,7 @@ public class MemberController {
         memberService.setMemberNickname(member, userInfoDto.getNickname());
 
         // Member career 추가 및 변경
-        Optional<CareerMember> careerMember = careerMemberService.getCareerMember(member);
+        Optional<CareerMember> careerMember = careerMemberService.getCareerMember(member.getId());
         careerMemberService.setCareerMember(member, careerMember, userInfoDto.getCareer());
 
         // TechStack 추가
@@ -126,7 +122,7 @@ public class MemberController {
         List<UserInfoCareerRequest> userInfoCareerRequests = new ArrayList<>();
         UserInfoCareerRequest userInfoCareerRequest = new UserInfoCareerRequest();
         if(member.getCareerMembers().size() != 0) {
-            userInfoCareerRequest.setName(member.getCareerMembers().get(0).getCareerId().getCareerName());
+            userInfoCareerRequest.setName(member.getCareerMembers().get(0).getCareer().getCareerName());
         }
         if(member.getCareerMembers().size() != 0) {
             userInfoCareerRequest.setLevel(member.getCareerMembers().get(0).getCareerLevelName().getName());
@@ -136,7 +132,7 @@ public class MemberController {
         List<UserInfoTechStackRequest> userInfoTechStackRequests = new ArrayList<>();
         for(MemberTechStack memberTechStack1 : member.getMemberTechStacks()) {
             UserInfoTechStackRequest userInfoTechStackRequest1 = new UserInfoTechStackRequest();
-            userInfoTechStackRequest1.setName(memberTechStack1.getTechStackId().getTechStackName());
+            userInfoTechStackRequest1.setName(memberTechStack1.getTechStack().getTechStackName());
             userInfoTechStackRequests.add(userInfoTechStackRequest1);
         }
 

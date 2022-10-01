@@ -67,44 +67,44 @@ public class Member extends BaseTimeEntity {
 
     //OneToMany 컬럼설정
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "memberId")
+    @OneToMany(mappedBy = "member")
     private List<CareerMember> careerMembers;
 
     public void add(CareerMember careerMember) {
-        careerMember.setMemberId(this);
+        careerMember.setMember(this);
         getCareerMembers().add(careerMember);
     }
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "memberId")
+    @OneToMany(mappedBy = "member")
     private List<MemberTechStack> memberTechStacks;
 
     public void add(MemberTechStack memberTechStack) {
-        memberTechStack.setMemberId(this);
+        memberTechStack.setMember(this);
         getMemberTechStacks().add(memberTechStack);
     }
 
-    @OneToMany(mappedBy = "memberId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Bookmark> bookmarks;
 
     public void add(Bookmark bookmark) {
-        bookmark.setMemberId(this);
+        bookmark.setMember(this);
         getBookmarks().add(bookmark);
     }
 
-    @OneToMany(mappedBy = "memberId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Board> boards;
 
     public void add(Board board) {
-        board.setMemberId(this);
+        board.setMember(this);
         getBoards().add(board);
     }
 
-    @OneToMany(mappedBy = "memberId")
+    @OneToMany(mappedBy = "member")
     private List<Comment> comments;
 
     public void add(Comment comment) {
-        comment.setMemberId(this);
+        comment.setMember(this);
         getComments().add(comment);
     }
 

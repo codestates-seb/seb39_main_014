@@ -9,17 +9,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class MemberTechstackService {
+public class MemberTechStackService {
 
     private final MemberTechStackRepository memberTechStackRepository;
     private final TechStackService techStackService;
 
     public List<MemberTechStack> getMemberTechStack(Member member){
-        List<MemberTechStack> list = memberTechStackRepository.findByMemberId(member);
+        List<MemberTechStack> list = memberTechStackRepository.findByMember(member);
 
         return list;
     }
@@ -38,7 +37,7 @@ public class MemberTechstackService {
     }
 
     public void deleteMemberTechStack(Member member) {
-        memberTechStackRepository.deleteAllByMemberId(member);
+        memberTechStackRepository.deleteAllByMember(member);
     }
 
     public void setMemberTechStack(Member member,

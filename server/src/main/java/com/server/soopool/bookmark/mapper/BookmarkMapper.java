@@ -19,8 +19,8 @@ public class BookmarkMapper {
     }
     public BookmarkOfUserResponseDto bookmarkToBookmarkListResponse(Bookmark bookmark) {
         BookmarkOfUserResponseDto.BookmarkOfUserResponseDtoBuilder bookmarkListResponseDto = BookmarkOfUserResponseDto.builder();
-        bookmarkListResponseDto.boardId(bookmark.getBoardId().getId());
-        bookmarkListResponseDto.title(bookmark.getBoardId().getTitle());
+        bookmarkListResponseDto.boardId(bookmark.getBoard().getId());
+        bookmarkListResponseDto.title(bookmark.getBoard().getTitle());
 
         return bookmarkListResponseDto.build();
     }
