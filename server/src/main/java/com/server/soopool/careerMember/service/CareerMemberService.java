@@ -42,9 +42,9 @@ public class CareerMemberService {
             CareerMember careerMember = new CareerMember();
             careerMember.setMemberId(member);
             careerMember.setCareerId(careerService.findCareer(name));
-            if(CareerMember.CareerLevelName.BEGINNER.getName().equals(level)) {
+            if(CareerMember.CareerLevelName.BEGINNER.toString().equals(level)) {
                 careerMember.setCareerLevelName(CareerMember.CareerLevelName.BEGINNER);
-            } else if(CareerMember.CareerLevelName.INTERMEDIATE.getName().equals(level)) {
+            } else if(CareerMember.CareerLevelName.INTERMEDIATE.toString().equals(level)) {
                 careerMember.setCareerLevelName(CareerMember.CareerLevelName.INTERMEDIATE);
             } else {
                 careerMember.setCareerLevelName(CareerMember.CareerLevelName.MASTER);
