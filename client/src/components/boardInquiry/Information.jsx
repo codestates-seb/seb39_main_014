@@ -28,7 +28,7 @@ function Information() {
       })
       .catch((err) => console.log(err));
   }, []);
-  console.log(boardInfo);
+
   if (loading) return null;
   return (
     <InformationContainer>
