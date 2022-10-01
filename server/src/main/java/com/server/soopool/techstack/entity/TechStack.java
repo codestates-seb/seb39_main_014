@@ -23,7 +23,7 @@ public class TechStack {
     private String techStackName;
 
     @Column
-    private String imageURI;
+    private String imageUri;
 
     @OneToMany(mappedBy = "techStack")
     private List<BoardTechStack> boardTechStacks = new ArrayList<>();
