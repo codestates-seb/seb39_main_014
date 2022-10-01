@@ -5,44 +5,16 @@ import InputGroup from "../inputGroup/InputGroup";
 import { FcGoogle } from "react-icons/fc";
 import useCheck from "../../hooks/useCheck";
 import handleSignup from "../../api/handleSignup";
+import {
+  checkId,
+  checkEmail,
+  checkNick,
+  checkPassword,
+  checkUsername,
+  cofirmPassword,
+} from "../../lib/checkSignup";
 
 // 회원가입 : 이메일, 이름, 닉네임 비밀번호, 비밀번호 확인
-
-/** 아이디 정합성 체크 함수 */
-function checkId(userId) {
-  let idReg = /^[0-9a-zA-Z]$/;
-  return idReg.test(userId);
-}
-
-/** 이메일 정합성 체크 함수 */
-function checkEmail(email) {
-  let emailReg =
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return emailReg.test(email);
-}
-
-/** 이름 정합성 체크 함수 */
-function checkUsername(name) {
-  let usernameReg = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
-  return usernameReg.test(name);
-}
-
-/** 닉네임 정합성 체크 함수 */
-function checkNick(nickname) {
-  let nickReg = /^[0-9a-zA-Zㄱ-ㅎ가-힣 ]{2,6}$/;
-  return nickReg.test(nickname);
-}
-
-/** 비밀번호 정합성 체크 함수 */
-function checkPassword(password) {
-  let passwordReg = /^[0-9a-zA-Z]{8,16}$/;
-  return passwordReg.test(password);
-}
-
-/** 비밀번호 확인 정합성 체크 함수 */
-function cofirmPassword(password, password2) {
-  return password === password2;
-}
 
 function SignUp() {
   const SIGNUP_URL = "http://183.106.239.239:8080/api/v1/sign-up";
@@ -54,19 +26,21 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
-  // 정합성 검사 state (emailCheck && usernameCheck && nickCheck && passwordCheck && confirmPassword)
-  const [idCheck, setIdCheck] = useState(false);
-  const [emailCheck, setEmailCheck] = useState(false);
-  const [usernameCheck, setUsernameCheck] = useState(false);
-  const [nickCheck, setNickCheck] = useState(false);
-  const [passwordCheck, setPasswordCheck] = useState(false);
-  const [PasswordConfirm, setPassWordConfirm] = useState(false);
+  // 정합성 검사 state
+  // isEmail, isUsername, isNickName && ispassword && confirmPassword
+  const [isUserId, setIsUserId] = useState(false);
+  const [isEmail, setIsEmail] = useState(false);
+  const [isUsername, setIsUsername] = useState(false);
+  const [isNickName, setIsNickName] = useState(false);
+  const [ispassword, setIsPassword] = useState(false);
+  const [isPasswordConfirm, setPassWordConfirm] = useState(false);
 
-  useCheck(checkId, userId, setIdCheck);
-  useCheck(checkEmail, email, setEmailCheck);
-  useCheck(checkUsername, name, setUsernameCheck);
-  useCheck(checkNick, nickname, setNickCheck);
-  useCheck(checkPassword, password, setPasswordCheck);
+  // 커스텀 훅
+  useCheck(checkId, userId, setIsUserId);
+  useCheck(checkEmail, email, setIsEmail);
+  useCheck(checkUsername, name, setIsUsername);
+  useCheck(checkNick, nickname, setIsNickName);
+  useCheck(checkPassword, password, setIsPassword);
 
   useEffect(() => {
     if (cofirmPassword(password, password2) === false) {
@@ -82,121 +56,132 @@ function SignUp() {
   };
 
   return (
-    <SignupContainer>
-      <h1>회원가입</h1>
-      <div className="social-container">
-        <a className="social">
-          <FcGoogle className="goggle-icon" />
-          <p>구글 아이디로 가입하기</p>
-        </a>
-      </div>
-      <hr />
-      <form>
-        <InputGroup
-          placeholder="아이디"
-          value={userId}
-          setValue={setUserId}
-          // error={error.email}
-        />
-        {idCheck === true ? (
-          <></>
-        ) : (
-          <ContentCheck>아이디는 영어와 숫자 조합만 가능합니다.</ContentCheck>
-        )}
-
-        <InputGroup
-          placeholder="이메일"
-          value={email}
-          setValue={setEmail}
-          // error={error.email}
-        />
-
-        {emailCheck === true ? (
-          <></>
-        ) : (
-          <ContentCheck>올바른 형식의 이메일을 입력해주세요.</ContentCheck>
-        )}
-
-        <InputGroup
-          placeholder="이름"
-          value={name}
-          setValue={setUsername}
-          // error={errors.name}
-        />
-
-        {usernameCheck === true ? (
-          <></>
-        ) : (
-          <ContentCheck>한글만 입력가능합니다.</ContentCheck>
-        )}
-
-        <InputGroup
-          placeholder="닉네임"
-          value={nickname}
-          setValue={setNick}
-          // error={errors.name}
-        />
-
-        {nickCheck === true ? (
-          <></>
-        ) : (
-          <ContentCheck>
-            6글자 이내의 한글, 영어, 숫자 조합만 가능합니다.
-          </ContentCheck>
-        )}
-
-        <InputGroup
-          placeholder="비밀번호"
-          value={password}
-          setValue={setPassword}
-          type="password"
-          // error={errors.password}
-        />
-
-        {passwordCheck === true ? (
-          <></>
-        ) : (
-          <ContentCheck>8~16자 영문 대 소문자, 숫자를 사용하세요.</ContentCheck>
-        )}
-
-        <InputGroup
-          placeholder="비밀번호 확인"
-          type="password"
-          value={password2}
-          setValue={setPassword2}
-          // error={errors.password}
-        />
-
-        {PasswordConfirm === true ? (
-          <></>
-        ) : (
-          <ContentCheck>비밀번호가 일치하지 않습니다.</ContentCheck>
-        )}
-
-        <button type="button" onClick={() => setTimeout(handleSubmit, 1000)}>
-          가입하기
-        </button>
-      </form>
-      <div className="sign-up">
-        <div>이미 아이디가 있으신가요?</div>
-        <div className="move-sign-up">
-          <Link to="/login">로그인</Link>
+    <SignupFrame>
+      <SignUpLayout>
+        <h1>회원가입</h1>
+        <div className="social-container">
+          <a className="social">
+            <FcGoogle className="goggle-icon" />
+            <p>구글 아이디로 가입하기</p>
+          </a>
         </div>
-      </div>
-    </SignupContainer>
+        <hr />
+        <form>
+          <InputGroup
+            placeholder="아이디"
+            value={userId}
+            setValue={setUserId}
+            // error={error.email}
+          />
+          {isUserId === true ? (
+            <></>
+          ) : (
+            <ContentCheck>아이디는 영어와 숫자 조합만 가능합니다.</ContentCheck>
+          )}
+
+          <InputGroup
+            placeholder="이메일"
+            value={email}
+            setValue={setEmail}
+            // error={error.email}
+          />
+
+          {isEmail === true ? (
+            <></>
+          ) : (
+            <ContentCheck>올바른 형식의 이메일을 입력해주세요.</ContentCheck>
+          )}
+
+          <InputGroup
+            placeholder="이름"
+            value={name}
+            setValue={setUsername}
+            // error={errors.name}
+          />
+
+          {isUsername === true ? (
+            <></>
+          ) : (
+            <ContentCheck>이름은 한글만 입력가능합니다.</ContentCheck>
+          )}
+
+          <InputGroup
+            placeholder="닉네임"
+            value={nickname}
+            setValue={setNick}
+            // error={errors.name}
+          />
+
+          {isNickName === true ? (
+            <></>
+          ) : (
+            <ContentCheck>
+              6글자 이내의 한글, 영어, 숫자 조합만 가능합니다.
+            </ContentCheck>
+          )}
+
+          <InputGroup
+            placeholder="비밀번호"
+            value={password}
+            setValue={setPassword}
+            type="password"
+            // error={errors.password}
+          />
+
+          {ispassword === true ? (
+            <></>
+          ) : (
+            <ContentCheck>
+              8~16자 영문 대 소문자, 숫자를 사용하세요.
+            </ContentCheck>
+          )}
+
+          <InputGroup
+            placeholder="비밀번호 확인"
+            type="password"
+            value={password2}
+            setValue={setPassword2}
+            // error={errors.password}
+          />
+
+          {isPasswordConfirm === true ? (
+            <></>
+          ) : (
+            <ContentCheck>비밀번호가 일치하지 않습니다.</ContentCheck>
+          )}
+
+          <button type="button" onClick={() => setTimeout(handleSubmit, 1000)}>
+            가입하기
+          </button>
+        </form>
+        <div className="sign-up">
+          <div>이미 아이디가 있으신가요?</div>
+          <div className="move-sign-up">
+            <Link to="/login">로그인</Link>
+          </div>
+        </div>
+      </SignUpLayout>
+    </SignupFrame>
   );
 }
 
-const SignupContainer = styled.div`
+const SignupFrame = styled.div`
+  width: 500px;
+  padding: 15px;
+
+  position: relative;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+
   border-radius: 10px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.22);
-  position: relative;
-  width: 500px;
-  height: 80%;
-  padding: 15px;
+`;
+
+/** div - 회원가입 레이아웃 */
+const SignUpLayout = styled.div`
   form {
     display: flex;
     align-items: center;

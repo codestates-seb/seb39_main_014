@@ -18,7 +18,7 @@ function CareerForm({ object }) {
 
   const idCount = useRef(0);
 
-  const newObject = { ...object, careers: careers };
+  const newObject = { ...object, boardCareers: careers };
 
   const onCountHandler = (e) => {
     e.preventDefault();
@@ -40,23 +40,28 @@ function CareerForm({ object }) {
       {
         id: idCount.current,
         career: career.career,
-        count: count,
-        value: career.value,
+        careerTotalRecruit: count,
+        careerId: career.value,
       },
     ]);
     setCareers([
       ...careers,
-      { careerId: career.value, careerTotalRecruit: count },
+      {
+        careerId: career.value,
+        careerTotalRecruit: count,
+      },
     ]);
     setCount(1);
     setCareer({ career: "웹 프론트엔드", value: 1 });
     idCount.current = idCount.current + 1;
   };
-  console.log(careers);
-  const onDeleteHandler = (e) => {
-    setCrew(crew.filter((prev) => prev.id !== e));
-  };
 
+  const onDeleteHandler = (e) => {
+    setCrew(crew.filter((prev) => prev.careerId !== e));
+    setCareers(careers.filter((prev) => prev.careerId !== e));
+  };
+  // console.log(crew);
+  // console.log(careers);
   return (
     <>
       <Career>
@@ -113,11 +118,14 @@ function CareerForm({ object }) {
         </div>
         {crew
           ? crew.map((el) => (
-              <Crew key={el.id}>
+              <Crew key={el.careerId}>
                 <div>
-                  {el.career} : {el.count}명
+                  {el.career} : {el.careerTotalRecruit}명
                 </div>
-                <button crew={crew} onClick={() => onDeleteHandler(el.id)}>
+                <button
+                  crew={crew}
+                  onClick={() => onDeleteHandler(el.careerId)}
+                >
                   삭제
                 </button>
               </Crew>

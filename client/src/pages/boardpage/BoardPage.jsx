@@ -7,6 +7,8 @@ import Stack from "../../components/stack/Stack";
 import Paging from "../../components/pagenation/Pagenation";
 import axios from "axios";
 import PopStack from "../../components/popStack/PopStack";
+import TopButton from "../../components/topButton/TopButton";
+import IsLoading from "../../components/isLoading/IsLoading";
 
 function BoardPage() {
   const BoardURL =
@@ -21,13 +23,44 @@ function BoardPage() {
     });
   }, []);
 
+  if (datas.length === 0) {
+    return (
+      <>
+        <BoardPageLayout>
+          <Main>
+            <PopSide className="side-visible">
+              <PopStack />
+            </PopSide>
+            <Center>
+              <StackArea>
+                <Stack
+                  selectedList={stackFilter}
+                  setSelectedList={setStackFilter}
+                />
+              </StackArea>
+              <IsLoading />
+              <PageNationArea>
+                {/* 페이지네이션 */}
+                <Paging page={1} setPage={9} />
+              </PageNationArea>
+            </Center>
+            <Side>
+              <TopButton />
+            </Side>
+          </Main>
+        </BoardPageLayout>
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <BoardPageLayout>
         <Main>
-          <Side className="side-visible">
+          <PopSide className="side-visible">
             <PopStack />
-          </Side>
+          </PopSide>
           <Center>
             <StackArea>
               <Stack
@@ -46,10 +79,13 @@ function BoardPage() {
               ))}
             </Content>
             <PageNationArea>
+              {/* 페이지네이션 */}
               <Paging page={1} setPage={9} />
             </PageNationArea>
           </Center>
-          <Side className="side-visible"></Side>
+          <Side className>
+            <TopButton />
+          </Side>
         </Main>
       </BoardPageLayout>
       <Footer />
@@ -57,10 +93,9 @@ function BoardPage() {
   );
 }
 
+/** div - boardPage 전체 레이아웃 */
 const BoardPageLayout = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
 `;
 
@@ -71,9 +106,9 @@ const StackArea = styled.div`
 `;
 
 const Main = styled.div`
-  width: 1600px;
+  width: 100%;
   display: grid;
-  grid-template-columns: 1fr 5fr 1fr;
+  grid-template-columns: 1fr 1.5fr 1fr;
 
   @media screen and (max-width: 1500px) {
     display: flex;
@@ -87,6 +122,8 @@ const Main = styled.div`
 const Center = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
   grid-template-rows: 1fr 1fr 1fr;
@@ -118,12 +155,17 @@ const PageNationArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1024px;
   height: 200px;
 `;
-const Side = styled.div`
+const PopSide = styled.div`
   /* background-color: gray; */
   display: flex;
+  justify-content: flex-end;
+`;
+
+const Side = styled.div`
+  .top-button {
+  }
 `;
 
 export default BoardPage;
