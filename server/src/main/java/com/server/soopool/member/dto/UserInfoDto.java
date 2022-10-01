@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 public class UserInfoDto {
     private String nickname;
-    private Integer acriveScore = 0; // default 0으로 정의
+    private Integer activeScore = 0; // default 0으로 정의
     private List<UserInfoCareerRequest> career;
     private List<UserInfoTechStackRequest> techStack;
 }
