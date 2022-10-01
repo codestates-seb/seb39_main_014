@@ -21,7 +21,6 @@ function Information() {
         `http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/${boardId}`
       )
       .then((res) => {
-        console.log(res);
         setBoardInfo([res.data.board]);
         setCreatedAt(res.data.board.createdAt.slice(0, 10));
         setLoading(false);
