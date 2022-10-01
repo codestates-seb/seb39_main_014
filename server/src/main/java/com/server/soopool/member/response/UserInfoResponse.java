@@ -10,5 +10,5 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 public class UserInfoResponse<T> {
-    private List<T> userInfo;
+    private T userInfo;
 }
