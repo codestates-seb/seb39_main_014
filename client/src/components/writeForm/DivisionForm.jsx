@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import {
   FirstDivision,
   FirstLeft,
@@ -17,8 +18,13 @@ import {
 import { AiOutlineDown } from "react-icons/ai";
 import { GoX } from "react-icons/go";
 import CareerForm from "./CareerForm";
+import axios from "axios";
 
 function DivisionForm() {
+  const { boardId } = useParams();
+  const BOARD_URL = `http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/${boardId}`;
+  const [modifyInfo, setModifyInfo] = useState([]);
+
   const [recruitCategory, setRecruitCategory] = useState("STUDY");
   const [recruitMethod, setRecruitMethod] = useState("ONLINE");
 
@@ -45,6 +51,18 @@ function DivisionForm() {
   });
   const [isPeriod, setIsPeriod] = useState(false);
 
+  useEffect(() => {
+    if (boardId)
+      axios
+        .get(BOARD_URL)
+        .then((res) => {
+          setModifyInfo(res.data.board);
+          setSelectedStackList([{ id: 1, techStackName: 5 }]);
+          setTechStacks([{ id: 1, techStackName: 1 }]);
+        })
+        .catch((err) => console.log(err));
+  }, []);
+  console.log(techStacks);
   // const oustClickRef = useRef();
 
   // useEffect(() => {
@@ -90,7 +108,7 @@ function DivisionForm() {
       newStackList.filter((prev) => prev.stack !== e.target.innerText)
     );
   };
-  // console.log(techStacks);
+  console.log(techStacks);
   /** 선택된 스택 추가 및 선택된 스택 기존 목록에서 제거*/
   const handleStackListRemove = (id) => {
     // target의 id
