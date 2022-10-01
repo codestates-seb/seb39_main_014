@@ -22,6 +22,7 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/board/:boardId" element={<BoardInquiryPage />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/board/:boardId/modify" element={<WriteForm />} />
       </Routes>
     </>
   );
