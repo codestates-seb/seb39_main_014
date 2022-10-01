@@ -19,6 +19,7 @@ import { AiOutlineDown } from "react-icons/ai";
 import { GoX } from "react-icons/go";
 import CareerForm from "./CareerForm";
 import axios from "axios";
+import _ from "lodash";
 
 function DivisionForm() {
   const { boardId } = useParams();
@@ -33,7 +34,7 @@ function DivisionForm() {
     value: "NO_CHOICE",
   });
   const [isLocation, setIsLocation] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const [stack, setStack] = useState("");
   const [isStack, setIsStack] = useState(false);
   const [newStackList, setNewStackList] = useState(stackLists);
@@ -52,32 +53,55 @@ function DivisionForm() {
   const [isPeriod, setIsPeriod] = useState(false);
 
   useEffect(() => {
-    if (boardId)
+    setLoading(true);
+    if (boardId) {
       axios
         .get(BOARD_URL)
         .then((res) => {
           setModifyInfo(res.data.board);
-          setSelectedStackList([{ id: 1, techStackName: 5 }]);
-          setTechStacks([{ id: 1, techStackName: 1 }]);
+          setRecruitCategory(
+            res.data.board.recruitCategory === "스터디" ? "STUDY" : "PROJECT"
+          );
+          setRecruitMethod(
+            res.data.board.recruitMethod === "온라인" ? "ONLINE" : "OFFLINE"
+          );
+          setLocation({
+            region: _.filter(regionLists, {
+              region: res.data.board.location,
+            })[0].region,
+            value: _.filter(regionLists, { region: res.data.board.location })[0]
+              .value,
+          });
+          setSelectedStackList(
+            res.data.board.techStackNames.map((el) => ({
+              id: el.techStackName,
+              techStackName: stackNumbers[0][el.techStackName],
+            }))
+          );
+          setPeriodValue({
+            period: _.filter(periodLists, { period: res.data.board.period })[0]
+              .period,
+            value: _.filter(periodLists, { period: res.data.baord.period })[0]
+              .value,
+          });
         })
+        .then((res) => setLoading(false))
         .catch((err) => console.log(err));
+    } else setLoading(false);
   }, []);
-  console.log(techStacks);
-  // const oustClickRef = useRef();
-
-  // useEffect(() => {
-  //   if (isLocation) document.addEventListener("mousedown", handleClickOutSide);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutSide);
-  //   };
-  // }, [isLocation]);
-
-  // const handleClickOutSide = (e) => {
-  //   console.log(oustClickRef.current.contains(e.target));
-  //   if (isLocation && !oustClickRef.current.contains(e.target)) {
-  //     setIsStack(false);
-  //   }
-  // };
+  // [java,javascript,python]
+  // console.log(newStackList.filter((el) => el.stack !== ["Docker", "Java"]));
+  console.log(selectedStackList);
+  console.log(
+    selectedStackList.filter((el) =>
+      newStackList.filter((prev) => prev.stack !== el.id)
+    )
+  );
+  console.log(
+    newStackList.filter((prev) =>
+      selectedStackList.filter((el) => el.id !== prev.stack)
+    )
+  );
 
   const object = {
     recruitCategory: recruitCategory,
@@ -108,7 +132,6 @@ function DivisionForm() {
       newStackList.filter((prev) => prev.stack !== e.target.innerText)
     );
   };
-  console.log(techStacks);
   /** 선택된 스택 추가 및 선택된 스택 기존 목록에서 제거*/
   const handleStackListRemove = (id) => {
     // target의 id
@@ -140,6 +163,8 @@ function DivisionForm() {
       return prev;
     } else return prev.stack.toLowerCase().includes(search.toLowerCase());
   });
+
+  if (loading) return null;
 
   return (
     <>
