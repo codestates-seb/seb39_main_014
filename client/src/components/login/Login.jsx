@@ -3,13 +3,17 @@ import styled from "styled-components";
 import InputGroup from "../inputGroup/InputGroup";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-import axios from "axios";
 import { useAuthDispatch } from "../../context/auth";
+import handleLogin from "../../api/handleLogin";
+
+//
 
 function Login() {
-  const LOGIN_URL = "http://183.106.239.239:8080/api/v1/log-in";
-  // const userRef = useRef();
-  // const errRef = useRef();
+  // const LOGIN_URL =
+  //   "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/log-in";
+
+  const LOGIN_URL = "http://183.106.239.239:8080/api/v1/log-in"; // 테스트용 승윤님 서버
+
   const [userId, setuserId] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
@@ -17,40 +21,10 @@ function Login() {
 
   const dispatch = useAuthDispatch();
 
-  // useEffect(() => {
-  //   userRef.current.focus();
-  // });
-
   /** 로그인 제출 함수 */
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Signup(인자)
-
-    // const data = { userId, password };
-
-    // axios.post(LOGIN_URL, data).then((res) => {
-    //   const { token } = res.data;
-    //   console.log(token);
-    // });
-
-    try {
-      const res = await axios.post(
-        LOGIN_URL,
-        {
-          userId,
-          password,
-        },
-        {
-          // 헤더자리
-        }
-      );
-      console.log(res);
-      dispatch("LOGIN", res.data?.user);
-      localStorage.setItem("token", res.headers["access-token"]);
-    } catch (error) {
-      console.log(error);
-      setErrors(error?.response?.data || {});
-    }
+    handleLogin(LOGIN_URL, userId, password, dispatch);
   };
 
   return (
@@ -61,7 +35,9 @@ function Login() {
         <SocialContainer>
           <div className="social">
             <FcGoogle className="google-icon" />
-            <p className="google-p">구글 아이디로 로그인</p>
+            <a href="http://183.106.239.239:8080/oauth2/authorization/google">
+              <p className="google-p">구글 아이디로 로그인</p>
+            </a>
           </div>
         </SocialContainer>
 
