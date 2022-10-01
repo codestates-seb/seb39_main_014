@@ -22,6 +22,9 @@ public class TechStack {
     @Column
     private String techStackName;
 
+    @Column
+    private String imageUri;
+
     @OneToMany(mappedBy = "techStack")
     private List<BoardTechStack> boardTechStacks = new ArrayList<>();
 
@@ -29,7 +32,4 @@ public class TechStack {
         boardTechStack.setTechStack(this);
         getBoardTechStacks().add(boardTechStack);
     }
-
-
-
 }

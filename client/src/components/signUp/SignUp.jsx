@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import InputGroup from "../inputGroup/InputGroup";
 import { FcGoogle } from "react-icons/fc";
 import useCheck from "../../hooks/useCheck";
@@ -15,9 +15,12 @@ import {
 } from "../../lib/checkSignup";
 
 // 회원가입 : 이메일, 이름, 닉네임 비밀번호, 비밀번호 확인
+//http:ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/sign-up
 
 function SignUp() {
   const SIGNUP_URL = "http://183.106.239.239:8080/api/v1/sign-up";
+  // const SIGNUP_URL =
+  //   "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/sign-up";
 
   const [userId, setUserId] = useState("");
   const [email, setEmail] = useState("");
@@ -52,6 +55,7 @@ function SignUp() {
 
   /** 회원가입 axios 요청 버튼 */
   const handleSubmit = (e) => {
+    console.log("signup click");
     handleSignup(SIGNUP_URL, userId, email, name, nickname, password);
   };
 
@@ -150,7 +154,7 @@ function SignUp() {
             <ContentCheck>비밀번호가 일치하지 않습니다.</ContentCheck>
           )}
 
-          <button type="button" onClick={() => setTimeout(handleSubmit, 1000)}>
+          <button type="button" onClick={handleSubmit}>
             가입하기
           </button>
         </form>

@@ -25,4 +25,25 @@ public class CareerMember {
     @ManyToOne(targetEntity = Career.class)
     @JoinColumn(name = "career_id")
     private Career career;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CareerLevelName careerLevelName;
+
+    public enum CareerLevelName{
+        BEGINNER("초보"),
+        INTERMEDIATE("중수"),
+        MASTER("고수");
+
+        @Getter
+        private final String name;
+
+        CareerLevelName(String name) {
+            this.name = name;
+        }
+
+        public String getName(){
+            return name;
+        }
+    }
 }

@@ -7,6 +7,8 @@ import com.server.soopool.comment.entity.Comment;
 import com.server.soopool.global.baseTime.BaseTimeEntity;
 import com.server.soopool.memberTechstack.entity.MemberTechStack;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
@@ -64,6 +66,7 @@ public class Member extends BaseTimeEntity {
     private String profileImagePath;
 
     //OneToMany 컬럼설정
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "member")
     private List<CareerMember> careerMembers;
 
@@ -72,6 +75,7 @@ public class Member extends BaseTimeEntity {
         getCareerMembers().add(careerMember);
     }
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "member")
     private List<MemberTechStack> memberTechStacks;
 
@@ -80,11 +84,11 @@ public class Member extends BaseTimeEntity {
         getMemberTechStacks().add(memberTechStack);
     }
 
-    @OneToMany(mappedBy = "memberId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Bookmark> bookmarks;
 
     public void add(Bookmark bookmark) {
-        bookmark.setMemberId(this);
+        bookmark.setMember(this);
         getBookmarks().add(bookmark);
     }
 
@@ -96,11 +100,11 @@ public class Member extends BaseTimeEntity {
         getBoards().add(board);
     }
 
-    @OneToMany(mappedBy = "memberId")
+    @OneToMany(mappedBy = "member")
     private List<Comment> comments;
 
     public void add(Comment comment) {
-        comment.setMemberId(this);
+        comment.setMember(this);
         getComments().add(comment);
     }
 

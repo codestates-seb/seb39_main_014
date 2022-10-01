@@ -22,11 +22,11 @@ public class Comment extends BaseTimeEntity {
     // ManyToOne 설정
     @ManyToOne(targetEntity = Board.class)
     @JoinColumn(name = "board_id")
-    private Board boardId;
+    private Board board;
 
     @ManyToOne(targetEntity = Member.class)
     @JoinColumn(name = "member_id")
-    private Member memberId;
+    private Member member;
 
     // 기본컬럼 설정
     @Column(nullable = false)

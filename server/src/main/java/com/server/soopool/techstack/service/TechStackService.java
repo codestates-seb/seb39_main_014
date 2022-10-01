@@ -20,4 +20,10 @@ public class TechStackService {
                 .orElseThrow(()-> new BusinessLogicException(ExceptionCode.TECHSTACK_NOT_FOUND));
         return techStack;
     }
+
+    public TechStack findTechStack(String techStackId) {
+        TechStack techStack = techStackRepository.findByTechStackName(techStackId)
+                .orElseThrow(()-> new BusinessLogicException(ExceptionCode.TECHSTACK_NOT_FOUND));
+        return techStack;
+    }
 }

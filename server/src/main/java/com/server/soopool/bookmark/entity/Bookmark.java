@@ -23,9 +23,9 @@ public class Bookmark {
     //ManyToone 컬럼설정
     @ManyToOne(targetEntity = Member.class)
     @JoinColumn(name = "member_id", nullable = false)
-    public Member memberId;
+    public Member member;
 
     @ManyToOne(targetEntity = Board.class)
     @JoinColumn(name = "board_id", nullable = false)
-    public Board boardId;
+    public Board board;
 }

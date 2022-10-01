@@ -80,19 +80,19 @@ public class Board extends BaseTimeEntity {
     private Integer viewCount = 0;
 
     // 양방향 연관관계 설정
-    @OneToMany(mappedBy = "boardId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Bookmark> bookmarks = new ArrayList<>();
 
     public void add(Bookmark bookmark) {
-        bookmark.setBoardId(this);
+        bookmark.setBoard(this);
         getBookmarks().add(bookmark);
     }
 
-    @OneToMany(mappedBy = "boardId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
     public void add(Comment comment) {
-        comment.setBoardId(this);
+        comment.setBoard(this);
         getComments().add(comment);
     }
 

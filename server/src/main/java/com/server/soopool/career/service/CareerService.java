@@ -20,4 +20,10 @@ public class CareerService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.CAREER_NOT_FOUND));
         return career;
     }
+
+    public Career findCareer(String careerName){
+        Career career =  careerRepository.findByCareerName(careerName)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.CAREER_NOT_FOUND));
+    return career;
+    }
 }

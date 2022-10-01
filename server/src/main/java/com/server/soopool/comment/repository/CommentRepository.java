@@ -17,34 +17,34 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     // boardId의 조건에 부합하는 모든 comments를 조회합니다.
     @Query(value = "SELECT c " +
             "FROM Comment c " +
-            "WHERE c.boardId = :boardId")
-    List<Comment> getComments(@Param("boardId") Board board);
+            "WHERE c.board = :board")
+    List<Comment> getComments(@Param("board") Board board);
 
-    // boardId, memberId, groupNumber의 조건에 부합하는 contentColumn을 수정합니다.
+    // board, member, groupNumber의 조건에 부합하는 contentColumn을 수정합니다.
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query(value = "UPDATE Comment c " +
             "SET c.content = :content " +
-            "WHERE c.boardId = :boardId AND c.memberId = :memberId AND c.groupNumber = :groupNumber")
+            "WHERE c.board = :board AND c.member = :member AND c.groupNumber = :groupNumber")
     void updateComment(@Param("content") String content,
-                       @Param("boardId") Board board,
-                       @Param("memberId") Member member,
+                       @Param("board") Board board,
+                       @Param("member") Member member,
                        @Param("groupNumber") Integer groupNumber);
 
-    // boardId, memberId, groupNumber의 조건에 부합하는 Comment table의 row들을 조회합니다.
+    // board, member, groupNumber의 조건에 부합하는 Comment table의 row들을 조회합니다.
     @Query(value = "SELECT c " +
             "FROM Comment c " +
-            "WHERE c.boardId = :boardId AND c.memberId = :memberId AND c.groupNumber = :groupNumber")
-    Comment getCommentMatchingMemberIdAndBoardIdAAndGroupNumber(@Param("boardId") Board boardId,
-               @Param("memberId") Member member,
+            "WHERE c.board = :board AND c.member = :member AND c.groupNumber = :groupNumber")
+    Comment getCommentMatchingMemberIdAndBoardIdAAndGroupNumber(@Param("board") Board board,
+               @Param("member") Member member,
                @Param("groupNumber") Integer groupNumber);
 
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query(value = "DELETE FROM Comment c " +
-            "WHERE c.boardId = :boardId AND c.memberId = :memberId AND c.groupNumber = :groupNumber")
-    void deleteComment(@Param("boardId") Board board,
-                       @Param("memberId") Member member,
+            "WHERE c.board = :board AND c.member = :member AND c.groupNumber = :groupNumber")
+    void deleteComment(@Param("board") Board board,
+                       @Param("member") Member member,
                        @Param("groupNumber") Integer groupNumber);
 
 }

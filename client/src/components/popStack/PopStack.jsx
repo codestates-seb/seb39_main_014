@@ -23,10 +23,12 @@ function PopStack() {
         <Content>
           {popStack.map((el) => (
             <div className="content" key={el.id}>
-              <p className="rank-color">
+              <p className="rank-color" key={el.id}>
                 {el.id}. {el.name}
               </p>
-              <p className="popstack-cnt">{el.time}</p>
+              <p className="popstack-cnt" key={el.id}>
+                {el.time}
+              </p>
             </div>
           ))}
         </Content>

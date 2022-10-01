@@ -39,8 +39,8 @@ public class CommentService {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND)); // 사용자 정의 Exception 설정 필요
         Comment comment = Comment.builder()
-                .memberId(member)
-                .boardId(board)
+                .member(member)
+                .board(board)
                 .content(content)
                 .groupNumber(createGroupNumber(board))
                 .build();

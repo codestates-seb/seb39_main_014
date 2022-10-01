@@ -5,9 +5,9 @@ import { createContext, useContext, useReducer } from "react";
    user -> userName */
 
 const StateContext = createContext({
-  authenticated: false,
+  isAuth: false,
   user: undefined,
-  loading: true,
+  isLoading: true,
 });
 
 const DispatchContext = createContext(null);
@@ -17,13 +17,13 @@ const reducer = (state, { type, payload }) => {
     case "LOGIN":
       return {
         ...state,
-        authenticated: true,
+        isAuth: true,
         user: payload,
       };
     case "LOGOUT":
       return {
         ...state,
-        authenticated: false,
+        isAuth: false,
         user: null,
       };
     default:
@@ -32,10 +32,11 @@ const reducer = (state, { type, payload }) => {
 };
 
 export const AuthProvider = ({ children }) => {
+  const initalToken = localStorage.getItem("token");
   const [state, defaultDispatch] = useReducer(reducer, {
-    user: null,
-    authenticated: false,
-    loading: true,
+    user: initalToken,
+    isAuth: false,
+    isLoading: true,
   });
 
   //로그인 확인용
