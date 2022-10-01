@@ -1,27 +1,26 @@
 package com.server.soopool.global.response;
 
+import com.server.soopool.auth.exception.AppAuthExceptionCode;
 import com.server.soopool.global.exception.ExceptionCode;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 @Getter
 public class ErrorResponse {
-    private static List<Map> fieldErrors = new ArrayList<>();
 
-    ErrorResponse(List<Map> fieldErrors) {
-        this.fieldErrors = fieldErrors;
+    private final int status;
+    private final String message;
+
+    public ErrorResponse(int status, String message) {
+        this.status = status;
+        this.message = message;
     }
+
+    public static ErrorResponse of(AppAuthExceptionCode exceptionCode){
+        return new ErrorResponse(exceptionCode.getStatus(),exceptionCode.getMessage());
+    }
+
     public static ErrorResponse of(ExceptionCode exceptionCode){
-        Map<String, String> group = new HashMap<>();
-        group.put("status", String.valueOf(exceptionCode.getStatus()));
-        group.put("reason", exceptionCode.getMessage());
-
-        fieldErrors.add(group);
-
-        return new ErrorResponse(fieldErrors);
+        return new ErrorResponse(exceptionCode.getStatus(),exceptionCode.getMessage());
     }
+
 }
