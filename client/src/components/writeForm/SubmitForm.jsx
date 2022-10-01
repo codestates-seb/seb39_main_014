@@ -10,6 +10,7 @@ import {
   PostButton,
 } from "../../pages/writeForm/styled";
 import handleBoardSubmit from "../../api/handleBoardSubmit";
+import Swal from "sweetalert2";
 
 const toolbarOptions = [
   ["link"],
@@ -63,31 +64,50 @@ function Editor({ newObject }) {
       navigate(-1);
     }
   };
-  console.log(contents);
-
+  console.log(newObject);
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleBoardSubmit(
-      WIRTEBOARD_URL,
-      newObject.recruitCategory,
-      newObject.recruitMethod,
-      newObject.location,
-      newObject.techStacks,
-      newObject.period,
-      newObject.careers,
-      newObject.boardCareers,
-      contact,
-      title,
-      contents
-    );
+    Swal.fire({
+      title: "게시글을 등록 하시겠습니까?",
+      text: "아직 작성할게 남으셨다면 취소를 눌러주세요",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#69D06F",
+      cancelButtonColor: "#FF6464",
+      confirmButtonText: "등록",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleBoardSubmit(
+          WIRTEBOARD_URL,
+          newObject.recruitCategory,
+          newObject.recruitMethod,
+          newObject.location,
+          newObject.boardTechStacks,
+          newObject.period,
+          newObject.boardCareers,
+          contact,
+          title,
+          contents
+        );
+        Swal.fire({
+          title: "등록 완료!",
+          icon: "success",
+          confirmButtonColor: "#69D06F",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            navigate("/board");
+          }
+        });
+      }
+    });
   };
 
   return (
     <>
       <Contact>
-        <label htmlFor="input">연락 방법</label>
+        <label>연락 방법</label>
         <input
-          id="input"
           type="text"
           value={contact}
           placeholder="이메일이나 카카오톡 오픈 채팅 주소를 남겨주세요."
@@ -95,9 +115,8 @@ function Editor({ newObject }) {
         />
       </Contact>
       <Title>
-        <label htmlFor="input">제목</label>
+        <label>제목</label>
         <input
-          id="input"
           type="text"
           value={title}
           placeholder="제목을 입력하세요."
