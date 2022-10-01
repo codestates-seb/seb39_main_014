@@ -17,7 +17,8 @@ import {
 // 회원가입 : 이메일, 이름, 닉네임 비밀번호, 비밀번호 확인
 
 function SignUp() {
-  const SIGNUP_URL = "http://183.106.239.239:8080/api/v1/sign-up";
+  const SIGNUP_URL =
+    "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/sign-up";
 
   const [userId, setUserId] = useState("");
   const [email, setEmail] = useState("");
