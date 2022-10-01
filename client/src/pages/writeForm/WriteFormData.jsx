@@ -89,15 +89,15 @@ export const stackReverse = [
 ];
 
 export const regionLists = [
-  { id: 0, region: "미정", value: "NO_CHOICE" },
+  { id: 0, region: "지역 무관", value: "NO_CHOICE" },
   { id: 1, region: "서울", value: "SEOUL" },
   { id: 2, region: "인천", value: "INCHEON" },
-  { id: 3, region: "경기도", value: "GYEONGGI" },
-  { id: 4, region: "강원도", value: "GANGWON" },
-  { id: 5, region: "경상도", value: "GYEONGSANG" },
-  { id: 6, region: "전라도", value: "JEOLLA" },
-  { id: 7, region: "충청도", value: "CHUNGCHEONG" },
-  { id: 8, region: "제주도", value: "JEJU" },
+  { id: 3, region: "경기", value: "GYEONGGI" },
+  { id: 4, region: "강원", value: "GANGWON" },
+  { id: 5, region: "경상", value: "GYEONGSANG" },
+  { id: 6, region: "전라", value: "JEOLLA" },
+  { id: 7, region: "충청", value: "CHUNGCHEONG" },
+  { id: 8, region: "제주", value: "JEJU" },
 ];
 
 export const periodLists = [
