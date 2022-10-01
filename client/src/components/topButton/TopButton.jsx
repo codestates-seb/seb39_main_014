@@ -39,7 +39,8 @@ const ScrollContainer = styled.div`
     font-weight: bold;
     font-size: 15px;
     color: green;
-    border-radius: 5px;
+    background-color: white;
+    border-radius: 50%;
     cursor: pointer;
   }
 
