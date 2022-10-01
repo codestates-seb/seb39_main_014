@@ -12,7 +12,12 @@ function scrollToTop() {
 function TopButton() {
   return (
     <ScrollContainer>
-      <BsFillArrowUpCircleFill id="top" onClick={scrollToTop} type="button" />
+      <BsFillArrowUpCircleFill
+        id="top"
+        onClick={scrollToTop}
+        type="button"
+        className="topbutton"
+      />
     </ScrollContainer>
   );
 }
@@ -20,9 +25,14 @@ function TopButton() {
 const ScrollContainer = styled.div`
   z-index: 1;
   display: flex;
-  position: relative;
-  bottom: -1000px;
   #top {
+    /* display: none; */
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 999;
+    color: #333;
+    cursor: pointer;
     width: 50px;
     height: 50px;
 
