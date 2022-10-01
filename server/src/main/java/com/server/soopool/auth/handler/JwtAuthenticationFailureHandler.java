@@ -19,9 +19,9 @@ import java.io.IOException;
 public class JwtAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) {
         if(exception instanceof BadCredentialsException)
-            throw new AppAuthenticationException(AppAuthExceptionCode.INVALID_EMAIL_OR_PASSWORD);
+            throw new AppAuthenticationException(AppAuthExceptionCode.INVALID_ID_OR_PASSWORD);
 
         if(exception instanceof AppAuthenticationException)
             throw exception;
