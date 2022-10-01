@@ -45,11 +45,27 @@ function DivisionForm() {
   });
   const [isPeriod, setIsPeriod] = useState(false);
 
+  // const oustClickRef = useRef();
+
+  // useEffect(() => {
+  //   if (isLocation) document.addEventListener("mousedown", handleClickOutSide);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutSide);
+  //   };
+  // }, [isLocation]);
+
+  // const handleClickOutSide = (e) => {
+  //   console.log(oustClickRef.current.contains(e.target));
+  //   if (isLocation && !oustClickRef.current.contains(e.target)) {
+  //     setIsStack(false);
+  //   }
+  // };
+
   const object = {
     recruitCategory: recruitCategory,
     recruitMethod: recruitMethod,
     location: location.value,
-    techStacks: techStacks,
+    boardTechStacks: techStacks,
     period: periodValue.value,
   };
 
@@ -74,7 +90,7 @@ function DivisionForm() {
       newStackList.filter((prev) => prev.stack !== e.target.innerText)
     );
   };
-  console.log(techStacks);
+  // console.log(techStacks);
   /** 선택된 스택 추가 및 선택된 스택 기존 목록에서 제거*/
   const handleStackListRemove = (id) => {
     // target의 id
@@ -170,7 +186,7 @@ function DivisionForm() {
                   />
                 </div>
               ) : null}
-              {isLocation ? (
+              {isLocation && recruitMethod === "OFFLINE" ? (
                 <ul className="location">
                   {regionLists.map((el) => (
                     <li
