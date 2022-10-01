@@ -27,8 +27,8 @@ public class Board extends BaseTimeEntity {
 
     @ManyToOne(targetEntity = Member.class)
     // 로그인 구현 후 nullable = false 처리 해야 함.
-    @JoinColumn(name = "member_id")
-    private Member memberId;
+    @JoinColumn(name = "member")
+    private Member member;
 
     // 모집글 분류 추가
     @Enumerated(EnumType.STRING)
@@ -71,10 +71,7 @@ public class Board extends BaseTimeEntity {
     private LocalDateTime deletedAt;
 
     @Column(nullable = false)
-    private boolean isRecruitDone = false;
-
-    @Column
-    private LocalDateTime recruitDoneAt;
+    private boolean recruitDone = false;
 
     @Column(nullable = false)
     private Integer commentAmount = 0;
@@ -99,19 +96,19 @@ public class Board extends BaseTimeEntity {
         getComments().add(comment);
     }
 
-    @OneToMany(mappedBy = "boardId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<BoardCareer> boardCareers = new ArrayList<>();
 
-    public void add(BoardCareer boardCareer) {
-        boardCareer.setBoardId(this);
+    public void addBoardCareer(BoardCareer boardCareer) {
+        boardCareer.setBoard(this);
         getBoardCareers().add(boardCareer);
     }
 
-    @OneToMany(mappedBy = "boardId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<BoardTechStack> boardTechStacks = new ArrayList<>();
 
-    public void add(BoardTechStack boardTechStack) {
-        boardTechStack.setBoardId(this);
+    public void addBoardTechStack(BoardTechStack boardTechStack) {
+        boardTechStack.setBoard(this);
         getBoardTechStacks().add(boardTechStack);
     }
     @Getter
@@ -171,7 +168,7 @@ public class Board extends BaseTimeEntity {
         JEOLLA("전라"),
         CHUNGCHEONG("충청"),
         JEJU("제주"),
-        NO_CHOICE("미정");
+        NO_CHOICE("지역 무관");
 
         private final String locationName;
 

@@ -1,6 +1,7 @@
 package com.server.soopool.bookmark.service;
 
 import com.server.soopool.board.entity.Board;
+import com.server.soopool.board.repository.BoardRepository;
 import com.server.soopool.bookmark.entity.Bookmark;
 import com.server.soopool.bookmark.repository.BookMarkRepository;
 import com.server.soopool.bookmark.request.BookmarkRequest;
@@ -19,6 +20,8 @@ public class BookmarkService {
 
     private final BookMarkRepository bookMarkRepository;
     private final MemberRepository memberRepository;
+
+    private final BoardRepository boardRepository;
 
     public List<Bookmark> getUserBookmark(Member member) {
         Member searchMembers = memberRepository.findById(member.getId()).get();
@@ -48,8 +51,12 @@ public class BookmarkService {
 
         if(bookmark.isPresent()){
             deleteBookmark(member,board);
+            board.setBookmarkCount(board.getBookmarkCount() - 1);
+            boardRepository.save(board);
         } else {
             createBookmark(member,board);
+            board.setBookmarkCount(board.getBookmarkCount() + 1);
+            boardRepository.save(board);
         }
     }
 }

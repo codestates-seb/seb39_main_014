@@ -64,19 +64,19 @@ public class Member extends BaseTimeEntity {
     private String profileImagePath;
 
     //OneToMany 컬럼설정
-    @OneToMany(mappedBy = "memberId")
+    @OneToMany(mappedBy = "member")
     private List<CareerMember> careerMembers;
 
     public void add(CareerMember careerMember) {
-        careerMember.setMemberId(this);
+        careerMember.setMember(this);
         getCareerMembers().add(careerMember);
     }
 
-    @OneToMany(mappedBy = "memberId")
+    @OneToMany(mappedBy = "member")
     private List<MemberTechStack> memberTechStacks;
 
     public void add(MemberTechStack memberTechStack) {
-        memberTechStack.setMemberId(this);
+        memberTechStack.setMember(this);
         getMemberTechStacks().add(memberTechStack);
     }
 
@@ -88,11 +88,11 @@ public class Member extends BaseTimeEntity {
         getBookmarks().add(bookmark);
     }
 
-    @OneToMany(mappedBy = "memberId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Board> boards;
 
     public void add(Board board) {
-        board.setMemberId(this);
+        board.setMember(this);
         getBoards().add(board);
     }
 

@@ -20,9 +20,22 @@ public class BoardTechStack {
     //ManyToOne 컬럼설정
     @ManyToOne(targetEntity = TechStack.class)
     @JoinColumn(name = "tech_stack_id")
-    private TechStack techStackId;
+    private TechStack techStack;
 
     @ManyToOne(targetEntity = Board.class)
     @JoinColumn(name = "board_id")
-    private Board boardId;
+    private Board board;
+
+    public void addBoard(Board board) {
+        this.board = board;
+        if(!this.board.getBoardTechStacks().contains(this)) {
+            this.board.addBoardTechStack(this);
+        }
+    }
+    public void addTechStack(TechStack techStack) {
+        this.techStack = techStack;
+        if(!this.techStack.getBoardTechStacks().contains(this)) {
+            this.techStack.addBoardTechStack(this);
+        }
+    }
 }

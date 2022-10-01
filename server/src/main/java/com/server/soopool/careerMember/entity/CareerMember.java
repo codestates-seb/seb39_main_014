@@ -20,9 +20,9 @@ public class CareerMember {
     // ManyToOne 설정
     @ManyToOne(targetEntity = Member.class)
     @JoinColumn(name = "member_id")
-    private Member memberId;
+    private Member member;
 
     @ManyToOne(targetEntity = Career.class)
     @JoinColumn(name = "career_id")
-    private Career careerId;
+    private Career career;
 }

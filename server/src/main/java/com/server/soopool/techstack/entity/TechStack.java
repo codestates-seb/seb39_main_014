@@ -1,10 +1,12 @@
 package com.server.soopool.techstack.entity;
 
+import com.server.soopool.boardTechstack.entity.BoardTechStack;
 import com.server.soopool.memberTechstack.entity.MemberTechStack;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,5 +21,15 @@ public class TechStack {
     //기본컬럼 설정
     @Column
     private String techStackName;
+
+    @OneToMany(mappedBy = "techStack")
+    private List<BoardTechStack> boardTechStacks = new ArrayList<>();
+
+    public void addBoardTechStack(BoardTechStack boardTechStack) {
+        boardTechStack.setTechStack(this);
+        getBoardTechStacks().add(boardTechStack);
+    }
+
+
 
 }

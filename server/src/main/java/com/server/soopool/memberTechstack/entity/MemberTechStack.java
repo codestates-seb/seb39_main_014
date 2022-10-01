@@ -22,9 +22,9 @@ public class MemberTechStack {
     //ManyToOne 컬럼설정
     @ManyToOne(targetEntity = Member.class)
     @JoinColumn(name = "member_id")
-    private Member memberId;
+    private Member member;
 
     @ManyToOne(targetEntity = TechStack.class)
     @JoinColumn(name = "tech_stack_id")
-    private TechStack techStackId;
+    private TechStack techStack;
 }
