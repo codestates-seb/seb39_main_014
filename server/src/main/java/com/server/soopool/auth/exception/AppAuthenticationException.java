@@ -3,9 +3,10 @@ package com.server.soopool.auth.exception;
 import lombok.Getter;
 import org.springframework.security.core.AuthenticationException;
 
-@Getter
+
 public class AppAuthenticationException extends AuthenticationException {
 
+    @Getter
     private final AppAuthExceptionCode exceptionCode;
 
     public AppAuthenticationException(AppAuthExceptionCode exceptionCode){
