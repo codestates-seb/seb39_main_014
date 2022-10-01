@@ -18,12 +18,44 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface BoardMapper {
-    Board boardPatchToBoard(BoardPatchDto boardPatchDto);
+    default Board boardPatchToBoard(BoardPatchDto boardPatchDto, Board board) {
+        board.setRecruitMethod( Enum.valueOf( Board.RecruitMethod.class, boardPatchDto.getRecruitMethod() ) );
+        board.setLocation( Enum.valueOf( Board.Location.class, boardPatchDto.getLocation() ) );
+        board.setPeriod( Enum.valueOf( Board.Period.class, boardPatchDto.getPeriod() ) );
+        board.setContact( boardPatchDto.getContact() );
+        board.setTitle( boardPatchDto.getTitle() );
+        board.setContents( boardPatchDto.getContents() );
+
+        List<BoardCareer> boardCareers = boardPatchDto.getBoardCareers().stream()
+                .map(boardCareerDto -> {
+                    BoardCareer boardCareer = new BoardCareer();
+                    Career career = new Career();
+                    boardCareer.addBoard(board);
+                    boardCareer.addCareer(career);
+                    career.setId(boardCareerDto.getCareerId());
+                    boardCareer.setCareerTotalRecruit(boardCareerDto.getCareerTotalRecruit());
+                    return boardCareer;
+                }).collect(Collectors.toList());
+
+        List<BoardTechStack> boardTechStacks = boardPatchDto.getBoardTechStacks().stream()
+                .map(boardTechStackDto -> {
+                    BoardTechStack boardTechStack = new BoardTechStack();
+                    TechStack techStack = new TechStack();
+                    techStack.setId(boardTechStackDto.getTechStackId());
+                    boardTechStack.addBoard(board);
+                    boardTechStack.addTechStack(techStack);
+                    return boardTechStack;
+                }).collect(Collectors.toList());
+
+        board.setBoardCareers(boardCareers);
+        board.setBoardTechStacks(boardTechStacks);
+
+        return board;
+    }
 
 
     default Board boardPostToBoard(BoardPostDto boardPostDto) {
         Board board = new Board();
-
         board.setRecruitCategory( Enum.valueOf( Board.RecruitCategory.class, boardPostDto.getRecruitCategory() ) );
         board.setRecruitMethod( Enum.valueOf( Board.RecruitMethod.class, boardPostDto.getRecruitMethod() ) );
         board.setLocation( Enum.valueOf( Board.Location.class, boardPostDto.getLocation() ) );
