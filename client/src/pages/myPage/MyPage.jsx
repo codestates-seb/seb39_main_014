@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   MypageContainer,
   ContentWrapper,
@@ -15,6 +15,7 @@ import {
 } from "../../pages/writeForm/WriteFormData";
 import { GoX } from "react-icons/go";
 import { AiOutlineDown } from "react-icons/ai";
+import axios from "axios";
 
 function MyPage() {
   const [career, setCareer] = useState({
@@ -35,6 +36,15 @@ function MyPage() {
   const newStackRef = useRef(27);
 
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/my-page/info`
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }, []);
 
   const searchStack = newStackList.filter((prev) => {
     if (search === "") {
