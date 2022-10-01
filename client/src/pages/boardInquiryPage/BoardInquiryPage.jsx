@@ -86,7 +86,9 @@ function BoardInquiryPage() {
                 onClick={() => navigate(-1)}
               />
               <div className="Patch-delete">
-                <button>수정</button>
+                <button onClick={() => navigate(`/board/${boardId}/modify`)}>
+                  수정
+                </button>
                 <button onClick={handleFormDelete}>삭제</button>
               </div>
             </Buttons>
