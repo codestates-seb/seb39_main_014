@@ -1,6 +1,6 @@
 /** 아이디 정합성 체크 함수 */
 export function checkId(userId) {
-  let idReg = /^[0-9a-zA-Z]$/;
+  let idReg = /^[0-9a-zA-Z]/g;
   return idReg.test(userId);
 }
 
@@ -13,7 +13,7 @@ export function checkEmail(email) {
 
 /** 이름 정합성 체크 함수 */
 export function checkUsername(name) {
-  let usernameReg = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
+  let usernameReg = /[가-힣]/g;
   return usernameReg.test(name);
 }
 
