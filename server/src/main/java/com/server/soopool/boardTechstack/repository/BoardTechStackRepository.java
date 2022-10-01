@@ -8,5 +8,7 @@ import java.util.Optional;
 
 public interface BoardTechStackRepository extends JpaRepository<BoardTechStack, Long> {
 
-    Optional<BoardTechStack> findByBoardId(Long boardId);
+    void deleteAllByBoardId(Long boardId);
+
+    List<BoardTechStack> findByTechStackId(Long techStackId);
 }
