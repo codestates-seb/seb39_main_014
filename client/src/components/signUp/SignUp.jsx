@@ -5,44 +5,16 @@ import InputGroup from "../inputGroup/InputGroup";
 import { FcGoogle } from "react-icons/fc";
 import useCheck from "../../hooks/useCheck";
 import handleSignup from "../../api/handleSignup";
+import {
+  checkId,
+  checkEmail,
+  checkNick,
+  checkPassword,
+  checkUsername,
+  cofirmPassword,
+} from "../../lib/checkSignup";
 
 // 회원가입 : 이메일, 이름, 닉네임 비밀번호, 비밀번호 확인
-
-/** 아이디 정합성 체크 함수 */
-function checkId(userId) {
-  let idReg = /^[0-9a-zA-Z]$/;
-  return idReg.test(userId);
-}
-
-/** 이메일 정합성 체크 함수 */
-function checkEmail(email) {
-  let emailReg =
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return emailReg.test(email);
-}
-
-/** 이름 정합성 체크 함수 */
-function checkUsername(name) {
-  let usernameReg = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
-  return usernameReg.test(name);
-}
-
-/** 닉네임 정합성 체크 함수 */
-function checkNick(nickname) {
-  let nickReg = /^[0-9a-zA-Zㄱ-ㅎ가-힣 ]{2,6}$/;
-  return nickReg.test(nickname);
-}
-
-/** 비밀번호 정합성 체크 함수 */
-function checkPassword(password) {
-  let passwordReg = /^[0-9a-zA-Z]{8,16}$/;
-  return passwordReg.test(password);
-}
-
-/** 비밀번호 확인 정합성 체크 함수 */
-function cofirmPassword(password, password2) {
-  return password === password2;
-}
 
 function SignUp() {
   const SIGNUP_URL = "http://183.106.239.239:8080/api/v1/sign-up";
@@ -54,25 +26,27 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
-  // 정합성 검사 state (emailCheck && usernameCheck && nickCheck && passwordCheck && confirmPassword)
-  const [idCheck, setIdCheck] = useState(false);
-  const [emailCheck, setEmailCheck] = useState(false);
-  const [usernameCheck, setUsernameCheck] = useState(false);
-  const [nickCheck, setNickCheck] = useState(false);
-  const [passwordCheck, setPasswordCheck] = useState(false);
-  const [PasswordConfirm, setPassWordConfirm] = useState(false);
+  // 정합성 검사 state
+  // isEmail, isUsername, isNick && ispassword && confirmPassword
+  const [isId, setIdCheck] = useState(false);
+  const [isEmail, setIsEmail] = useState(false);
+  const [isUsername, setIsUsername] = useState(false);
+  const [isNick, setIsNick] = useState(false);
+  const [ispassword, setIsPassword] = useState(false);
+  const [isPasswordConfirm, setIsPassWordConfirm] = useState(false);
 
+  // 커스텀 훅
   useCheck(checkId, userId, setIdCheck);
-  useCheck(checkEmail, email, setEmailCheck);
-  useCheck(checkUsername, name, setUsernameCheck);
-  useCheck(checkNick, nickname, setNickCheck);
-  useCheck(checkPassword, password, setPasswordCheck);
+  useCheck(checkEmail, email, setIsEmail);
+  useCheck(checkUsername, name, setIsUsername);
+  useCheck(checkNick, nickname, setIsNick);
+  useCheck(checkPassword, password, setIsPassword);
 
   useEffect(() => {
     if (cofirmPassword(password, password2) === false) {
-      setPassWordConfirm(false);
+      setIsPassWordConfirm(false);
     } else if (cofirmPassword(password, password2) === true) {
-      setPassWordConfirm(true);
+      setIsPassWordConfirm(true);
     }
   }, [password2]);
 
@@ -98,7 +72,7 @@ function SignUp() {
           setValue={setUserId}
           // error={error.email}
         />
-        {idCheck === true ? (
+        {isId === true ? (
           <></>
         ) : (
           <ContentCheck>아이디는 영어와 숫자 조합만 가능합니다.</ContentCheck>
@@ -111,7 +85,7 @@ function SignUp() {
           // error={error.email}
         />
 
-        {emailCheck === true ? (
+        {isEmail === true ? (
           <></>
         ) : (
           <ContentCheck>올바른 형식의 이메일을 입력해주세요.</ContentCheck>
@@ -124,7 +98,7 @@ function SignUp() {
           // error={errors.name}
         />
 
-        {usernameCheck === true ? (
+        {isUsername === true ? (
           <></>
         ) : (
           <ContentCheck>한글만 입력가능합니다.</ContentCheck>
@@ -137,7 +111,7 @@ function SignUp() {
           // error={errors.name}
         />
 
-        {nickCheck === true ? (
+        {isNick === true ? (
           <></>
         ) : (
           <ContentCheck>
@@ -153,7 +127,7 @@ function SignUp() {
           // error={errors.password}
         />
 
-        {passwordCheck === true ? (
+        {ispassword === true ? (
           <></>
         ) : (
           <ContentCheck>8~16자 영문 대 소문자, 숫자를 사용하세요.</ContentCheck>
@@ -167,7 +141,7 @@ function SignUp() {
           // error={errors.password}
         />
 
-        {PasswordConfirm === true ? (
+        {isPasswordConfirm === true ? (
           <></>
         ) : (
           <ContentCheck>비밀번호가 일치하지 않습니다.</ContentCheck>
