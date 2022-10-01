@@ -18,13 +18,10 @@ public class MemberTechstackService {
     private final MemberTechStackRepository memberTechStackRepository;
     private final TechStackService techStackService;
 
-    public Optional<MemberTechStack> getMemberTechStack(Member member){
-        List<Optional<MemberTechStack>> list = memberTechStackRepository.findByMemberId(member);
+    public List<MemberTechStack> getMemberTechStack(Member member){
+        List<MemberTechStack> list = memberTechStackRepository.findByMemberId(member);
 
-        if(list.size() == 0) return Optional.empty();
-
-        Optional<MemberTechStack> result = list.get(0);
-        return result;
+        return list;
     }
 
     public void insertMemberTechStack(Member member,
@@ -41,15 +38,14 @@ public class MemberTechstackService {
     }
 
     public void deleteMemberTechStack(Member member) {
-        memberTechStackRepository.deleteAllByMemberId(member.getId());
+        memberTechStackRepository.deleteAllByMemberId(member);
     }
 
     public void setMemberTechStack(Member member,
-                                   Optional<MemberTechStack> memberTechStack,
+                                   List<MemberTechStack> memberTechStack,
                                    List<UserInfoTechStackRequest> userInfoTechStackRequests) {
 
-
-            if (memberTechStack.isPresent()) {
+            if (memberTechStack.size() > 0) {
                 deleteMemberTechStack(member);
             }
 
