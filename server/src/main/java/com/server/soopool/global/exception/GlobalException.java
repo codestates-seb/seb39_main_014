@@ -13,16 +13,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalException {
 
     @ExceptionHandler
-    public ResponseEntity BusinessLogicExceptionHandler(BusinessLogicException e){
-        return new ResponseEntity<>(
-                ErrorResponse.of(e.getExceptionCode()),
-                HttpStatus.valueOf(e.getExceptionCode().getStatus())
-        );
+    public ResponseEntity handleAppAuthenticationException(AppAuthenticationException e){
+        ErrorResponse response = ErrorResponse.of(e.getExceptionCode());
+        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getExceptionCode().getStatus()));
     }
 
     @ExceptionHandler
-    public ResponseEntity AppAuthenticationExceptionHandler(AppAuthenticationException e){
-        return new ResponseEntity(e.getExceptionCode(), HttpStatus.valueOf(e.getMessage()));
+    public ResponseEntity handleBusinessException(BusinessLogicException e){
+        ErrorResponse response = ErrorResponse.of(e.getExceptionCode());
+        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getExceptionCode().getStatus()));
     }
-
 }
