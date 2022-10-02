@@ -1,6 +1,7 @@
 package com.server.soopool.member.entity;
 
 import com.server.soopool.board.entity.Board;
+import com.server.soopool.boardApply.entity.BoardApply;
 import com.server.soopool.bookmark.entity.Bookmark;
 import com.server.soopool.careerMember.entity.CareerMember;
 import com.server.soopool.comment.entity.Comment;
@@ -106,6 +107,14 @@ public class Member extends BaseTimeEntity {
     public void add(Comment comment) {
         comment.setMember(this);
         getComments().add(comment);
+    }
+
+    @OneToMany(mappedBy = "member")
+    private List<BoardApply> boardApplies;
+
+    public void addBoardApply(BoardApply boardApply) {
+        boardApply.setMember(this);
+        getBoardApplies().add(boardApply);
     }
 
     private enum MemberStatus{
