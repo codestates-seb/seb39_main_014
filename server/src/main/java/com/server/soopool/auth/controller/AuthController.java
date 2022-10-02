@@ -1,8 +1,11 @@
 package com.server.soopool.auth.controller;
 
 import com.server.soopool.auth.PrincipalDetails;
+import com.server.soopool.auth.dto.MemberResponseDto;
 import com.server.soopool.auth.dto.SignUpRequestDto;
+import com.server.soopool.auth.mapper.AuthMapper;
 import com.server.soopool.auth.service.JwtService;
+import com.server.soopool.global.dto.SingleResponseDto;
 import com.server.soopool.member.entity.Member;
 import com.server.soopool.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +29,7 @@ public class AuthController {
 
     private final MemberService memberService;
     private final JwtService jwtService;
+    private final AuthMapper authMapper;
 
     @PostMapping("sign-up")
     public ResponseEntity signUp(@Valid @RequestBody SignUpRequestDto signUpRequestDto){
@@ -38,6 +42,12 @@ public class AuthController {
     public ResponseEntity refresh(HttpServletRequest request, HttpServletResponse response){
         jwtService.refresh(request,response);
         return new ResponseEntity("토큰을 재발급 하였습니다 !", HttpStatus.OK);
+    }
+
+    @GetMapping("member")
+    public ResponseEntity<MemberResponseDto> getMember(){
+        Member member = memberService.getMemberByToken();
+        return new ResponseEntity<>(authMapper.memberToMemberResponseDto(member),HttpStatus.OK);
     }
 
     @GetMapping("authtest")
