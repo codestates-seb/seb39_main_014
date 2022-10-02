@@ -27,7 +27,7 @@ function Information() {
       })
       .catch((err) => console.log(err));
   }, []);
-
+  console.log(boardInfo);
   if (loading) return null;
   return (
     <InformationContainer>
@@ -56,8 +56,17 @@ function Information() {
           <span className="Span-box">{boardInfo[0].recruitMethod}</span>
           <span className="Span-box">{boardInfo[0].location}</span>
         </li>
-        <li>
+        <li className="Using-stack">
           <span className="Subject">사용 언어</span>
+
+          {boardInfo[0].techStackNames.map((el) => (
+            <span key={el.techStackName} className="Stack">
+              <img
+                src={`/assets/stack/${el.techStackName}.svg`}
+                alt={`${el.techStackName}`}
+              />
+            </span>
+          ))}
         </li>
         <li>
           <span className="Subject">연락 방법</span>
