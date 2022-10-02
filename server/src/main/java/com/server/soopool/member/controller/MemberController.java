@@ -144,7 +144,15 @@ public class MemberController {
 
         return new ResponseEntity<>(userInfoResponseDto,HttpStatus.OK);
     }
+
+    @DeleteMapping("/my-page/delete")
+    public ResponseEntity deleteMember(@AuthenticationPrincipal PrincipalDetails principal){
+        memberService.deleteMember(principal.getMemberId());
+        return ResponseEntity.ok("회원탈퇴가 완료되었습니다.");
+    }
 }
+
+
 
 
 /*
