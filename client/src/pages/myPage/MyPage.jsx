@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   MypageContainer,
   ContentWrapper,
@@ -17,7 +18,15 @@ import { GoX } from "react-icons/go";
 import { AiOutlineDown } from "react-icons/ai";
 import axios from "axios";
 
+export const levelData = [
+  { level: "초보", value: "BEGINNER" },
+  { level: "중수", value: "INTERMEDIATE" },
+  { level: "고수", value: "MASTER" },
+];
+
 function MyPage() {
+  const navigate = useNavigate();
+  const MYPAGE_URL = `http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/my-page`;
   const [career, setCareer] = useState({
     name: "웹 프론트엔드",
     level: "초보",
@@ -26,8 +35,7 @@ function MyPage() {
   const outSection = useRef();
   const [info, setInfo] = useState([]);
 
-  const [nickname, setNickname] = useState("아무개");
-
+  const [nickname, setNickname] = useState("");
   const [activeScore, setActiveScore] = useState(0);
 
   const [techStack, setTechStack] = useState([]);
@@ -38,20 +46,75 @@ function MyPage() {
 
   const [search, setSearch] = useState("");
 
+  const [bookmarkList, setBookmarkList] = useState([]);
+  const getMypage = () => {
+    axios
+      .get(`${MYPAGE_URL}/info`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setInfo(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     axios
-      .get(
-        `http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/my-page/info`
-      )
-      .then((res) => setInfo(res.data))
+      .get(`${MYPAGE_URL}/info`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setInfo(res.data);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get(`${MYPAGE_URL}bookmark`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => setBookmarkList(res.data.bookmarkList))
       .catch((err) => console.log(err));
   }, []);
-  console.log(info);
+
   const searchStack = newStackList.filter((prev) => {
     if (search === "") {
       return prev;
     } else return prev.stack.toLowerCase().includes(search.toLowerCase());
   });
+
+  const handleMypageSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        `http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/my-page/info`,
+        {
+          nickname: nickname,
+          activeScore: 0,
+          techStack: techStack.map((el) => ({ name: el.name })),
+          career: [
+            {
+              name: career.name,
+              level: levelData.filter((prev) => prev.level === career.level)[0]
+                .value,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((res) => navigate("/"))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <MypageContainer>
@@ -73,7 +136,7 @@ function MyPage() {
               ref={outSection}
               onClick={(e) => {
                 if (outSection.current === e.target) {
-                  setIsCareer(!career);
+                  setIsCareer(!isCareer);
                 }
               }}
             >
@@ -114,7 +177,7 @@ function MyPage() {
               ) : null}
             </div>
             <label className="Activity-label">활동 점수</label>
-            <div className="Activity">{info.activeScore}점</div>
+            <div className="Activity">{activeScore}점</div>
             <label className="Stack-label">기술 스택</label>
             <div
               className="Registration-box"
@@ -192,14 +255,16 @@ function MyPage() {
                 <div className="Bookmark">북마크한 게시글</div>
                 <div>지원한 게시글</div>
               </div>
-              <div className="Checkboard">
-                <input type="checkbox" />
-                <div>스터디 하면서 프로젝트까지 같이 하실분</div>
-              </div>
-              <div className="Checkboard">
-                <input type="checkbox" />
-                <div>스터디 하면서 프로젝트까지 같이 하실분</div>
-              </div>
+              {bookmarkList
+                ? bookmarkList.map((el) => (
+                    <div className="Checkboard" key={el.boardId}>
+                      <input type="checkbox" />
+                      <div onClick={() => navigate(`/board/${el.boardId}`)}>
+                        {el.title}
+                      </div>
+                    </div>
+                  ))
+                : null}
               <div className="Select-all">
                 <div>
                   <input type="checkbox" />
@@ -208,7 +273,7 @@ function MyPage() {
                 <button>삭제</button>
               </div>
               <div className="Modification">
-                <button>완료</button>
+                <button onClick={handleMypageSubmit}>완료</button>
                 <button className="Withdrawal">회원 탈퇴</button>
               </div>
             </UserBoard>
