@@ -7,12 +7,15 @@ import com.server.soopool.comment.dto.*;
 import com.server.soopool.comment.entity.Comment;
 import com.server.soopool.comment.mapper.CommentMapper;
 import com.server.soopool.comment.service.CommentService;
+import com.server.soopool.global.exception.BusinessLogicException;
+import com.server.soopool.global.exception.ExceptionCode;
 import com.server.soopool.member.entity.Member;
 import com.server.soopool.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -31,27 +34,26 @@ public class CommentController {
     private final MemberService memberService;
 
     @GetMapping("board/{board_id}/comment")
-        public ResponseEntity getCommentsMatchingBoardId(@AuthenticationPrincipal PrincipalDetails principal,
-                                                         @PathVariable("board_id") @Positive Long boardId) {
+        public ResponseEntity getCommentsMatchingBoardId(@PathVariable("board_id") @Positive Long boardId) {
         // principal.getName()으로 로그인한 사용자의 아이디를 구합니다.
-        Member member = memberService.findByUserId("hgd2022");
         Board board = boardService.findBoard(boardId);
         List<Comment> comments = commentService.getComments(board);
 
         return new ResponseEntity<>(
-                new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments, member, board)),
-                HttpStatus.CREATED
+                new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments)),
+                HttpStatus.OK
         );
     }
 
     // 댓글 생성
     @PostMapping("board/{board_id}/comment")
+    @Secured("ROLE_USER")
     public ResponseEntity postComment(@AuthenticationPrincipal PrincipalDetails principal,
                                       @PathVariable("board_id") @Positive Long boardId,
                                       @Validated @RequestBody CommentPostDto commentPostDto){
         // PathVariable RequestParam 차이 알아보기 (RequestParam 오류 나는듯합니다.)
         // principal.getName()으로 로그인한 사용자의 아이디를 구합니다.
-        Member member = memberService.findByUserId("hgd2022");
+        Member member = memberService.findByUserId(principal.getUsername());
         Board board = boardService.findBoard(boardId);
 
         // 게시글 댓글 개수 + 1
@@ -61,37 +63,55 @@ public class CommentController {
         List<Comment> comments = commentService.getComments(board);
 
         return new ResponseEntity<>(
-                new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments, member, board)),
+                new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments)),
                 HttpStatus.CREATED
         );
     }
 
     // 댓글 수정
+
     @PatchMapping("/board/{board_id}/comment")
+    @Secured("ROLE_USER")
     public ResponseEntity patchComment(@AuthenticationPrincipal PrincipalDetails principal,
                                        @PathVariable("board_id") @Positive Long boardId,
                                        @Validated @RequestBody CommentPatchDto commentPatchDto) {
         // principal.getName()으로 로그인한 사용자의 아이디를 구합니다.
-        Member member = memberService.findByUserId("hgd2022");
+
+        Member member = memberService.findByUserId(principal.getUsername());
         Board board = boardService.findBoard(boardId);
+        Comment comment = new Comment();
+        for(Comment comment1 : board.getComments()) {
+            if(comment1.getGroupNumber() == commentPatchDto.getGroupNumber()){
+                comment = comment1;
+            }
+        }
+        if (principal.getMemberId() != comment.getMember().getId()) {
+            throw new BusinessLogicException(ExceptionCode.CAN_NOT_MODIFY_COMMENT);
+        }
 
         commentService.modifyComment(member.getId(), board.getId(), commentPatchDto);
         List<Comment> comments = commentService.getComments(board);
 
         boardService.save(board);
         return new ResponseEntity<>(
-                new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments, member, board)),
+                new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments)),
                 HttpStatus.CREATED
         );
     }
 
     // 댓글 삭제
     @DeleteMapping("board/{board_id}/comment")
+    @Secured("ROLE_USER")
     public ResponseEntity deleteComment(@AuthenticationPrincipal PrincipalDetails principal,
                                         @PathVariable("board_id") @Positive Long boardId,
                                         @Validated @RequestBody CommentDeleteDto commentDeleteDto) {
-        Member member = memberService.findByUserId("hgd2022");
+        Member member = memberService.findByUserId(principal.getUsername());
         Board board = boardService.findBoard(boardId);
+
+        if( principal.getMemberId() != board.getMember().getId() ){
+            throw new BusinessLogicException(ExceptionCode.CAN_NOT_DELETE_COMMENT);
+        }
+
         // 게시글 댓글 개수 - 1
         board.setCommentAmount(board.getCommentAmount() - 1);
 
@@ -100,7 +120,7 @@ public class CommentController {
 
         boardService.save(board);
         return new ResponseEntity<>(
-                new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments, member, board)),
+                new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments)),
                 HttpStatus.CREATED
         );
     }
