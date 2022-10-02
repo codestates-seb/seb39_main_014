@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
+import handleLogout from "../../api/handleLogout";
 
 import styled from "styled-components";
 
@@ -37,6 +38,9 @@ function Nav() {
           <StyledLink to="/login">
             <div>로그인</div>
           </StyledLink>
+          <div className="logout-button" onClick={handleLogout}>
+            로그아웃
+          </div>
         </RightMenu>
 
         <GiHamburgerMenu className="hambuger" />
@@ -115,6 +119,13 @@ const LeftMenu = styled.div`
 const RightMenu = styled.div`
   display: flex;
   margin-right: 0px;
+
+  .logout-button {
+    cursor: pointer;
+
+    // 조건부 렌더링 넣으면 지울 내용
+    margin-left: 5px;
+  }
 `;
 
 const StyledLink = styled(Link)`
