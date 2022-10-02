@@ -11,20 +11,42 @@ import TopButton from "../../components/topButton/TopButton";
 import IsLoading from "../../components/isLoading/IsLoading";
 import getBoard from "../../api/getBoard";
 
-function BoardPage() {
-  const BOARD_URL =
-    "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board?page=1&size=9";
+function BoardPage({ group }) {
+  const BOARD_URL = {
+    ALL: "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/?page=1&size=9",
+    STUDY:
+      "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/study?page=1&size=9",
+    PROJECT:
+      "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/project?page=1&size=9",
+  };
 
+  // console.log(group);
+  //테스트 서버 URI
   // const BOARD_URL = "http://183.106.239.239:8080/api/v1/board?page=1&size=9";
 
   const [stackFilter, setStackFilter] = useState([]);
   const [datas, setDatas] = useState([]);
+  const isLoading = !datas.length;
 
   useEffect(() => {
-    getBoard(BOARD_URL, setDatas);
-  }, []);
+    if (group === "" || group === "전체") {
+      getBoard(BOARD_URL.ALL, setDatas);
+    } else if (group === "스터디") {
+      getBoard(BOARD_URL.STUDY, setDatas);
+    } else if (group === "프로젝트") {
+      getBoard(BOARD_URL.PROJECT, setDatas);
+    }
+    // switch (group) {
+    //   case "":
+    //   getBoard(BOARD_URL.ALL, setDatas);
+    //   case "스터디":
+    //     getBoard(BOARD_URL.STUDY, setDatas);
+    //   case "프로젝트":
+    //     getBoard(BOARD_URL.PROJECT, setDatas);
+    // }
+  }, [group]);
 
-  if (datas.length === 0) {
+  if (isLoading) {
     return (
       <>
         <BoardPageLayout>
@@ -39,6 +61,7 @@ function BoardPage() {
                   setSelectedList={setStackFilter}
                 />
               </StackArea>
+              {/* 로딩컴포넌트 */}
               <IsLoading />
               <PageNationArea>
                 {/* 페이지네이션 */}
