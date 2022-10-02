@@ -10,20 +10,29 @@ import axios from "axios";
 
 function Information() {
   const { boardId } = useParams();
+  const BOARD_URL = `http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/${boardId}`;
   const [boardInfo, setBoardInfo] = useState([]);
   const [createdAt, setCreatedAt] = useState("");
   const [comment, setComment] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [dday, setDday] = useState(null);
+  const [bookmarkCount, setBookmarkCount] = useState(0);
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        `http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/${boardId}`
-      )
+      .get(BOARD_URL)
       .then((res) => {
+        console.log(res.data);
         setBoardInfo([res.data.board]);
         setCreatedAt(res.data.board.createdAt.slice(0, 10));
         setLoading(false);
+        const createdAtDay = new Date(res.data.board.createdAt);
+        const today = new Date();
+        const dayGap = today.getTime() - createdAtDay.getTime();
+        const result = Math.ceil(dayGap / (1000 * 60 * 60 * 24));
+        const deadline = 30 - Number(result);
+        setBookmarkCount(res.data.board.bookmarkCount);
+        setDday(deadline);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -39,11 +48,20 @@ function Information() {
         </div>
         <div className="Board-info">
           <div className="Bookmark">
-            <AiOutlineHeart className="AiOutlineHeart" />
-            <span>10</span>
+            <AiOutlineHeart
+              className="AiOutlineHeart"
+              onClick={() =>
+                axios
+                  .get(`${BOARD_URL}/bookmark`)
+                  .then((res) => console.log(res))
+              }
+            />
+            <span>{bookmarkCount}</span>
           </div>
-          <button>{boardInfo[0].recruitCategory}</button>
-          <button>모집 완료</button>
+          <span className="Recruitment-classification">
+            {boardInfo[0].recruitCategory}
+          </span>
+          <button>{dday > 0 ? `마감 - ${dday}` : `모집 마감`}</button>
         </div>
       </UserInfo>
       <BoardInfo>
@@ -56,8 +74,17 @@ function Information() {
           <span className="Span-box">{boardInfo[0].recruitMethod}</span>
           <span className="Span-box">{boardInfo[0].location}</span>
         </li>
-        <li>
+        <li className="Using-stack">
           <span className="Subject">사용 언어</span>
+
+          {boardInfo[0].techStackNames.map((el) => (
+            <span key={el.techStackName} className="Stack">
+              <img
+                src={`/assets/stack/${el.techStackName}.svg`}
+                alt={`${el.techStackName}`}
+              />
+            </span>
+          ))}
         </li>
         <li>
           <span className="Subject">연락 방법</span>

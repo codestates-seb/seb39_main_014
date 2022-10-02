@@ -78,10 +78,15 @@ function DivisionForm() {
               techStackName: stackNumbers[0][el.techStackName],
             }))
           );
+          setTechStacks(
+            res.data.board.techStackNames.map((el) => ({
+              techStackId: stackNumbers[0][el.techStackName],
+            }))
+          );
           setPeriodValue({
             period: _.filter(periodLists, { period: res.data.board.period })[0]
               .period,
-            value: _.filter(periodLists, { period: res.data.baord.period })[0]
+            value: _.filter(periodLists, { period: res.data.board.period })[0]
               .value,
           });
         })
@@ -91,17 +96,14 @@ function DivisionForm() {
   }, []);
   // [java,javascript,python]
   // console.log(newStackList.filter((el) => el.stack !== ["Docker", "Java"]));
-  console.log(selectedStackList);
-  console.log(
-    selectedStackList.filter((el) =>
-      newStackList.filter((prev) => prev.stack !== el.id)
-    )
-  );
-  console.log(
-    newStackList.filter((prev) =>
-      selectedStackList.filter((el) => el.id !== prev.stack)
-    )
-  );
+  // console.log(stackLists);
+  // console.log(selectedStackList);
+
+  // console.log(
+  //   newStackList.filter((prev) =>
+  //     selectedStackList.filter((el) => el.id !== prev.stack)
+  //   )
+  // );
 
   const object = {
     recruitCategory: recruitCategory,

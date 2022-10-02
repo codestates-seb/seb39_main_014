@@ -14,20 +14,30 @@ const handleBoardSubmit = async (
   boardCareers,
   contact,
   title,
-  contents
+  contents,
+  headers
 ) => {
   try {
-    const res = await axios.post(WIRTEBOARD_URL, {
-      recruitCategory: recruitCategory,
-      recruitMethod: recruitMethod,
-      location: location,
-      boardTechStacks: boardTechStacks,
-      period: period,
-      boardCareers: boardCareers,
-      contact: contact,
-      title: title,
-      contents: contents,
-    });
+    const res = await axios.post(
+      WIRTEBOARD_URL,
+      {
+        recruitCategory: recruitCategory,
+        recruitMethod: recruitMethod,
+        location: location,
+        boardTechStacks: boardTechStacks,
+        period: period,
+        boardCareers: boardCareers,
+        contact: contact,
+        title: title,
+        contents: contents,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
     console.log("res :", res);
   } catch (error) {
     console.log("error :", error);

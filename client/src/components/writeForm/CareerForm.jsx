@@ -1,11 +1,18 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { careerLists } from "../../pages/writeForm/WriteFormData";
 import { Career, Crew } from "../../pages/writeForm/styled";
 
 import { AiOutlineDown } from "react-icons/ai";
 import SubmitForm from "./SubmitForm";
+import axios from "axios";
+import _ from "lodash";
 
 function CareerForm({ object }) {
+  const { boardId } = useParams();
+  const BOARD_URL = `http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/${boardId}`;
+  const [modifyInfo, setModifyInfo] = useState([]);
+
   const [career, setCareer] = useState({
     career: "웹 프론트엔드",
     value: 1,
@@ -16,7 +23,38 @@ function CareerForm({ object }) {
   const [crew, setCrew] = useState([]);
   const [careers, setCareers] = useState([]);
 
+  const [loading, setLoading] = useState(false);
+
   const idCount = useRef(0);
+
+  useEffect(() => {
+    if (boardId) {
+      setLoading(true);
+      axios
+        .get(BOARD_URL)
+        .then((res) => {
+          setCrew(
+            res.data.board.boardCareers.map((el) => ({
+              id: el.careerName,
+              career: el.careerName,
+              careerTotalRecruit: el.careerTotalRecruit,
+              careerId: _.filter(careerLists, {
+                career: el.careerName,
+              })[0].value,
+            }))
+          );
+          setCareers(
+            res.data.board.boardCareers.map((el) => ({
+              careerId: _.filter(careerLists, {
+                career: el.careerName,
+              })[0].value,
+              careerTotalRecruit: el.careerTotalRecruit,
+            }))
+          );
+        })
+        .then((res) => setLoading(false));
+    } else setLoading(false);
+  }, []);
 
   const newObject = { ...object, boardCareers: careers };
 
@@ -60,8 +98,9 @@ function CareerForm({ object }) {
     setCrew(crew.filter((prev) => prev.careerId !== e));
     setCareers(careers.filter((prev) => prev.careerId !== e));
   };
-  // console.log(crew);
-  // console.log(careers);
+
+  if (loading) return null;
+
   return (
     <>
       <Career>

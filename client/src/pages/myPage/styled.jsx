@@ -280,6 +280,9 @@ export const UserBoard = styled.div`
       height: 1.5rem;
       margin-right: 1rem;
     }
+    > div {
+      cursor: pointer;
+    }
   }
   .Select-all {
     display: flex;
@@ -299,11 +302,13 @@ export const UserBoard = styled.div`
       border: none;
       border-radius: 5px;
       background-color: #f0f0f0;
+      cursor: pointer;
     }
   }
   .Modification {
     display: flex;
     justify-content: center;
+
     .Withdrawal {
       color: #ff7d85;
       background-color: #ffe3e4;
@@ -317,6 +322,7 @@ export const UserBoard = styled.div`
       margin: 0 2rem;
       width: 20%;
       border: none;
+      cursor: pointer;
       @media screen and (max-width: 760px) {
         font-size: 0.8rem;
         padding: 1rem 0;

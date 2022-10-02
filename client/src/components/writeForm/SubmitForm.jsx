@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactQuill from "react-quill";
 import styled from "styled-components";
 import "react-quill/dist/quill.snow.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Contact,
   Title,
@@ -11,6 +11,7 @@ import {
 } from "../../pages/writeForm/styled";
 import handleBoardSubmit from "../../api/handleBoardSubmit";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const toolbarOptions = [
   ["link"],
@@ -50,12 +51,27 @@ const modules = {
 };
 
 function Editor({ newObject }) {
+  const { boardId } = useParams();
+  const BOARD_URL = `http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/${boardId}`;
+
   const WIRTEBOARD_URL =
     "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/write";
 
   const [contents, setContents] = useState("");
   const [contact, setContact] = useState("");
   const [title, setTitle] = useState("");
+
+  const patchForm = {
+    recruitCategory: newObject.recruitCategory,
+    recruitMethod: newObject.recruitMethod,
+    location: newObject.location,
+    boardTechStacks: newObject.boardTechStacks,
+    period: newObject.period,
+    boardCareers: newObject.boardCareers,
+    contact: contact,
+    title: title,
+    contents: contents,
+  };
 
   const navigate = useNavigate();
   const onCancelHandler = (e) => {
@@ -64,6 +80,16 @@ function Editor({ newObject }) {
       navigate(-1);
     }
   };
+
+  useEffect(() => {
+    if (boardId) {
+      axios.get(BOARD_URL).then((res) => {
+        setContents(res.data.board.contents);
+        setContact(res.data.board.contact);
+        setTitle(res.data.board.title);
+      });
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -78,18 +104,34 @@ function Editor({ newObject }) {
       cancelButtonText: "취소",
     }).then((result) => {
       if (result.isConfirmed) {
-        handleBoardSubmit(
-          WIRTEBOARD_URL,
-          newObject.recruitCategory,
-          newObject.recruitMethod,
-          newObject.location,
-          newObject.boardTechStacks,
-          newObject.period,
-          newObject.boardCareers,
-          contact,
-          title,
-          contents
-        );
+        if (boardId) {
+          axios
+            .patch(
+              BOARD_URL,
+              patchForm,
+
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              }
+            )
+            .then((res) => console.log("haha"))
+            .catch((error) => console.log("err:", error));
+        } else {
+          handleBoardSubmit(
+            WIRTEBOARD_URL,
+            newObject.recruitCategory,
+            newObject.recruitMethod,
+            newObject.location,
+            newObject.boardTechStacks,
+            newObject.period,
+            newObject.boardCareers,
+            contact,
+            title,
+            contents
+          );
+        }
         Swal.fire({
           title: "등록 완료!",
           icon: "success",
