@@ -35,7 +35,7 @@ function GroupBoardPage() {
             <LeftMenu>
               {/* 게시판 nav바 전체, 스터디, 프로젝트 컴포넌트 */}
               {group.map((el) => (
-                <StyledLink to="/boardpage" key={el}>
+                <StyledLink to="/board" key={el}>
                   <div
                     onClick={handleGroup}
                     // eslint-disable-next-line prettier/prettier
