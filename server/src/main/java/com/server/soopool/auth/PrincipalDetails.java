@@ -15,6 +15,10 @@ public class PrincipalDetails implements UserDetails , OAuth2User , Serializable
     private final Member member;
     private Map<String, Object> attributes;
 
+    public Member getMember(){
+        return member;
+    }
+
     private PrincipalDetails(Member member, Map<String, Object> attributes){
         this.member = member;
         this.attributes = attributes;
