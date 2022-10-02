@@ -156,8 +156,10 @@ export const BoardInfo = styled.ul`
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }
   > li {
+    display: flex;
     width: 100%;
     line-height: 2.5rem;
+    margin-bottom: 0.5rem;
     @media screen and (max-width: 476px) {
       line-height: 1.5rem;
     }
@@ -170,9 +172,14 @@ export const BoardInfo = styled.ul`
         margin-right: 1rem;
       }
     }
+    .Stack {
+      display: flex;
+      align-items: center;
+      padding-right: 0.5rem;
+    }
   }
   .Span-box {
-    padding: 0.5rem 0.6rem;
+    padding: 0 0.5rem;
     background-color: #e5f8ed;
     color: #009f47;
     border-radius: 5px;
@@ -183,7 +190,7 @@ export const BoardInfo = styled.ul`
     }
   }
   .Contact-method {
-    padding: 0.5rem 0.6rem;
+    padding: 0 0.6rem;
     background-color: #f2f4f8;
     color: #4a5e75;
     border-radius: 5px;
@@ -191,6 +198,7 @@ export const BoardInfo = styled.ul`
       padding: 0.2rem 0.4rem;
     }
   }
+
   .Applicants {
     display: flex;
     .Applicants-list {
