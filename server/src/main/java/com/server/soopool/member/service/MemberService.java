@@ -1,9 +1,11 @@
 package com.server.soopool.member.service;
+import com.server.soopool.auth.PrincipalDetails;
 import com.server.soopool.auth.exception.AppAuthExceptionCode;
 import com.server.soopool.auth.exception.AppAuthenticationException;
 import com.server.soopool.member.entity.Member;
 import com.server.soopool.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -64,6 +66,13 @@ public class MemberService {
         member.setNickname(nickname);
         memberRepository.save(member);
     }
+
+    public Member getMemberByToken(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        PrincipalDetails principalDetails = (PrincipalDetails) principal;
+        return principalDetails.getMember();
+    }
+
 
     public void deleteMember(Long memberId){
         memberRepository.deleteById(memberId);
