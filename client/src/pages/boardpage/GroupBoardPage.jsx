@@ -5,6 +5,7 @@ import handleLogout from "../../api/handleLogout";
 
 import styled from "styled-components";
 import BoardPage from "../../pages/boardpage/BoardPage";
+import Profile from "../../components/navigation/Profile";
 
 // true일경우 로그인된 상태
 const isLogin = Boolean(localStorage.getItem("token"));
@@ -38,8 +39,10 @@ function GroupBoardPage() {
                 <StyledLink to="/board" key={el}>
                   <div
                     onClick={handleGroup}
-                    // eslint-disable-next-line prettier/prettier
-                    className={currentGroup === el ? "selectedList" : ""}>
+                    className={
+                      currentGroup === el ? "selectedList" : "not-selectedList"
+                      // eslint-disable-next-line prettier/prettier
+                    }>
                     {el}
                   </div>
                 </StyledLink>
@@ -50,16 +53,19 @@ function GroupBoardPage() {
           {isLogin ? (
             <RightMenu>
               <StyledLink to="/board/write">
-                <div>작성하기</div>
+                <div>모집하기</div>
               </StyledLink>
-              <div className="logout-button" onClick={handleLogout}>
-                로그아웃
-              </div>
+
+              <StyledLink className="logout-button" onClick={handleLogout}>
+                <div>로그아웃</div>
+              </StyledLink>
+
+              <Profile />
             </RightMenu>
           ) : (
             <RightMenu>
               <StyledLink to="/board/write">
-                <div>작성하기</div>
+                <div>모집하기</div>
               </StyledLink>
               <StyledLink to="/login">
                 <div>로그인</div>
@@ -70,8 +76,7 @@ function GroupBoardPage() {
           <GiHamburgerMenu className="hambuger" />
         </NavContainer>
       </NavFrame>
-
-      <BoardPage group={currentGroup} />
+      <BoardPage group={currentGroup} />;
     </>
   );
 }
@@ -87,7 +92,7 @@ const NavFrame = styled.nav`
   position: sticky;
 
   top: 0;
-  z-index: 20;
+  z-index: 10;
 
   font-size: 20px;
   font-weight: bold;
@@ -129,16 +134,6 @@ const LeftMenu = styled.div`
   cursor: pointer;
   margin-left: 20px;
 
-  div {
-    opacity: 0.5;
-  }
-
-  .selectedList {
-    color: black;
-    opacity: 1;
-    font-weight: 500;
-  }
-
   .menu-list {
     display: flex;
     align-items: center;
@@ -147,7 +142,7 @@ const LeftMenu = styled.div`
   @media screen and (max-width: 768px) {
     align-items: center;
 
-    .menu-list {
+    div {
       display: none;
     }
   }
@@ -156,14 +151,18 @@ const LeftMenu = styled.div`
 const RightMenu = styled.div`
   display: flex;
   margin-right: 0px;
+  align-items: center;
 
   .logout-button {
-    text-decoration: none;
     color: #5f5f5f;
     margin-left: 20px;
     cursor: pointer;
+  }
 
-    // 조건부 렌더링 넣으면 지울 내용
+  @media screen and (max-width: 768px) {
+    div {
+      display: none;
+    }
   }
 `;
 
@@ -172,16 +171,11 @@ const StyledLink = styled(Link)`
   color: #5f5f5f;
   margin-left: 20px;
 
-  div {
-    margin-left: 10px;
+  .not-selectedList {
+    opacity: 0.5;
   }
-
-  @media screen and (max-width: 768px) {
-    align-items: center;
-
-    div {
-      display: none;
-    }
+  .selectedList {
+    color: black;
   }
 `;
 
