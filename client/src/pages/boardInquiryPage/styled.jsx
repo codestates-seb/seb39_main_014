@@ -124,6 +124,14 @@ export const UserInfo = styled.div`
         font-size: 0.4rem;
       }
     }
+    .Recruitment-classification {
+      margin-left: 0.5rem;
+      padding: 0.5rem 0.5rem;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      color: #009f47;
+      background-color: #e5f8ed;
+    }
     > button {
       margin-left: 1rem;
 
