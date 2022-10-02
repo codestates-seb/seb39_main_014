@@ -6,10 +6,15 @@ import com.server.soopool.board.dto.BoardPostDto;
 import com.server.soopool.board.entity.Board;
 import com.server.soopool.board.mapper.BoardMapper;
 import com.server.soopool.board.service.BoardService;
+import com.server.soopool.boardApply.entity.BoardApply;
+import com.server.soopool.boardApply.repository.BoardApplyRepository;
+import com.server.soopool.boardCareer.entity.BoardCareer;
 import com.server.soopool.boardCareer.service.BoardCareerService;
 import com.server.soopool.boardTechstack.service.BoardTechStackService;
 import com.server.soopool.global.dto.MultiResponseDto;
 import com.server.soopool.global.dto.SingleResponseDto;
+import com.server.soopool.global.exception.BusinessLogicException;
+import com.server.soopool.global.exception.ExceptionCode;
 import com.server.soopool.member.entity.Member;
 import com.server.soopool.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +38,7 @@ public class BoardController {
     private final MemberService memberService;
     private final BoardCareerService boardCareerService;
     private final BoardTechStackService boardTechStackService;
+    private final BoardApplyRepository boardApplyRepository;
 
     // 게시글 등록
     @PostMapping("/write")
@@ -125,8 +131,51 @@ public class BoardController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+
+    // 인기스택 출력
     @GetMapping("/popstack")
     public List<Map.Entry<String, Integer>> popstack() {
         return boardTechStackService.findPopularTechStack().subList(0, 5);
+    }
+
+    @GetMapping("/{board-id}/{career-id}/apply")
+    public void applyBoard(@AuthenticationPrincipal PrincipalDetails principal,
+                           @PathVariable("board-id") @Positive long boardId,
+                           @PathVariable("career-id") int careerId) {
+        Member member = memberService.findByUserId(principal.getUsername());
+        Board board = boardService.findBoard(boardId);
+        BoardApply boardApply = new BoardApply();
+
+        List<BoardApply> boardApplies = member.getBoardApplies();
+        for(BoardApply boardApply1 : boardApplies) {
+            if(boardApply1.getBoardCareer().getBoard().getId() == boardId) {
+                throw new BusinessLogicException(ExceptionCode.ALREADY_RECRUIT);
+            }
+        }
+
+        List<BoardCareer> boardCareers = board.getBoardCareers();
+
+        BoardCareer result = new BoardCareer();
+        for(BoardCareer boardCareer : boardCareers) {
+            if(boardCareer.getCareer().getId() == careerId) {
+                result = boardCareer;
+            }
+        }
+
+        if(result.getCareerTotalRecruit() <= result.getCareerCurrentRecruit()) {
+            throw new BusinessLogicException(ExceptionCode.CAN_NOT_RECRUIT);
+        }
+
+        boardApply.setBoardCareer(result);
+        boardApply.setMember(member);
+        result.setCareerCurrentRecruit(result.getCareerCurrentRecruit() + 1);
+        board.setCurrentRecruit(board.getCurrentRecruit() + 1);
+        if(board.getCurrentRecruit() == board.getTotalRecruit()) {
+            board.setRecruitDone(true);
+            boardService.save(board);
+        }
+
+        boardApplyRepository.save(boardApply);
+
     }
 }
