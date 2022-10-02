@@ -14,25 +14,24 @@ import java.util.List;
 @AllArgsConstructor
 public class CommentMapper {
 
-    public List<CommentResponseDto> commentToCommentResponse(List<Comment> comments, Member member, Board board) {
+    public List<CommentResponseDto> commentToCommentResponse(List<Comment> comments) {
 
         List<CommentResponseDto> list = new ArrayList<>();
         for(Comment comment : comments) {
-            list.add(commentToCommentResponse(comment, member));
+            list.add(commentToCommentResponse(comment));
         }
-
         return list;
     }
 
-    public CommentResponseDto commentToCommentResponse(Comment comment, Member member) {
+    public CommentResponseDto commentToCommentResponse(Comment comment) {
         CommentResponseDto.CommentResponseDtoBuilder commentResponseDto = CommentResponseDto.builder();
-        commentResponseDto.nickname(member.getNickname());
+        commentResponseDto.nickname(comment.getMember().getNickname());
         commentResponseDto.content(comment.getContent());
         commentResponseDto.groupNumber(comment.getGroupNumber());
         commentResponseDto.groupSeq(comment.getGroupSeq());
         commentResponseDto.groupDepth(comment.isGroupDepth());
         commentResponseDto.createdAt(comment.getCreatedAt());
-        commentResponseDto.modifyedAt(comment.getModifiedAt());
+        commentResponseDto.modifiedAt(comment.getModifiedAt());
 
         return commentResponseDto.build();
     }
