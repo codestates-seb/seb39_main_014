@@ -1,11 +1,14 @@
 package com.server.soopool.boardCareer.entity;
 
 import com.server.soopool.board.entity.Board;
+import com.server.soopool.boardApply.entity.BoardApply;
 import com.server.soopool.career.entity.Career;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -33,6 +36,9 @@ public class BoardCareer {
     @Column(nullable = false)
     private Integer careerCurrentRecruit = 0;
 
+    @OneToMany(mappedBy = "boardCareer", cascade = CascadeType.ALL)
+    private List<BoardApply> boardApplies = new ArrayList<>();
+
     public void addBoard(Board board) {
         this.board = board;
         if(!this.board.getBoardCareers().contains(this)) {
@@ -45,6 +51,11 @@ public class BoardCareer {
         if(!this.career.getBoardCareers().contains(this)) {
             this.career.addBoardCareer(this);
         }
+    }
+
+    public void addBoardApply(BoardApply boardApply) {
+        boardApply.setBoardCareer(this);
+        getBoardApplies().add(boardApply);
     }
 
 }
