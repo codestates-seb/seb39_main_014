@@ -17,5 +17,5 @@ public class CommentResponseDto {
     private Integer groupSeq;
     private boolean groupDepth;
     private LocalDateTime createdAt;
-    private LocalDateTime modifyedAt;
+    private LocalDateTime modifiedAt;
 }
