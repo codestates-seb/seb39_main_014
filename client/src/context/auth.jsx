@@ -2,11 +2,11 @@ import { createContext, useContext, useReducer } from "react";
 
 /* 멘토링 변수명 명시적으로 작성하기
    boolean 변수일 경우 -> is
-   user -> userName */
+   token -> userName */
 
 const StateContext = createContext({
-  isAuth: false,
-  user: undefined,
+  isLogin: false,
+  token: undefined,
   isLoading: true,
 });
 
@@ -17,14 +17,14 @@ const reducer = (state, { type, payload }) => {
     case "LOGIN":
       return {
         ...state,
-        isAuth: true,
-        user: payload,
+        isLogin: true,
+        token: payload,
       };
     case "LOGOUT":
       return {
         ...state,
-        isAuth: false,
-        user: null,
+        isLogin: false,
+        token: null,
       };
     default:
       throw new Error(`정의되지않은 action : ${type}`);
@@ -34,8 +34,8 @@ const reducer = (state, { type, payload }) => {
 export const AuthProvider = ({ children }) => {
   const initalToken = localStorage.getItem("token");
   const [state, defaultDispatch] = useReducer(reducer, {
-    user: initalToken,
-    isAuth: false,
+    token: initalToken,
+    isLogin: initalToken ? true : false,
     isLoading: true,
   });
 
