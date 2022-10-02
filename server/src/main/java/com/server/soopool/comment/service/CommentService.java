@@ -42,7 +42,7 @@ public class CommentService {
                 .member(member)
                 .board(board)
                 .content(content)
-                .groupNumber(createGroupNumber(board))
+                .groupNumber(createGroupNumber(boardId))
                 .build();
 
         commentRepository.save(comment);
@@ -56,8 +56,10 @@ public class CommentService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)); // 사용자 정의 Exception 설정 필요
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND)); // 사용자 정의 Exception 설정 필요
+
         commentRepository.updateComment(commentPatchDto.getContent(), board, member, commentPatchDto.getGroupNumber());
         Comment comment = commentRepository.getCommentMatchingMemberIdAndBoardIdAAndGroupNumber(board, member, commentPatchDto.getGroupNumber());
+
         return comment;
     }
 
@@ -71,9 +73,9 @@ public class CommentService {
     }
 
     // 댓글의 GroupNumber 정의
-    public Integer createGroupNumber(Board board) {
+    public Integer createGroupNumber(Long boardId) {
         // NonUniqueResultException :: https://programmer7895.tistory.com/18
-        List<BoardIdAndGroupNumberMapping> search = BoardIdAndGroupNumberMapping(board);
+        List<BoardIdAndGroupNumberMapping> search = BoardIdAndGroupNumberMapping(boardId);
 
         // stream으로 코드 작성 고민할 부분
         if(search.size() == 0) {
@@ -84,8 +86,8 @@ public class CommentService {
 
     }
 
-    public List BoardIdAndGroupNumberMapping(Board board) {
-        List<BoardIdAndGroupNumberMapping> search = commentRepository.findByBoardId(board);
+    public List BoardIdAndGroupNumberMapping(Long boardId) {
+        List<BoardIdAndGroupNumberMapping> search = commentRepository.findByBoardId(boardId);
         return search;
     }
 }
