@@ -24,6 +24,7 @@ function MyPage() {
   });
   const [isCareer, setIsCareer] = useState(false);
   const outSection = useRef();
+  const [info, setInfo] = useState([]);
 
   const [nickname, setNickname] = useState("아무개");
 
@@ -42,10 +43,10 @@ function MyPage() {
       .get(
         `http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/my-page/info`
       )
-      .then((res) => console.log(res))
+      .then((res) => setInfo(res.data))
       .catch((err) => console.log(err));
   }, []);
-
+  console.log(info);
   const searchStack = newStackList.filter((prev) => {
     if (search === "") {
       return prev;
@@ -64,7 +65,7 @@ function MyPage() {
             <input
               className="Nickname"
               type="text"
-              defaultValue={nickname}
+              defaultValue={info.nickname}
               onChange={(e) => setNickname(e.target.value)}
             />
             <div
@@ -113,7 +114,7 @@ function MyPage() {
               ) : null}
             </div>
             <label className="Activity-label">활동 점수</label>
-            <div className="Activity">{activeScore}점</div>
+            <div className="Activity">{info.activeScore}점</div>
             <label className="Stack-label">기술 스택</label>
             <div
               className="Registration-box"
