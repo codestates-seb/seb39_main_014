@@ -18,6 +18,9 @@ public enum ExceptionCode {
     COMMENT_NOT_MODIFY(500, "댓글 수정에 실패했습니다."),
     BOARD_NOT_FOUNT(404, "해당 게시글을 찾을 수 없습니다."),
 
+    CAN_NOT_RECRUIT(400, "해당 커리어에 지원할 수 없습니다."),
+    ALREADY_RECRUIT(400, "이미 지원한 게시글입니다."),
+
     //BOARD EXCEPTION
 
     BOARD_NOT_FOUND(404,"게시글을 찾을 수 없습니다."),
