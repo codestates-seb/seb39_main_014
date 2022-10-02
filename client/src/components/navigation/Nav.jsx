@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import handleLogout from "../../api/handleLogout";
 
@@ -9,54 +9,59 @@ import styled from "styled-components";
 const isLogin = Boolean(localStorage.getItem("token"));
 
 function Nav() {
+  const locationNow = useLocation();
+
+  if (locationNow.pathname === "/board") return null;
   return (
-    <NavFrame>
-      <NavContainer>
-        <Logo>
-          <StyledLink to="/">
-            <img
-              src="/assets/logo/logo_black.png"
-              alt="asd.png"
-              width={100}
-              height={50}
-            />
-          </StyledLink>
-          <LeftMenu>
+    <>
+      <NavFrame>
+        <NavContainer>
+          <Logo>
             <StyledLink to="/board">
-              <div>전체</div>
+              <img
+                src="/assets/logo/logo_black.png"
+                alt="asd.png"
+                width={100}
+                height={50}
+              />
             </StyledLink>
-            <StyledLink>
-              <div>스터디</div>
-            </StyledLink>
-            <StyledLink>
-              <div>프로젝트</div>
-            </StyledLink>
-          </LeftMenu>
-        </Logo>
+            <LeftMenu>
+              {/* <StyledLink to="/boardpage">
+                <div>전체</div>
+              </StyledLink>
+              <StyledLink to="/boardpage">
+                <div>스터디</div>
+              </StyledLink>
+              <StyledLink to="/boardpage">
+                <div>프로젝트</div>
+              </StyledLink> */}
+            </LeftMenu>
+          </Logo>
 
-        {isLogin ? (
-          <RightMenu>
-            <StyledLink to="/board/write">
-              <div>작성하기</div>
-            </StyledLink>
-            <div className="logout-button" onClick={handleLogout}>
-              로그아웃
-            </div>
-          </RightMenu>
-        ) : (
-          <RightMenu>
-            <StyledLink to="/board/write">
-              <div>작성하기</div>
-            </StyledLink>
-            <StyledLink to="/login">
-              <div>로그인</div>
-            </StyledLink>
-          </RightMenu>
-        )}
+          {isLogin ? (
+            <RightMenu>
+              <StyledLink to="/board/write">
+                <div>작성하기</div>
+              </StyledLink>
+              <div className="logout-button" onClick={handleLogout}>
+                로그아웃
+              </div>
+            </RightMenu>
+          ) : (
+            <RightMenu>
+              <StyledLink to="/board/write">
+                <div>작성하기</div>
+              </StyledLink>
+              <StyledLink to="/login">
+                <div>로그인</div>
+              </StyledLink>
+            </RightMenu>
+          )}
 
-        <GiHamburgerMenu className="hambuger" />
-      </NavContainer>
-    </NavFrame>
+          <GiHamburgerMenu className="hambuger" />
+        </NavContainer>
+      </NavFrame>
+    </>
   );
 }
 
