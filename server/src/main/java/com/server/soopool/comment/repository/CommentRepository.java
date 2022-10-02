@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    List<BoardIdAndGroupNumberMapping> findByBoardId(Board boardId);
+    List<BoardIdAndGroupNumberMapping> findByBoardId(Long boardId);
 
     // boardId의 조건에 부합하는 모든 comments를 조회합니다.
     @Query(value = "SELECT c " +
