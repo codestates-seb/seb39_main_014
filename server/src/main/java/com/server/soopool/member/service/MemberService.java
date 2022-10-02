@@ -64,4 +64,8 @@ public class MemberService {
         member.setNickname(nickname);
         memberRepository.save(member);
     }
+
+    public void deleteMember(Long memberId){
+        memberRepository.deleteById(memberId);
+    }
 }
