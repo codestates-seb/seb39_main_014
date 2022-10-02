@@ -11,7 +11,6 @@
   "env": {
     "node": true
   },
-  "indent": ["error", 4, { "SwitchCase": 1 }],
   "ignorePatterns": ["node_modules/", ".prettierrc"],
   "rules": {
     "prettier/prettier": "error",
