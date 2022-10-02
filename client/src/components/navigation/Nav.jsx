@@ -5,6 +5,9 @@ import handleLogout from "../../api/handleLogout";
 
 import styled from "styled-components";
 
+// true일경우 로그인된 상태
+const isLogin = Boolean(localStorage.getItem("token"));
+
 function Nav() {
   return (
     <NavFrame>
@@ -31,17 +34,25 @@ function Nav() {
           </LeftMenu>
         </Logo>
 
-        <RightMenu>
-          <StyledLink to="/board/write">
-            <div>작성하기</div>
-          </StyledLink>
-          <StyledLink to="/login">
-            <div>로그인</div>
-          </StyledLink>
-          <div className="logout-button" onClick={handleLogout}>
-            로그아웃
-          </div>
-        </RightMenu>
+        {isLogin ? (
+          <RightMenu>
+            <StyledLink to="/board/write">
+              <div>작성하기</div>
+            </StyledLink>
+            <div className="logout-button" onClick={handleLogout}>
+              로그아웃
+            </div>
+          </RightMenu>
+        ) : (
+          <RightMenu>
+            <StyledLink to="/board/write">
+              <div>작성하기</div>
+            </StyledLink>
+            <StyledLink to="/login">
+              <div>로그인</div>
+            </StyledLink>
+          </RightMenu>
+        )}
 
         <GiHamburgerMenu className="hambuger" />
       </NavContainer>
@@ -121,10 +132,12 @@ const RightMenu = styled.div`
   margin-right: 0px;
 
   .logout-button {
+    text-decoration: none;
+    color: #5f5f5f;
+    margin-left: 20px;
     cursor: pointer;
 
     // 조건부 렌더링 넣으면 지울 내용
-    margin-left: 5px;
   }
 `;
 
