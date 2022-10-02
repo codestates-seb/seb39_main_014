@@ -47,6 +47,8 @@ function MyPage() {
   const [search, setSearch] = useState("");
 
   const [bookmarkList, setBookmarkList] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const getMypage = () => {
     axios
       .get(`${MYPAGE_URL}/info`, {
@@ -57,29 +59,31 @@ function MyPage() {
       .then((res) => {
         console.log(res);
         setInfo(res.data);
+        setNickname(res.data.nickname);
+        setTechStack(
+          res.data.techStack.map((el) => ({ name: el.name, id: el.name }))
+        );
+        setCareer({
+          name: res.data.career[0].name,
+          level: res.data.career[0].level,
+        });
       })
       .catch((err) => console.log(err));
   };
-
+  console.log(info);
   useEffect(() => {
+    setLoading(true);
+    getMypage();
     axios
-      .get(`${MYPAGE_URL}/info`, {
+      .get(`${MYPAGE_URL}/bookmark`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((res) => {
-        console.log(res);
-        setInfo(res.data);
+        setBookmarkList(res.data.bookmarkList);
+        setLoading(false);
       })
-      .catch((err) => console.log(err));
-    axios
-      .get(`${MYPAGE_URL}bookmark`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-      .then((res) => setBookmarkList(res.data.bookmarkList))
       .catch((err) => console.log(err));
   }, []);
 
@@ -115,6 +119,7 @@ function MyPage() {
       .then((res) => navigate("/"))
       .catch((err) => console.log(err));
   };
+  if (loading) return null;
 
   return (
     <MypageContainer>
