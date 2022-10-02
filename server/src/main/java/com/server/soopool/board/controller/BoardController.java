@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,9 +43,16 @@ public class BoardController {
 
     // 게시글 등록
     @PostMapping("/write")
+    @Secured("ROLE_USER")
     public ResponseEntity postBoard(@AuthenticationPrincipal PrincipalDetails principal,
                                     @RequestBody BoardPostDto boardDto) {
+
         Member member = memberService.findByUserId(principal.getUsername());
+
+        if(principal.getMemberId() == null){
+            throw new BusinessLogicException(ExceptionCode.NEEDED_LOGIN);
+        }
+
         Board board = boardService.createBoard(boardMapper.boardPostToBoard(boardDto));
         board.setMember(member);
         boardService.updateBoardTotalRecruit(board);
@@ -57,10 +65,16 @@ public class BoardController {
 
     // 게시글 수정
     @PatchMapping("/{board-id}")
-    public ResponseEntity patchBoard(@PathVariable("board-id") @Positive long boardId,
+    @Secured("ROLE_USER")
+    public ResponseEntity patchBoard(@AuthenticationPrincipal PrincipalDetails principal
+                                    ,@PathVariable("board-id") @Positive long boardId,
                                      @RequestBody BoardPatchDto boardPatchDto){
 
+
         Board board = boardService.findBoard(boardId);
+        if( principal.getMemberId() != board.getMember().getId() ){
+            throw new BusinessLogicException(ExceptionCode.CAN_NOT_MODIFY_BOARD);
+        }
         boardCareerService.deleteBoardCareers(boardId);
         boardTechStackService.deleteBoardTechStacks(boardId);
 
@@ -125,8 +139,14 @@ public class BoardController {
 
     // 게시글 삭제
     @DeleteMapping("/{board-id}")
+    @Secured("ROLE_USER")
     public ResponseEntity deleteBoard(@AuthenticationPrincipal PrincipalDetails principal,
                                       @PathVariable("board-id") @Positive long boardId){
+
+        Board board = boardService.findBoard(boardId);
+        if( principal.getMemberId() != board.getMember().getId() ){
+            throw new BusinessLogicException(ExceptionCode.CAN_NOT_DELETE_BOARD);
+        }
         boardService.deleteById(boardId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -139,11 +159,17 @@ public class BoardController {
     }
 
     @GetMapping("/{board-id}/{career-id}/apply")
+    @Secured("ROLE_USER")
     public void applyBoard(@AuthenticationPrincipal PrincipalDetails principal,
                            @PathVariable("board-id") @Positive long boardId,
                            @PathVariable("career-id") int careerId) {
         Member member = memberService.findByUserId(principal.getUsername());
         Board board = boardService.findBoard(boardId);
+
+        if(principal.getMemberId() == null){
+            throw new BusinessLogicException(ExceptionCode.NEEDED_LOGIN);
+        }
+
         BoardApply boardApply = new BoardApply();
 
         List<BoardApply> boardApplies = member.getBoardApplies();
