@@ -4,12 +4,15 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import handleLogout from "../../api/handleLogout";
 
 import styled from "styled-components";
+import Hambuger from "./Hambuger";
+import Profile from "./Profile";
 
 // true일경우 로그인된 상태
 const isLogin = Boolean(localStorage.getItem("token"));
 
 function Nav() {
   const locationNow = useLocation();
+  const [isOpen, setIsOpen] = useState(false); // 메뉴의 초기값을 false로 설정
 
   if (locationNow.pathname === "/board") return null;
   return (
@@ -25,32 +28,23 @@ function Nav() {
                 height={50}
               />
             </StyledLink>
-            <LeftMenu>
-              {/* <StyledLink to="/boardpage">
-                <div>전체</div>
-              </StyledLink>
-              <StyledLink to="/boardpage">
-                <div>스터디</div>
-              </StyledLink>
-              <StyledLink to="/boardpage">
-                <div>프로젝트</div>
-              </StyledLink> */}
-            </LeftMenu>
+            <LeftMenu></LeftMenu>
           </Logo>
 
           {isLogin ? (
             <RightMenu>
               <StyledLink to="/board/write">
-                <div>작성하기</div>
+                <div>모집하기</div>
               </StyledLink>
-              <div className="logout-button" onClick={handleLogout}>
-                로그아웃
-              </div>
+              <StyledLink className="logout-button" onClick={handleLogout}>
+                <div>로그아웃</div>
+              </StyledLink>
+              <Profile />
             </RightMenu>
           ) : (
             <RightMenu>
               <StyledLink to="/board/write">
-                <div>작성하기</div>
+                <div>모집하기</div>
               </StyledLink>
               <StyledLink to="/login">
                 <div>로그인</div>
@@ -58,7 +52,13 @@ function Nav() {
             </RightMenu>
           )}
 
-          <GiHamburgerMenu className="hambuger" />
+          <GiHamburgerMenu
+            className="hambuger"
+            onClick={() => {
+              setIsOpen(!isOpen);
+            }}
+          />
+          {/* <div className="test-hambuger">햄버거</div> */}
         </NavContainer>
       </NavFrame>
     </>
@@ -94,6 +94,9 @@ const NavContainer = styled.div`
     display: none;
   }
 
+  .test-hambuger {
+    background-color: gray;
+  }
   @media screen and (max-width: 768px) {
     align-items: center;
 
@@ -126,7 +129,7 @@ const LeftMenu = styled.div`
   @media screen and (max-width: 768px) {
     align-items: center;
 
-    .menu-list {
+    div {
       display: none;
     }
   }
@@ -135,14 +138,18 @@ const LeftMenu = styled.div`
 const RightMenu = styled.div`
   display: flex;
   margin-right: 0px;
+  align-items: center;
 
   .logout-button {
-    text-decoration: none;
     color: #5f5f5f;
     margin-left: 20px;
     cursor: pointer;
+  }
 
-    // 조건부 렌더링 넣으면 지울 내용
+  @media screen and (max-width: 768px) {
+    div {
+      display: none;
+    }
   }
 `;
 
@@ -150,18 +157,6 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   color: #5f5f5f;
   margin-left: 20px;
-
-  div {
-    margin-left: 10px;
-  }
-
-  @media screen and (max-width: 768px) {
-    align-items: center;
-
-    div {
-      display: none;
-    }
-  }
 `;
 
 export default Nav;
