@@ -19,6 +19,7 @@ import com.server.soopool.techstack.request.UserInfoTechStackRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -41,8 +42,10 @@ public class MemberController {
 
     // 마이페이지 북마크 조회
     @GetMapping("my-page/bookmark")
+    @Secured("ROLE_USER")
     public ResponseEntity getUserInfoBookmark(@AuthenticationPrincipal PrincipalDetails principal) {
-        Member member = memberService.findByUserId("hgd2022");
+
+        Member member = memberService.findByUserId(principal.getUsername());
         List<Bookmark> bookmark = bookmarkService.getUserBookmark(member);
 
         return new ResponseEntity<>(
@@ -56,9 +59,10 @@ public class MemberController {
     // 마이페이지 특정 북마크 삭제
     //todo : RequestDto 해결 및 서비스로직구현
     @DeleteMapping("my-page/bookmark")
+    @Secured("ROLE_USER")
     public ResponseEntity deleteUserInfoBookmark(@AuthenticationPrincipal PrincipalDetails principal,
                                                  @RequestBody BookmarkDeleteDto bookmarkDeleteDto) {
-        Member member = memberService.findByUserId("hgd2022");
+        Member member = memberService.findByUserId(principal.getUsername());
         bookmarkService.deleteBookmark(member, bookmarkDeleteDto.getBookmarkList());
         List<Bookmark> bookmark = bookmarkService.getUserBookmark(member);
 
@@ -72,9 +76,10 @@ public class MemberController {
 
     // 회원정보 info 가져오기
     @GetMapping("my-page/info")
+    @Secured("ROLE_USER")
     public ResponseEntity getUserInfo(@AuthenticationPrincipal PrincipalDetails principal) {
 
-        Member member = memberService.findByUserId("hgd2022");
+        Member member = memberService.findByUserId(principal.getUsername());
         List<UserInfoCareerRequest> userInfoCareerRequests = new ArrayList<>();
         UserInfoCareerRequest userInfoCareerRequest = new UserInfoCareerRequest();
         if(member.getCareerMembers().size() != 0) {
@@ -103,11 +108,12 @@ public class MemberController {
     }
 
     @PostMapping("my-page/info")
+    @Secured("ROLE_USER")
     @Transactional
     public ResponseEntity postUserInfo(@AuthenticationPrincipal PrincipalDetails principal,
                                        @RequestBody UserInfoDto userInfoDto) {
         //Member nickname 변경
-        Member member = memberService.findByUserId("hgd2022");
+        Member member = memberService.findByUserId(principal.getUsername());
         memberService.setMemberNickname(member, userInfoDto.getNickname());
 
         // Member career 추가 및 변경
@@ -162,7 +168,7 @@ public class MemberController {
 
         @DeleteMapping("my-page/bookmark")
         public ResponseEntity deleteAllUserInfoBookmark(@AuthenticationPrincipal PrincipalDetails principal) {
-            Member member = memberService.findByUserId("hgd2022");
+            Member member = memberService.findByUserId(principal.getUsername());
             bookmarkService.deleteAllBookmark(member);
             List<Bookmark> bookmark = bookmarkService.getUserBookmark(member);
 
