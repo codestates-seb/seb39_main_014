@@ -31,7 +31,6 @@ function BoardInquiryPage() {
       .get(BOARD_URL)
       .then((res) => setBoardInfo(res.data.board))
       .catch((err) => console.log(err));
-    getComment();
   }, []);
 
   const getComment = () => {
@@ -69,7 +68,15 @@ function BoardInquiryPage() {
   const handleCommentSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(`${BOARD_URL}/comment`, { content: comment })
+      .post(
+        `${BOARD_URL}/comment`,
+        { content: comment },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
       .then((res) => getComment())
       .then((res) => setComment(""))
       .catch((err) => console.log(err));
