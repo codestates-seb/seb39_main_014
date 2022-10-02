@@ -122,7 +122,7 @@ const Stack = ({ selectedList, setSelectedList }) => {
               />
             ))
           : // 현재탭이 전체일 경우
-            [...stacks.전체].map((el, idx) => (
+            [...stacks.전체].map((el) => (
               <StackImg
                 src={`/assets/stack/${el}.svg`}
                 alt={`${el}`}
