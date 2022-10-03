@@ -13,8 +13,8 @@ import java.util.List;
 public class CommentResponseDto {
     private String nickname;
     private String content;
-    private Integer groupNumber;
-    private Integer groupSeq;
+    private Long groupNumber;
+    private Long groupSeq;
     private boolean groupDepth;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
