@@ -120,7 +120,7 @@ function DivisionForm() {
   };
 
   useOutsideClick(recuirtClickRef, setIsLocation);
-  useOutsideClick(recuirtClickRef, setIsStack);
+  useOutsideClick(stackClickRef, setIsStack);
   useOutsideClick(periodClickRef, setIsPeriod);
 
   /** props 내릴 데이터 */
