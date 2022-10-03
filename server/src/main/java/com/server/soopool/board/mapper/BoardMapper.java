@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface BoardMapper {
     default Board boardPatchToBoard(BoardPatchDto boardPatchDto, Board board) {
+        board.setRecruitCategory( Enum.valueOf( Board.RecruitCategory.class, boardPatchDto.getRecruitCategory() ));
         board.setRecruitMethod( Enum.valueOf( Board.RecruitMethod.class, boardPatchDto.getRecruitMethod() ) );
         board.setLocation( Enum.valueOf( Board.Location.class, boardPatchDto.getLocation() ) );
         board.setPeriod( Enum.valueOf( Board.Period.class, boardPatchDto.getPeriod() ) );
