@@ -11,6 +11,7 @@ import TopButton from "../../components/topButton/TopButton";
 import IsLoading from "../../components/isLoading/IsLoading";
 import getBoard from "../../api/getBoard";
 import getMember from "../../api/getMember";
+import { result } from "lodash";
 
 function BoardPage({ group }) {
   const BOARD_URL = {
@@ -39,26 +40,35 @@ function BoardPage({ group }) {
 
   /////////////////////////////////////////////////////////////////
 
-  // pseudo코드 - 해야할 일
-  // 1. 객체가 들어있는 datas 배열 map 순회
-  // 2. filter
+  // const wow = datas
+  //   .map((el) => el.techStackNames)
+  //   .map((el) => el.map((el) => el.techStackName))
+  //   .map((el) => el.includes(stackFilter[0]));
 
-  // 스택 필터
-  console.log(stackFilter);
-  // 첫번째 게시글의 테크스택
+  // const wow = datas
+  //   .map((e) => e.techStackNames)
+  //   .map((el) => el.map((el) => el.techStackName))
+  //   .map((elm) => elm.includes(stackFilter[0]));
 
-  // 객체안의 특정 값이 배열인데 배열안에 객체
-  // 배열이랑 비교
+  //해결한 코드
+  const wow = datas
+    .map((e) => e.techStackNames)
+    .map((el) => el.map((el) => el.techStackName))
+    .map((elm) => stackFilter.some((r) => elm.indexOf(r) >= 0));
 
-  const result = datas.filter(
-    (el) => el.techStackNames[0].techStackName === "React"
-  );
-  // console.log(result);
+  const result = [];
 
-  const res1 = datas.filter((el) =>
-    el.techStackNames.filter((el) => el.techStackName === "Java")
-  );
-  console.log(res1);
+  const foo = () => {
+    wow.map((el, idx) => {
+      if (el === true) {
+        result.push(datas[idx]);
+      }
+    });
+    console.log(result);
+  };
+
+  foo();
+  console.log(result);
 
   ///////////////////////////////////////////////////////////////////////////////
 
