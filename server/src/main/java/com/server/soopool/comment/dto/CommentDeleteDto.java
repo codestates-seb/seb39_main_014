@@ -4,5 +4,5 @@ import lombok.Getter;
 
 @Getter
 public class CommentDeleteDto {
-    private Integer groupNumber;
+    private Long groupNumber;
 }
