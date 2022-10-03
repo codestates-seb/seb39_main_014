@@ -108,9 +108,19 @@ public class CommentController {
         Member member = memberService.findByUserId(principal.getUsername());
         Board board = boardService.findBoard(boardId);
 
-        if( principal.getMemberId() != board.getMember().getId() ){
+        Comment comment1 = new Comment();
+
+        for(Comment comment : board.getComments()){
+            if(commentDeleteDto.getGroupNumber() == comment.getGroupNumber()){
+                comment1 = comment;
+            }
+        }
+
+        if( principal.getMemberId() != comment1.getMember().getId() ){
             throw new BusinessLogicException(ExceptionCode.CAN_NOT_DELETE_COMMENT);
         }
+
+
 
         // 게시글 댓글 개수 - 1
         board.setCommentAmount(board.getCommentAmount() - 1);
