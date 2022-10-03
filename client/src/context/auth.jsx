@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
   });
 
   //로그인 확인용
-  console.log(state);
+  // console.log(state);
 
   const dispatch = (type, payload) => {
     defaultDispatch({ type, payload });
