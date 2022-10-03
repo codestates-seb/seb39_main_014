@@ -14,6 +14,7 @@ import com.server.soopool.member.repository.MemberRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -51,6 +52,7 @@ public class CommentService {
     }
 
     // 댓글 수정
+    @Transactional
     public Comment modifyComment(Long memberId, Long boardId, CommentPatchDto commentPatchDto) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)); // 사용자 정의 Exception 설정 필요
@@ -83,7 +85,6 @@ public class CommentService {
         } else {
             return search.get(search.size() - 1).getGroupNumber() + 1;
         }
-
     }
 
     public List BoardIdAndGroupNumberMapping(Long boardId) {
