@@ -457,7 +457,7 @@ export const Contact = styled.div`
     @media screen and (max-width: 710px) {
       width: 100%;
     }
-    padding: 0.5rem 0;
+    padding: 0.8rem 0 0.8rem 0.5rem;
     margin: 0.7rem 0 1rem 0;
     &::placeholder {
       padding-left: 0.5rem;
@@ -476,7 +476,7 @@ export const Title = styled.div`
 
   > input {
     width: 100%;
-    padding: 0.5rem 0;
+    padding: 0.8rem 0 0.8rem 0.5rem;
     border: 1px solid #a6a6a6;
     border-radius: 10px;
     margin: 0.7rem 0 1rem 0;
