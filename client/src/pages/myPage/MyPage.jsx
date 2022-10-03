@@ -51,7 +51,8 @@ function MyPage() {
 
   const [checkLists, setCheckLists] = useState([]);
 
-  const [test, setTest] = useState([]);
+  const careerClickRef = useRef();
+  const stackClickRef = useRef();
 
   /** 유저정보 get 요청 함수 */
   const getMypage = () => {
@@ -96,6 +97,28 @@ function MyPage() {
     getBookmark();
     setLoading(false);
   }, []);
+
+  /** 외부 클릭시 창 사라지는 기능 */
+  const useOutsideClick = (ref, callback) => {
+    const handleClick = (e) => {
+      if (ref && !ref.current.contains(e.target)) {
+        callback(false);
+      } else {
+        callback(true);
+      }
+    };
+
+    useEffect(() => {
+      document.addEventListener("mousedown", handleClick);
+
+      return () => {
+        document.removeEventListener("mousedown", handleClick);
+      };
+    });
+  };
+
+  useOutsideClick(careerClickRef, setIsCareer);
+  useOutsideClick(stackClickRef, setIsTechStackList);
 
   const searchStack = newStackList.filter((prev) => {
     if (search === "") {
@@ -200,7 +223,7 @@ function MyPage() {
               </p>
               {isCareer ? (
                 <div className="Career-level-lists">
-                  <ul className="Career-list">
+                  <ul className="Career-list" ref={careerClickRef}>
                     {careerLists.map((el) => (
                       <li
                         key={el.id}
@@ -256,7 +279,7 @@ function MyPage() {
                 }}
               />{" "}
               {istechStackList ? (
-                <ul className="Stacklist">
+                <ul className="Stacklist" ref={stackClickRef}>
                   {searchStack.map((el) => (
                     <li
                       key={el.id}

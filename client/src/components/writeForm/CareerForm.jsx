@@ -26,6 +26,7 @@ function CareerForm({ object }) {
   const [loading, setLoading] = useState(false);
 
   const idCount = useRef(0);
+  const careerClickRef = useRef();
 
   useEffect(() => {
     if (boardId) {
@@ -55,6 +56,22 @@ function CareerForm({ object }) {
         .then((res) => setLoading(false));
     } else setLoading(false);
   }, []);
+
+  /** 외부 클릭시 창 사라지는 기능 */
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  });
+  const handleClickOutside = (event) => {
+    if (careerClickRef && !careerClickRef.current.contains(event.target)) {
+      setIsCareer(false);
+    } else {
+      setIsCareer(true);
+    }
+  };
 
   const newObject = { ...object, boardCareers: careers };
 
@@ -127,7 +144,7 @@ function CareerForm({ object }) {
               />
             </div>
             {isCareer ? (
-              <ul className="Careerlists">
+              <ul className="Careerlists" ref={careerClickRef}>
                 {careerLists.map((el) => (
                   <li
                     key={el.id}
