@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import {
   InformationContainer,
   UserInfo,
@@ -20,13 +20,12 @@ function Information() {
   const [isBookmark, setIsBookmark] = useState(false);
 
   const user = localStorage.getItem("nickname");
-  console.log(boardId);
+
   useEffect(() => {
     setLoading(true);
     axios
       .get(BOARD_URL)
       .then((res) => {
-        console.log(res.data);
         setBoardInfo([res.data.board]);
         setCreatedAt(res.data.board.createdAt.slice(0, 10));
 
@@ -48,14 +47,13 @@ function Information() {
         },
       })
       .then((res) => {
-        console.log(res);
-        if (res.data.userBookmarks.includes(boardId)) {
+        if (res.data.userBookmarks.includes(Number(boardId))) {
           setIsBookmark(true);
         } else setIsBookmark(false);
       })
       .catch((err) => console.log(err));
   }, []);
-
+  console.log(boardInfo);
   const handleBookmarkClick = (e) => {
     e.preventDefault();
     axios
@@ -69,7 +67,6 @@ function Information() {
         }
       )
       .then((res) => {
-        console.log(res);
         setIsBookmark(!isBookmark);
         isBookmark
           ? setBookmarkCount(bookmarkCount - 1)
@@ -89,16 +86,23 @@ function Information() {
         </div>
         <div className="Board-info">
           <div className="Bookmark">
-            <AiOutlineHeart
-              className="AiOutlineHeart"
-              onClick={handleBookmarkClick}
-            />
+            {isBookmark ? (
+              <AiFillHeart
+                className="AiOutlineHeart full"
+                onClick={handleBookmarkClick}
+              />
+            ) : (
+              <AiOutlineHeart
+                className="AiOutlineHeart"
+                onClick={handleBookmarkClick}
+              />
+            )}
             <span>{bookmarkCount}</span>
           </div>
           <span className="Recruitment-classification">
             {boardInfo[0].recruitCategory}
           </span>
-          <button>{dday > 0 ? `D - ${dday}` : `모집 마감`}</button>
+          <button>{dday > 0 ? `D-${dday}` : `모집 마감`}</button>
         </div>
       </UserInfo>
       <BoardInfo>
