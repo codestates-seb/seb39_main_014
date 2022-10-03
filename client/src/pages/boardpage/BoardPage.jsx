@@ -14,11 +14,11 @@ import getMember from "../../api/getMember";
 
 function BoardPage({ group }) {
   const BOARD_URL = {
-    ALL: "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/?page=1&size=9",
+    ALL: "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/?page=1&size=3",
     STUDY:
-      "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/study?page=1&size=9",
+      "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/study?page=1&size=3",
     PROJECT:
-      "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/project?page=1&size=9",
+      "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/project?page=1&size=3",
   };
   const MEMBER_URL =
     "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/member";
@@ -27,9 +27,40 @@ function BoardPage({ group }) {
   //테스트 서버 URI
   // const BOARD_URL = "http://183.106.239.239:8080/api/v1/board?page=1&size=9";
 
+  // 필터링할 스택 담긴 리스트
   const [stackFilter, setStackFilter] = useState([]);
+  // 각 게시글 객체가 담긴 리스트
   const [datas, setDatas] = useState([]);
+
+  // 필터링된 게시글 객체가 담긴 리스트
+  const [filterDatas, setFilterDatas] = useState([]);
+
   const isLoading = !datas.length;
+
+  /////////////////////////////////////////////////////////////////
+
+  // pseudo코드 - 해야할 일
+  // 1. 객체가 들어있는 datas 배열 map 순회
+  // 2. filter
+
+  // 스택 필터
+  console.log(stackFilter);
+  // 첫번째 게시글의 테크스택
+
+  // 객체안의 특정 값이 배열인데 배열안에 객체
+  // 배열이랑 비교
+
+  const result = datas.filter(
+    (el) => el.techStackNames[0].techStackName === "React"
+  );
+  // console.log(result);
+
+  const res1 = datas.filter((el) =>
+    el.techStackNames.filter((el) => el.techStackName === "Java")
+  );
+  console.log(res1);
+
+  ///////////////////////////////////////////////////////////////////////////////
 
   useEffect(() => {
     getMember(MEMBER_URL);
@@ -41,14 +72,6 @@ function BoardPage({ group }) {
     } else if (group === "프로젝트") {
       getBoard(BOARD_URL.PROJECT, setDatas);
     }
-    // switch (group) {
-    //   case "":
-    //   getBoard(BOARD_URL.ALL, setDatas);
-    //   case "스터디":
-    //     getBoard(BOARD_URL.STUDY, setDatas);
-    //   case "프로젝트":
-    //     getBoard(BOARD_URL.PROJECT, setDatas);
-    // }
   }, [group]);
 
   if (isLoading) {
