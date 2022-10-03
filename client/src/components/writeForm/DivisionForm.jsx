@@ -43,7 +43,11 @@ function DivisionForm() {
 
   const [search, setSearch] = useState("");
 
-  const clickRef = useRef();
+  /** 외부클릭 관련 ref */
+  const recuirtClickRef = useRef();
+  const stackClickRef = useRef();
+  const periodClickRef = useRef();
+
   const stackRef = useRef(0);
   const newStackRef = useRef(9);
 
@@ -96,21 +100,30 @@ function DivisionForm() {
     } else setLoading(false);
   }, []);
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+  /** 외부 클릭시 창 사라지는 기능 */
+  const useOutsideClick = (ref, callback) => {
+    const handleClick = (e) => {
+      if (ref && !ref.current.contains(e.target)) {
+        callback(false);
+      } else {
+        callback(true);
+      }
     };
-  });
-  const handleClickOutside = (event) => {
-    if (clickRef && !clickRef.current.contains(event.target)) {
-      setIsLocation(false);
-    } else {
-      setIsLocation(true);
-    }
+
+    useEffect(() => {
+      document.addEventListener("mousedown", handleClick);
+
+      return () => {
+        document.removeEventListener("mousedown", handleClick);
+      };
+    });
   };
 
+  useOutsideClick(recuirtClickRef, setIsLocation);
+  useOutsideClick(stackClickRef, setIsStack);
+  useOutsideClick(periodClickRef, setIsPeriod);
+
+  /** props 내릴 데이터 */
   const object = {
     recruitCategory: recruitCategory,
     recruitMethod: recruitMethod,
@@ -238,7 +251,11 @@ function DivisionForm() {
                 </div>
               ) : null}
               {isLocation && recruitMethod === "OFFLINE" ? (
-                <ul className="location" ref={clickRef} value={isLocation}>
+                <ul
+                  className="location"
+                  ref={recuirtClickRef}
+                  value={isLocation}
+                >
                   {regionLists.map((el) => (
                     <li
                       key={el.id}
@@ -287,7 +304,7 @@ function DivisionForm() {
             />
           </div>
           {isStack ? (
-            <ul className="Stacklists" ref={clickRef} value={isStack}>
+            <ul className="Stacklists" ref={stackClickRef} value={isStack}>
               {searchStack.map((el) => {
                 return (
                   <li key={el.id} onClick={handleStackListClick}>
@@ -335,7 +352,7 @@ function DivisionForm() {
             />
           </div>
           {isPeriod ? (
-            <ul className="Periodlists">
+            <ul className="Periodlists" ref={periodClickRef}>
               {periodLists.map((el) => (
                 <li key={el.id} onClick={() => handlePeriodClick(el)}>
                   {el.period}
