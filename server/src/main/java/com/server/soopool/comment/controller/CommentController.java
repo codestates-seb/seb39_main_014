@@ -6,6 +6,7 @@ import com.server.soopool.board.service.BoardService;
 import com.server.soopool.comment.dto.*;
 import com.server.soopool.comment.entity.Comment;
 import com.server.soopool.comment.mapper.CommentMapper;
+import com.server.soopool.comment.repository.CommentRepository;
 import com.server.soopool.comment.service.CommentService;
 import com.server.soopool.global.exception.BusinessLogicException;
 import com.server.soopool.global.exception.ExceptionCode;
@@ -32,6 +33,7 @@ public class CommentController {
     private final BoardService boardService;
     private final CommentMapper commentMapper;
     private final MemberService memberService;
+    private final CommentRepository commentRepository;
 
     @GetMapping("board/{board_id}/comment")
         public ResponseEntity getCommentsMatchingBoardId(@PathVariable("board_id") @Positive Long boardId) {
@@ -89,7 +91,10 @@ public class CommentController {
             throw new BusinessLogicException(ExceptionCode.CAN_NOT_MODIFY_COMMENT);
         }
 
-        commentService.modifyComment(member.getId(), board.getId(), commentPatchDto);
+
+        comment.setContent((commentPatchDto.getContent()));
+        commentRepository.save(comment);
+
         List<Comment> comments = commentService.getComments(board);
 
         boardService.save(board);
@@ -108,33 +113,19 @@ public class CommentController {
         Member member = memberService.findByUserId(principal.getUsername());
         Board board = boardService.findBoard(boardId);
 
-        Comment comment1 = new Comment();
-
-        for(Comment comment : board.getComments()){
-            if(commentDeleteDto.getGroupNumber() == comment.getGroupNumber()){
-                comment1 = comment;
-            }
-        }
-
-        if( principal.getMemberId() != comment1.getMember().getId() ){
-            throw new BusinessLogicException(ExceptionCode.CAN_NOT_DELETE_COMMENT);
-        }
-
-
+        commentRepository.deleteById(commentDeleteDto.getGroupNumber());
 
         // 게시글 댓글 개수 - 1
         board.setCommentAmount(board.getCommentAmount() - 1);
-
-        commentService.deleteComment(member.getId(), board.getId(), commentDeleteDto);
-        List<Comment> comments = commentService.getComments(board);
-
         boardService.save(board);
-        return new ResponseEntity<>(
-                new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments)),
-                HttpStatus.CREATED
-        );
+
+        List<Comment> comments = board.getComments();
+
+        return new ResponseEntity<>(new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments)),HttpStatus.OK);
     }
 }
+
+
 
 
 /*
