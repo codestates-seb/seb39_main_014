@@ -8,7 +8,6 @@ export default function getMember(MEMBER_URL) {
       },
     })
     .then((res) => {
-      console.log(res);
       localStorage.setItem("nickname", res.data.nickname);
     })
     .catch((err) => {
