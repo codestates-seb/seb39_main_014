@@ -114,9 +114,9 @@ public interface BoardMapper {
         );
         boardResponseDto.setTitle(board.getTitle());
         boardResponseDto.setContents(board.getContents());
-        boardResponseDto.setCommentAmount(board.getCommentAmount());
+        boardResponseDto.setCommentAmount(board.getComments().size());
         boardResponseDto.setTotalRecruit(board.getTotalRecruit());
-        boardResponseDto.setBookmarkCount(board.getBookmarkCount());
+        boardResponseDto.setBookmarkCount(board.getBookmarks().size());
         boardResponseDto.setCreatedAt(board.getCreatedAt());
         boardResponseDto.setModifiedAt(board.getModifiedAt());
         boardResponseDto.setDeletedAt(board.getDeletedAt());
