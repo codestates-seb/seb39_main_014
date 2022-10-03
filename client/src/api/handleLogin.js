@@ -20,6 +20,33 @@ const handleLogin = async (LOGIN_URL, userId, password, dispatch) => {
   }
 };
 
+// 로그인, 닉네임 체이닝 함수
+// function handleLogin(LOGIN_URL, MEMBER_URL, userId, password, dispatch) {
+//   axios
+//     .post(LOGIN_URL, {
+//       userId,
+//       password,
+//     })
+//     .then((res) => {
+//       localStorage.setItem("token", res.headers["access-token"]);
+//     })
+//     .then(
+//       axios
+//         .get(MEMBER_URL, {
+//           headers: {
+//             Authorization: `Bearer ${localStorage.getItem("token")}`,
+//           },
+//         })
+//         .then((res) => {
+//           console.log(res);
+//           localStorage.setItem("nickname", res.data.nickname);
+//         })
+//         .catch((err) => {
+//           console.log(err);
+//         })
+//     );
+// }
+
 export default handleLogin;
 
 //  try {
