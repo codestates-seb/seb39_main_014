@@ -5,8 +5,11 @@ import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useAuthDispatch } from "../../context/auth";
 import handleLogin from "../../api/handleLogin";
+import getMember from "../../api/getMember";
 
 function Login() {
+  const MEMBER_URL =
+    "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/member";
   const LOGIN_URL =
     "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/log-in";
 
@@ -22,7 +25,8 @@ function Login() {
   /** 로그인 제출 함수 */
   const handleSubmit = async (event) => {
     event.preventDefault();
-    handleLogin(LOGIN_URL, userId, password, dispatch);
+    handleLogin(LOGIN_URL, MEMBER_URL, userId, password, dispatch);
+    // getMember(MEMBER_URL);
   };
 
   return (
