@@ -49,6 +49,8 @@ function MyPage() {
   const [bookmarkList, setBookmarkList] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const [checkLists, setCheckLists] = useState([]);
+  const [posts, setPosts] = useState([]);
   const getMypage = () => {
     axios
       .get(`${MYPAGE_URL}/info`, {
@@ -70,7 +72,7 @@ function MyPage() {
       })
       .catch((err) => console.log(err));
   };
-  console.log(info);
+
   useEffect(() => {
     setLoading(true);
     getMypage();
@@ -81,7 +83,6 @@ function MyPage() {
         },
       })
       .then((res) => {
-        console.log(res);
         setBookmarkList(res.data.bookmarkList);
         setLoading(false);
       })
@@ -120,6 +121,24 @@ function MyPage() {
       .then((res) => navigate("/"))
       .catch((err) => console.log(err));
   };
+
+  const handleSingleCheck = (checked, id) => {
+    if (checked) {
+      setCheckLists([...checkLists, id]);
+    } else {
+      setCheckLists(checkLists.filter((el) => el !== id));
+    }
+  };
+
+  const handleAllCheck = (checked) => {
+    if (checked) {
+      const idArr = [];
+      bookmarkList.forEach((el) => idArr.push(el.boadId));
+      setCheckLists(idArr);
+    }
+  };
+  console.log(checkLists);
+  console.log(bookmarkList);
   if (loading) return null;
 
   return (
@@ -264,7 +283,13 @@ function MyPage() {
               {bookmarkList
                 ? bookmarkList.map((el) => (
                     <div className="Checkboard" key={el.boardId}>
-                      <input type="checkbox" />
+                      <input
+                        type="checkbox"
+                        onChange={(e) =>
+                          handleSingleCheck(e.target.checked, el.boardId)
+                        }
+                        checked={checkLists.includes(el.boardId) ? true : false}
+                      />
                       <div onClick={() => navigate(`/board/${el.boardId}`)}>
                         {el.title}
                       </div>
@@ -273,7 +298,13 @@ function MyPage() {
                 : null}
               <div className="Select-all">
                 <div>
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    onChange={(e) => handleAllCheck(e.target.checked)}
+                    checked={
+                      checkLists.length === bookmarkList.length ? true : false
+                    }
+                  />
                   <div>전체 선택</div>
                 </div>
                 <button>삭제</button>

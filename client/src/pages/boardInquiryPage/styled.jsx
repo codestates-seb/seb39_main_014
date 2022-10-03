@@ -303,7 +303,7 @@ export const Comments = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 0.5rem;
-
+  width: 100%;
   @media screen and (max-width: 476px) {
     font-size: 0.8rem;
   }
@@ -311,6 +311,7 @@ export const Comments = styled.div`
     border-top: 1px solid #b1b1b1;
   }
   .Comment-list {
+    width: 100%;
     padding: 1rem 0;
     border-bottom: 1px solid #b1b1b1;
     > p {
@@ -319,6 +320,7 @@ export const Comments = styled.div`
   }
   .Username {
     display: flex;
+    width: 100%;
     > img {
       padding: 0.3rem;
       border: 1px solid #d9d9d9;
@@ -336,6 +338,14 @@ export const Comments = styled.div`
       .Createdat {
         font-size: 0.5rem;
         color: #b1b1b1;
+      }
+    }
+    > span {
+      display: flex;
+      justify-self: right;
+      padding-top: 0.3rem;
+      .RiDeleteBin5Line {
+        cursor: pointer;
       }
     }
   }
