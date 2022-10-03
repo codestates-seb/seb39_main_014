@@ -17,6 +17,8 @@ function Information() {
   const [loading, setLoading] = useState(true);
   const [dday, setDday] = useState(null);
   const [bookmarkCount, setBookmarkCount] = useState(0);
+  const [isBookmark, setIsBookmark] = useState(false);
+
   useEffect(() => {
     setLoading(true);
     axios
@@ -50,11 +52,21 @@ function Information() {
           <div className="Bookmark">
             <AiOutlineHeart
               className="AiOutlineHeart"
-              onClick={() =>
+              onClick={() => {
                 axios
-                  .get(`${BOARD_URL}/bookmark`)
+                  .get(`${BOARD_URL}/bookmark`, {
+                    headers: {
+                      Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                  })
                   .then((res) => console.log(res))
-              }
+                  .catch((err) => console.log(err));
+                setIsBookmark(!isBookmark);
+
+                isBookmark
+                  ? setBookmarkCount(bookmarkCount - 1)
+                  : setBookmarkCount(bookmarkCount + 1);
+              }}
             />
             <span>{bookmarkCount}</span>
           </div>
