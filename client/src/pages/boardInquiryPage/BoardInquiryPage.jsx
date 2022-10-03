@@ -26,7 +26,12 @@ function BoardInquiryPage() {
   const [comment, setComment] = useState("");
   const [commentList, setCommentList] = useState([]);
 
+  const [userNickname, setUserNickname] = useState("");
+  /** 로컬스토리지에서 로그인한 유저 nickname */
+  const user = localStorage.getItem("nickname");
+
   useEffect(() => {
+    getComment();
     axios
       .get(BOARD_URL)
       .then((res) => setBoardInfo(res.data.board))
@@ -36,7 +41,9 @@ function BoardInquiryPage() {
   const getComment = () => {
     axios
       .get(`${BOARD_URL}/comment`)
-      .then((res) => setCommentList(res.data.content))
+      .then((res) => {
+        setCommentList(res.data.content);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -52,7 +59,11 @@ function BoardInquiryPage() {
       cancelButtonText: "취소",
     }).then((res) => {
       if (res.isConfirmed) {
-        axios.delete(BOARD_URL);
+        axios.delete(BOARD_URL, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
         Swal.fire({
           title: "삭제 완료!",
           icon: "success",
@@ -92,12 +103,14 @@ function BoardInquiryPage() {
                 className="BiArrowBack"
                 onClick={() => navigate(-1)}
               />
-              <div className="Patch-delete">
-                <button onClick={() => navigate(`/board/${boardId}/modify`)}>
-                  수정
-                </button>
-                <button onClick={handleFormDelete}>삭제</button>
-              </div>
+              {user === boardInfo.nickName ? (
+                <div className="Patch-delete">
+                  <button onClick={() => navigate(`/board/${boardId}/modify`)}>
+                    수정
+                  </button>
+                  <button onClick={handleFormDelete}>삭제</button>
+                </div>
+              ) : null}
             </Buttons>
             <p>{boardInfo.title}</p>
           </Title>
@@ -114,7 +127,7 @@ function BoardInquiryPage() {
               <button onClick={handleCommentSubmit}>등록</button>
             </div>
           </WriteComment>
-          <Comment commentList={commentList} />
+          <Comment commentList={commentList} BOARD_URL={BOARD_URL} />
         </ContentWrapper>
       </ContentContainer>
     </InquiryContainer>
