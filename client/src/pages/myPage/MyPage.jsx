@@ -51,6 +51,7 @@ function MyPage() {
 
   const [checkLists, setCheckLists] = useState([]);
 
+
   const [test, setTest] = useState([]);
 
   /** 유저정보 get 요청 함수 */
@@ -74,6 +75,7 @@ function MyPage() {
       })
       .catch((err) => console.log(err));
   };
+
 
   /** 북마크 get 요청 함수 */
   const getBookmark = () => {
@@ -129,6 +131,7 @@ function MyPage() {
       .catch((err) => console.log(err));
   };
 
+
   const handleSingleCheck = (checked, id, title) => {
     if (checked) {
       setCheckLists([...checkLists, { boardId: id, title: title }]);
@@ -140,6 +143,7 @@ function MyPage() {
   const handleAllCheck = (checked) => {
     if (checked) {
       const idArr = [];
+
       bookmarkList.forEach((el) =>
         idArr.push({ boardId: el.boardId, title: el.title })
       );
