@@ -19,6 +19,8 @@ function Information() {
   const [bookmarkCount, setBookmarkCount] = useState(0);
   const [isBookmark, setIsBookmark] = useState(false);
 
+  const user = localStorage.getItem("nickname");
+  console.log(boardId);
   useEffect(() => {
     setLoading(true);
     axios
@@ -27,7 +29,7 @@ function Information() {
         console.log(res.data);
         setBoardInfo([res.data.board]);
         setCreatedAt(res.data.board.createdAt.slice(0, 10));
-        setLoading(false);
+
         const createdAtDay = new Date(res.data.board.createdAt);
         const today = new Date();
         const dayGap = today.getTime() - createdAtDay.getTime();
@@ -35,9 +37,46 @@ function Information() {
         const deadline = 30 - Number(result);
         setBookmarkCount(res.data.board.bookmarkCount);
         setDday(deadline);
+
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+    axios
+      .get(`${BOARD_URL}/bookmark`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.data.userBookmarks.includes(boardId)) {
+          setIsBookmark(true);
+        } else setIsBookmark(false);
       })
       .catch((err) => console.log(err));
   }, []);
+
+  const handleBookmarkClick = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        `${BOARD_URL}/bookmark`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        setIsBookmark(!isBookmark);
+        isBookmark
+          ? setBookmarkCount(bookmarkCount - 1)
+          : setBookmarkCount(bookmarkCount + 1);
+      })
+      .catch((err) => console.log(err));
+  };
 
   if (loading) return null;
   return (
@@ -52,28 +91,14 @@ function Information() {
           <div className="Bookmark">
             <AiOutlineHeart
               className="AiOutlineHeart"
-              onClick={() => {
-                axios
-                  .get(`${BOARD_URL}/bookmark`, {
-                    headers: {
-                      Authorization: `Bearer ${localStorage.getItem("token")}`,
-                    },
-                  })
-                  .then((res) => console.log(res))
-                  .catch((err) => console.log(err));
-                setIsBookmark(!isBookmark);
-
-                isBookmark
-                  ? setBookmarkCount(bookmarkCount - 1)
-                  : setBookmarkCount(bookmarkCount + 1);
-              }}
+              onClick={handleBookmarkClick}
             />
             <span>{bookmarkCount}</span>
           </div>
           <span className="Recruitment-classification">
             {boardInfo[0].recruitCategory}
           </span>
-          <button>{dday > 0 ? `마감 - ${dday}` : `모집 마감`}</button>
+          <button>{dday > 0 ? `D - ${dday}` : `모집 마감`}</button>
         </div>
       </UserInfo>
       <BoardInfo>
@@ -107,7 +132,7 @@ function Information() {
           <ul className="Applicants-list">
             {boardInfo
               ? boardInfo[0].boardCareers.map((el) => (
-                  <li>
+                  <li key={el.careerTotalRecruit}>
                     <div> {el.careerName}</div>
                     <div>0/{el.careerTotalRecruit}</div>
                     <div>
