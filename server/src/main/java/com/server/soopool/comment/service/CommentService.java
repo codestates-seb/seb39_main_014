@@ -52,36 +52,36 @@ public class CommentService {
     }
 
     // 댓글 수정
-    @Transactional
-    public Comment modifyComment(Long memberId, Long boardId, CommentPatchDto commentPatchDto) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)); // 사용자 정의 Exception 설정 필요
-        Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND)); // 사용자 정의 Exception 설정 필요
 
-        commentRepository.updateComment(commentPatchDto.getContent(), board, member, commentPatchDto.getGroupNumber());
-        Comment comment = commentRepository.getCommentMatchingMemberIdAndBoardIdAAndGroupNumber(board, member, commentPatchDto.getGroupNumber());
-
-        return comment;
-    }
+//    public Comment modifyComment(Long memberId, Long boardId, CommentPatchDto commentPatchDto) {
+//        Member member = memberRepository.findById(memberId)
+//                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)); // 사용자 정의 Exception 설정 필요
+//        Board board = boardRepository.findById(boardId)
+//                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND)); // 사용자 정의 Exception 설정 필요
+//
+//        commentRepository.updateComment(commentPatchDto.getContent(), board, member, commentPatchDto.getGroupNumber());
+//        Comment comment = commentRepository.getCommentMatchingMemberIdAndBoardIdAAndGroupNumber(board, member, commentPatchDto.getGroupNumber());
+//
+//        return comment;
+//    }
 
     // 댓글 삭제
-    public void deleteComment(Long memberId, Long boardId, CommentDeleteDto commentDeleteDto) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)); // 사용자 정의 Exception 설정 필요
-        Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND)); // 사용자 정의 Exception 설정 필요
-        commentRepository.deleteComment(board, member, commentDeleteDto.getGroupNumber());
-    }
+//    public void deleteComment(Long memberId, Long boardId, CommentDeleteDto commentDeleteDto) {
+//        Member member = memberRepository.findById(memberId)
+//                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)); // 사용자 정의 Exception 설정 필요
+//        Board board = boardRepository.findById(boardId)
+//                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND)); // 사용자 정의 Exception 설정 필요
+//        commentRepository.deleteComment(board, member, commentDeleteDto.getGroupNumber());
+//    }
 
     // 댓글의 GroupNumber 정의
-    public Integer createGroupNumber(Long boardId) {
+    public Long createGroupNumber(Long boardId) {
         // NonUniqueResultException :: https://programmer7895.tistory.com/18
         List<BoardIdAndGroupNumberMapping> search = BoardIdAndGroupNumberMapping(boardId);
 
         // stream으로 코드 작성 고민할 부분
         if(search.size() == 0) {
-            return 1;
+            return 1L;
         } else {
             return search.get(search.size() - 1).getGroupNumber() + 1;
         }
