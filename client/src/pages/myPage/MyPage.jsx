@@ -54,7 +54,6 @@ function MyPage() {
   const careerClickRef = useRef();
   const stackClickRef = useRef();
 
-
   /** 유저정보 get 요청 함수 */
   const getMypage = () => {
     axios

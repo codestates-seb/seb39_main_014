@@ -72,7 +72,12 @@ function Editor({ newObject }) {
     title: title,
     contents: contents,
   };
-
+  // const isTrue = () => {
+  //   if (patchForm.map((el) => el.length === 0)) {
+  //     return "haha";
+  //   }
+  // };
+  // isTrue();
   const navigate = useNavigate();
   const onCancelHandler = (e) => {
     e.preventDefault();
