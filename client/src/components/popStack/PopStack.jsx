@@ -33,9 +33,7 @@ function PopStack() {
               <p className="rank-color">
                 {idx + 1}. {Object.keys(el)}
               </p>
-              <p className="popstack-cnt" key={el.id}>
-                {Object.values(el)}
-              </p>
+              <p className="popstack-cnt">{Object.values(el)}</p>
             </div>
           ))}
         </Content>
