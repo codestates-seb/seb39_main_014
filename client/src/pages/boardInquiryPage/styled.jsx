@@ -117,8 +117,10 @@ export const UserInfo = styled.div`
       flex-direction: column;
       .AiOutlineHeart {
         font-size: 1.5rem;
-
-        color: red;
+        cursor: pointer;
+        &.full {
+          color: red;
+        }
       }
       > span {
         display: flex;
@@ -136,12 +138,13 @@ export const UserInfo = styled.div`
     }
     > button {
       margin-left: 1rem;
-
+      font-weight: 500;
       &:nth-child(3) {
+        letter-spacing: 0.1rem;
         width: 3rem;
         height: 3rem;
         padding: 0;
-        font-size: 0.7rem;
+        font-size: 0.9rem;
         border-radius: 50%;
         border: none;
       }

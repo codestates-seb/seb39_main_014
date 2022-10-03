@@ -51,7 +51,6 @@ function MyPage() {
 
   const [checkLists, setCheckLists] = useState([]);
 
-
   const [test, setTest] = useState([]);
 
   /** 유저정보 get 요청 함수 */
@@ -76,7 +75,6 @@ function MyPage() {
       .catch((err) => console.log(err));
   };
 
-
   /** 북마크 get 요청 함수 */
   const getBookmark = () => {
     axios
@@ -86,6 +84,7 @@ function MyPage() {
         },
       })
       .then((res) => {
+        console.log(res);
         setBookmarkList(res.data.bookmarkList);
       })
       .catch((err) => console.log(err));
@@ -131,7 +130,6 @@ function MyPage() {
       .catch((err) => console.log(err));
   };
 
-
   const handleSingleCheck = (checked, id, title) => {
     if (checked) {
       setCheckLists([...checkLists, { boardId: id, title: title }]);
@@ -153,24 +151,23 @@ function MyPage() {
     }
   };
 
-  const handleBookmarkListDelete = () => {
+  const handleBookmarkListDelete = (e) => {
+    e.preventDefault();
     axios
-      .delete(
-        `${MYPAGE_URL}/bookmark`,
-        {
-          bookmarkList: checkLists,
+      .delete(`${MYPAGE_URL}/bookmark`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      )
-      .then((res) => console.log(res))
+        data: { bookmarkList: checkLists },
+      })
+      .then((res) => {
+        setBookmarkList(res.data.bookmarkList);
+        setCheckLists([]);
+      })
       .catch((err) => console.log(err));
   };
-
   console.log(bookmarkList);
+  console.log(checkLists);
 
   if (loading) return null;
 
