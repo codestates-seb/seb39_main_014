@@ -20,6 +20,12 @@ const StyledLink = styled(Link)`
     box-shadow: rgba(149, 157, 165, 0.2) 5px 5px 16px 5px;
     border-radius: 50%;
   }
+
+  @media screen and (max-width: 768px) {
+    .profile {
+      display: none;
+    }
+  }
 `;
 
 export default Profile;
