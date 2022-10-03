@@ -50,7 +50,11 @@ function MyPage() {
   const [loading, setLoading] = useState(false);
 
   const [checkLists, setCheckLists] = useState([]);
-  const [posts, setPosts] = useState([]);
+
+
+  const [test, setTest] = useState([]);
+
+  /** 유저정보 get 요청 함수 */
   const getMypage = () => {
     axios
       .get(`${MYPAGE_URL}/info`, {
@@ -59,7 +63,6 @@ function MyPage() {
         },
       })
       .then((res) => {
-        console.log(res);
         setInfo(res.data);
         setNickname(res.data.nickname);
         setTechStack(
@@ -73,9 +76,9 @@ function MyPage() {
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => {
-    setLoading(true);
-    getMypage();
+
+  /** 북마크 get 요청 함수 */
+  const getBookmark = () => {
     axios
       .get(`${MYPAGE_URL}/bookmark`, {
         headers: {
@@ -84,9 +87,15 @@ function MyPage() {
       })
       .then((res) => {
         setBookmarkList(res.data.bookmarkList);
-        setLoading(false);
       })
       .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    getMypage();
+    getBookmark();
+    setLoading(false);
   }, []);
 
   const searchStack = newStackList.filter((prev) => {
@@ -122,9 +131,10 @@ function MyPage() {
       .catch((err) => console.log(err));
   };
 
-  const handleSingleCheck = (checked, id) => {
+
+  const handleSingleCheck = (checked, id, title) => {
     if (checked) {
-      setCheckLists([...checkLists, id]);
+      setCheckLists([...checkLists, { boardId: id, title: title }]);
     } else {
       setCheckLists(checkLists.filter((el) => el !== id));
     }
@@ -133,12 +143,35 @@ function MyPage() {
   const handleAllCheck = (checked) => {
     if (checked) {
       const idArr = [];
-      bookmarkList.forEach((el) => idArr.push(el.boadId));
+
+      bookmarkList.forEach((el) =>
+        idArr.push({ boardId: el.boardId, title: el.title })
+      );
       setCheckLists(idArr);
+    } else {
+      setCheckLists([]);
     }
   };
-  console.log(checkLists);
+
+  const handleBookmarkListDelete = () => {
+    axios
+      .delete(
+        `${MYPAGE_URL}/bookmark`,
+        {
+          bookmarkList: checkLists,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
   console.log(bookmarkList);
+
   if (loading) return null;
 
   return (
@@ -286,9 +319,19 @@ function MyPage() {
                       <input
                         type="checkbox"
                         onChange={(e) =>
-                          handleSingleCheck(e.target.checked, el.boardId)
+                          handleSingleCheck(
+                            e.target.checked,
+                            el.boardId,
+                            el.title
+                          )
                         }
-                        checked={checkLists.includes(el.boardId) ? true : false}
+                        checked={
+                          checkLists
+                            .map((el) => el.boardId)
+                            .includes(el.boardId)
+                            ? true
+                            : false
+                        }
                       />
                       <div onClick={() => navigate(`/board/${el.boardId}`)}>
                         {el.title}
@@ -307,7 +350,7 @@ function MyPage() {
                   />
                   <div>전체 선택</div>
                 </div>
-                <button>삭제</button>
+                <button onClick={handleBookmarkListDelete}>삭제</button>
               </div>
               <div className="Modification">
                 <button onClick={handleMypageSubmit}>완료</button>
