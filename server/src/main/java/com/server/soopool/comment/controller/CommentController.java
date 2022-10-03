@@ -3,6 +3,8 @@ package com.server.soopool.comment.controller;
 import com.server.soopool.auth.PrincipalDetails;
 import com.server.soopool.board.entity.Board;
 import com.server.soopool.board.service.BoardService;
+import com.server.soopool.boardCareer.entity.BoardCareer;
+import com.server.soopool.career.entity.Career;
 import com.server.soopool.comment.dto.*;
 import com.server.soopool.comment.entity.Comment;
 import com.server.soopool.comment.mapper.CommentMapper;
@@ -18,11 +20,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -42,7 +46,7 @@ public class CommentController {
         List<Comment> comments = commentService.getComments(board);
 
         return new ResponseEntity<>(
-                new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments)),
+                new MultiResponseCommentDto(boardId, commentMapper.commentListToCommentResponse(comments)),
                 HttpStatus.OK
         );
     }
@@ -65,7 +69,7 @@ public class CommentController {
         List<Comment> comments = commentService.getComments(board);
 
         return new ResponseEntity<>(
-                new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments)),
+                new MultiResponseCommentDto(boardId, commentMapper.commentListToCommentResponse(comments)),
                 HttpStatus.CREATED
         );
     }
@@ -91,7 +95,6 @@ public class CommentController {
             throw new BusinessLogicException(ExceptionCode.CAN_NOT_MODIFY_COMMENT);
         }
 
-
         comment.setContent((commentPatchDto.getContent()));
         commentRepository.save(comment);
 
@@ -99,7 +102,7 @@ public class CommentController {
 
         boardService.save(board);
         return new ResponseEntity<>(
-                new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments)),
+                new MultiResponseCommentDto(boardId, commentMapper.commentListToCommentResponse(comments)),
                 HttpStatus.CREATED
         );
     }
@@ -107,24 +110,25 @@ public class CommentController {
     // 댓글 삭제
     @DeleteMapping("board/{board_id}/comment")
     @Secured("ROLE_USER")
+    @Transactional
     public ResponseEntity deleteComment(@AuthenticationPrincipal PrincipalDetails principal,
                                         @PathVariable("board_id") @Positive Long boardId,
                                         @Validated @RequestBody CommentDeleteDto commentDeleteDto) {
         Member member = memberService.findByUserId(principal.getUsername());
         Board board = boardService.findBoard(boardId);
+        Comment comment = commentRepository.findByGroupNumber(commentDeleteDto.getGroupNumber());
 
-        commentRepository.deleteById(commentDeleteDto.getGroupNumber());
+        if (principal.getMemberId() != comment.getMember().getId()){
+            throw new BusinessLogicException(ExceptionCode.CAN_NOT_MODIFY_COMMENT);
+        }
 
-        // 게시글 댓글 개수 - 1
-        board.setCommentAmount(board.getCommentAmount() - 1);
-        boardService.save(board);
+        commentRepository.deleteByGroupNumber(commentDeleteDto.getGroupNumber());
 
-        List<Comment> comments = board.getComments();
 
-        return new ResponseEntity<>(new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments)),HttpStatus.OK);
+
+        return new ResponseEntity("댓글이 삭제되었습니다.", HttpStatus.OK);
     }
 }
-
 
 
 
