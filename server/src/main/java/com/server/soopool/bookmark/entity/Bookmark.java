@@ -21,11 +21,11 @@ public class Bookmark {
     private Long Id;
 
     //ManyToone 컬럼설정
-    @ManyToOne(targetEntity = Member.class)
+    @ManyToOne(targetEntity = Member.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id", nullable = false)
     public Member member;
 
-    @ManyToOne(targetEntity = Board.class)
+    @ManyToOne(targetEntity = Board.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "board_id", nullable = false)
     public Board board;
 }

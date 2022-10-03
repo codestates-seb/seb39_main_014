@@ -117,6 +117,8 @@ export const UserInfo = styled.div`
       flex-direction: column;
       .AiOutlineHeart {
         font-size: 1.5rem;
+
+        color: red;
       }
       > span {
         display: flex;

@@ -59,4 +59,11 @@ public class BookmarkService {
             boardRepository.save(board);
         }
     }
+
+    public boolean bookmarkedStatus(Member member, Board board) {
+        Optional<Bookmark> result = bookMarkRepository.findByBookmark(member,board);
+
+        return result.isPresent() ? true : false;
+
+    }
 }

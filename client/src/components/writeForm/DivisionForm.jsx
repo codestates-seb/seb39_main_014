@@ -43,6 +43,7 @@ function DivisionForm() {
 
   const [search, setSearch] = useState("");
 
+  const clickRef = useRef();
   const stackRef = useRef(0);
   const newStackRef = useRef(9);
 
@@ -94,16 +95,21 @@ function DivisionForm() {
         .catch((err) => console.log(err));
     } else setLoading(false);
   }, []);
-  // [java,javascript,python]
-  // console.log(newStackList.filter((el) => el.stack !== ["Docker", "Java"]));
-  // console.log(stackLists);
-  // console.log(selectedStackList);
 
-  // console.log(
-  //   newStackList.filter((prev) =>
-  //     selectedStackList.filter((el) => el.id !== prev.stack)
-  //   )
-  // );
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  });
+  const handleClickOutside = (event) => {
+    if (clickRef && !clickRef.current.contains(event.target)) {
+      setIsLocation(false);
+    } else {
+      setIsLocation(true);
+    }
+  };
 
   const object = {
     recruitCategory: recruitCategory,
@@ -232,7 +238,7 @@ function DivisionForm() {
                 </div>
               ) : null}
               {isLocation && recruitMethod === "OFFLINE" ? (
-                <ul className="location">
+                <ul className="location" ref={clickRef} value={isLocation}>
                   {regionLists.map((el) => (
                     <li
                       key={el.id}
@@ -281,7 +287,7 @@ function DivisionForm() {
             />
           </div>
           {isStack ? (
-            <ul className="Stacklists">
+            <ul className="Stacklists" ref={clickRef} value={isStack}>
               {searchStack.map((el) => {
                 return (
                   <li key={el.id} onClick={handleStackListClick}>

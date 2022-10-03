@@ -81,6 +81,7 @@ function MyPage() {
         },
       })
       .then((res) => {
+        console.log(res);
         setBookmarkList(res.data.bookmarkList);
         setLoading(false);
       })
