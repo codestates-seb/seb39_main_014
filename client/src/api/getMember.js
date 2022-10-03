@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default function getBoard(MEMBER_URL) {
+export default function getMember(MEMBER_URL) {
   axios
     .get(MEMBER_URL, {
       headers: {
