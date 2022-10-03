@@ -25,7 +25,7 @@ function Login() {
   /** 로그인 제출 함수 */
   const handleSubmit = async (event) => {
     event.preventDefault();
-    handleLogin(LOGIN_URL, MEMBER_URL, userId, password, dispatch);
+    handleLogin(LOGIN_URL, userId, password, dispatch);
     // getMember(MEMBER_URL);
   };
 
