@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import Pagination from "react-js-pagination";
 import styled from "styled-components";
 
-const Paging = ({ count }) => {
-  const [page, setPage] = useState(1);
-
+const Paging = ({ page, setPage, datas, filterDatas }) => {
   const handlePageChange = (page) => {
     setPage(page);
+    console.log(page);
   };
   return (
     <PaginationStyle>
       <Pagination
         activePage={page}
-        totalItemsCount={100}
+        totalItemsCount={50}
         pageRangeDisplayed={5}
         prevPageText={"‹"}
         nextPageText={"›"}
