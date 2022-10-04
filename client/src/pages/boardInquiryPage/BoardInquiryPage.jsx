@@ -13,7 +13,6 @@ import {
   Title,
   Buttons,
   Body,
-  WriteComment,
 } from "./styled";
 
 function BoardInquiryPage() {
@@ -23,29 +22,16 @@ function BoardInquiryPage() {
   const navigate = useNavigate();
 
   const [boardInfo, setBoardInfo] = useState([]);
-  const [comment, setComment] = useState("");
-  const [commentList, setCommentList] = useState([]);
 
-  const [userNickname, setUserNickname] = useState("");
   /** 로컬스토리지에서 로그인한 유저 nickname */
   const user = localStorage.getItem("nickname");
 
   useEffect(() => {
-    getComment();
     axios
       .get(BOARD_URL)
       .then((res) => setBoardInfo(res.data.board))
       .catch((err) => console.log(err));
   }, []);
-
-  const getComment = () => {
-    axios
-      .get(`${BOARD_URL}/comment`)
-      .then((res) => {
-        setCommentList(res.data.content);
-      })
-      .catch((err) => console.log(err));
-  };
 
   const handleFormDelete = (e) => {
     e.preventDefault();
@@ -76,22 +62,6 @@ function BoardInquiryPage() {
       }
     });
   };
-  const handleCommentSubmit = (e) => {
-    e.preventDefault();
-    axios
-      .post(
-        `${BOARD_URL}/comment`,
-        { content: comment },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      )
-      .then((res) => getComment())
-      .then((res) => setComment(""))
-      .catch((err) => console.log(err));
-  };
 
   return (
     <InquiryContainer>
@@ -116,18 +86,7 @@ function BoardInquiryPage() {
           </Title>
           <Information />
           <Body dangerouslySetInnerHTML={{ __html: boardInfo.contents }}></Body>
-          <WriteComment>
-            <div>댓글&nbsp;{commentList.length}개</div>
-            <textarea
-              placeholder="댓글을 입력하세요"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            ></textarea>
-            <div className="Submit">
-              <button onClick={handleCommentSubmit}>등록</button>
-            </div>
-          </WriteComment>
-          <Comment commentList={commentList} BOARD_URL={BOARD_URL} />
+          <Comment />
         </ContentWrapper>
       </ContentContainer>
     </InquiryContainer>

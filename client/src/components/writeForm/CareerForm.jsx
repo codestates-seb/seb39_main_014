@@ -58,13 +58,6 @@ function CareerForm({ object }) {
   }, []);
 
   /** 외부 클릭시 창 사라지는 기능 */
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  });
   const handleClickOutside = (event) => {
     if (careerClickRef && !careerClickRef.current.contains(event.target)) {
       setIsCareer(false);
@@ -72,6 +65,14 @@ function CareerForm({ object }) {
       setIsCareer(true);
     }
   };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  });
 
   const newObject = { ...object, boardCareers: careers };
 
