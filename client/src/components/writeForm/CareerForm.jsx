@@ -10,7 +10,7 @@ import _ from "lodash";
 
 function CareerForm({ object }) {
   const { boardId } = useParams();
-  const BOARD_URL = `http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/${boardId}`;
+  const BOARD_URL = `${process.env.REACT_APP_API_URL}/api/v1/board/${boardId}`;
   const [modifyInfo, setModifyInfo] = useState([]);
 
   const [career, setCareer] = useState({
@@ -131,8 +131,11 @@ function CareerForm({ object }) {
                 onClick={(e) => {
                   e.preventDefault();
                   setIsCareer(!isCareer);
-                }}
-              >
+                  // eslint-disable-next-line prettier/prettier
+                  // eslint-disable-next-line prettier/prettier
+                  // eslint-disable-next-line prettier/prettier
+                  // eslint-disable-next-line prettier/prettier
+                }}>
                 {career.career}
               </button>
 
@@ -152,8 +155,8 @@ function CareerForm({ object }) {
                     onClick={() => {
                       setIsCareer(!isCareer);
                       setCareer({ career: el.career, value: el.value });
-                    }}
-                  >
+                      // eslint-disable-next-line prettier/prettier
+                    }}>
                     {el.career}
                   </li>
                 ))}
@@ -181,8 +184,8 @@ function CareerForm({ object }) {
                 </div>
                 <button
                   crew={crew}
-                  onClick={() => onDeleteHandler(el.careerId)}
-                >
+                  // eslint-disable-next-line prettier/prettier
+                  onClick={() => onDeleteHandler(el.careerId)}>
                   삭제
                 </button>
               </Crew>
