@@ -1,20 +1,14 @@
 package com.server.soopool.techstack.entity;
 
+import com.server.soopool.boardTechstack.entity.BoardTechStack;
 import com.server.soopool.memberTechstack.entity.MemberTechStack;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 작성자 : 김은철
- * 작성핵심 : Entity 연관관계 매핑, 양방향 또는 단방향의 정의
- * 작성일자 : 2022-09-19
- * 최신 수정자 :
- * 최신 수정일자 :
- * email : klmeuncheol@kakao.com
- */
 @Entity
 @Getter
 @Setter
@@ -25,23 +19,17 @@ public class TechStack {
     private Long id;
 
     //기본컬럼 설정
-    @Enumerated(EnumType.STRING)
-    private TechStackName techStackName;
+    @Column
+    private String techStackName;
 
-    //enum 정의
-    private enum TechStackName {
-        JAVA("자바"),
-        PYTHON("파이썬"),
-        JAVASCRIPT("자바스크립트");
+    @Column
+    private String imageUri;
 
-        private final String name;
+    @OneToMany(mappedBy = "techStack")
+    private List<BoardTechStack> boardTechStacks = new ArrayList<>();
 
-        TechStackName(String name) {
-            this.name = name;
-        }
-
-        String getName() {
-            return this.name;
-        }
+    public void addBoardTechStack(BoardTechStack boardTechStack) {
+        boardTechStack.setTechStack(this);
+        getBoardTechStacks().add(boardTechStack);
     }
 }

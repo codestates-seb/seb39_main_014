@@ -2,15 +2,18 @@ package com.server.soopool.bookmark.entity;
 
 import com.server.soopool.board.entity.Board;
 import com.server.soopool.member.entity.Member;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+
 
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Bookmark {
     //Todo : 컬럼의 제약조건 & 레이지 로딩 설정하기
 
@@ -18,11 +21,11 @@ public class Bookmark {
     private Long Id;
 
     //ManyToone 컬럼설정
-    @ManyToOne(targetEntity = Member.class)
-    @JoinColumn(name = "user_id")
-    public String userId;
+    @ManyToOne(targetEntity = Member.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "member_id", nullable = false)
+    public Member member;
 
-    @ManyToOne(targetEntity = Board.class)
-    @JoinColumn(name = "board_id")
-    public String boardId;
+    @ManyToOne(targetEntity = Board.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "board_id", nullable = false)
+    public Board board;
 }

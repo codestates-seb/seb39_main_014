@@ -1,9 +1,13 @@
 package com.server.soopool.career.entity;
 
+import com.server.soopool.boardCareer.entity.BoardCareer;
+import com.server.soopool.careerMember.entity.CareerMember;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -16,23 +20,17 @@ public class Career {
     private Long Id;
 
     //enum 컬럼설정
-    @Enumerated(EnumType.STRING)
-    private CareerName careerName;
+    @Column
+    private String careerName;
 
-    //enum 설정
-    private enum CareerName{
-        FRONT_END("프론트엔드"),
-        BACK_END("백엔드"),
-        ETC("기타");
+    @OneToMany(mappedBy = "member")
+    private List<CareerMember> careerMembers;
 
-        private final String career;
+    @OneToMany(mappedBy = "career")
+    private List<BoardCareer> boardCareers = new ArrayList<>();
 
-        CareerName(String career) {
-            this.career = career;
-        }
-
-        public String getCareerName() {
-            return career;
-        }
+    public void addBoardCareer(BoardCareer boardCareer) {
+        boardCareer.setCareer(this);
+        getBoardCareers().add(boardCareer);
     }
 }

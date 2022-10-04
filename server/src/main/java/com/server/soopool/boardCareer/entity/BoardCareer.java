@@ -1,11 +1,14 @@
 package com.server.soopool.boardCareer.entity;
 
 import com.server.soopool.board.entity.Board;
+import com.server.soopool.boardApply.entity.BoardApply;
 import com.server.soopool.career.entity.Career;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -20,17 +23,39 @@ public class BoardCareer {
     //ManyToOne 컬럼설정
     @ManyToOne(targetEntity = Board.class)
     @JoinColumn(name = "board_id")
-    private Board boardId;
+    private Board board;
 
     @ManyToOne(targetEntity = Career.class)
     @JoinColumn(name = "career_id")
-    private Career careerId;
+    private Career career;
 
     //기본컬럼 설정
     @Column(nullable = false)
-    private Integer careerTotalRecruit;
+    private Integer careerTotalRecruit = 0;
 
     @Column(nullable = false)
-    private Integer careerCurrentRecruit;
+    private Integer careerCurrentRecruit = 0;
+
+    @OneToMany(mappedBy = "boardCareer", cascade = CascadeType.ALL)
+    private List<BoardApply> boardApplies = new ArrayList<>();
+
+    public void addBoard(Board board) {
+        this.board = board;
+        if(!this.board.getBoardCareers().contains(this)) {
+            this.board.addBoardCareer(this);
+        }
+    }
+
+    public void addCareer(Career career) {
+        this.career = career;
+        if(!this.career.getBoardCareers().contains(this)) {
+            this.career.addBoardCareer(this);
+        }
+    }
+
+    public void addBoardApply(BoardApply boardApply) {
+        boardApply.setBoardCareer(this);
+        getBoardApplies().add(boardApply);
+    }
 
 }

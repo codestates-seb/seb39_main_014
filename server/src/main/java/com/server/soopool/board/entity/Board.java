@@ -5,10 +5,8 @@ import com.server.soopool.boardTechstack.entity.BoardTechStack;
 import com.server.soopool.bookmark.entity.Bookmark;
 import com.server.soopool.comment.entity.Comment;
 import com.server.soopool.global.baseTime.BaseTimeEntity;
-import com.server.soopool.location.entity.Location;
 import com.server.soopool.member.entity.Member;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,20 +17,23 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Board extends BaseTimeEntity {
     //Todo : 컬럼의 제약조건 & 레이지 로딩 설정하기
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // ManyToOne & OneToOne 관계설정
-    @OneToOne(targetEntity = Location.class)
-    @JoinColumn(name = "location_id", nullable = false)
-    private Location locationId;
-
     @ManyToOne(targetEntity = Member.class)
-    @JoinColumn(name = "member_id", nullable = false)
-    private Member memberId;
+    // 로그인 구현 후 nullable = false 처리 해야 함.
+    @JoinColumn(name = "member")
+    private Member member;
+
+    // 모집글 분류 추가
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private RecruitCategory recruitCategory = RecruitCategory.STUDY;
 
     // enum 컬럼설정
     @Enumerated(EnumType.STRING)
@@ -40,7 +41,11 @@ public class Board extends BaseTimeEntity {
     private RecruitMethod recruitMethod = RecruitMethod.ONLINE;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "period_name", nullable = false)
+    @Column(nullable = false)
+    private Location location = Location.NO_CHOICE;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Period period = Period.NO_CHOICE;
 
     // 기본컬럼 설정
@@ -48,7 +53,7 @@ public class Board extends BaseTimeEntity {
     private String contact;
 
     @Column(nullable = false)
-    private Integer totalRecruit;
+    private Integer totalRecruit = 0;
 
     @Column(nullable = false)
     private Integer currentRecruit = 0;
@@ -66,10 +71,7 @@ public class Board extends BaseTimeEntity {
     private LocalDateTime deletedAt;
 
     @Column(nullable = false)
-    private boolean isRecruitDone = false;
-
-    @Column
-    private LocalDateTime recruitDoneAt;
+    private boolean recruitDone = false;
 
     @Column(nullable = false)
     private Integer commentAmount = 0;
@@ -78,19 +80,55 @@ public class Board extends BaseTimeEntity {
     private Integer viewCount = 0;
 
     // 양방향 연관관계 설정
-    @OneToMany(mappedBy = "boardId")
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Bookmark> bookmarks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "boardId")
+    public void add(Bookmark bookmark) {
+        bookmark.setBoard(this);
+        getBookmarks().add(bookmark);
+    }
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "boardId")
+    public void add(Comment comment) {
+        comment.setBoard(this);
+        getComments().add(comment);
+    }
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<BoardCareer> boardCareers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "boardId")
+    public void addBoardCareer(BoardCareer boardCareer) {
+        boardCareer.setBoard(this);
+        getBoardCareers().add(boardCareer);
+    }
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<BoardTechStack> boardTechStacks = new ArrayList<>();
 
-    private enum RecruitMethod{
+    public void addBoardTechStack(BoardTechStack boardTechStack) {
+        boardTechStack.setBoard(this);
+        getBoardTechStacks().add(boardTechStack);
+    }
+    @Getter
+    public enum RecruitCategory{
+        STUDY("스터디"),
+        PROJECT("프로젝트");
+
+        @Getter
+        private final String category;
+
+        RecruitCategory(String category) {
+            this.category = category;
+        }
+
+        public String getCategory(){
+            return category;
+        }
+    }
+
+    public enum RecruitMethod{
         ONLINE("온라인"),
         OFFLINE("오프라인");
 
@@ -102,10 +140,14 @@ public class Board extends BaseTimeEntity {
 
         public String getMethodName() {return method;}
     }
-    private enum Period{
-        THREE_MONTHS("3개월"),
-        SIX_MONTHS("6개월"),
-        NINE_MONTHS("9개월"),
+    public enum Period {
+        ONE_MONTH("1개월"),
+        TWO_MONTH("2개월"),
+        THREE_MONTH("3개월"),
+        FOUR_MONTH("4개월"),
+        FIVE_MONTH("5개월"),
+        SIX_MONTH("6개월"),
+        LONG_TERM("장기"),
         NO_CHOICE("미정");
 
         private final String month;
@@ -115,5 +157,25 @@ public class Board extends BaseTimeEntity {
         }
 
         public String getMonth() {return month;}
+    }
+
+    public enum Location{
+        SEOUL("서울"),
+        INCHEON("인천"),
+        GYEONGGI("경기"),
+        GANGWON("강원"),
+        GYEONGSANG("경상"),
+        JEOLLA("전라"),
+        CHUNGCHEONG("충청"),
+        JEJU("제주"),
+        NO_CHOICE("지역 무관");
+
+        private final String locationName;
+
+        Location(String locationName) {
+            this.locationName = locationName;
+        }
+
+        public String getLocationName() {return locationName;}
     }
 }
