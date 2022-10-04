@@ -5,7 +5,6 @@ import Footer from "../../components/footer/Footer";
 import Board from "../../components/board/Board";
 import Stack from "../../components/stack/Stack";
 import Paging from "../../components/pagenation/Pagenation";
-// import axios from "axios";
 import PopStack from "../../components/popStack/PopStack";
 import TopButton from "../../components/topButton/TopButton";
 import IsLoading from "../../components/isLoading/IsLoading";
@@ -20,20 +19,13 @@ function BoardPage({ group }) {
     PROJECT: `${process.env.REACT_APP_API_URL}/api/v1/board/project?page=1&size=100`,
   };
   const MEMBER_URL = `${process.env.REACT_APP_API_URL}/api/v1/member`;
-
-  // 필터링할 스택 담긴 리스트
-  const [stackFilter, setStackFilter] = useState([]);
-  // 각 게시글 객체가 담긴 리스트
-  const [datas, setDatas] = useState([]);
-
-  // 필터링된 게시글 객체가 담긴 리스트
-  const [filterDatas, setFilterDatas] = useState([]);
+  const [stackFilter, setStackFilter] = useState([]); // 필터링할 스택 담긴 리스트
+  const [datas, setDatas] = useState([]); // 각 게시글 객체가 담긴 리스트
+  const [filterDatas, setFilterDatas] = useState([]); // datas를 stackfilter로 필터링
+  const [page, setPage] = useState(1); // 페이지네이션
 
   const isLoading = !datas.length;
-
-  /////////////////////////////////////////////////////////////////
-
-  ///////////////////////////////////////////////////////////////////////////////
+  console.log(datas);
 
   useEffect(() => {
     getMember(MEMBER_URL);
@@ -51,6 +43,7 @@ function BoardPage({ group }) {
   }, [stackFilter, group]);
 
   if (isLoading) {
+    // 로딩중 화면
     return (
       <>
         <BoardPageLayout>
@@ -77,11 +70,13 @@ function BoardPage({ group }) {
             </Side>
           </Main>
         </BoardPageLayout>
+        <Paging />
         <Footer />
       </>
     );
   }
 
+  //로딩 끝난후 컴포넌트
   return (
     <>
       <BoardPageLayout>
@@ -99,28 +94,38 @@ function BoardPage({ group }) {
             <Content>
               {/* 스택 필터 리스트의 길이가 0이면 ? 전체글 : 필터링 글 */}
               {stackFilter.length === 0
-                ? datas.map((el) => (
-                    <Link
-                      key={el.id}
-                      to={`/board/${el.id}`}
-                      // eslint-disable-next-line prettier/prettier
-                      className="board-link">
-                      <Board key={el.id} data={el} />
-                    </Link>
-                  ))
-                : filterDatas.map((el) => (
-                    <Link
-                      key={el.id}
-                      to={`/board/${el.id}`}
-                      // eslint-disable-next-line prettier/prettier
-                      className="board-link">
-                      <Board key={el.id} data={el} />
-                    </Link>
-                  ))}
+                ? /// 이부분 건드려서 페이지네이션 만들기
+                  datas
+                    .slice((page - 1) * 18, (page - 1) * 8 + 18)
+                    .map((el) => (
+                      <Link
+                        key={el.id}
+                        to={`/board/${el.id}`}
+                        // eslint-disable-next-line prettier/prettier
+                        className="board-link">
+                        <Board key={el.id} data={el} />
+                      </Link>
+                    ))
+                : filterDatas
+                    .slice((page - 1) * 18, (page - 1) * 8 + 18)
+                    .map((el) => (
+                      <Link
+                        key={el.id}
+                        to={`/board/${el.id}`}
+                        // eslint-disable-next-line prettier/prettier
+                        className="board-link">
+                        <Board key={el.id} data={el} />
+                      </Link>
+                    ))}
             </Content>
             <PageNationArea>
               {/* 페이지네이션 */}
-              <Paging page={1} setPage={9} />
+              <Paging
+                page={page}
+                setPage={setPage}
+                datas={datas}
+                filterDatas={filterDatas}
+              />
             </PageNationArea>
           </Center>
           <Side className>
