@@ -63,6 +63,7 @@ function DivisionForm() {
       axios
         .get(BOARD_URL)
         .then((res) => {
+          console.log(res);
           setModifyInfo(res.data.board);
           setRecruitCategory(
             res.data.board.recruitCategory === "스터디" ? "STUDY" : "PROJECT"
@@ -94,10 +95,22 @@ function DivisionForm() {
             value: _.filter(periodLists, { period: res.data.board.period })[0]
               .value,
           });
+          setNewStackList(
+            stackLists.filter(
+              (prev) =>
+                !res.data.board.techStackNames
+                  .map((el) => el.techStackName)
+                  .includes(prev.stack)
+            )
+          );
         })
-        .then((res) => setLoading(false))
+        .then((res) => {
+          setLoading(false);
+        })
         .catch((err) => console.log(err));
-    } else setLoading(false);
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   /** 외부 클릭시 창 사라지는 기능 */
@@ -238,7 +251,8 @@ function DivisionForm() {
                       e.preventDefault();
                       setIsLocation(!isLocation);
                       // eslint-disable-next-line prettier/prettier
-                    }}>
+                    }}
+                  >
                     {location.region}
                   </button>
                   <AiOutlineDown
@@ -255,7 +269,8 @@ function DivisionForm() {
                   className="location"
                   ref={recuirtClickRef}
                   // eslint-disable-next-line prettier/prettier
-                  value={isLocation}>
+                  value={isLocation}
+                >
                   {regionLists.map((el) => (
                     <li
                       key={el.id}
@@ -269,7 +284,8 @@ function DivisionForm() {
                           };
                         });
                         // eslint-disable-next-line prettier/prettier
-                      }}>
+                      }}
+                    >
                       {el.region}
                     </li>
                   ))}
@@ -281,13 +297,14 @@ function DivisionForm() {
       </FirstDivision>
       <SecondDivision>
         <SecondLeft>
-          <label htmlFor="classification">기술 스택</label>
+          <label htmlFor="classification">기술 스택 (최대 7개)</label>
           <div
             onClick={(e) => {
               e.preventDefault();
               setIsStack(!isStack);
               // eslint-disable-next-line prettier/prettier
-            }}>
+            }}
+          >
             <input
               type="text"
               value={search}
@@ -304,7 +321,7 @@ function DivisionForm() {
             />
           </div>
           {isStack ? (
-            <ul className="Stacklists" ref={stackClickRef} value={isStack}>
+            <ul className="Stacklists" ref={stackClickRef}>
               {searchStack.map((el) => {
                 return (
                   <li key={el.id} onClick={handleStackListClick}>
@@ -335,14 +352,15 @@ function DivisionForm() {
         <SecondRight>
           <label htmlFor="period">기간</label>
           <div>
-            <button
+            <div
               onClick={(e) => {
                 e.preventDefault();
                 setIsPeriod(!isPeriod);
                 // eslint-disable-next-line prettier/prettier
-              }}>
+              }}
+            >
               {periodValue.period}
-            </button>
+            </div>
             <AiOutlineDown
               className="AiOutlineDown"
               onClick={(e) => {
