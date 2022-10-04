@@ -77,7 +77,7 @@ function GroupBoardPage() {
         </NavContainer>
       </NavFrame>
       {/*BoardPage 컴포넌트 */}
-      <BoardPage group={currentGroup} />;
+      <BoardPage group={currentGroup} />
     </>
   );
 }
