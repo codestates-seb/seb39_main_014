@@ -31,15 +31,7 @@ const Stack = ({ selectedList, setSelectedList }) => {
       "Aws",
       "Docker",
     ],
-    프론트엔드: [
-      "JavaScript",
-      "TypeScript",
-      "React",
-      "Vue",
-      "Svelte",
-      "Next",
-      "Graphql",
-    ],
+    프론트엔드: ["JavaScript", "TypeScript", "React", "Vue", "Svelte", "Next"],
     백엔드: [
       "Java",
       "Spring",
