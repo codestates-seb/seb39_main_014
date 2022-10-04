@@ -152,14 +152,22 @@ const Stack = ({ selectedList, setSelectedList }) => {
 };
 
 const StackFrame = styled.div`
-  width: 1100px;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+  @media screen and (min-width: 768px) {
+    width: 1000px;
+  }
 `;
 
 const JobGroup = styled.div`
   display: flex;
+  width: 100%;
+
   h2 {
     color: gray;
-    opacity: 0.7;
+    opacity: 0.8;
     padding-right: 20px;
     cursor: pointer;
   }
@@ -173,6 +181,7 @@ const JobGroup = styled.div`
 const StackContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 
   div {
     display: flex;
