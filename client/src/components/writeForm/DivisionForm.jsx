@@ -23,7 +23,7 @@ import _ from "lodash";
 
 function DivisionForm() {
   const { boardId } = useParams();
-  const BOARD_URL = `http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/${boardId}`;
+  const BOARD_URL = `${process.env.REACT_APP_API_URL}/api/v1/board/${boardId}`;
   const [modifyInfo, setModifyInfo] = useState([]);
 
   const [recruitCategory, setRecruitCategory] = useState("STUDY");
@@ -237,8 +237,8 @@ function DivisionForm() {
                     onClick={(e) => {
                       e.preventDefault();
                       setIsLocation(!isLocation);
-                    }}
-                  >
+                      // eslint-disable-next-line prettier/prettier
+                    }}>
                     {location.region}
                   </button>
                   <AiOutlineDown
@@ -254,8 +254,8 @@ function DivisionForm() {
                 <ul
                   className="location"
                   ref={recuirtClickRef}
-                  value={isLocation}
-                >
+                  // eslint-disable-next-line prettier/prettier
+                  value={isLocation}>
                   {regionLists.map((el) => (
                     <li
                       key={el.id}
@@ -268,8 +268,8 @@ function DivisionForm() {
                             value: el.value,
                           };
                         });
-                      }}
-                    >
+                        // eslint-disable-next-line prettier/prettier
+                      }}>
                       {el.region}
                     </li>
                   ))}
@@ -286,8 +286,8 @@ function DivisionForm() {
             onClick={(e) => {
               e.preventDefault();
               setIsStack(!isStack);
-            }}
-          >
+              // eslint-disable-next-line prettier/prettier
+            }}>
             <input
               type="text"
               value={search}
@@ -339,8 +339,8 @@ function DivisionForm() {
               onClick={(e) => {
                 e.preventDefault();
                 setIsPeriod(!isPeriod);
-              }}
-            >
+                // eslint-disable-next-line prettier/prettier
+              }}>
               {periodValue.period}
             </button>
             <AiOutlineDown

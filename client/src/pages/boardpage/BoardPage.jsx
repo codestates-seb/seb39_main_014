@@ -15,17 +15,11 @@ import { handleStack } from "../../lib/handleStack";
 
 function BoardPage({ group, data }) {
   const BOARD_URL = {
-    ALL: "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/?page=1&size=100",
-    STUDY:
-      "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/study?page=1&size=100",
-    PROJECT:
-      "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/project?page=1&size=100",
+    ALL: `${process.env.REACT_APP_API_URL}/api/v1/board/?page=1&size=100`,
+    STUDY: `${process.env.REACT_APP_API_URL}}/api/v1/board/study?page=1&size=100`,
+    PROJECT: `${process.env.REACT_APP_API_URL}/api/v1/board/project?page=1&size=100`,
   };
-  const MEMBER_URL =
-    "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/member";
-
-  //테스트 서버 URI
-  // const BOARD_URL = "http://183.106.239.239:8080/api/v1/board?page=1&size=9";
+  const MEMBER_URL = `${process.env.REACT_APP_API_URL}/api/v1/member`;
 
   // 필터링할 스택 담긴 리스트
   const [stackFilter, setStackFilter] = useState([]);

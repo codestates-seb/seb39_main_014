@@ -8,8 +8,7 @@ import handleLogin from "../../api/handleLogin";
 import getMember from "../../api/getMember";
 
 function Login() {
-  const LOGIN_URL =
-    "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/log-in";
+  const LOGIN_URL = `${process.env.REACT_APP_API_URL}/api/v1/log-in`;
 
   // const LOGIN_URL = "http://183.106.239.239:8080/api/v1/log-in"; // 테스트용 승윤님 서버
 
