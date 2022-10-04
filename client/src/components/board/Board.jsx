@@ -8,6 +8,7 @@ import { AiOutlineEye, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 /** 게시글 컴포넌트 */
 function Board({ data }) {
+  console.log(data);
   return (
     <PostFrame>
       <PostLayout>
@@ -41,9 +42,9 @@ function Board({ data }) {
         <RecruitmentLayout>
           <div className="recruitment">
             <p>모집인원</p>
-            <p> 0 {/* {data.currentRecruit}  */}</p>
+            <p> {data.currentRecruit ? data.currentRecruit : 0} </p>
             <p> / </p>
-            <p> 0{/* {data.total_recruit}  */}</p>
+            <p> {data.totalRecruit}</p>
             <p>▿</p>
             <div className="created-at">{data.createdAt.slice(0, 10)}</div>
           </div>
