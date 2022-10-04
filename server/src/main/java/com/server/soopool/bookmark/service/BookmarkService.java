@@ -51,12 +51,8 @@ public class BookmarkService {
 
         if(bookmark.isPresent()){
             deleteBookmark(member,board);
-            board.setBookmarkCount(board.getBookmarkCount() - 1);
-            boardRepository.save(board);
         } else {
             createBookmark(member,board);
-            board.setBookmarkCount(board.getBookmarkCount() + 1);
-            boardRepository.save(board);
         }
     }
 

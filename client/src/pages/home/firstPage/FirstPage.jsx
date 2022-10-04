@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Video from "../../../assets/videos/landingVideo.mp4";
 
@@ -16,7 +17,7 @@ function FirstPage() {
           <div>막막하시다면 수풀에서 찾아보세요!</div>
         </div>
         <StartSoopool>
-          <a href="/">시작하기</a>
+          <Link to="/board">시작하기</Link>
         </StartSoopool>
       </div>
 

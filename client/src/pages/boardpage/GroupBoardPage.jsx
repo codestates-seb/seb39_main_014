@@ -76,6 +76,7 @@ function GroupBoardPage() {
           <GiHamburgerMenu className="hambuger" />
         </NavContainer>
       </NavFrame>
+      {/*BoardPage 컴포넌트 */}
       <BoardPage group={currentGroup} />;
     </>
   );

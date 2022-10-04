@@ -8,7 +8,7 @@ export default function getPopStack(POPSTACK_URL, setState) {
       // },
     })
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setState(res.data);
     });
 }

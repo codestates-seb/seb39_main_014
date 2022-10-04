@@ -5,25 +5,20 @@ import com.server.soopool.comment.dto.CommentResponseDto;
 import com.server.soopool.comment.entity.Comment;
 import com.server.soopool.member.entity.Member;
 import lombok.AllArgsConstructor;
+import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@AllArgsConstructor
-public class CommentMapper {
+@Mapper(componentModel = "spring")
+public interface CommentMapper {
 
-    public List<CommentResponseDto> commentToCommentResponse(List<Comment> comments) {
+    List<CommentResponseDto> commentListToCommentResponse(List<Comment> comments);
 
-        List<CommentResponseDto> list = new ArrayList<>();
-        for(Comment comment : comments) {
-            list.add(commentToCommentResponse(comment));
-        }
-        return list;
-    }
 
-    public CommentResponseDto commentToCommentResponse(Comment comment) {
+    default CommentResponseDto commentToCommentResponse(Comment comment) {
         CommentResponseDto.CommentResponseDtoBuilder commentResponseDto = CommentResponseDto.builder();
         commentResponseDto.nickname(comment.getMember().getNickname());
         commentResponseDto.content(comment.getContent());

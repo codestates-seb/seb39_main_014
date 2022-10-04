@@ -30,10 +30,10 @@ public class Comment extends BaseTimeEntity {
 
     // 기본컬럼 설정
     @Column(nullable = false)
-    private Integer groupNumber;
+    private Long groupNumber;
 
     @Column(nullable = true) // 대댓글 구현시 false로 변경필요
-    private Integer groupSeq;
+    private Long groupSeq;
 
     @Column(nullable = true) // 대댓글 구현시 false로 변경필요
     private boolean groupDepth = true;

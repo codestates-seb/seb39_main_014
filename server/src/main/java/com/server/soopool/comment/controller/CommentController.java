@@ -3,9 +3,12 @@ package com.server.soopool.comment.controller;
 import com.server.soopool.auth.PrincipalDetails;
 import com.server.soopool.board.entity.Board;
 import com.server.soopool.board.service.BoardService;
+import com.server.soopool.boardCareer.entity.BoardCareer;
+import com.server.soopool.career.entity.Career;
 import com.server.soopool.comment.dto.*;
 import com.server.soopool.comment.entity.Comment;
 import com.server.soopool.comment.mapper.CommentMapper;
+import com.server.soopool.comment.repository.CommentRepository;
 import com.server.soopool.comment.service.CommentService;
 import com.server.soopool.global.exception.BusinessLogicException;
 import com.server.soopool.global.exception.ExceptionCode;
@@ -17,11 +20,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -32,6 +37,7 @@ public class CommentController {
     private final BoardService boardService;
     private final CommentMapper commentMapper;
     private final MemberService memberService;
+    private final CommentRepository commentRepository;
 
     @GetMapping("board/{board_id}/comment")
         public ResponseEntity getCommentsMatchingBoardId(@PathVariable("board_id") @Positive Long boardId) {
@@ -40,7 +46,7 @@ public class CommentController {
         List<Comment> comments = commentService.getComments(board);
 
         return new ResponseEntity<>(
-                new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments)),
+                new MultiResponseCommentDto(boardId, commentMapper.commentListToCommentResponse(comments)),
                 HttpStatus.OK
         );
     }
@@ -63,7 +69,7 @@ public class CommentController {
         List<Comment> comments = commentService.getComments(board);
 
         return new ResponseEntity<>(
-                new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments)),
+                new MultiResponseCommentDto(boardId, commentMapper.commentListToCommentResponse(comments)),
                 HttpStatus.CREATED
         );
     }
@@ -89,12 +95,14 @@ public class CommentController {
             throw new BusinessLogicException(ExceptionCode.CAN_NOT_MODIFY_COMMENT);
         }
 
-        commentService.modifyComment(member.getId(), board.getId(), commentPatchDto);
+        comment.setContent((commentPatchDto.getContent()));
+        commentRepository.save(comment);
+
         List<Comment> comments = commentService.getComments(board);
 
         boardService.save(board);
         return new ResponseEntity<>(
-                new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments)),
+                new MultiResponseCommentDto(boardId, commentMapper.commentListToCommentResponse(comments)),
                 HttpStatus.CREATED
         );
     }
@@ -102,39 +110,26 @@ public class CommentController {
     // 댓글 삭제
     @DeleteMapping("board/{board_id}/comment")
     @Secured("ROLE_USER")
+    @Transactional
     public ResponseEntity deleteComment(@AuthenticationPrincipal PrincipalDetails principal,
                                         @PathVariable("board_id") @Positive Long boardId,
                                         @Validated @RequestBody CommentDeleteDto commentDeleteDto) {
         Member member = memberService.findByUserId(principal.getUsername());
         Board board = boardService.findBoard(boardId);
+        Comment comment = commentRepository.findByGroupNumber(commentDeleteDto.getGroupNumber());
 
-        Comment comment1 = new Comment();
-
-        for(Comment comment : board.getComments()){
-            if(commentDeleteDto.getGroupNumber() == comment.getGroupNumber()){
-                comment1 = comment;
-            }
+        if (principal.getMemberId() != comment.getMember().getId()){
+            throw new BusinessLogicException(ExceptionCode.CAN_NOT_MODIFY_COMMENT);
         }
 
-        if( principal.getMemberId() != comment1.getMember().getId() ){
-            throw new BusinessLogicException(ExceptionCode.CAN_NOT_DELETE_COMMENT);
-        }
+        commentRepository.deleteByGroupNumber(commentDeleteDto.getGroupNumber());
 
 
 
-        // 게시글 댓글 개수 - 1
-        board.setCommentAmount(board.getCommentAmount() - 1);
-
-        commentService.deleteComment(member.getId(), board.getId(), commentDeleteDto);
-        List<Comment> comments = commentService.getComments(board);
-
-        boardService.save(board);
-        return new ResponseEntity<>(
-                new MultiResponseCommentDto<>(boardId, commentMapper.commentToCommentResponse(comments)),
-                HttpStatus.CREATED
-        );
+        return new ResponseEntity("댓글이 삭제되었습니다.", HttpStatus.OK);
     }
 }
+
 
 
 /*
