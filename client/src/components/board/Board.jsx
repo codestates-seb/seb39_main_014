@@ -8,7 +8,20 @@ import { AiOutlineEye, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 /** 게시글 컴포넌트 */
 function Board({ data }) {
-  console.log(data);
+  const [createdAt, setCreatedAt] = useState("");
+  const [dday, setDday] = useState(null);
+
+  useEffect(() => {
+    setCreatedAt(data.createdAt.slice(0, 10));
+
+    const createdAtDay = new Date(data.createdAt);
+    const today = new Date();
+    const dayGap = today.getTime() - createdAtDay.getTime();
+    const result = Math.ceil(dayGap / (1000 * 60 * 60 * 24));
+    const deadline = 30 - Number(result);
+    setDday(deadline);
+  });
+
   return (
     <PostFrame>
       <PostLayout>
@@ -19,7 +32,7 @@ function Board({ data }) {
             <div>{data.location}</div>
           )}
           <div className="top-period">{data.period}</div>
-          <div className="info-deadline">D-14</div>
+          <div className="info-deadline">D - {dday}</div>
         </TopLayout>
         <TitleLayout>
           <h3>{data.title}</h3>
