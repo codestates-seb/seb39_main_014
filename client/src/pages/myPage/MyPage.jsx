@@ -120,6 +120,7 @@ function MyPage() {
   useOutsideClick(careerClickRef, setIsCareer);
   useOutsideClick(stackClickRef, setIsTechStackList);
 
+  /** 스택 검색 필터 */
   const searchStack = newStackList.filter((prev) => {
     if (search === "") {
       return prev;
@@ -189,8 +190,6 @@ function MyPage() {
       })
       .catch((err) => console.log(err));
   };
-  console.log(bookmarkList);
-  console.log(checkLists);
 
   if (loading) return null;
 

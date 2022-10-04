@@ -320,35 +320,62 @@ export const Comments = styled.div`
     > p {
       padding-left: 0.5rem;
     }
+    .Modify-box {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      > input {
+        display: flex;
+        width: 100%;
+        min-height: 80px;
+      }
+      > button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 15%;
+        flex-wrap: nowrap;
+      }
+    }
   }
   .Username {
     display: flex;
     width: 100%;
-    > img {
-      padding: 0.3rem;
-      border: 1px solid #d9d9d9;
-      border-radius: 50%;
-      @media screen and (max-width: 476px) {
-        width: 2rem;
-        padding: 0.2rem;
-      }
-    }
-    > div {
+    justify-content: space-between;
+    .User-information {
       display: flex;
-      justify-content: center;
-      flex-direction: column;
-      padding-left: 0.3rem;
-      .Createdat {
-        font-size: 0.5rem;
-        color: #b1b1b1;
+
+      > img {
+        padding: 0.3rem;
+        border: 1px solid #d9d9d9;
+        border-radius: 50%;
+        @media screen and (max-width: 476px) {
+          width: 2rem;
+          padding: 0.2rem;
+        }
+      }
+      > div {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding-left: 0.3rem;
+        .Createdat {
+          font-size: 0.5rem;
+          color: #b1b1b1;
+        }
       }
     }
     > span {
       display: flex;
       justify-self: right;
+      align-items: center;
       padding-top: 0.3rem;
+      .HiOutlinePencil {
+        cursor: pointer;
+      }
       .RiDeleteBin5Line {
         cursor: pointer;
+        margin: 0 0.5rem;
       }
     }
   }
