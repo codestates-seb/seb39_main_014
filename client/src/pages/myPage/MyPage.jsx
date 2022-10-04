@@ -17,6 +17,7 @@ import {
 import { GoX } from "react-icons/go";
 import { AiOutlineDown } from "react-icons/ai";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export const levelData = [
   { level: "초보", value: "BEGINNER" },
@@ -52,6 +53,7 @@ function MyPage() {
   const [checkLists, setCheckLists] = useState([]);
 
   const careerClickRef = useRef();
+  const levelClickRef = useRef();
   const stackClickRef = useRef();
 
   /** 유저정보 get 요청 함수 */
@@ -127,33 +129,56 @@ function MyPage() {
     } else return prev.stack.toLowerCase().includes(search.toLowerCase());
   });
 
+  /** 마이페이지 변경 완료 */
   const handleMypageSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post(
-        `http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/my-page/info`,
-        {
-          nickname: nickname,
-          activeScore: 0,
-          techStack: techStack.map((el) => ({ name: el.name })),
-          career: [
+    Swal.fire({
+      title: "정보 수정을 완료 하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#69D06F",
+      cancelButtonColor: "#FF6464",
+      confirmButtonText: "등록",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .post(
+            `http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/my-page/info`,
             {
-              name: career.name,
-              level: levelData.filter((prev) => prev.level === career.level)[0]
-                .value,
+              nickname: nickname,
+              activeScore: 0,
+              techStack: techStack.map((el) => ({ name: el.name })),
+              career: [
+                {
+                  name: career.name,
+                  level: levelData.filter(
+                    (prev) => prev.level === career.level
+                  )[0].value,
+                },
+              ],
             },
-          ],
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      )
-      .then((res) => navigate("/"))
-      .catch((err) => console.log(err));
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          )
+          .catch((err) => console.log(err));
+        Swal.fire({
+          title: "수정 완료!",
+          icon: "success",
+          confirmButtonColor: "#69D06F",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            navigate("/board");
+          }
+        });
+      }
+    });
   };
 
+  /** 북마크 체크 */
   const handleSingleCheck = (checked, id, title) => {
     if (checked) {
       setCheckLists([...checkLists, { boardId: id, title: title }]);
@@ -175,6 +200,7 @@ function MyPage() {
     }
   };
 
+  /** 북마크 삭제 */
   const handleBookmarkListDelete = (e) => {
     e.preventDefault();
     axios
@@ -221,8 +247,8 @@ function MyPage() {
                 {career.name} / {career.level}
               </p>
               {isCareer ? (
-                <div className="Career-level-lists">
-                  <ul className="Career-list" ref={careerClickRef}>
+                <div className="Career-level-lists" ref={careerClickRef}>
+                  <ul className="Career-list">
                     {careerLists.map((el) => (
                       <li
                         key={el.id}
