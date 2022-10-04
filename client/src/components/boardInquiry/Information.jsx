@@ -34,8 +34,8 @@ function Information() {
         const dayGap = today.getTime() - createdAtDay.getTime();
         const result = Math.ceil(dayGap / (1000 * 60 * 60 * 24));
         const deadline = 30 - Number(result);
-        setBookmarkCount(res.data.board.bookmarkCount);
         setDday(deadline);
+        setBookmarkCount(res.data.board.bookmarkCount);
 
         setLoading(false);
       })
@@ -53,7 +53,7 @@ function Information() {
       })
       .catch((err) => console.log(err));
   }, []);
-  console.log(boardInfo);
+
   const handleBookmarkClick = (e) => {
     e.preventDefault();
     axios
