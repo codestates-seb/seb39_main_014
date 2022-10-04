@@ -268,7 +268,9 @@ export const SecondRight = styled.div`
     &:hover {
       border: 1px solid #69d06f;
     }
-    > button {
+    > div {
+      display: flex;
+      align-items: center;
       width: 100%;
       height: 2.3rem;
       border: none;
