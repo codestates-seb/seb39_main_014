@@ -11,20 +11,19 @@ import TopButton from "../../components/topButton/TopButton";
 import IsLoading from "../../components/isLoading/IsLoading";
 import getBoard from "../../api/getBoard";
 import getMember from "../../api/getMember";
-import { result } from "lodash";
+import { handleStack } from "../../lib/handleStack";
 
-function BoardPage({ group }) {
+function BoardPage({ group, data }) {
   const BOARD_URL = {
-    ALL: "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/?page=1&size=3",
+    ALL: "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/?page=1&size=100",
     STUDY:
-      "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/study?page=1&size=3",
+      "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/study?page=1&size=100",
     PROJECT:
-      "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/project?page=1&size=3",
+      "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/project?page=1&size=100",
   };
   const MEMBER_URL =
     "http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/member";
 
-  // console.log(group);
   //테스트 서버 URI
   // const BOARD_URL = "http://183.106.239.239:8080/api/v1/board?page=1&size=9";
 
@@ -40,36 +39,6 @@ function BoardPage({ group }) {
 
   /////////////////////////////////////////////////////////////////
 
-  // const wow = datas
-  //   .map((el) => el.techStackNames)
-  //   .map((el) => el.map((el) => el.techStackName))
-  //   .map((el) => el.includes(stackFilter[0]));
-
-  // const wow = datas
-  //   .map((e) => e.techStackNames)
-  //   .map((el) => el.map((el) => el.techStackName))
-  //   .map((elm) => elm.includes(stackFilter[0]));
-
-  //해결한 코드
-  const wow = datas
-    .map((e) => e.techStackNames)
-    .map((el) => el.map((el) => el.techStackName))
-    .map((elm) => stackFilter.some((r) => elm.indexOf(r) >= 0));
-
-  const result = [];
-
-  const foo = () => {
-    wow.map((el, idx) => {
-      if (el === true) {
-        result.push(datas[idx]);
-      }
-    });
-    console.log(result);
-  };
-
-  foo();
-  console.log(result);
-
   ///////////////////////////////////////////////////////////////////////////////
 
   useEffect(() => {
@@ -82,7 +51,10 @@ function BoardPage({ group }) {
     } else if (group === "프로젝트") {
       getBoard(BOARD_URL.PROJECT, setDatas);
     }
-  }, [group]);
+
+    console.log(group);
+    handleStack(datas, stackFilter, setFilterDatas);
+  }, [stackFilter, group]);
 
   if (isLoading) {
     return (
@@ -131,15 +103,26 @@ function BoardPage({ group }) {
               />
             </StackArea>
             <Content>
-              {datas.map((el) => (
-                <Link
-                  key={el.id}
-                  to={`/board/${el.id}`}
-                  // eslint-disable-next-line prettier/prettier
-                  className="board-link">
-                  <Board key={el.id} data={el} />
-                </Link>
-              ))}
+              {/* 스택 필터 리스트의 길이가 0이면 ? 전체글 : 필터링 글 */}
+              {stackFilter.length === 0
+                ? datas.map((el) => (
+                    <Link
+                      key={el.id}
+                      to={`/board/${el.id}`}
+                      // eslint-disable-next-line prettier/prettier
+                      className="board-link">
+                      <Board key={el.id} data={el} />
+                    </Link>
+                  ))
+                : filterDatas.map((el) => (
+                    <Link
+                      key={el.id}
+                      to={`/board/${el.id}`}
+                      // eslint-disable-next-line prettier/prettier
+                      className="board-link">
+                      <Board key={el.id} data={el} />
+                    </Link>
+                  ))}
             </Content>
             <PageNationArea>
               {/* 페이지네이션 */}
