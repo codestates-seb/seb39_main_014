@@ -13,10 +13,10 @@ import getBoard from "../../api/getBoard";
 import getMember from "../../api/getMember";
 import { handleStack } from "../../lib/handleStack";
 
-function BoardPage({ group, data }) {
+function BoardPage({ group }) {
   const BOARD_URL = {
     ALL: `${process.env.REACT_APP_API_URL}/api/v1/board/?page=1&size=100`,
-    STUDY: `${process.env.REACT_APP_API_URL}}/api/v1/board/study?page=1&size=100`,
+    STUDY: `${process.env.REACT_APP_API_URL}/api/v1/board/study?page=1&size=100`,
     PROJECT: `${process.env.REACT_APP_API_URL}/api/v1/board/project?page=1&size=100`,
   };
   const MEMBER_URL = `${process.env.REACT_APP_API_URL}/api/v1/member`;
