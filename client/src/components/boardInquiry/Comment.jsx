@@ -8,7 +8,7 @@ import { HiOutlinePencil } from "react-icons/hi";
 
 function CommentForm() {
   const { boardId } = useParams();
-  const BOARD_URL = `http://ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/board/${boardId}`;
+  const BOARD_URL = `${process.env.REACT_APP_API_URL}/api/v1/board/${boardId}`;
 
   const [comment, setComment] = useState("");
   const [commentList, setCommentList] = useState([]);
@@ -104,8 +104,8 @@ function CommentForm() {
         <textarea
           placeholder="댓글을 입력하세요"
           value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        ></textarea>
+          // eslint-disable-next-line prettier/prettier
+          onChange={(e) => setComment(e.target.value)}></textarea>
         <div className="Submit">
           <button onClick={handleCommentSubmit}>등록</button>
         </div>
@@ -147,8 +147,8 @@ function CommentForm() {
                       onChange={(e) => setInput(e.target.value)}
                     />
                     <button
-                      onClick={() => handleModificationSubmit(el.groupNumber)}
-                    >
+                      // eslint-disable-next-line prettier/prettier
+                      onClick={() => handleModificationSubmit(el.groupNumber)}>
                       완료
                     </button>
                   </div>
