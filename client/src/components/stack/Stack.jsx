@@ -12,7 +12,6 @@ const Stack = ({ selectedList, setSelectedList }) => {
       "Vue",
       "Svelte",
       "Next",
-      "Graphql",
       "Java",
       "Spring",
       "Node",
