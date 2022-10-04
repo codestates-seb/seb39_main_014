@@ -38,7 +38,7 @@
 # 정의서
 
 - 사용자 요구사항 정의서 : <a href = "https://docs.google.com/spreadsheets/d/1NmpGNddYCKSjMZONwPeiW7ZcN_sEq_GDCnGrnq-4zIY/edit#gid=1983389426" target="_blank">사용자 요구사항 정의서 주소 </a>
-- API 명세서 :  <a href = "hhttps://docs.google.com/spreadsheets/d/1NmpGNddYCKSjMZONwPeiW7ZcN_sEq_GDCnGrnq-4zIY/edit#gid=428306005" target="_blank">API 명세서 주소 </a>
+- API 명세서 : <a href = "https://docs.google.com/spreadsheets/d/1NmpGNddYCKSjMZONwPeiW7ZcN_sEq_GDCnGrnq-4zIY/edit#gid=428306005" target="_blank">API 명세서 주소 </a>
 - 개정이력 :  <a href = "https://docs.google.com/spreadsheets/d/1NmpGNddYCKSjMZONwPeiW7ZcN_sEq_GDCnGrnq-4zIY/edit#gid=471508366">개정이력 주소 </a>
 
 
