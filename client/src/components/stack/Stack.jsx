@@ -169,9 +169,14 @@ const JobGroup = styled.div`
 
   h2 {
     color: gray;
-    opacity: 0.8;
+    opacity: 0.7;
     padding-right: 20px;
     cursor: pointer;
+  }
+
+  h2:hover {
+    opacity: 0.9;
+    color: #69d06f;
   }
 
   .selectedList {
@@ -193,7 +198,7 @@ const StackContainer = styled.div`
   }
   .selectedList {
     // 선택된 스택 css 변경 필요
-    border: 3px solid green;
+    border: 2px solid gray;
   }
   .not-selectedList {
     opacity: 0.5;
@@ -209,6 +214,10 @@ const StackImg = styled.img`
 
   padding: 2px;
   margin: 4px;
+
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 const SelectedContainer = styled.div`
@@ -229,8 +238,12 @@ const SelectedContainer = styled.div`
   .del-icon {
     margin-left: 5px;
     width: 15px;
-
     cursor: pointer;
+    transition: 0.3s;
+  }
+  .del-icon:hover {
+    color: red;
+    transition: 0.3s;
   }
 
   .reset-button {
@@ -245,10 +258,10 @@ const SelectedContainer = styled.div`
   }
 
   .reset-button:hover {
+    transition: 0.2s;
     background-color: #ffe3e4;
     color: #ff7d85;
     font-weight: bold;
-    transition: 0.15s;
   }
 `;
 
