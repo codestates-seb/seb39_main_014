@@ -1,6 +1,9 @@
 package com.server.soopool.member.controller;
 
 import com.server.soopool.auth.PrincipalDetails;
+import com.server.soopool.boardApply.entity.BoardApply;
+import com.server.soopool.boardApply.mapper.BoardApplyMapper;
+import com.server.soopool.boardApply.response.BoardApplyListResponse;
 import com.server.soopool.bookmark.dto.BookmarkDeleteDto;
 import com.server.soopool.bookmark.response.BookmarkListResponse;
 import com.server.soopool.bookmark.entity.Bookmark;
@@ -36,8 +39,8 @@ public class MemberController {
     private final MemberService memberService;
     private final BookmarkService bookmarkService;
     private final BookmarkMapper bookmarkMapper;
+    private final BoardApplyMapper boardApplyMapper;
     private final CareerMemberService careerMemberService;
-
     private final MemberTechStackService memberTechStackService;
 
     // 마이페이지 북마크 조회
@@ -73,6 +76,22 @@ public class MemberController {
                 HttpStatus.OK
         );
     }
+
+    @GetMapping("my-page/apply")
+    @Secured("ROLE_USER")
+    public ResponseEntity getUserInfoApply(@AuthenticationPrincipal PrincipalDetails principal) {
+
+        Member member = memberService.findByUserId(principal.getUsername());
+        List<BoardApply> boardApplies = member.getBoardApplies();
+
+        return new ResponseEntity<>(
+                new BoardApplyListResponse<>(
+                        boardApplyMapper.appliesToApplyListResponses(boardApplies)
+                ),
+                HttpStatus.OK
+        );
+    }
+
 
     // 회원정보 info 가져오기
     @GetMapping("my-page/info")
