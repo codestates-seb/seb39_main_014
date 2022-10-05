@@ -4,6 +4,8 @@ import com.server.soopool.board.dto.BoardPatchDto;
 import com.server.soopool.board.dto.BoardPostDto;
 import com.server.soopool.board.dto.BoardResponseDto;
 import com.server.soopool.board.entity.Board;
+import com.server.soopool.boardApply.dto.BoardApplyResponseDto;
+import com.server.soopool.boardApply.entity.BoardApply;
 import com.server.soopool.boardCareer.dto.BoardCareerResponseDto;
 import com.server.soopool.boardCareer.entity.BoardCareer;
 import com.server.soopool.boardTechstack.dto.BoardTechStackResponseDto;
@@ -12,6 +14,7 @@ import com.server.soopool.career.entity.Career;
 import com.server.soopool.techstack.entity.TechStack;
 import org.mapstruct.Mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -95,7 +98,12 @@ public interface BoardMapper {
     default BoardResponseDto boardToBoardResponse(Board board) {
         List<BoardCareer> boardCareers = board.getBoardCareers();
         List<BoardTechStack> boardTechStacks = board.getBoardTechStacks();
-
+        List<BoardApply> boardApplies = new ArrayList<>();
+        for(BoardCareer boardCareer: boardCareers) {
+            for(BoardApply boardApply: boardCareer.getBoardApplies()) {
+                boardApplies.add(boardApply);
+            }
+        }
 
         BoardResponseDto boardResponseDto = new BoardResponseDto();
         boardResponseDto.setId(board.getId());
@@ -115,6 +123,7 @@ public interface BoardMapper {
         boardResponseDto.setTitle(board.getTitle());
         boardResponseDto.setContents(board.getContents());
         boardResponseDto.setCommentAmount(board.getComments().size());
+        boardResponseDto.setCurrentRecruit(boardApplies.size());
         boardResponseDto.setTotalRecruit(board.getTotalRecruit());
         boardResponseDto.setBookmarkCount(board.getBookmarks().size());
         boardResponseDto.setCreatedAt(board.getCreatedAt());
@@ -139,16 +148,28 @@ public interface BoardMapper {
     }
 
     default List<BoardCareerResponseDto> boardCareersToBoardCareerResponses(List<BoardCareer> boardCareers) {
+
         return boardCareers
                 .stream()
                 .map(boardCareer -> BoardCareerResponseDto
                         .builder()
                         .careerName(boardCareer.getCareer().getCareerName())
+                        .careerCurrentRecruit(boardCareer.getBoardApplies().size())
                         .careerTotalRecruit(boardCareer.getCareerTotalRecruit())
                         .build())
                 .collect(Collectors.toList());
     }
 
+    default List<BoardApplyResponseDto> boardApplyToBoardApplyResponse(List<BoardApply> boardApplies) {
+        List<BoardApplyResponseDto> list = new ArrayList<>();
+        for(BoardApply boardApply : boardApplies) {
+            BoardApplyResponseDto boardApplyResponseDto = new BoardApplyResponseDto();
+            boardApplyResponseDto.setCareerName(boardApply.getBoardCareer().getCareer().getCareerName());
+            boardApplyResponseDto.setNickName(boardApply.getMember().getNickname());
+            list.add(boardApplyResponseDto);
+        }
+        return list;
+    }
 }
 
 
