@@ -6,6 +6,7 @@ import handleLogout from "../../api/handleLogout";
 import styled from "styled-components";
 import BoardPage from "../../pages/boardpage/BoardPage";
 import Profile from "../../components/navigation/Profile";
+import Hambuger from "../../components/navigation/Hambuger";
 
 // true일경우 로그인된 상태
 const isLogin = Boolean(localStorage.getItem("token"));
@@ -15,6 +16,7 @@ const group = ["전체", "스터디", "프로젝트"];
 /** Nav, BoardPage 합성 컴포넌트 */
 function GroupBoardPage() {
   const [currentGroup, setCurrentGroup] = useState("전체");
+  const [isOpen, setIsOpen] = useState(false); // 메뉴의 초기값을 false로 설정
 
   const handleGroup = (e) => {
     setCurrentGroup(e.target.innerText);
@@ -73,7 +75,14 @@ function GroupBoardPage() {
             </RightMenu>
           )}
 
-          <GiHamburgerMenu className="hambuger" />
+          <GiHamburgerMenu
+            className="hambuger"
+            onClick={() => {
+              setIsOpen(!isOpen);
+            }}
+          />
+
+          {isOpen ? <Hambuger login={isLogin} /> : <></>}
         </NavContainer>
       </NavFrame>
       {/*BoardPage 컴포넌트 */}
@@ -109,6 +118,7 @@ const NavContainer = styled.div`
 
   .hambuger {
     display: none;
+    cursor: pointer;
   }
 
   @media screen and (max-width: 768px) {
@@ -142,10 +152,7 @@ const LeftMenu = styled.div`
 
   @media screen and (max-width: 768px) {
     align-items: center;
-
-    div {
-      display: none;
-    }
+    font-size: 19px;
   }
 `;
 
@@ -158,6 +165,11 @@ const RightMenu = styled.div`
     color: #5f5f5f;
     margin-left: 20px;
     cursor: pointer;
+  }
+
+  .logout-button:hover {
+    color: #ff7d85;
+    transition: 0.2s;
   }
 
   @media screen and (max-width: 768px) {
