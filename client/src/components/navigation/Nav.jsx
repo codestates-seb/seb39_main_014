@@ -58,7 +58,8 @@ function Nav() {
               setIsOpen(!isOpen);
             }}
           />
-          {/* <div className="test-hambuger">햄버거</div> */}
+
+          {isOpen ? <Hambuger login={isLogin} /> : <></>}
         </NavContainer>
       </NavFrame>
     </>
@@ -92,6 +93,7 @@ const NavContainer = styled.div`
 
   .hambuger {
     display: none;
+    cursor: pointer;
   }
 
   .test-hambuger {
@@ -103,6 +105,7 @@ const NavContainer = styled.div`
     .hambuger {
       display: block;
       margin-left: auto;
+      cursor: pointer;
     }
   }
 `;
@@ -140,8 +143,8 @@ const RightMenu = styled.div`
   margin-right: 0px;
   align-items: center;
 
-  .logout-button {
-    color: #5f5f5f;
+  .logout-button:hover {
+    color: #ff7d85;
     margin-left: 20px;
     cursor: pointer;
   }
