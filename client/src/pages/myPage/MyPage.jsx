@@ -18,6 +18,8 @@ import { GoX } from "react-icons/go";
 import { AiOutlineDown } from "react-icons/ai";
 import axios from "axios";
 import Swal from "sweetalert2";
+import BookmarkApply from "../../components/myPage/BookmarkApply";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
 
 export const levelData = [
   { level: "초보", value: "BEGINNER" },
@@ -47,8 +49,10 @@ function MyPage() {
 
   const [search, setSearch] = useState("");
 
+  const [isTab, setIsTab] = useState(true);
   const [bookmarkList, setBookmarkList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [applyList, setApplyList] = useState([]);
 
   const [checkLists, setCheckLists] = useState([]);
 
@@ -87,8 +91,21 @@ function MyPage() {
         },
       })
       .then((res) => {
-        console.log(res);
         setBookmarkList(res.data.bookmarkList);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  /** 지원한 게시글 get 요청 함수 */
+  const getApply = () => {
+    axios
+      .get(`${MYPAGE_URL}/apply`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        setApplyList(res.data.boardApplyList);
       })
       .catch((err) => console.log(err));
   };
@@ -101,24 +118,6 @@ function MyPage() {
   }, []);
 
   /** 외부 클릭시 창 사라지는 기능 */
-  const useOutsideClick = (ref, callback) => {
-    const handleClick = (e) => {
-      if (ref && !ref.current.contains(e.target)) {
-        callback(false);
-      } else {
-        callback(true);
-      }
-    };
-
-    useEffect(() => {
-      document.addEventListener("mousedown", handleClick);
-
-      return () => {
-        document.removeEventListener("mousedown", handleClick);
-      };
-    });
-  };
-
   useOutsideClick(careerClickRef, setIsCareer);
   useOutsideClick(stackClickRef, setIsTechStackList);
 
@@ -215,6 +214,12 @@ function MyPage() {
         setCheckLists([]);
       })
       .catch((err) => console.log(err));
+  };
+
+  /** 북마크 지원 탭 클릭 핸들러 */
+  const handleTabClick = (el) => {
+    el.preventDefault();
+    setIsTab(el);
   };
 
   if (loading) return null;
@@ -355,11 +360,48 @@ function MyPage() {
           <UserBoardWrapper>
             <UserBoard>
               <div className="Myboard">
-                <div className="Bookmark">북마크한 게시글</div>
-                <div>지원한 게시글</div>
+                <div
+                  className={isTab ? "Bookmark" : ""}
+                  onClick={() => setIsTab(true)}
+                >
+                  북마크한 게시글
+                </div>
+                <div
+                  className={isTab ? "" : "Bookmark"}
+                  onClick={() => setIsTab(false)}
+                >
+                  지원한 게시글
+                </div>
               </div>
-              {bookmarkList
-                ? bookmarkList.map((el) => (
+              {isTab
+                ? bookmarkList
+                  ? bookmarkList.map((el) => (
+                      <div className="Checkboard" key={el.boardId}>
+                        <input
+                          type="checkbox"
+                          onChange={(e) =>
+                            handleSingleCheck(
+                              e.target.checked,
+                              el.boardId,
+                              el.title
+                            )
+                          }
+                          checked={
+                            checkLists
+                              .map((el) => el.boardId)
+                              .includes(el.boardId)
+                              ? true
+                              : false
+                          }
+                        />
+                        <div onClick={() => navigate(`/board/${el.boardId}`)}>
+                          {el.title}
+                        </div>
+                      </div>
+                    ))
+                  : null
+                : applyList
+                ? applyList.map((el) => (
                     <div className="Checkboard" key={el.boardId}>
                       <input
                         type="checkbox"
