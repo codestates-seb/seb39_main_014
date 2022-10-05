@@ -28,7 +28,7 @@ function PopStack() {
         </Head>
         <Content>
           {popStack.map((el, idx) => (
-            <div className="content">
+            <div className="content" key={Object.keys(el)}>
               <p className="rank-color">
                 {idx + 1}. {Object.keys(el)}
               </p>
