@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { BsFillArrowUpCircleFill } from "react-icons/bs";
 
-function scrollToTop() {
+export function scrollToTop() {
   window.scrollTo({
     top: 0,
     behavior: "smooth",
@@ -46,6 +46,10 @@ const ScrollContainer = styled.div`
 
   #top:hover {
     color: green;
+  }
+
+  @media screen and (max-width: 900px) {
+    display: none;
   }
 `;
 

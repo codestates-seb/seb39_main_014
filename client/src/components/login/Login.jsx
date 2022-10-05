@@ -9,6 +9,7 @@ import getMember from "../../api/getMember";
 
 function Login() {
   const LOGIN_URL = `${process.env.REACT_APP_API_URL}/api/v1/log-in`;
+  const AUTH_LOGIN_URL = `${process.env.REACT_APP_API_URL}/oauth2/authorization/google`;
 
   // const LOGIN_URL = "http://183.106.239.239:8080/api/v1/log-in"; // 테스트용 승윤님 서버
 
@@ -34,7 +35,7 @@ function Login() {
         <SocialContainer>
           <div className="social">
             <FcGoogle className="google-icon" />
-            <a href="http://183.106.239.239:8080/oauth2/authorization/google">
+            <a href={AUTH_LOGIN_URL}>
               <p className="google-p">구글 아이디로 로그인</p>
             </a>
           </div>
@@ -135,6 +136,9 @@ const SocialContainer = styled.div`
     font-size: 20px;
     font-weight: bolder;
     color: gray;
+  }
+  a {
+    text-decoration: none;
   }
 `;
 

@@ -1,17 +1,23 @@
 import React, { useState } from "react";
 import Pagination from "react-js-pagination";
 import styled from "styled-components";
+import { scrollToTop } from "../topButton/TopButton";
 
 const Paging = ({ page, setPage, datas, filterDatas }) => {
+  console.log(datas);
+  console.log(filterDatas);
   const handlePageChange = (page) => {
     setPage(page);
-    console.log(page);
+    scrollToTop();
   };
   return (
     <PaginationStyle>
       <Pagination
         activePage={page}
-        totalItemsCount={50}
+        itemsCountPerPage={18}
+        totalItemsCount={
+          filterDatas?.length === 0 ? datas?.length : filterDatas?.length
+        }
         pageRangeDisplayed={5}
         prevPageText={"‹"}
         nextPageText={"›"}

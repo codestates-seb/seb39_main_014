@@ -108,6 +108,7 @@ const PostFrame = styled.div`
   box-sizing: content-box;
   margin: 15px;
   padding: 20px;
+  background-color: white;
 
   box-shadow: rgba(149, 157, 165, 0.2) 1px 1px 6px 1px;
   height: 320px;

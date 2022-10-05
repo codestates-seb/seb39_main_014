@@ -152,11 +152,13 @@ const Stack = ({ selectedList, setSelectedList }) => {
 };
 
 const StackFrame = styled.div`
+  margin-top: 10px;
   max-width: 100%;
   display: flex;
   flex-wrap: wrap;
+  background-color: white;
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1100px) {
     width: 1000px;
   }
 `;
@@ -191,7 +193,7 @@ const StackContainer = styled.div`
   }
   .selectedList {
     // 선택된 스택 css 변경 필요
-    border: 2px solid black;
+    border: 3px solid green;
   }
   .not-selectedList {
     opacity: 0.5;

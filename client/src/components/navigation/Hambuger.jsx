@@ -1,5 +1,6 @@
-// import React, { useState } from "react";
-// import styled from "styled-components";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 // /*
 
@@ -11,117 +12,63 @@
 
 // */
 
-// const Hambuger = () => {
-//   const [isToggled, setIsToggled] = useState(false);
-//   const [userToggled, setUserToggled] = useState(false);
+const Hambuger = () => {
+  return (
+    <Li>
+      <DropDown>
+        <ListContainer>
+          <Ul>
+            <Li>
+              <Link to="/">프로필</Link>
+            </Li>
+            <Li>
+              <Link to="/">매니저</Link>
+            </Li>
+            <Li>
+              <Link>로그아웃</Link>
+            </Li>
+          </Ul>
+        </ListContainer>
+      </DropDown>
+    </Li>
+  );
+};
 
-//   return (
-//     <Header isToggled={isToggled} userToggled={userToggled}>
-//       {/* 햄버거 버튼(bar) */}
-//       <div
-//         className="toggle"
-//         onClick={() => {
-//           setIsToggled(!isToggled);
-//         }}>
-//         <div icon={!isToggled ? 1 : 2} />
-//       </div>
+const Li = styled.li`
+  list-style: none;
+`;
 
-//       {/* User 버튼 */}
-//       <div
-//         className="user"
-//         onClick={() => {
-//           setUserToggled(!userToggled);
-//         }}>
-//         <div icon={!userToggled ? 1 : 2} />
-//       </div>
+const Ul = styled.ul`
+  list-style: none;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  color: #666666;
+  line-height: 22px;
+`;
 
-//       <ul className="header__right">
-//         <li>로그인</li>
-//         <li>작성하기</li>
-//       </ul>
-//     </Header>
-//   );
-// };
+const DropDown = styled.button`
+  border: none;
+  outline: none;
+  position: relative;
+  width: 80px;
+`;
 
-// const Header = styled.div`
-//   max-width: 1280px;
-//   margin: 0 auto;
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   color: white;
-//   background-color: black;
+const ListContainer = styled.div`
+  border: 1px solid ${(props) => props.theme.borderColor};
+  background-color: ${(props) => props.theme.bgColor};
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  padding: 3px;
+  margin-top: 7px;
+  position: absolute;
+  display: none;
+  ${DropDown}:active & {
+    display: block;
+  }
+  ${DropDown}:focus & {
+    display: block;
+  }
+`;
 
-//   .logo {
-//     margin: 0 1rem;
-//     font-size: 2rem;
-//   }
-
-//   .header__menulist {
-//     list-style: none;
-//     display: flex;
-//   }
-
-//   .header__left {
-//     display: flex;
-//   }
-
-//   .header__right {
-//     list-style: none;
-//     display: flex;
-//   }
-
-//   .header__right div {
-//     margin: 0 1rem;
-//   }
-
-//   li {
-//     padding: 0 1rem;
-//   }
-
-//   .toggle {
-//     display: none;
-//     font-size: 1.5rem;
-//     padding: 1rem 1rem;
-//   }
-
-//   .user {
-//     display: none;
-//     font-size: 1.5rem;
-//     padding: 1rem 1rem;
-//   }
-
-//   @media screen and (max-width: 768px) {
-//     flex-wrap: wrap;
-
-//     .header__right {
-//       display: ${(props) => (props.userToggled ? "flex" : "none")};
-//       flex-direction: column;
-//       width: 100%;
-//       background-color: black;
-//     }
-
-//     .header__menulist {
-//       display: ${(props) => (props.isToggled ? "flex" : "none")};
-//       flex-direction: column;
-//       width: 100%;
-//       background-color: black;
-//     }
-
-//     .header__menulist li,
-//     .header__right li {
-//       margin: 1rem 0;
-//       padding: 0;
-//     }
-
-//     .toggle {
-//       display: block;
-//     }
-
-//     .user {
-//       display: block;
-//     }
-//   }
-// `;
-
-// export default Hambuger;
+export default Hambuger;

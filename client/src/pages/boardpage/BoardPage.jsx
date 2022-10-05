@@ -25,7 +25,13 @@ function BoardPage({ group }) {
   const [page, setPage] = useState(1); // 페이지네이션
 
   const isLoading = !datas.length;
-  console.log(datas);
+
+  // 자료 확인용
+  if (filterDatas.length === 0) {
+    console.log(datas);
+  } else {
+    console.log(filterDatas);
+  }
 
   useEffect(() => {
     getMember(MEMBER_URL);
@@ -60,17 +66,13 @@ function BoardPage({ group }) {
               </StackArea>
               {/* 로딩컴포넌트 */}
               <IsLoading />
-              <PageNationArea>
-                {/* 페이지네이션 */}
-                <Paging page={1} setPage={9} />
-              </PageNationArea>
+              <PageNationArea></PageNationArea>
             </Center>
             <Side>
               <TopButton />
             </Side>
           </Main>
         </BoardPageLayout>
-        <Paging />
         <Footer />
       </>
     );
@@ -96,7 +98,7 @@ function BoardPage({ group }) {
               {stackFilter.length === 0
                 ? /// 이부분 건드려서 페이지네이션 만들기
                   datas
-                    .slice((page - 1) * 18, (page - 1) * 8 + 18)
+                    .slice((page - 1) * 18, (page - 1) * 9 + 18)
                     .map((el) => (
                       <Link
                         key={el.id}
@@ -107,7 +109,7 @@ function BoardPage({ group }) {
                       </Link>
                     ))
                 : filterDatas
-                    .slice((page - 1) * 18, (page - 1) * 8 + 18)
+                    .slice((page - 1) * 18, (page - 1) * 9 + 18)
                     .map((el) => (
                       <Link
                         key={el.id}
@@ -173,6 +175,14 @@ const Center = styled.div`
   height: 100%;
   grid-template-rows: 1fr 1fr 1fr;
   max-width: 1100px;
+
+  @media screen and (max-width: 1000px) {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
+  }
 `;
 
 const Content = styled.div`
@@ -188,11 +198,18 @@ const Content = styled.div`
     text-decoration: none;
     color: black;
   }
-  @media screen and (max-width: 820px) {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0;
+  @media screen and (max-width: 1000px) {
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr;
+    place-items: center;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media screen and (max-width: 800px) {
+    display: grid;
+    grid-template-columns: 3fr;
+    place-items: center;
   }
 `;
 

@@ -58,7 +58,6 @@ function Nav() {
               setIsOpen(!isOpen);
             }}
           />
-          {/* <div className="test-hambuger">햄버거</div> */}
         </NavContainer>
       </NavFrame>
     </>
@@ -92,6 +91,7 @@ const NavContainer = styled.div`
 
   .hambuger {
     display: none;
+    cursor: pointer;
   }
 
   .test-hambuger {
@@ -103,6 +103,7 @@ const NavContainer = styled.div`
     .hambuger {
       display: block;
       margin-left: auto;
+      cursor: pointer;
     }
   }
 `;
@@ -157,6 +158,11 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   color: #5f5f5f;
   margin-left: 20px;
+`;
+
+const DropDown = styled.div`
+  top: 200px;
+  position: absolute;
 `;
 
 export default Nav;
