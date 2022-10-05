@@ -17,6 +17,8 @@ import java.util.Optional;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<BoardIdAndGroupNumberMapping> findByBoardId(Long boardId);
 
+    Comment findByBoardIdAndGroupNumber(Long boardId, Long groupNumber);
+
     Comment findByGroupNumber(Long groupNumber);
 
     void deleteByGroupNumber(Long groupNumber);
