@@ -24,22 +24,4 @@ public class SoopoolApplication {
 	public PasswordEncoder passwordEncoder(){
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
-
-	@Bean
-	public CommandLineRunner dataSave(MemberRepository memberRepository) {
-		return new CommandLineRunner() {
-			@Override
-			public void run(String... args) throws Exception {
-				Member member = memberRepository.save(
-						Member.generalBuilder()
-								.name("홍길동")
-								.userId("hgd2022")
-								.password("123456789")
-								.email("hgd2022@naver.com")
-								.nickname("MrHong")
-								.buildGeneralMember()
-				);
-			}
-		};
-	}
 }
