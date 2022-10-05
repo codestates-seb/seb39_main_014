@@ -4,8 +4,6 @@ import styled from "styled-components";
 import { scrollToTop } from "../topButton/TopButton";
 
 const Paging = ({ page, setPage, datas, filterDatas }) => {
-  console.log(datas);
-  console.log(filterDatas);
   const handlePageChange = (page) => {
     setPage(page);
     scrollToTop();
