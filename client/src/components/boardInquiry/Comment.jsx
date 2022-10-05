@@ -149,17 +149,19 @@ function CommentForm() {
                 </div>
                 {groupNumber === el.groupNumber ? (
                   <div className="Modify-box">
-                    <input
+                    <textarea
                       type="text"
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                     />
-                    <button
-                      // eslint-disable-next-line prettier/prettier
-                      onClick={() => handleModificationSubmit(el.groupNumber)}
-                    >
-                      완료
-                    </button>
+                    <div>
+                      <button
+                        // eslint-disable-next-line prettier/prettier
+                        onClick={() => handleModificationSubmit(el.groupNumber)}
+                      >
+                        완료
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <p>{el.content}</p>

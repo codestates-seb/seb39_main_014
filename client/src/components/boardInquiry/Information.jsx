@@ -27,7 +27,10 @@ function Information() {
   const [dday, setDday] = useState(null);
   const [bookmarkCount, setBookmarkCount] = useState(0);
   const [isBookmark, setIsBookmark] = useState(false);
+  const [isApply, setIsApply] = useState(false);
 
+  //지원하기 눌렀을때 -> 지원 취소
+  //인원 다 찼을 때 -> 마감
   useEffect(() => {
     setLoading(true);
     axios
@@ -114,12 +117,66 @@ function Information() {
     });
   };
 
+  /** 지원 클릭 핸들러 */
+  const handleApplyClick = (e) => {
+    e.preventDefault();
+    if (!isApply) {
+      Swal.fire({
+        title: "지원 하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#69D06F",
+        cancelButtonColor: "#FF6464",
+        confirmButtonText: "확인",
+        cancelButtonText: "취소",
+      }).then((res) => {
+        if (res.isConfirmed) {
+          Swal.fire({
+            title: "지원 완료!",
+            icon: "success",
+            confirmButtonColor: "#69D06F",
+          }).then((res) => {
+            if (res.isConfirmed) {
+              setIsApply(!isApply);
+            }
+          });
+        }
+      });
+    } else {
+      Swal.fire({
+        title: "지원을 취소 하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#69D06F",
+        cancelButtonColor: "#FF6464",
+        confirmButtonText: "확인",
+        cancelButtonText: "취소",
+      }).then((res) => {
+        if (res.isConfirmed) {
+          Swal.fire({
+            title: "지원을 취소 했습니다.",
+            icon: "success",
+            confirmButtonColor: "#69D06F",
+          }).then((res) => {
+            if (res.isConfirmed) {
+              setIsApply(!isApply);
+            }
+          });
+        }
+      });
+    }
+  };
+
   if (loading) return null;
   return (
     <>
       <Title>
+        <BiArrowBack className="BiArrowBack" onClick={() => navigate(-1)} />
         <Buttons>
-          <BiArrowBack className="BiArrowBack" onClick={() => navigate(-1)} />
+          <div className="Recruitment-classification">
+            <span>{boardInfo[0].recruitCategory}</span>
+            <button>{dday > 0 ? `D-${dday}` : `모집 마감`}</button>
+          </div>
           {user === boardInfo[0].nickName ? (
             <div className="Patch-delete">
               <button onClick={() => navigate(`/board/${boardId}/modify`)}>
@@ -153,10 +210,6 @@ function Information() {
               )}
               <span>{bookmarkCount}</span>
             </div>
-            <span className="Recruitment-classification">
-              {boardInfo[0].recruitCategory}
-            </span>
-            <button>{dday > 0 ? `D-${dday}` : `모집 마감`}</button>
           </div>
         </UserInfo>
         <BoardInfo>
@@ -194,7 +247,9 @@ function Information() {
                       <div> {el.careerName}</div>
                       <div>0/{el.careerTotalRecruit}</div>
                       <div>
-                        <span className="Apply-box">지원</span>
+                        <span className="Apply-box" onClick={handleApplyClick}>
+                          {isApply ? "지원 취소" : "지원"}
+                        </span>
                       </div>
                     </li>
                   ))
