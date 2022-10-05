@@ -63,7 +63,6 @@ function DivisionForm() {
       axios
         .get(BOARD_URL)
         .then((res) => {
-          console.log(res);
           setModifyInfo(res.data.board);
           setRecruitCategory(
             res.data.board.recruitCategory === "스터디" ? "STUDY" : "PROJECT"
@@ -96,7 +95,7 @@ function DivisionForm() {
               .value,
           });
           setNewStackList(
-            stackLists.filter(
+            newStackList.filter(
               (prev) =>
                 !res.data.board.techStackNames
                   .map((el) => el.techStackName)
@@ -147,25 +146,27 @@ function DivisionForm() {
 
   const handleStackListClick = (e) => {
     e.preventDefault();
-
     setStack(e.target.innerText);
-    setSelectedStackList([
-      ...selectedStackList,
-      {
-        id: stackRef.current,
-        techStackName: stackNumbers[0][e.target.innerText],
-      },
-    ]);
-    stackRef.current = stackRef.current + 1;
-    setTechStacks([
-      ...techStacks,
-      { techStackId: stackNumbers[0][e.target.innerText] },
-    ]);
-    setIsStack(!isStack);
-    setNewStackList(
-      newStackList.filter((prev) => prev.stack !== e.target.innerText)
-    );
+    if (selectedStackList.length < 7) {
+      setSelectedStackList([
+        ...selectedStackList,
+        {
+          id: stackRef.current,
+          techStackName: stackNumbers[0][e.target.innerText],
+        },
+      ]);
+      stackRef.current = stackRef.current + 1;
+      setTechStacks([
+        ...techStacks,
+        { techStackId: stackNumbers[0][e.target.innerText] },
+      ]);
+      setIsStack(!isStack);
+      setNewStackList(
+        newStackList.filter((prev) => prev.stack !== e.target.innerText)
+      );
+    }
   };
+
   /** 선택된 스택 추가 및 선택된 스택 기존 목록에서 제거*/
   const handleStackListRemove = (id) => {
     // target의 id
