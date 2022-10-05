@@ -4,11 +4,13 @@ export const WriteFormContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  height: 90vh;
 `;
 
 export const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
+
   width: 100%;
   max-width: 1024px;
   padding: 1rem 3rem;

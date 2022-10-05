@@ -60,7 +60,7 @@ function Editor({ newObject }) {
   const [contact, setContact] = useState("");
   const [title, setTitle] = useState("");
 
-  const patchForm = {
+  const submitForm = {
     recruitCategory: newObject.recruitCategory,
     recruitMethod: newObject.recruitMethod,
     location: newObject.location,
@@ -71,12 +71,7 @@ function Editor({ newObject }) {
     title: title,
     contents: contents,
   };
-  // const isTrue = () => {
-  //   if (patchForm.map((el) => el.length === 0)) {
-  //     return "haha";
-  //   }
-  // };
-  // isTrue();
+
   const navigate = useNavigate();
   const onCancelHandler = (e) => {
     e.preventDefault();
@@ -95,58 +90,64 @@ function Editor({ newObject }) {
     }
   }, []);
 
+  /** 완료 버튼 클릭 핸들러 */
   const handleSubmit = (e) => {
     e.preventDefault();
-    Swal.fire({
-      title: "게시글을 등록 하시겠습니까?",
-      text: "아직 작성할게 남으셨다면 취소를 눌러주세요",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#69D06F",
-      cancelButtonColor: "#FF6464",
-      confirmButtonText: "등록",
-      cancelButtonText: "취소",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        if (boardId) {
-          axios
-            .patch(
-              BOARD_URL,
-              patchForm,
+    if (
+      Object.values(submitForm).some(
+        (el) => el.length === 0 || el.length === 11
+      )
+    ) {
+      Swal.fire({
+        title: "입력하지 않은 부분이 있습니다.",
+        confirmButtonColor: "#69D06F",
+        confirmButtonText: "확인",
+      });
+    } else {
+      Swal.fire({
+        title: "게시글을 등록 하시겠습니까?",
+        text: "아직 작성할게 남으셨다면 취소를 눌러주세요",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#69D06F",
+        cancelButtonColor: "#FF6464",
+        confirmButtonText: "등록",
+        cancelButtonText: "취소",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (boardId) {
+            axios
+              .patch(
+                BOARD_URL,
+                submitForm,
 
-              {
-                headers: {
-                  Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-              }
-            )
-            .then((res) => console.log("haha"))
-            .catch((error) => console.log("err:", error));
-        } else {
-          handleBoardSubmit(
-            WIRTEBOARD_URL,
-            newObject.recruitCategory,
-            newObject.recruitMethod,
-            newObject.location,
-            newObject.boardTechStacks,
-            newObject.period,
-            newObject.boardCareers,
-            contact,
-            title,
-            contents
-          );
-        }
-        Swal.fire({
-          title: "등록 완료!",
-          icon: "success",
-          confirmButtonColor: "#69D06F",
-        }).then((res) => {
-          if (res.isConfirmed) {
-            navigate("/board");
+                {
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                  },
+                }
+              )
+              .then((res) => console.log("haha"))
+              .catch((error) => console.log("err:", error));
+          } else {
+            handleBoardSubmit(WIRTEBOARD_URL, submitForm, {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            });
           }
-        });
-      }
-    });
+          Swal.fire({
+            title: "등록 완료!",
+            icon: "success",
+            confirmButtonColor: "#69D06F",
+          }).then((res) => {
+            if (res.isConfirmed) {
+              navigate("/board");
+            }
+          });
+        }
+      });
+    }
   };
 
   return (
@@ -179,7 +180,8 @@ function Editor({ newObject }) {
             theme="snow"
             modules={modules}
             // eslint-disable-next-line prettier/prettier
-            formats={formats}></ReactQuill>
+            formats={formats}
+          ></ReactQuill>
         </QuillContainer>
       </Content>
       <PostButton>
