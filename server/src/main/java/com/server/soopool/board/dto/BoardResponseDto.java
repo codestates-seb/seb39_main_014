@@ -1,5 +1,6 @@
 package com.server.soopool.board.dto;
 
+import com.server.soopool.boardApply.dto.BoardApplyResponseDto;
 import com.server.soopool.boardCareer.dto.BoardCareerResponseDto;
 import com.server.soopool.boardTechstack.dto.BoardTechStackResponseDto;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class BoardResponseDto {
     private String title;
     private String contents;
     private Integer commentAmount;
+    private Integer currentRecruit;
     private Integer totalRecruit;
     private Integer bookmarkCount;
     private boolean recruitDone;

@@ -12,6 +12,8 @@ function CommentForm() {
 
   const [comment, setComment] = useState("");
   const [commentList, setCommentList] = useState([]);
+
+  const [groupNumber, setGroupNumber] = useState(null);
   const [input, setInput] = useState("");
 
   const user = localStorage.getItem("nickname");
@@ -28,7 +30,7 @@ function CommentForm() {
       })
       .catch((err) => console.log(err));
   };
-  console.log(commentList);
+
   const handleCommentSubmit = (e) => {
     e.preventDefault();
     axios
@@ -41,8 +43,10 @@ function CommentForm() {
           },
         }
       )
-      .then((res) => getComment())
-      .then((res) => setComment(""))
+      .then((res) => {
+        getComment();
+        setComment("");
+      })
       .catch((err) => console.log(err));
   };
 
@@ -51,7 +55,6 @@ function CommentForm() {
   };
 
   const handleModificationSubmit = (number) => {
-    console.log(number);
     axios
       .patch(
         `${BOARD_URL}/comment`,
@@ -63,7 +66,7 @@ function CommentForm() {
         }
       )
       .then((res) => {
-        setInput("");
+        setGroupNumber("");
         getComment();
       })
       .catch((err) => console.log(err));
@@ -97,6 +100,7 @@ function CommentForm() {
       }
     });
   };
+
   return (
     <>
       <WriteComment>
@@ -105,7 +109,8 @@ function CommentForm() {
           placeholder="댓글을 입력하세요"
           value={comment}
           // eslint-disable-next-line prettier/prettier
-          onChange={(e) => setComment(e.target.value)}></textarea>
+          onChange={(e) => setComment(e.target.value)}
+        ></textarea>
         <div className="Submit">
           <button onClick={handleCommentSubmit}>등록</button>
         </div>
@@ -129,7 +134,10 @@ function CommentForm() {
                       <>
                         <HiOutlinePencil
                           className="HiOutlinePencil"
-                          onClick={() => handleModificationClick(el.content)}
+                          onClick={() => {
+                            setGroupNumber(el.groupNumber);
+                            handleModificationClick(el.content);
+                          }}
                         />
                         <RiDeleteBin5Line
                           className="RiDeleteBin5Line"
@@ -139,7 +147,7 @@ function CommentForm() {
                     ) : null}
                   </span>
                 </div>
-                {input ? (
+                {groupNumber === el.groupNumber ? (
                   <div className="Modify-box">
                     <input
                       type="text"
@@ -148,7 +156,8 @@ function CommentForm() {
                     />
                     <button
                       // eslint-disable-next-line prettier/prettier
-                      onClick={() => handleModificationSubmit(el.groupNumber)}>
+                      onClick={() => handleModificationSubmit(el.groupNumber)}
+                    >
                       완료
                     </button>
                   </div>
