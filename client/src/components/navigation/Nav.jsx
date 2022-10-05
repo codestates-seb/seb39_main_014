@@ -58,6 +58,8 @@ function Nav() {
               setIsOpen(!isOpen);
             }}
           />
+
+          {isOpen ? <Hambuger login={isLogin} /> : <></>}
         </NavContainer>
       </NavFrame>
     </>
