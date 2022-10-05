@@ -93,11 +93,7 @@ function Editor({ newObject }) {
   /** 완료 버튼 클릭 핸들러 */
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      Object.values(submitForm).some(
-        (el) => el.length === 0 || el.length === 11
-      )
-    ) {
+    if (Object.values(submitForm).some((el) => el.length === 0)) {
       Swal.fire({
         title: "입력하지 않은 부분이 있습니다.",
         confirmButtonColor: "#69D06F",
@@ -119,8 +115,17 @@ function Editor({ newObject }) {
             axios
               .patch(
                 BOARD_URL,
-                submitForm,
-
+                {
+                  recruitCategory: newObject.recruitCategory,
+                  recruitMethod: newObject.recruitMethod,
+                  location: newObject.location,
+                  boardTechStacks: newObject.boardTechStacks,
+                  period: newObject.period,
+                  boardCareers: newObject.boardCareers,
+                  contact: contact,
+                  title: title,
+                  contents: contents,
+                },
                 {
                   headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -130,11 +135,13 @@ function Editor({ newObject }) {
               .then((res) => console.log("haha"))
               .catch((error) => console.log("err:", error));
           } else {
-            handleBoardSubmit(WIRTEBOARD_URL, submitForm, {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
-            });
+            axios
+              .post(WIRTEBOARD_URL, submitForm, {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              })
+              .catch((err) => console.log(err));
           }
           Swal.fire({
             title: "등록 완료!",
@@ -149,7 +156,7 @@ function Editor({ newObject }) {
       });
     }
   };
-
+  console.log(submitForm);
   return (
     <>
       <Contact>
