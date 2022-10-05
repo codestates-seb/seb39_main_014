@@ -246,6 +246,7 @@ export const Profile = styled.div`
 
 export const UserBoardWrapper = styled.div`
   display: flex;
+  padding-top: 4rem;
 `;
 
 export const UserBoard = styled.div`
@@ -265,6 +266,7 @@ export const UserBoard = styled.div`
   .Myboard {
     > div {
       padding: 1rem;
+      cursor: pointer;
     }
     .Bookmark {
       background-color: #f0f0f0;

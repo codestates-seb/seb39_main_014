@@ -31,6 +31,11 @@ export const Title = styled.div`
   @media screen and (max-width: 476px) {
     margin-bottom: 0.5rem;
   }
+  .BiArrowBack {
+    font-size: 2rem;
+    color: #959595;
+    cursor: pointer;
+  }
   > p {
     margin: 0;
     padding-left: 0.5rem;
@@ -46,11 +51,7 @@ export const Buttons = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
-  .BiArrowBack {
-    font-size: 2rem;
-    color: #959595;
-    cursor: pointer;
-  }
+  padding-top: 1rem;
   .Patch-delete {
     > button {
       background-color: white;
@@ -59,6 +60,33 @@ export const Buttons = styled.div`
       margin-left: 0.5rem;
       padding: 0.5rem 0.6rem;
       cursor: pointer;
+    }
+  }
+  .Recruitment-classification {
+    display: flex;
+    > span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 0.5rem;
+      width: 5rem;
+      height: 2.5rem;
+      border-radius: 5px;
+      font-size: 1rem;
+      color: #009f47;
+      background-color: #e5f8ed;
+    }
+    > button {
+      margin-left: 1rem;
+      font-weight: 500;
+
+      letter-spacing: 0.1rem;
+      width: 5rem;
+      height: 2.5rem;
+      padding: 0;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: none;
     }
   }
 `;
@@ -116,7 +144,7 @@ export const UserInfo = styled.div`
       display: flex;
       flex-direction: column;
       .AiOutlineHeart {
-        font-size: 1.5rem;
+        font-size: 2rem;
         cursor: pointer;
         &.full {
           color: red;
@@ -125,14 +153,18 @@ export const UserInfo = styled.div`
       > span {
         display: flex;
         justify-content: center;
-        font-size: 0.4rem;
+        font-size: 0.8rem;
       }
     }
     .Recruitment-classification {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin-left: 0.5rem;
-      padding: 0.5rem 0.5rem;
-      border-radius: 10px;
-      font-size: 0.8rem;
+      width: 4rem;
+      height: 3rem;
+      border-radius: 5px;
+      font-size: 1rem;
       color: #009f47;
       background-color: #e5f8ed;
     }
@@ -141,11 +173,11 @@ export const UserInfo = styled.div`
       font-weight: 500;
       &:nth-child(3) {
         letter-spacing: 0.1rem;
-        width: 3rem;
+        width: 4rem;
         height: 3rem;
         padding: 0;
-        font-size: 0.9rem;
-        border-radius: 50%;
+        font-size: 1rem;
+        border-radius: 5px;
         border: none;
       }
     }
@@ -158,8 +190,8 @@ export const BoardInfo = styled.ul`
   grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
   /* grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr auto; */
-  border-bottom: 1px solid #bababa;
-  border-top: 1px solid #bababa;
+  border-bottom: 1.5px solid #bababa;
+  border-top: 1.5px solid #bababa;
   list-style: none;
   padding: 1rem 0;
   margin: 0.5rem 0;
@@ -171,16 +203,22 @@ export const BoardInfo = styled.ul`
   > li {
     display: flex;
     width: 100%;
-    line-height: 2.5rem;
+    line-height: 3rem;
     margin-bottom: 0.5rem;
     @media screen and (max-width: 476px) {
       line-height: 1.5rem;
     }
     .Subject {
+      width: 20%;
+      font-size: 1.3rem;
       min-width: 4rem;
       color: #989898;
       margin-right: 2rem;
       @media screen and (max-width: 476px) {
+        font-size: 1rem;
+        min-width: 4rem;
+        color: #989898;
+        margin-right: 2rem;
         min-width: 2.5rem;
         margin-right: 1rem;
       }
@@ -192,11 +230,10 @@ export const BoardInfo = styled.ul`
     }
   }
   .Span-box {
-    padding: 0 0.5rem;
-    background-color: #e5f8ed;
-    color: #009f47;
     border-radius: 5px;
     margin-right: 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
     @media screen and (max-width: 476px) {
       margin-right: 0.5rem;
       padding: 0.2rem 0.4rem;
@@ -215,7 +252,7 @@ export const BoardInfo = styled.ul`
   .Applicants {
     display: flex;
     .Applicants-list {
-      width: 100%;
+      width: 70%;
       list-style: none;
       margin-top: 0.2rem;
       padding-left: 0;
@@ -224,9 +261,10 @@ export const BoardInfo = styled.ul`
         line-height: 1rem;
       }
       > li {
+        width: 80%;
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(100px, auto));
-        /* grid-template-columns: 2fr 1fr 1fr; */
+        /* grid-template-columns: repeat(auto-fill, minmax(100px, auto)); */
+        grid-template-columns: 1fr 0.6fr 1fr;
         @media screen and (max-width: 476px) {
           grid-template-columns: repeat(auto-fill, minmax(70px, auto));
         }
@@ -242,11 +280,13 @@ export const BoardInfo = styled.ul`
           align-items: center;
           justify-content: center;
           line-height: 0;
-          width: 3rem;
+          width: 80%;
+          min-width: 5rem;
           height: 1.8rem;
           border: 1px solid #b1b1b1;
           border-radius: 3px;
           font-size: 0.8rem;
+          cursor: pointer;
           @media screen and (max-width: 476px) {
             width: 1.5rem;
             height: 1rem;
@@ -287,6 +327,7 @@ export const WriteComment = styled.div`
   .Submit {
     display: flex;
     justify-content: flex-end;
+    margin-top: 0.3rem;
     > button {
       display: flex;
       justify-content: center;
@@ -324,17 +365,30 @@ export const Comments = styled.div`
       display: flex;
       justify-content: space-between;
       width: 100%;
-      > input {
+      padding-top: 1rem;
+      flex-direction: column;
+      > textarea {
         display: flex;
         width: 100%;
         min-height: 80px;
+        resize: none;
       }
-      > button {
+      > div {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 15%;
-        flex-wrap: nowrap;
+        justify-content: flex-end;
+        padding-top: 0.5rem;
+        > button {
+          display: flex;
+          justify-content: center;
+          padding: 0.5rem;
+          min-width: 3rem;
+          width: 10%;
+          border: none;
+          border-radius: 5px;
+          background-color: #e5f8ed;
+          color: #009f47;
+          cursor: pointer;
+        }
       }
     }
   }
