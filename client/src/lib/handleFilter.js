@@ -33,39 +33,44 @@ export const handleFilter = (
   isDone,
   group
 ) => {
+  // 스텍 필터 기준으로 true, false
+  const isIncludeList = datas
+    .map((e) => e.techStackNames)
+    .map((el) => el.map((el) => el.techStackName))
+    .map((elm) => stackFilter.some((r) => elm.indexOf(r) >= 0));
+
+  // 그룹이 전체일 경우
   if (group === "전체") {
-    const isIncludeList = datas
-      .map((e) => e.techStackNames)
-      .map((el) => el.map((el) => el.techStackName))
-      .map((elm) => stackFilter.some((r) => elm.indexOf(r) >= 0));
+    console.log("전체 선택됨");
 
     const makeFilterdList = () => {
       const stackResult = [];
-      isIncludeList.map((el, idx) => {
-        if (el === true) {
-          stackResult.push(datas[idx]);
-        }
-      });
 
-      const doneResult = stackResult.filter((el) => el.recruitDone === isDone);
-      console.log(doneResult);
-      setFilterDatas(doneResult);
+      if (stackFilter.length === 0) {
+        const doneResult = datas.filter((el) => el.recruitDone === isDone);
+        setFilterDatas(doneResult);
+      } else {
+        isIncludeList.map((el, idx) => {
+          if (el === true) {
+            stackResult.push(datas[idx]);
+          }
+        });
+        const doneResult = stackResult.filter(
+          (el) => el.recruitDone === isDone
+        );
+        console.log(doneResult);
+        setFilterDatas(doneResult);
+      }
     };
 
     makeFilterdList();
+
+    // 스텍 필터가 안 걸려 있을 경우
   } else if (stackFilter.length === 0) {
-    const allStackList = datas
-      .map((e) => e.techStackNames)
-      .map((el) => el.map((el) => el.techStackName))
-      .map((elm) => stacks.some((r) => elm.indexOf(r) >= 0));
+    console.log("2번 실행");
+    const allStackList = datas;
     const makeFilterdList = () => {
-      const stackResult = [];
-      allStackList.map((el, idx) => {
-        if (el === true) {
-          stackResult.push(datas[idx]);
-        }
-      });
-      const doneResult = stackResult.filter((el) => el.recruitDone === isDone);
+      const doneResult = allStackList.filter((el) => el.recruitDone === isDone);
       const groupResult = doneResult.filter(
         (el) => el.recruitCategory === group
       );
@@ -73,6 +78,8 @@ export const handleFilter = (
     };
     makeFilterdList();
   } else {
+    console.log("3번 실행");
+    // 스택으로 필터링된 리스트
     const isIncludeList = datas
       .map((e) => e.techStackNames)
       .map((el) => el.map((el) => el.techStackName))
@@ -85,7 +92,10 @@ export const handleFilter = (
           stackResult.push(datas[idx]);
         }
       });
+
+      // [모집중, 모집완료]
       const doneResult = stackResult.filter((el) => el.recruitDone === isDone);
+      // [전체, 스터디, 프로젝트]
       const groupResult = doneResult.filter(
         (el) => el.recruitCategory === group
       );
