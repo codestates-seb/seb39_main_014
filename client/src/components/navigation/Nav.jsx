@@ -143,8 +143,8 @@ const RightMenu = styled.div`
   margin-right: 0px;
   align-items: center;
 
-  .logout-button {
-    color: #5f5f5f;
+  .logout-button:hover {
+    color: #ff7d85;
     margin-left: 20px;
     cursor: pointer;
   }
@@ -160,11 +160,6 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   color: #5f5f5f;
   margin-left: 20px;
-`;
-
-const DropDown = styled.div`
-  top: 200px;
-  position: absolute;
 `;
 
 export default Nav;
