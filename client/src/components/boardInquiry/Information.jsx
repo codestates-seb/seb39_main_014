@@ -120,7 +120,7 @@ function Information() {
       <Title>
         <Buttons>
           <BiArrowBack className="BiArrowBack" onClick={() => navigate(-1)} />
-          {user === boardInfo.nickName ? (
+          {user === boardInfo[0].nickName ? (
             <div className="Patch-delete">
               <button onClick={() => navigate(`/board/${boardId}/modify`)}>
                 수정
