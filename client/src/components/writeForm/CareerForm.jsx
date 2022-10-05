@@ -11,17 +11,14 @@ import _ from "lodash";
 function CareerForm({ object }) {
   const { boardId } = useParams();
   const BOARD_URL = `${process.env.REACT_APP_API_URL}/api/v1/board/${boardId}`;
-  const [modifyInfo, setModifyInfo] = useState([]);
 
-  const [career, setCareer] = useState({
-    career: "웹 프론트엔드",
-    value: 1,
-  });
+  const [career, setCareer] = useState("모집 분류");
   const [isCareer, setIsCareer] = useState(false);
 
   const [count, setCount] = useState(1);
   const [crew, setCrew] = useState([]);
   const [careers, setCareers] = useState([]);
+  const [newCareerList, setNewCareerList] = useState(careerLists);
 
   const [loading, setLoading] = useState(false);
 
@@ -52,6 +49,14 @@ function CareerForm({ object }) {
               careerTotalRecruit: el.careerTotalRecruit,
             }))
           );
+          setNewCareerList(
+            newCareerList.filter(
+              (prev) =>
+                !res.data.board.boardCareers
+                  .map((el) => el.careerName)
+                  .includes(prev.career)
+            )
+          );
         })
         .then((res) => setLoading(false));
     } else setLoading(false);
@@ -74,8 +79,10 @@ function CareerForm({ object }) {
     };
   });
 
+  /** props 전달할 객체 */
   const newObject = { ...object, boardCareers: careers };
 
+  /** 인원 증가 감소 버튼 */
   const onCountHandler = (e) => {
     e.preventDefault();
     if (e.target.value === "-") {
@@ -89,32 +96,43 @@ function CareerForm({ object }) {
     }
   };
 
+  /** 추가 버튼 핸들러 */
   const onCrewAdditionHandler = (e) => {
     e.preventDefault();
-    setCrew([
-      ...crew,
-      {
-        id: idCount.current,
-        career: career.career,
-        careerTotalRecruit: count,
-        careerId: career.value,
-      },
-    ]);
-    setCareers([
-      ...careers,
-      {
-        careerId: career.value,
-        careerTotalRecruit: count,
-      },
-    ]);
-    setCount(1);
-    setCareer({ career: "웹 프론트엔드", value: 1 });
-    idCount.current = idCount.current + 1;
+    if (career !== "모집 분류") {
+      setCrew([
+        ...crew,
+        {
+          id: idCount.current,
+          career: career.career,
+          careerTotalRecruit: count,
+          careerId: career.value,
+        },
+      ]);
+      setCareers([
+        ...careers,
+        {
+          careerId: career.value,
+          careerTotalRecruit: count,
+        },
+      ]);
+      setCount(1);
+      setCareer("모집 분류");
+      setNewCareerList(
+        newCareerList.filter((prev) => prev.career !== career.career)
+      );
+      idCount.current = idCount.current + 1;
+    }
   };
 
-  const onDeleteHandler = (e) => {
-    setCrew(crew.filter((prev) => prev.careerId !== e));
-    setCareers(careers.filter((prev) => prev.careerId !== e));
+  /** 삭제 버튼 핸들러 */
+  const onDeleteHandler = (careerId, career) => {
+    setCrew(crew.filter((prev) => prev.careerId !== careerId));
+    setCareers(careers.filter((prev) => prev.careerId !== careerId));
+    setNewCareerList([
+      ...newCareerList,
+      careerLists.filter((prev) => prev.career === career)[0],
+    ]);
   };
 
   if (loading) return null;
@@ -135,8 +153,9 @@ function CareerForm({ object }) {
                   // eslint-disable-next-line prettier/prettier
                   // eslint-disable-next-line prettier/prettier
                   // eslint-disable-next-line prettier/prettier
-                }}>
-                {career.career}
+                }}
+              >
+                {career.career ? career.career : `모집 분류`}
               </button>
 
               <AiOutlineDown
@@ -149,14 +168,15 @@ function CareerForm({ object }) {
             </div>
             {isCareer ? (
               <ul className="Careerlists" ref={careerClickRef}>
-                {careerLists.map((el) => (
+                {newCareerList.map((el) => (
                   <li
                     key={el.id}
                     onClick={() => {
                       setIsCareer(!isCareer);
                       setCareer({ career: el.career, value: el.value });
                       // eslint-disable-next-line prettier/prettier
-                    }}>
+                    }}
+                  >
                     {el.career}
                   </li>
                 ))}
@@ -185,7 +205,8 @@ function CareerForm({ object }) {
                 <button
                   crew={crew}
                   // eslint-disable-next-line prettier/prettier
-                  onClick={() => onDeleteHandler(el.careerId)}>
+                  onClick={() => onDeleteHandler(el.careerId, el.career)}
+                >
                   삭제
                 </button>
               </Crew>
