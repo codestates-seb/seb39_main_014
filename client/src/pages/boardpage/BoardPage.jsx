@@ -23,9 +23,11 @@ function BoardPage({ group }) {
   const BOARD_URL = `${process.env.REACT_APP_API_URL}/api/v1/board/?page=1&size=100`;
   const MEMBER_URL = `${process.env.REACT_APP_API_URL}/api/v1/member`;
   const [datas, setDatas] = useState([]); // 각 게시글 객체가 담긴 리스트
+  const [isDone, setIsDone] = useState(false); // 모집중 모집완료
   const [stackFilter, setStackFilter] = useState([]); // 필터링할 스택 담긴 리스트
+
   const [filterDatas, setFilterDatas] = useState([]); // datas를 stackfilter로 필터링
-  const [isDone, setIsDone] = useState(false);
+
   const [page, setPage] = useState(1); // 페이지네이션
 
   // 모집중 확인용
@@ -111,30 +113,17 @@ function BoardPage({ group }) {
             </ToggleArea>
             <Content>
               {/* 스택 필터 리스트의 길이가 0이면 ? 전체글 : 필터링 글 */}
-              {stackFilter.length === 0
-                ? /// 이부분 건드려서 페이지네이션 만들기
-                  datas
-                    .slice((page - 1) * 18, (page - 1) * 9 + 18)
-                    .map((el) => (
-                      <Link
-                        key={el.id}
-                        to={`/board/${el.id}`}
-                        // eslint-disable-next-line prettier/prettier
-                        className="board-link">
-                        <Board key={el.id} data={el} />
-                      </Link>
-                    ))
-                : filterDatas
-                    .slice((page - 1) * 18, (page - 1) * 9 + 18)
-                    .map((el) => (
-                      <Link
-                        key={el.id}
-                        to={`/board/${el.id}`}
-                        // eslint-disable-next-line prettier/prettier
-                        className="board-link">
-                        <Board key={el.id} data={el} />
-                      </Link>
-                    ))}
+              {filterDatas
+                .slice((page - 1) * 18, (page - 1) * 9 + 18)
+                .map((el) => (
+                  <Link
+                    key={el.id}
+                    to={`/board/${el.id}`}
+                    // eslint-disable-next-line prettier/prettier
+                    className="board-link">
+                    <Board key={el.id} data={el} />
+                  </Link>
+                ))}
             </Content>
             <PageNationArea>
               {/* 페이지네이션 */}
