@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import { AiOutlineEye, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import Toggle from "../toggle/Toggle";
 
 //로컬스토리지 저장된 토큰 사용 -> localStorage.getItem("token");
 //로컬스토리지 저장된
