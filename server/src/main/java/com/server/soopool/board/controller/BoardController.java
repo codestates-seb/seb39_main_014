@@ -225,19 +225,23 @@ public class BoardController {
     @DeleteMapping("/{board-id}/apply")
     @Secured("ROLE_USER")
     public ResponseEntity applyBoardCancel(@AuthenticationPrincipal PrincipalDetails principal,
-                           @PathVariable("board-id") @Positive long boardId,
-                           @RequestBody BoardApplyPostDto boardApplyPostDto) {
+                           @PathVariable("board-id") @Positive long boardId) {
 
         Member member = memberService.findByUserId(principal.getUsername());
+        Board board = boardService.findBoard(boardId);
 
         List<BoardApply> boardApplies = member.getBoardApplies();
         for(BoardApply boardApply1 : boardApplies) {
             if (boardApply1.getBoardCareer().getBoard().getId() == boardId) {
                 boardApplyRepository.delete(boardApply1);
+                boardApply1.getBoardCareer().setCareerCurrentRecruit(boardApply1.getBoardCareer().getCareerCurrentRecruit() - 1);
             }
         }
 
-        return new ResponseEntity<>("게시글 신청 취소가 완료되었습니다.", HttpStatus.NO_CONTENT);
+        board.setCurrentRecruit(board.getCurrentRecruit() - 1);
+        boardService.save(board);
+
+        return new ResponseEntity<>("게시글 신청 취소가 완료되었습니다.", HttpStatus.OK);
 
     }
 
