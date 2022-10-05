@@ -10,43 +10,51 @@ import TopButton from "../../components/topButton/TopButton";
 import IsLoading from "../../components/isLoading/IsLoading";
 import getBoard from "../../api/getBoard";
 import getMember from "../../api/getMember";
-import { handleStack } from "../../lib/handleStack";
+import { handleFilter } from "../../lib/handleFilter";
+import Toggle from "../../components/toggle/Toggle";
 
 function BoardPage({ group }) {
-  const BOARD_URL = {
-    ALL: `${process.env.REACT_APP_API_URL}/api/v1/board/?page=1&size=100`,
-    STUDY: `${process.env.REACT_APP_API_URL}/api/v1/board/study?page=1&size=100`,
-    PROJECT: `${process.env.REACT_APP_API_URL}/api/v1/board/project?page=1&size=100`,
-  };
+  // const BOARD_URL = {
+  //   ALL: `${process.env.REACT_APP_API_URL}/api/v1/board/?page=1&size=100`,
+  //   STUDY: `${process.env.REACT_APP_API_URL}/api/v1/board/study?page=1&size=100`,
+  //   PROJECT: `${process.env.REACT_APP_API_URL}/api/v1/board/project?page=1&size=100`,
+  // };
+
+  const BOARD_URL = `${process.env.REACT_APP_API_URL}/api/v1/board/?page=1&size=100`;
   const MEMBER_URL = `${process.env.REACT_APP_API_URL}/api/v1/member`;
-  const [stackFilter, setStackFilter] = useState([]); // 필터링할 스택 담긴 리스트
   const [datas, setDatas] = useState([]); // 각 게시글 객체가 담긴 리스트
+  const [stackFilter, setStackFilter] = useState([]); // 필터링할 스택 담긴 리스트
   const [filterDatas, setFilterDatas] = useState([]); // datas를 stackfilter로 필터링
+  const [isDone, setIsDone] = useState(false);
   const [page, setPage] = useState(1); // 페이지네이션
+
+  // 모집중 확인용
+  // console.log(isDone);
 
   const isLoading = !datas.length;
 
   // 자료 확인용
   if (filterDatas.length === 0) {
-    console.log(datas);
+    // console.log(datas);
   } else {
-    console.log(filterDatas);
+    // console.log(filterDatas);
   }
 
   useEffect(() => {
+    // 닉네임 로컬 스토리지 저장
     getMember(MEMBER_URL);
+    getBoard(BOARD_URL, setDatas);
 
-    if (group === "" || group === "전체") {
-      getBoard(BOARD_URL.ALL, setDatas);
-    } else if (group === "스터디") {
-      getBoard(BOARD_URL.STUDY, setDatas);
-    } else if (group === "프로젝트") {
-      getBoard(BOARD_URL.PROJECT, setDatas);
-    }
+    // if (group === "" || group === "전체") {
+    //   getBoard(BOARD_URL.ALL, setDatas);
+    // } else if (group === "스터디") {
+    //   getBoard(BOARD_URL.STUDY, setDatas);
+    // } else if (group === "프로젝트") {
+    //   getBoard(BOARD_URL.PROJECT, setDatas);
+    // }
 
-    console.log(group);
-    handleStack(datas, stackFilter, setFilterDatas);
-  }, [stackFilter, group]);
+    handleFilter(datas, stackFilter, setFilterDatas, isDone, group);
+  }, [stackFilter, , isDone, group]);
 
   if (isLoading) {
     // 로딩중 화면
@@ -93,6 +101,14 @@ function BoardPage({ group }) {
                 setSelectedList={setStackFilter}
               />
             </StackArea>
+            <ToggleArea>
+              {isDone ? (
+                <div className="done">모집완료</div>
+              ) : (
+                <div className="doing">모집중</div>
+              )}
+              <Toggle isDone={isDone} setIsDone={setIsDone} />
+            </ToggleArea>
             <Content>
               {/* 스택 필터 리스트의 길이가 0이면 ? 전체글 : 필터링 글 */}
               {stackFilter.length === 0
@@ -150,6 +166,25 @@ const StackArea = styled.div`
   display: flex;
   align-items: center;
   margin-left: 30px;
+`;
+
+const ToggleArea = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 50px;
+  margin-left: auto;
+
+  .done {
+    font-size: 20px;
+    font-weight: bolder;
+    margin-right: -40px;
+    opacity: 0.5;
+  }
+  .doing {
+    font-size: 20px;
+    font-weight: bolder;
+    margin-right: -40px;
+  }
 `;
 
 const Main = styled.div`
