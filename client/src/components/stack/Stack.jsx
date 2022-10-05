@@ -176,7 +176,6 @@ const JobGroup = styled.div`
 
   h2:hover {
     opacity: 0.9;
-    color: #69d06f;
   }
 
   .selectedList {
