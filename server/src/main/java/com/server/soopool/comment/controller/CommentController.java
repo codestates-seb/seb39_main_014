@@ -116,15 +116,13 @@ public class CommentController {
                                         @Validated @RequestBody CommentDeleteDto commentDeleteDto) {
         Member member = memberService.findByUserId(principal.getUsername());
         Board board = boardService.findBoard(boardId);
-        Comment comment = commentRepository.findByGroupNumber(commentDeleteDto.getGroupNumber());
+        Comment comment = commentRepository.findByBoardIdAndGroupNumber(boardId,commentDeleteDto.getGroupNumber());
 
         if (principal.getMemberId() != comment.getMember().getId()){
             throw new BusinessLogicException(ExceptionCode.CAN_NOT_MODIFY_COMMENT);
         }
 
-        commentRepository.deleteByGroupNumber(commentDeleteDto.getGroupNumber());
-
-
+        commentRepository.delete(comment);
 
         return new ResponseEntity("댓글이 삭제되었습니다.", HttpStatus.OK);
     }
