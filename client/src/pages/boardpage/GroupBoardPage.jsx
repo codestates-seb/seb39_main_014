@@ -190,6 +190,10 @@ const StyledLink = styled(Link)`
   .selectedList {
     color: black;
   }
+
+  .not-selectedList:hover {
+    opacity: 0.8;
+  }
 `;
 
 export default GroupBoardPage;

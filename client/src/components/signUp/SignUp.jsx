@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import InputGroup from "../inputGroup/InputGroup";
 import { FcGoogle } from "react-icons/fc";
 import useCheck from "../../hooks/useCheck";
@@ -81,40 +81,34 @@ function SignUp() {
           ) : (
             <ContentCheck>아이디는 영어와 숫자 조합만 가능합니다.</ContentCheck>
           )}
-
           <InputGroup
             placeholder="이메일"
             value={email}
             setValue={setEmail}
             // error={error.email}
           />
-
           {isEmail === true ? (
             <></>
           ) : (
             <ContentCheck>올바른 형식의 이메일을 입력해주세요.</ContentCheck>
           )}
-
           <InputGroup
             placeholder="이름"
             value={name}
             setValue={setUsername}
             // error={errors.name}
           />
-
           {isUsername === true ? (
             <></>
           ) : (
             <ContentCheck>이름은 한글만 입력가능합니다.</ContentCheck>
           )}
-
           <InputGroup
             placeholder="닉네임"
             value={nickname}
             setValue={setNick}
             // error={errors.name}
           />
-
           {isNickName === true ? (
             <></>
           ) : (
@@ -122,7 +116,6 @@ function SignUp() {
               6글자 이내의 한글, 영어, 숫자 조합만 가능합니다.
             </ContentCheck>
           )}
-
           <InputGroup
             placeholder="비밀번호"
             value={password}
@@ -130,7 +123,6 @@ function SignUp() {
             type="password"
             // error={errors.password}
           />
-
           {ispassword === true ? (
             <></>
           ) : (
@@ -138,7 +130,6 @@ function SignUp() {
               8~16자 영문 대 소문자, 숫자를 사용하세요.
             </ContentCheck>
           )}
-
           <InputGroup
             placeholder="비밀번호 확인"
             type="password"
@@ -146,16 +137,29 @@ function SignUp() {
             setValue={setPassword2}
             // error={errors.password}
           />
-
           {isPasswordConfirm === true ? (
             <></>
           ) : (
             <ContentCheck>비밀번호가 일치하지 않습니다.</ContentCheck>
           )}
-
-          <button type="button" onClick={handleSubmit}>
-            가입하기
-          </button>
+          {isUserId &&
+          isEmail &&
+          isUsername &&
+          isNickName &&
+          ispassword &&
+          isPasswordConfirm ? (
+            <button
+              type="button"
+              className="allow-signup"
+              // eslint-disable-next-line prettier/prettier
+              onClick={handleSubmit}>
+              가입하기
+            </button>
+          ) : (
+            <button type="button" className="block-signup">
+              가입하기
+            </button>
+          )}
         </form>
         <div className="sign-up">
           <div>이미 아이디가 있으신가요?</div>
@@ -231,20 +235,20 @@ const SignUpLayout = styled.div`
     cursor: pointer;
   }
 
-  button:active {
+  .allow-signup:active {
     transform: scale(0.99);
   }
 
-  button:focus {
+  .allow-signup:focus {
     outline: none;
   }
 
-  button.ghost {
+  .allow-signup.ghost {
     background-color: transparent;
     border-color: #ffffff;
   }
 
-  button:hover {
+  .allow-signup:hover {
     opacity: 0.93;
   }
 
@@ -291,6 +295,14 @@ const SignUpLayout = styled.div`
 
   .move-sign-up {
     margin-left: 15px;
+  }
+
+  .block-signup {
+    opacity: 0.5;
+  }
+
+  .block-signup:hover {
+    opacity: 0.5;
   }
 `;
 
