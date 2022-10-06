@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import handleLogout from "../../api/handleLogout";
@@ -13,12 +13,13 @@ const isLogin = Boolean(localStorage.getItem("token"));
 function Nav() {
   const locationNow = useLocation();
   const [isOpen, setIsOpen] = useState(false); // 메뉴의 초기값을 false로 설정
+  const hambugerClickRef = useRef();
 
   if (locationNow.pathname === "/board") return null;
   return (
     <>
       <NavFrame>
-        <NavContainer>
+        <NavContainer ref={hambugerClickRef}>
           <Logo>
             <StyledLink to="/board">
               <img
@@ -57,6 +58,9 @@ function Nav() {
             onClick={() => {
               setIsOpen(!isOpen);
             }}
+            setIsOpen={setIsOpen}
+            isOpen={isOpen}
+            isLogin={isLogin}
           />
 
           {isOpen ? <Hambuger login={isLogin} /> : <></>}
@@ -68,7 +72,7 @@ function Nav() {
 
 const NavFrame = styled.nav`
   background: white;
-  height: 5rem;
+  height: 60px;
 
   display: flex;
   align-items: center;

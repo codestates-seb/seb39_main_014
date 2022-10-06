@@ -3,17 +3,22 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import handleLogout from "../../api/handleLogout";
 
-function Hambuger(login) {
-  console.log(login);
+
+function Hambuger(login, isOpen, setIsOpen) {
+  const isLogin = Boolean(localStorage.getItem("token"));
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
   return (
     <>
-      {login ? (
+      {isLogin ? (
         <>
           <HambugerContainer>
-            <StyledLink to="/mypage">
+            <StyledLink to="/mypage" onClick={handleClose}>
               <div>마이페이지</div>
             </StyledLink>
-            <StyledLink to="/board/write">
+            <StyledLink to="/board/write" onClick={handleClose}>
               <div>모집하기</div>
             </StyledLink>
             <StyledLink>
@@ -25,10 +30,10 @@ function Hambuger(login) {
         </>
       ) : (
         <HambugerContainer>
-          <StyledLink to="/login">
+          <StyledLink to="/login" onClick={handleClose}>
             <div>로그인</div>
           </StyledLink>
-          <StyledLink to="/board/write">
+          <StyledLink to="/board/write" onClick={handleClose}>
             <div>모집하기</div>
           </StyledLink>
         </HambugerContainer>

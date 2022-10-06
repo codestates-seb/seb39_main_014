@@ -93,7 +93,7 @@ function GroupBoardPage() {
 
 const NavFrame = styled.nav`
   background: white;
-  height: 5rem;
+  height: 60px;
 
   display: flex;
   align-items: center;

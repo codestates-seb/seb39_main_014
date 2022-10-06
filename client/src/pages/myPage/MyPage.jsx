@@ -208,6 +208,7 @@ function MyPage() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         data: { bookmarkList: bookmarkCheckLists },
+
       })
       .then((res) => {
         setBookmarkList(res.data.bookmarkList);
@@ -220,15 +221,16 @@ function MyPage() {
   const handleApplyListDelete = (e) => {
     e.preventDefault();
     axios
-      .delete(`${MYPAGE_URL}/bookmark`, {
+      .delete(`${MYPAGE_URL}/apply`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        data: { bookmarkList: bookmarkCheckLists },
+        data: { applyList: applyCheckLists },
       })
       .then((res) => {
-        setBookmarkList(res.data.bookmarkList);
-        setBookmarkCheckLists([]);
+        setApplyList(res.data.applyList);
+        setApplyCheckLists([]);
+        getApply();
       })
       .catch((err) => console.log(err));
   };
@@ -242,17 +244,37 @@ function MyPage() {
   /** 회원 탈퇴 */
   const handleWithdrawalDelete = (e) => {
     e.preventDefault();
-    axios
-      .delete(`${MYPAGE_URL}/delete`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+    Swal.fire({
+      title: "회원 탈퇴 하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#69D06F",
+      cancelButtonColor: "#FF6464",
+      confirmButtonText: "확인",
+      cancelButtonText: "취소",
+    })
+      .then((res) => {
+        if (res.isConfirmed) {
+          axios
+            .delete(`${MYPAGE_URL}/delete`, {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            })
+            .catch((err) => console.log(err));
+        }
       })
       .then((res) => {
-        console.log(res);
-        navigate("/board");
-      })
-      .catch((err) => console.log(err));
+        if (res.isConfirmed) {
+          Swal.fire({
+            title: "탈퇴 완료!",
+            icon: "success",
+            confirmButtonColor: "#69D06F",
+          }).then((res) => {
+            navigate("/board");
+          });
+        }
+      });
   };
 
   if (loading) return null;

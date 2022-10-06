@@ -147,6 +147,8 @@ public interface BoardMapper {
                 .collect(Collectors.toList());
     }
 
+    BoardCareerResponseDto boardCareerToBoardCareerResponse(BoardCareer boardCareer);
+
     default List<BoardCareerResponseDto> boardCareersToBoardCareerResponses(List<BoardCareer> boardCareers) {
 
         return boardCareers

@@ -6,10 +6,14 @@ import { FcGoogle } from "react-icons/fc";
 import { useAuthDispatch } from "../../context/auth";
 import handleLogin from "../../api/handleLogin";
 import getMember from "../../api/getMember";
+import { GoogleLogin } from "@react-oauth/google";
+
+import { useGoogleLogin } from "@react-oauth/google";
 
 function Login() {
   const LOGIN_URL = `${process.env.REACT_APP_API_URL}/api/v1/log-in`;
   const AUTH_LOGIN_URL = `${process.env.REACT_APP_API_URL}/oauth2/authorization/google`;
+  // const AUTH_LOGIN_URL = `http://183.106.239.239:8080/oauth2/authorization/google`;
 
   // const LOGIN_URL = "http://183.106.239.239:8080/api/v1/log-in"; // 테스트용 승윤님 서버
 
@@ -32,9 +36,14 @@ function Login() {
   /** 로그인 제출 함수 */
   const handleSubmit = async (event) => {
     event.preventDefault();
-    handleLogin(LOGIN_URL, userId, password, dispatch);
+    handleLogin(LOGIN_URL, userId, password, dispatch, setErrors);
     // getMember(MEMBER_URL);
   };
+
+  const googlelogin = useGoogleLogin({
+    onSuccess: (tokenResponse) =>
+      localStorage.setItem("token", tokenResponse.access_token),
+  });
 
   return (
     <LoginFrame>
@@ -44,9 +53,9 @@ function Login() {
         <SocialContainer>
           <div className="social">
             <FcGoogle className="google-icon" />
-            <a href={AUTH_LOGIN_URL}>
-              <p className="google-p">구글 아이디로 로그인</p>
-            </a>
+            <div onClick={googlelogin} className="googgle-login">
+              구글 계정으로 로그인
+            </div>
           </div>
         </SocialContainer>
 
@@ -69,8 +78,15 @@ function Login() {
             // error={error.email}
           />
 
-          {isConfirm && (
-            <span className="password_guide">CapsLock이 켜져 있습니다.</span>
+
+          {errors.length !== 0 ? (
+            <>
+              <small>아이디 또는 비밀번호를 잘못 입력하셨습니다.</small>
+              <small>입력하신 내용을 다시 확인해주세요.</small>
+            </>
+          ) : (
+            <></>
+
           )}
 
           <LoginButton>로그인</LoginButton>
@@ -135,12 +151,22 @@ const SocialContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0.8;
 
     width: 395px;
     height: 50px;
     border-radius: 5px;
     margin-bottom: 15px;
-    border: 1px solid black;
+    border: 1px solid #dddddd;
+    transition: 0.3s;
+  }
+
+  .googgle-login {
+    cursor: pointer;
+  }
+  .social:hover {
+    opacity: 1;
+    transition: 0.3s;
   }
   .google-icon {
     margin-right: 10px;
@@ -161,6 +187,12 @@ const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
   transition: all 0.6s ease-in-out;
+
+  small {
+    margin-top: 5px;
+    font-weight: 200;
+    color: red;
+  }
 `;
 
 const LoginButton = styled.button`
