@@ -6,10 +6,14 @@ import { FcGoogle } from "react-icons/fc";
 import { useAuthDispatch } from "../../context/auth";
 import handleLogin from "../../api/handleLogin";
 import getMember from "../../api/getMember";
+import { GoogleLogin } from "@react-oauth/google";
+
+import { useGoogleLogin } from "@react-oauth/google";
 
 function Login() {
   const LOGIN_URL = `${process.env.REACT_APP_API_URL}/api/v1/log-in`;
   const AUTH_LOGIN_URL = `${process.env.REACT_APP_API_URL}/oauth2/authorization/google`;
+  // const AUTH_LOGIN_URL = `http://183.106.239.239:8080/oauth2/authorization/google`;
 
   // const LOGIN_URL = "http://183.106.239.239:8080/api/v1/log-in"; // 테스트용 승윤님 서버
 
@@ -37,6 +41,11 @@ function Login() {
     // getMember(MEMBER_URL);
   };
 
+  const googlelogin = useGoogleLogin({
+    onSuccess: (tokenResponse) =>
+      localStorage.setItem("token", tokenResponse.access_token),
+  });
+
   return (
     <LoginFrame>
       <LoginContainer>
@@ -45,9 +54,9 @@ function Login() {
         <SocialContainer>
           <div className="social">
             <FcGoogle className="google-icon" />
-            <a href={AUTH_LOGIN_URL}>
-              <p className="google-p">구글 계정으로 로그인</p>
-            </a>
+            <div onClick={googlelogin} className="googgle-login">
+              구글 계정으로 로그인
+            </div>
           </div>
         </SocialContainer>
 
@@ -151,6 +160,9 @@ const SocialContainer = styled.div`
     transition: 0.3s;
   }
 
+  .googgle-login {
+    cursor: pointer;
+  }
   .social:hover {
     opacity: 1;
     transition: 0.3s;

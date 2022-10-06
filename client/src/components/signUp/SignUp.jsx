@@ -13,6 +13,7 @@ import {
   checkUsername,
   cofirmPassword,
 } from "../../lib/checkSignup";
+import { useGoogleLogin } from "@react-oauth/google";
 
 // 회원가입 : 이메일, 이름, 닉네임 비밀번호, 비밀번호 확인
 //http:ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/sign-up
@@ -20,7 +21,8 @@ import {
 function SignUp() {
   // const SIGNUP_URL = "http://183.106.239.239:8080/api/v1/sign-up";
   const SIGNUP_URL = `${process.env.REACT_APP_API_URL}/api/v1/sign-up`;
-  const AUTH_LOGIN_URL = `${process.env.REACT_APP_API_URL}/oauth2/authorization/google`;
+  // const AUTH_LOGIN_URL = `${process.env.REACT_APP_API_URL}/oauth2/authorization/google`;
+  const AUTH_LOGIN_URL = `/oauth2/authorization/google`;
 
   const [userId, setUserId] = useState("");
   const [email, setEmail] = useState("");
@@ -68,6 +70,11 @@ function SignUp() {
     );
   };
 
+  const googlelogin = useGoogleLogin({
+    onSuccess: (tokenResponse) =>
+      localStorage.setItem("token", tokenResponse.access_token),
+  });
+
   return (
     <SignupFrame>
       <SignUpLayout>
@@ -75,9 +82,9 @@ function SignUp() {
         <SocialContainer>
           <div className="social">
             <FcGoogle className="google-icon" />
-            <a href={AUTH_LOGIN_URL}>
-              <p className="google-p">구글 계정으로 회원가입</p>
-            </a>
+            <div onClick={googlelogin} className="google-login">
+              구글 계정으로 로그인
+            </div>
           </div>
         </SocialContainer>
         <hr />
@@ -216,6 +223,10 @@ const SocialContainer = styled.div`
     margin-bottom: 15px;
     border: 1px solid #dddddd;
     transition: 0.3s;
+  }
+
+  .google-login {
+    cursor: pointer;
   }
 
   .social:hover {
