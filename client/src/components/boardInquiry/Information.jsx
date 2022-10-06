@@ -29,8 +29,8 @@ function Information() {
   const [bookmarkCount, setBookmarkCount] = useState(0);
   const [isBookmark, setIsBookmark] = useState(false);
   const [isApply, setIsApply] = useState(false);
-  const [apply, setApply] = useState("지원");
-  const [applicantList, setApplicantList] = [];
+  const [apply, setApply] = useState([]);
+  const [applicantList, setApplicantList] = useState([]);
   //지원하기 눌렀을때 -> 지원 취소
   //인원 다 찼을 때 -> 마감
   const getApply = () => {
@@ -40,7 +40,11 @@ function Information() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
-      .then((res) => setApplicantList(res));
+      .then((res) => {
+        setApplicantList(res.data.board);
+
+        setLoading(false);
+      });
   };
 
   const getBoard = () => {
@@ -57,16 +61,16 @@ function Information() {
         const deadline = 30 - Number(result);
         setDday(deadline);
         setBookmarkCount(res.data.board.bookmarkCount);
-
-        setLoading(false);
+        getApply();
       })
       .catch((err) => console.log(err));
   };
 
-  console.log(boardInfo);
   useEffect(() => {
     setLoading(true);
+
     getBoard();
+
     axios
       .get(`${BOARD_URL}/bookmark`, {
         headers: {
@@ -79,7 +83,6 @@ function Information() {
         } else setIsBookmark(false);
       })
       .catch((err) => console.log(err));
-    getApply();
   }, []);
 
   /** 북마크 추가 */
@@ -135,13 +138,20 @@ function Information() {
     });
   };
 
+  const handleApplyChange = (careerTotalRecruit, careerCurrentRecruit) => {
+    if (careerTotalRecruit === careerCurrentRecruit) {
+      setApply("마감");
+    } else if (isApply) {
+      setApply("지원 취소");
+    } else if (!isApply) {
+      setApply("지원");
+    }
+  };
+
   /** 지원 클릭 핸들러 */
-  const handleApplyClick = (
-    careerName,
-    careerCurrentRecruit,
-    careerTotalRecruit
-  ) => {
-    if (!isApply) {
+  const handleApplyClick = (e, careerName) => {
+    console.log(e.innerText);
+    if (e.target.innerText === "지원") {
       Swal.fire({
         title: "지원 하시겠습니까?",
         icon: "warning",
@@ -173,11 +183,7 @@ function Information() {
                   },
                 }
               )
-              .then((res) => {
-                getBoard();
-                getApply();
-                console.log(applicantList, boardInfo);
-              })
+              .then((res) => {})
               .catch((err) => console.log(err));
             Swal.fire({
               title: "지원 완료!",
@@ -185,13 +191,13 @@ function Information() {
               confirmButtonColor: "#69D06F",
             }).then((res) => {
               if (res.isConfirmed) {
-                setIsApply(!isApply);
+                window.location.replace(`/board/${boardId}`);
               }
             });
           }
         }
       });
-    } else if (isApply) {
+    } else if (e.target.innerText === "지원 취소") {
       Swal.fire({
         title: "지원을 취소 하시겠습니까?",
         icon: "warning",
@@ -202,20 +208,27 @@ function Information() {
         cancelButtonText: "취소",
       }).then((res) => {
         if (res.isConfirmed) {
+          axios.delete(`${BOARD_URL}/apply`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
           Swal.fire({
             title: "지원을 취소 했습니다.",
             icon: "success",
             confirmButtonColor: "#69D06F",
           }).then((res) => {
             if (res.isConfirmed) {
-              setIsApply(!isApply);
+              window.location.replace(`/board/${boardId}`);
             }
           });
         }
       });
     }
   };
-
+  console.log(applicantList.map((el) => el.nickName).includes(user));
+  console.log(boardInfo);
+  console.log(applicantList);
   if (loading) return null;
   return (
     <>
@@ -291,7 +304,7 @@ function Information() {
             <span className="Subject">모집 인원</span>
             <ul className="Applicants-list">
               {/**el.careerCurrentRecruit=== el.careerCurrentRecruit && user */}
-              {boardInfo
+              {boardInfo[0].boardCareers
                 ? boardInfo[0].boardCareers.map((el) => (
                     <li key={el.careerTotalRecruit}>
                       <div> {el.careerName}</div>
@@ -299,24 +312,30 @@ function Information() {
                         {el.careerCurrentRecruit}/{el.careerTotalRecruit}
                       </div>
                       <div>
-                        <input
-                          type="button"
+                        <button
                           className={"Apply-box"}
-                          value={
-                            el.careerCurrentRecruit === el.careerTotalRecruit
-                              ? "마감"
-                              : isApply
+                          disabled={
+                            el.careerCurrentRecruit === el.careerTotalRecruit &&
+                            applicantList
+                              .map((el) => el.nickName)
+                              .includes(!user)
+                              ? true
+                              : false
+                          }
+                          onClick={(e) => handleApplyClick(e, el.careerName)}
+                        >
+                          {applicantList.map((el) => el.nickName).includes(user)
+                            ? el.careerName ===
+                              applicantList.filter(
+                                (el) => user === el.nickName
+                              )[0].careerName
                               ? "지원 취소"
+                              : el.careerCurrentRecruit ===
+                                el.careerTotalRecruit
+                              ? "마감"
                               : "지원"
-                          }
-                          onClick={() =>
-                            handleApplyClick(
-                              el.careerName,
-                              el.careerCurrentRecruit,
-                              el.careerTotalRecruit
-                            )
-                          }
-                        ></input>
+                            : "지원"}
+                        </button>
                       </div>
                     </li>
                   ))
