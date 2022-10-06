@@ -44,23 +44,23 @@ const HambugerContainer = styled.div`
   font-size: 15px;
   text-align: center;
   padding: 10px;
-  top: 55px;
-  right: 30px;
+  top: 50px;
+  right: 35px;
   background-color: #f6f6f6;
   border-radius: 5px;
   display: none;
 
-  transition: 0.7s;
+  transition: 0.33s;
 
   @media screen and (max-width: 768px) {
-    transition: 0.5s;
+    transition: 0.33s;
     display: block;
   }
 `;
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: #5f5f5f;
+  color: #6d6d6d;
 
   .not-selectedList {
     opacity: 0.5;
@@ -81,7 +81,7 @@ const StyledLink = styled(Link)`
   }
 
   .log-out:hover {
-    color: #ff7d85;
+    color: #ea3434;
   }
 
   .hambuger {

@@ -56,7 +56,7 @@ function BoardPage({ group }) {
     // }
 
     handleFilter(datas, stackFilter, setFilterDatas, isDone, group);
-  }, [stackFilter, , isDone, group]);
+  }, [stackFilter, , isDone, group, page]);
 
   if (isLoading) {
     // 로딩중 화면

@@ -41,13 +41,15 @@ export const handleFilter = (
 
   // 그룹이 전체일 경우
   if (group === "전체") {
-    console.log("전체 선택됨");
+    console.log("1번 실행 전체 선택됨");
+    console.log(isDone);
 
     const makeFilterdList = () => {
       const stackResult = [];
-
+      console.log(datas);
       if (stackFilter.length === 0) {
         const doneResult = datas.filter((el) => el.recruitDone === isDone);
+        console.log(doneResult);
         setFilterDatas(doneResult);
       } else {
         isIncludeList.map((el, idx) => {
@@ -58,7 +60,7 @@ export const handleFilter = (
         const doneResult = stackResult.filter(
           (el) => el.recruitDone === isDone
         );
-        console.log(doneResult);
+
         setFilterDatas(doneResult);
       }
     };
@@ -68,16 +70,15 @@ export const handleFilter = (
     // 스텍 필터가 안 걸려 있을 경우
   } else if (stackFilter.length === 0) {
     console.log("2번 실행");
-    const allStackList = datas;
     const makeFilterdList = () => {
-      const doneResult = allStackList.filter((el) => el.recruitDone === isDone);
+      const doneResult = datas.filter((el) => el.recruitDone === isDone);
       const groupResult = doneResult.filter(
         (el) => el.recruitCategory === group
       );
       setFilterDatas(groupResult);
     };
     makeFilterdList();
-  } else {
+  } else if (stackFilter.length !== 0 && group !== "전체") {
     console.log("3번 실행");
     // 스택으로 필터링된 리스트
     const isIncludeList = datas
