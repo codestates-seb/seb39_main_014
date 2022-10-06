@@ -46,7 +46,6 @@ export const handleFilter = (
 
     const makeFilterdList = () => {
       const stackResult = [];
-      console.log(datas);
       if (stackFilter.length === 0) {
         const doneResult = datas.filter((el) => el.recruitDone === isDone);
         console.log(doneResult);
