@@ -19,7 +19,7 @@ export function checkUsername(name) {
 
 /** 닉네임 정합성 체크 함수 */
 export function checkNick(nickname) {
-  let nickReg = /^[0-9a-zA-Zㄱ-ㅎ가-힣 ]{2,6}$/;
+  let nickReg = /^[0-9a-zA-Zㄱ-ㅎ가-힣 ]/g;
   return nickReg.test(nickname);
 }
 
