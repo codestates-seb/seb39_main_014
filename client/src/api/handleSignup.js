@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 /** 회원가입 POST API
  * postSignup(URL, {아이디, 이메일, 이름, 닉네임, 비밀번호})
