@@ -138,16 +138,6 @@ function Information() {
     });
   };
 
-  const handleApplyChange = (careerTotalRecruit, careerCurrentRecruit) => {
-    if (careerTotalRecruit === careerCurrentRecruit) {
-      setApply("마감");
-    } else if (isApply) {
-      setApply("지원 취소");
-    } else if (!isApply) {
-      setApply("지원");
-    }
-  };
-
   /** 지원 클릭 핸들러 */
   const handleApplyClick = (e, careerName) => {
     console.log(e.innerText);
