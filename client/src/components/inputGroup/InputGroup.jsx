@@ -7,7 +7,12 @@ const InputGroup = ({
   error,
   value,
   setValue,
+  setErrors,
 }) => {
+  const resetInputClick = () => {
+    setErrors("");
+    setValue("");
+  };
   return (
     <InputLayout>
       <div>
@@ -17,6 +22,7 @@ const InputGroup = ({
             placeholder={placeholder}
             value={value}
             onChange={(e) => setValue(e.target.value)}
+            onClick={resetInputClick}
             className="input"
             atuocomplete="off"
           />
