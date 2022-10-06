@@ -16,7 +16,16 @@ function Login() {
   const [userId, setuserId] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
+  const [isConfirm, setIsConfirm] = useState(false);
   // const [success, setSuccess] = useState(false);
+  const passwordKeyPress = (e) => {
+    if (e.getModifierState("CapsLock")) {
+      setIsConfirm(true);
+      return;
+    } else {
+      setIsConfirm(false);
+    }
+  };
 
   const dispatch = useAuthDispatch();
 
@@ -56,8 +65,13 @@ function Login() {
             value={password}
             setValue={setPassword}
             type="password"
+            onKeyPress={passwordKeyPress}
             // error={error.email}
           />
+
+          {isConfirm && (
+            <span className="password_guide">CapsLock이 켜져 있습니다.</span>
+          )}
 
           <LoginButton>로그인</LoginButton>
         </LoginForm>
