@@ -156,7 +156,7 @@ function Editor({ newObject }) {
       });
     }
   };
-  console.log(submitForm);
+
   return (
     <>
       <Contact>
