@@ -6,12 +6,21 @@ function NotExistBoard() {
   const nickname = window.localStorage.getItem("nickname");
   return (
     <NotExistFrame>
-      <div>
-        조건에 맞는 스터디 / 프로젝트가 없습니다
-        <br />
-        <br />
-        <b>{nickname}</b> 님께서 직접 모집해보시겠어요?
-      </div>
+      {nickname ? (
+        <div>
+          찾으시는 스터디 / 프로젝트가 없습니다
+          <br />
+          <br />
+          <b>{nickname}</b> 님께서 직접 모집해보시겠어요?
+        </div>
+      ) : (
+        <div>
+          찾으시는 스터디 / 프로젝트가 없습니다
+          <br />
+          <br />
+          직접 모집해보시겠어요?
+        </div>
+      )}
       <br />
       <StartSoopool to="/board/write">모집하기</StartSoopool>
     </NotExistFrame>
