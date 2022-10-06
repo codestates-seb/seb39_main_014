@@ -9,6 +9,7 @@ import com.server.soopool.board.service.BoardService;
 import com.server.soopool.boardApply.dto.BoardApplyPostDto;
 import com.server.soopool.boardApply.entity.BoardApply;
 import com.server.soopool.boardApply.repository.BoardApplyRepository;
+import com.server.soopool.boardCareer.dto.BoardCareerResponseDto;
 import com.server.soopool.boardCareer.entity.BoardCareer;
 import com.server.soopool.boardCareer.service.BoardCareerService;
 import com.server.soopool.boardTechstack.entity.BoardTechStack;
@@ -220,8 +221,7 @@ public class BoardController {
 
         boardService.save(board);
 
-
-        return new ResponseEntity<>("게시글 신청이 완료되었습니다.", HttpStatus.CREATED);
+        return new ResponseEntity<>(boardMapper.boardCareerToBoardCareerResponse(result), HttpStatus.CREATED);
     }
 
 
