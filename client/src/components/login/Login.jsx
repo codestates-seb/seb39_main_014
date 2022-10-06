@@ -17,6 +17,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
   const [isConfirm, setIsConfirm] = useState(false);
+  console.log(errors);
   // const [success, setSuccess] = useState(false);
   const passwordKeyPress = (e) => {
     if (e.getModifierState("CapsLock")) {
@@ -32,7 +33,7 @@ function Login() {
   /** 로그인 제출 함수 */
   const handleSubmit = async (event) => {
     event.preventDefault();
-    handleLogin(LOGIN_URL, userId, password, dispatch);
+    handleLogin(LOGIN_URL, userId, password, dispatch, setErrors);
     // getMember(MEMBER_URL);
   };
 
@@ -45,7 +46,7 @@ function Login() {
           <div className="social">
             <FcGoogle className="google-icon" />
             <a href={AUTH_LOGIN_URL}>
-              <p className="google-p">구글 아이디로 로그인</p>
+              <p className="google-p">구글 계정으로 로그인</p>
             </a>
           </div>
         </SocialContainer>
@@ -69,8 +70,13 @@ function Login() {
             // error={error.email}
           />
 
-          {isConfirm && (
-            <span className="password_guide">CapsLock이 켜져 있습니다.</span>
+          {errors.length !== 0 ? (
+            <>
+              <small>아이디 또는 비밀번호를 잘못 입력하셨습니다.</small>
+              <small>입력하신 내용을 다시 확인해주세요.</small>
+            </>
+          ) : (
+            <></>
           )}
 
           <LoginButton>로그인</LoginButton>
@@ -135,12 +141,19 @@ const SocialContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0.8;
 
     width: 395px;
     height: 50px;
     border-radius: 5px;
     margin-bottom: 15px;
-    border: 1px solid black;
+    border: 1px solid #dddddd;
+    transition: 0.3s;
+  }
+
+  .social:hover {
+    opacity: 1;
+    transition: 0.3s;
   }
   .google-icon {
     margin-right: 10px;
@@ -161,6 +174,12 @@ const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
   transition: all 0.6s ease-in-out;
+
+  small {
+    margin-top: 5px;
+    font-weight: 200;
+    color: red;
+  }
 `;
 
 const LoginButton = styled.button`
