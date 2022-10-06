@@ -214,6 +214,10 @@ public class BoardController {
         }
 
         board.setCurrentRecruit(count);
+        if(board.getCurrentRecruit() == board.getTotalRecruit()) {
+            board.setRecruitDone(true);
+        }
+
         boardService.save(board);
 
 
@@ -239,6 +243,7 @@ public class BoardController {
         }
 
         board.setCurrentRecruit(board.getCurrentRecruit() - 1);
+        board.setRecruitDone(false);
         boardService.save(board);
 
         return new ResponseEntity<>("게시글 신청 취소가 완료되었습니다.", HttpStatus.OK);
