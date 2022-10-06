@@ -18,7 +18,6 @@ import { GoX } from "react-icons/go";
 import { AiOutlineDown } from "react-icons/ai";
 import axios from "axios";
 import Swal from "sweetalert2";
-import BookmarkApply from "../../components/myPage/BookmarkApply";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 
 export const levelData = [
@@ -54,7 +53,8 @@ function MyPage() {
   const [loading, setLoading] = useState(false);
   const [applyList, setApplyList] = useState([]);
 
-  const [checkLists, setCheckLists] = useState([]);
+  const [bookmarkCheckLists, setBookmarkCheckLists] = useState([]);
+  const [applyCheckLists, setApplyCheckLists] = useState([]);
 
   const careerClickRef = useRef();
   const levelClickRef = useRef();
@@ -114,6 +114,7 @@ function MyPage() {
     setLoading(true);
     getMypage();
     getBookmark();
+    getApply();
     setLoading(false);
   }, []);
 
@@ -177,29 +178,28 @@ function MyPage() {
     });
   };
 
-  /** 북마크 체크 */
-  const handleSingleCheck = (checked, id, title) => {
+  /** 북마크,지원 체크 리스트 */
+  const handleSingleCheck = (checked, id, title, state, setState) => {
     if (checked) {
-      setCheckLists([...checkLists, { boardId: id, title: title }]);
+      setState([...state, { boardId: id, title: title }]);
     } else {
-      setCheckLists(checkLists.filter((el) => el !== id));
+      setState(state.filter((el) => el !== id));
     }
   };
 
-  const handleAllCheck = (checked) => {
+  const handleAllCheck = (checked, list, setState) => {
     if (checked) {
       const idArr = [];
-
-      bookmarkList.forEach((el) =>
+      list.forEach((el) =>
         idArr.push({ boardId: el.boardId, title: el.title })
       );
-      setCheckLists(idArr);
+      setState(idArr);
     } else {
-      setCheckLists([]);
+      setState([]);
     }
   };
-
-  /** 북마크 삭제 */
+  // { bookmarkList: checkListState }
+  /** 북마크 리스트 삭제 */
   const handleBookmarkListDelete = (e) => {
     e.preventDefault();
     axios
@@ -207,11 +207,28 @@ function MyPage() {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        data: { bookmarkList: checkLists },
+        data: { bookmarkList: bookmarkCheckLists },
       })
       .then((res) => {
         setBookmarkList(res.data.bookmarkList);
-        setCheckLists([]);
+        setBookmarkCheckLists([]);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  /** 지원 리스트 삭제 */
+  const handleApplyListDelete = (e) => {
+    e.preventDefault();
+    axios
+      .delete(`${MYPAGE_URL}/bookmark`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        data: { bookmarkList: bookmarkCheckLists },
+      })
+      .then((res) => {
+        setBookmarkList(res.data.bookmarkList);
+        setBookmarkCheckLists([]);
       })
       .catch((err) => console.log(err));
   };
@@ -220,6 +237,22 @@ function MyPage() {
   const handleTabClick = (el) => {
     el.preventDefault();
     setIsTab(el);
+  };
+
+  /** 회원 탈퇴 */
+  const handleWithdrawalDelete = (e) => {
+    e.preventDefault();
+    axios
+      .delete(`${MYPAGE_URL}/delete`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        navigate("/board");
+      })
+      .catch((err) => console.log(err));
   };
 
   if (loading) return null;
@@ -373,9 +406,10 @@ function MyPage() {
                   지원한 게시글
                 </div>
               </div>
-              {isTab
-                ? bookmarkList
-                  ? bookmarkList.map((el) => (
+              {isTab ? (
+                bookmarkList ? (
+                  <>
+                    {bookmarkList.map((el) => (
                       <div className="Checkboard" key={el.boardId}>
                         <input
                           type="checkbox"
@@ -383,11 +417,13 @@ function MyPage() {
                             handleSingleCheck(
                               e.target.checked,
                               el.boardId,
-                              el.title
+                              el.title,
+                              bookmarkCheckLists,
+                              setBookmarkCheckLists
                             )
                           }
                           checked={
-                            checkLists
+                            bookmarkCheckLists
                               .map((el) => el.boardId)
                               .includes(el.boardId)
                               ? true
@@ -398,10 +434,33 @@ function MyPage() {
                           {el.title}
                         </div>
                       </div>
-                    ))
-                  : null
-                : applyList
-                ? applyList.map((el) => (
+                    ))}
+                    <div className="Select-all">
+                      <div>
+                        <input
+                          type="checkbox"
+                          onChange={(e) =>
+                            handleAllCheck(
+                              e.target.checked,
+                              bookmarkList,
+                              setBookmarkCheckLists
+                            )
+                          }
+                          checked={
+                            bookmarkCheckLists.length === bookmarkList.length
+                              ? true
+                              : false
+                          }
+                        />
+                        <div>전체 선택</div>
+                      </div>
+                      <button onClick={handleBookmarkListDelete}>삭제</button>
+                    </div>
+                  </>
+                ) : null
+              ) : applyList ? (
+                <>
+                  {applyList.map((el) => (
                     <div className="Checkboard" key={el.boardId}>
                       <input
                         type="checkbox"
@@ -409,11 +468,13 @@ function MyPage() {
                           handleSingleCheck(
                             e.target.checked,
                             el.boardId,
-                            el.title
+                            el.title,
+                            applyCheckLists,
+                            setApplyCheckLists
                           )
                         }
                         checked={
-                          checkLists
+                          applyCheckLists
                             .map((el) => el.boardId)
                             .includes(el.boardId)
                             ? true
@@ -424,24 +485,36 @@ function MyPage() {
                         {el.title}
                       </div>
                     </div>
-                  ))
-                : null}
-              <div className="Select-all">
-                <div>
-                  <input
-                    type="checkbox"
-                    onChange={(e) => handleAllCheck(e.target.checked)}
-                    checked={
-                      checkLists.length === bookmarkList.length ? true : false
-                    }
-                  />
-                  <div>전체 선택</div>
-                </div>
-                <button onClick={handleBookmarkListDelete}>삭제</button>
-              </div>
+                  ))}
+                  <div className="Select-all">
+                    <div>
+                      <input
+                        type="checkbox"
+                        onChange={(e) =>
+                          handleAllCheck(
+                            e.target.checked,
+                            applyList,
+                            setApplyCheckLists
+                          )
+                        }
+                        checked={
+                          applyCheckLists.length === applyList.length
+                            ? true
+                            : false
+                        }
+                      />
+                      <div>전체 선택</div>
+                    </div>
+                    <button onClick={handleApplyListDelete}>삭제</button>
+                  </div>
+                </>
+              ) : null}
+
               <div className="Modification">
                 <button onClick={handleMypageSubmit}>완료</button>
-                <button className="Withdrawal">회원 탈퇴</button>
+                <button className="Withdrawal" onClick={handleWithdrawalDelete}>
+                  회원 탈퇴
+                </button>
               </div>
             </UserBoard>
           </UserBoardWrapper>
