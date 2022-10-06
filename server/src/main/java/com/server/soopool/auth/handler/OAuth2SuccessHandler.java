@@ -47,7 +47,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             return;
         }
 
-        this.redirectStrategy.sendRedirect(request, response, "http://soopool-deploy.s3-website.ap-northeast-2.amazonaws.com/");
+        this.redirectStrategy.sendRedirect(request, response, "http://localhost:3000/board");
     }
 
 }
