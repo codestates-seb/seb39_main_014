@@ -83,6 +83,7 @@ function Information() {
         } else setIsBookmark(false);
       })
       .catch((err) => console.log(err));
+    getApply();
   }, []);
 
   /** 북마크 추가 */
@@ -295,6 +296,7 @@ function Information() {
             <ul className="Applicants-list">
               {/**el.careerCurrentRecruit=== el.careerCurrentRecruit && user */}
               {boardInfo[0].boardCareers
+
                 ? boardInfo[0].boardCareers.map((el) => (
                     <li key={el.careerTotalRecruit}>
                       <div> {el.careerName}</div>

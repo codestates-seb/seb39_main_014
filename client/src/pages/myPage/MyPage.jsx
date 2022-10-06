@@ -208,6 +208,7 @@ function MyPage() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         data: { bookmarkList: bookmarkCheckLists },
+
       })
       .then((res) => {
         setBookmarkList(res.data.bookmarkList);

@@ -169,6 +169,7 @@ function SignUp() {
           isNickName &&
           ispassword &&
           password2.length !== 0 &&
+
           isPasswordConfirm ? (
             <button
               type="button"
@@ -356,6 +357,14 @@ const SignUpLayout = styled.div`
   .move-sign-up {
     margin-left: 15px;
     margin-bottom: 15px;
+  }
+
+  .block-signup {
+    opacity: 0.5;
+  }
+
+  .block-signup:hover {
+    opacity: 0.5;
   }
 
   .block-signup {

@@ -21,7 +21,6 @@ function Login() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
   const [isConfirm, setIsConfirm] = useState(false);
-  console.log(errors);
   // const [success, setSuccess] = useState(false);
   const passwordKeyPress = (e) => {
     if (e.getModifierState("CapsLock")) {
@@ -79,6 +78,7 @@ function Login() {
             // error={error.email}
           />
 
+
           {errors.length !== 0 ? (
             <>
               <small>아이디 또는 비밀번호를 잘못 입력하셨습니다.</small>
@@ -86,6 +86,7 @@ function Login() {
             </>
           ) : (
             <></>
+
           )}
 
           <LoginButton>로그인</LoginButton>
