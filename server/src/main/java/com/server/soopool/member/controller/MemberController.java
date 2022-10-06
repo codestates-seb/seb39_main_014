@@ -1,8 +1,11 @@
 package com.server.soopool.member.controller;
 
 import com.server.soopool.auth.PrincipalDetails;
+import com.server.soopool.boardApply.dto.BoardApplyDeleteDto;
 import com.server.soopool.boardApply.entity.BoardApply;
 import com.server.soopool.boardApply.mapper.BoardApplyMapper;
+import com.server.soopool.boardApply.repository.BoardApplyRepository;
+import com.server.soopool.boardApply.request.BoardApplyRequest;
 import com.server.soopool.boardApply.response.BoardApplyListResponse;
 import com.server.soopool.bookmark.dto.BookmarkDeleteDto;
 import com.server.soopool.bookmark.response.BookmarkListResponse;
@@ -42,6 +45,7 @@ public class MemberController {
     private final BoardApplyMapper boardApplyMapper;
     private final CareerMemberService careerMemberService;
     private final MemberTechStackService memberTechStackService;
+    private final BoardApplyRepository boardApplyRepository;
 
     // 마이페이지 북마크 조회
     @GetMapping("my-page/bookmark")
@@ -77,6 +81,7 @@ public class MemberController {
         );
     }
 
+    // 마이페이지 지원한 게시글 조회
     @GetMapping("my-page/apply")
     @Secured("ROLE_USER")
     public ResponseEntity getUserInfoApply(@AuthenticationPrincipal PrincipalDetails principal) {
@@ -87,6 +92,35 @@ public class MemberController {
         return new ResponseEntity<>(
                 new BoardApplyListResponse<>(
                         boardApplyMapper.appliesToApplyListResponses(boardApplies)
+                ),
+                HttpStatus.OK
+        );
+    }
+
+
+    // 마이페이지 특정 지원한 게시글 지원 취소
+    @DeleteMapping("my-page/apply")
+    @Secured("ROLE_USER")
+    public ResponseEntity deleteUserInfoApply(@AuthenticationPrincipal PrincipalDetails principal,
+                                                 @RequestBody BoardApplyDeleteDto boardApplyDeleteDto) {
+        Member member = memberService.findByUserId(principal.getUsername());
+        List<BoardApply> boardApplies = member.getBoardApplies();
+
+        List<BoardApplyRequest> boardApplyRequests = boardApplyDeleteDto.getApplyList();
+        for(BoardApplyRequest boardApplyRequest : boardApplyRequests) {
+            for(BoardApply boardApply : boardApplies) {
+                if(boardApplyRequest.getBoardId() == boardApply.getBoardCareer().getBoard().getId()) {
+                    boardApplyRepository.delete(boardApply);
+                    boardApply.getBoardCareer().getBoard().setRecruitDone(false);
+                }
+            }
+        }
+
+        List<BoardApply> newBoardApplies = boardApplyRepository.findAll();
+
+        return new ResponseEntity<>(
+                new BoardApplyListResponse<>(
+                        boardApplyMapper.appliesToApplyListResponses(newBoardApplies)
                 ),
                 HttpStatus.OK
         );

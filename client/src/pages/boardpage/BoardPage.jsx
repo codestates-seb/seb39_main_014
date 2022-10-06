@@ -10,6 +10,7 @@ import TopButton from "../../components/topButton/TopButton";
 import IsLoading from "../../components/isLoading/IsLoading";
 import getBoard from "../../api/getBoard";
 import getMember from "../../api/getMember";
+import NotExistBoard from "../../components/board/NotExistBoard";
 import { handleFilter } from "../../lib/handleFilter";
 import Toggle from "../../components/toggle/Toggle";
 
@@ -23,38 +24,20 @@ function BoardPage({ group }) {
   const BOARD_URL = `${process.env.REACT_APP_API_URL}/api/v1/board/?page=1&size=100`;
   const MEMBER_URL = `${process.env.REACT_APP_API_URL}/api/v1/member`;
   const [datas, setDatas] = useState([]); // 각 게시글 객체가 담긴 리스트
+  const [isDone, setIsDone] = useState(false); // 모집중 모집완료
   const [stackFilter, setStackFilter] = useState([]); // 필터링할 스택 담긴 리스트
   const [filterDatas, setFilterDatas] = useState([]); // datas를 stackfilter로 필터링
-  const [isDone, setIsDone] = useState(false);
+  const [isNotExist, setIsNotExist] = useState(true);
   const [page, setPage] = useState(1); // 페이지네이션
-
-  // 모집중 확인용
-  // console.log(isDone);
 
   const isLoading = !datas.length;
 
-  // 자료 확인용
-  if (filterDatas.length === 0) {
-    // console.log(datas);
-  } else {
-    // console.log(filterDatas);
-  }
-
   useEffect(() => {
-    // 닉네임 로컬 스토리지 저장
-    getMember(MEMBER_URL);
-    getBoard(BOARD_URL, setDatas);
-
-    // if (group === "" || group === "전체") {
-    //   getBoard(BOARD_URL.ALL, setDatas);
-    // } else if (group === "스터디") {
-    //   getBoard(BOARD_URL.STUDY, setDatas);
-    // } else if (group === "프로젝트") {
-    //   getBoard(BOARD_URL.PROJECT, setDatas);
-    // }
+    getMember(MEMBER_URL); // 닉네임 로컬 스토리지 저장
+    getBoard(BOARD_URL, setDatas); // 게시글 가져오기
 
     handleFilter(datas, stackFilter, setFilterDatas, isDone, group);
-  }, [stackFilter, , isDone, group]);
+  }, [stackFilter, , isDone, group, page]);
 
   if (isLoading) {
     // 로딩중 화면
@@ -111,30 +94,44 @@ function BoardPage({ group }) {
             </ToggleArea>
             <Content>
               {/* 스택 필터 리스트의 길이가 0이면 ? 전체글 : 필터링 글 */}
-              {stackFilter.length === 0
-                ? /// 이부분 건드려서 페이지네이션 만들기
-                  datas
-                    .slice((page - 1) * 18, (page - 1) * 9 + 18)
-                    .map((el) => (
-                      <Link
-                        key={el.id}
-                        to={`/board/${el.id}`}
-                        // eslint-disable-next-line prettier/prettier
-                        className="board-link">
-                        <Board key={el.id} data={el} />
-                      </Link>
-                    ))
-                : filterDatas
-                    .slice((page - 1) * 18, (page - 1) * 9 + 18)
-                    .map((el) => (
-                      <Link
-                        key={el.id}
-                        to={`/board/${el.id}`}
-                        // eslint-disable-next-line prettier/prettier
-                        className="board-link">
-                        <Board key={el.id} data={el} />
-                      </Link>
-                    ))}
+              {filterDatas.length === 0 &&
+              stackFilter.length == 0 &&
+              isDone !== true &&
+              group === "전체" ? (
+                datas.slice((page - 1) * 18, (page - 1) * 9 + 18).map((el) => (
+                  <Link
+                    key={el.id}
+                    to={`/board/${el.id}`}
+                    // eslint-disable-next-line prettier/prettier
+                    className="board-link">
+                    <Board key={el.id} data={el} />
+                  </Link>
+                ))
+              ) : filterDatas.length === 0 ? (
+                <>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <NotExistBoard></NotExistBoard>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </>
+              ) : (
+                filterDatas
+                  .slice((page - 1) * 18, (page - 1) * 9 + 18)
+                  .map((el) => (
+                    <Link
+                      key={el.id}
+                      to={`/board/${el.id}`}
+                      // eslint-disable-next-line prettier/prettier
+                      className="board-link">
+                      <Board key={el.id} data={el} />
+                    </Link>
+                  ))
+              )}
             </Content>
             <PageNationArea>
               {/* 페이지네이션 */}
