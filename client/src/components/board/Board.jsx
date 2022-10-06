@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import { AiOutlineEye, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import Toggle from "../toggle/Toggle";
 
 //로컬스토리지 저장된 토큰 사용 -> localStorage.getItem("token");
 //로컬스토리지 저장된
@@ -107,11 +108,12 @@ const PostFrame = styled.div`
   justify-content: center;
   box-sizing: content-box;
   margin: 15px;
-  padding: 20px;
+  padding: 20px 20px 20px 21px;
+  background-color: white;
 
   box-shadow: rgba(149, 157, 165, 0.2) 1px 1px 6px 1px;
-  height: 320px;
-  width: 280px;
+  height: 300px;
+  width: 275px;
 
   border-radius: 25px;
 
@@ -132,6 +134,8 @@ const PostLayout = styled.div`
   display: grid;
   grid-template-rows: 2fr 4fr 1.5fr 2fr 1fr 0.1fr 1fr;
   height: 300px;
+  justify-content: center;
+  align-items: center;
 `;
 
 /** div - 지역, 활동 기간, 모집 기한 */
@@ -156,7 +160,7 @@ const TopLayout = styled.div`
   }
 
   .top-period {
-    margin-left: -60px;
+    margin-left: -70px;
   }
 
   /* 모집기한 */
@@ -165,6 +169,7 @@ const TopLayout = styled.div`
     align-items: center;
     justify-content: center;
     background-color: #d9d9d9;
+    margin-right: -8px;
     font-weight: bold;
     color: black;
     height: 23px;
@@ -204,7 +209,7 @@ const StackLayout = styled.div`
 const RecruitmentLayout = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 270px;
   font-size: 13px;
   .recruitment {
@@ -216,7 +221,7 @@ const RecruitmentLayout = styled.div`
 
   .created-at {
     opacity: 0.4;
-    margin-left: 75px;
+    margin-left: 80px;
     display: flex;
     align-items: center;
   }
@@ -224,12 +229,11 @@ const RecruitmentLayout = styled.div`
 
 /** div - 경계선 */
 const Boundary = styled.div`
-  align-self: center;
   .boundary-line {
     margin-top: -10px;
     opacity: 0.2;
     border-top: 1px solid gray;
-    width: 265px;
+    width: 275px;
   }
 `;
 

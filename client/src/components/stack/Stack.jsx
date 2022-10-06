@@ -31,15 +31,7 @@ const Stack = ({ selectedList, setSelectedList }) => {
       "Aws",
       "Docker",
     ],
-    프론트엔드: [
-      "JavaScript",
-      "TypeScript",
-      "React",
-      "Vue",
-      "Svelte",
-      "Next",
-      "Graphql",
-    ],
+    프론트엔드: ["JavaScript", "TypeScript", "React", "Vue", "Svelte", "Next"],
     백엔드: [
       "Java",
       "Spring",
@@ -160,16 +152,30 @@ const Stack = ({ selectedList, setSelectedList }) => {
 };
 
 const StackFrame = styled.div`
-  width: 1100px;
+  margin-top: 10px;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: white;
+
+  @media screen and (min-width: 1100px) {
+    width: 1000px;
+  }
 `;
 
 const JobGroup = styled.div`
   display: flex;
+  width: 100%;
+
   h2 {
     color: gray;
     opacity: 0.7;
     padding-right: 20px;
     cursor: pointer;
+  }
+
+  h2:hover {
+    opacity: 0.9;
   }
 
   .selectedList {
@@ -181,6 +187,7 @@ const JobGroup = styled.div`
 const StackContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 
   div {
     display: flex;
@@ -190,7 +197,7 @@ const StackContainer = styled.div`
   }
   .selectedList {
     // 선택된 스택 css 변경 필요
-    border: 2px solid black;
+    border: 2px solid gray;
   }
   .not-selectedList {
     opacity: 0.5;
@@ -206,6 +213,10 @@ const StackImg = styled.img`
 
   padding: 2px;
   margin: 4px;
+
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 const SelectedContainer = styled.div`
@@ -226,8 +237,12 @@ const SelectedContainer = styled.div`
   .del-icon {
     margin-left: 5px;
     width: 15px;
-
     cursor: pointer;
+    transition: 0.3s;
+  }
+  .del-icon:hover {
+    color: red;
+    transition: 0.3s;
   }
 
   .reset-button {
@@ -242,10 +257,10 @@ const SelectedContainer = styled.div`
   }
 
   .reset-button:hover {
+    transition: 0.2s;
     background-color: #ffe3e4;
     color: #ff7d85;
     font-weight: bold;
-    transition: 0.15s;
   }
 `;
 
