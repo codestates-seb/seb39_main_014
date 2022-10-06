@@ -24,7 +24,7 @@ function Board({ data }) {
   });
 
   return (
-    <PostFrame className={data.recruitDone === true ? "" : "done"}>
+    <PostFrame className={data.recruitDone ? "done" : ""}>
       <PostLayout>
         <TopLayout>
           {data.location === "지역 무관" ? (
@@ -33,7 +33,11 @@ function Board({ data }) {
             <div>{data.location}</div>
           )}
           <div className="top-period">{data.period}</div>
-          <div className="info-deadline">D - {dday}</div>
+          {data.recruitDone ? (
+            <div className="info-deadline">모집완료</div>
+          ) : (
+            <div className="info-deadline">D - {dday}</div>
+          )}
         </TopLayout>
         <TitleLayout>
           <h3>{data.title}</h3>
@@ -113,12 +117,10 @@ const PostFrame = styled.div`
   box-shadow: rgba(149, 157, 165, 0.2) 1px 1px 6px 1px;
   height: 300px;
   width: 275px;
-
   border-radius: 25px;
-
   transition: 0.2s;
 
-  .done {
+  &.done {
     opacity: 0.7;
   }
 
@@ -214,7 +216,7 @@ const RecruitmentLayout = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 270px;
+  width: 275px;
   font-size: 13px;
   .recruitment {
     display: flex;
