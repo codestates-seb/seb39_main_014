@@ -20,6 +20,7 @@ import {
 function SignUp() {
   // const SIGNUP_URL = "http://183.106.239.239:8080/api/v1/sign-up";
   const SIGNUP_URL = `${process.env.REACT_APP_API_URL}/api/v1/sign-up`;
+  const AUTH_LOGIN_URL = `${process.env.REACT_APP_API_URL}/oauth2/authorization/google`;
 
   const [userId, setUserId] = useState("");
   const [email, setEmail] = useState("");
@@ -27,6 +28,7 @@ function SignUp() {
   const [nickname, setNick] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
+  const [errors, setErrors] = useState("");
 
   // 정합성 검사 state
   // isEmail, isUsername, isNickName && ispassword && confirmPassword
@@ -55,28 +57,40 @@ function SignUp() {
   /** 회원가입 axios 요청 버튼 */
   const handleSubmit = (e) => {
     console.log("signup click");
-    handleSignup(SIGNUP_URL, userId, email, name, nickname, password);
+    handleSignup(
+      SIGNUP_URL,
+      userId,
+      email,
+      name,
+      nickname,
+      password,
+      setErrors
+    );
   };
 
   return (
     <SignupFrame>
       <SignUpLayout>
         <h1>회원가입</h1>
-        <div className="social-container">
-          <a className="social">
-            <FcGoogle className="goggle-icon" />
-            <p>구글 아이디로 가입하기</p>
-          </a>
-        </div>
+        <SocialContainer>
+          <div className="social">
+            <FcGoogle className="google-icon" />
+            <a href={AUTH_LOGIN_URL}>
+              <p className="google-p">구글 계정으로 회원가입</p>
+            </a>
+          </div>
+        </SocialContainer>
         <hr />
         <form>
           <InputGroup
             placeholder="아이디"
             value={userId}
             setValue={setUserId}
-            // error={error.email}
+            setErrors={setErrors}
           />
-          {isUserId === true ? (
+          {errors.length !== 0 ? (
+            <ContentCheck>중복된 아이디입니다.</ContentCheck>
+          ) : isUserId === true ? (
             <></>
           ) : (
             <ContentCheck>아이디는 영어와 숫자 조합만 가능합니다.</ContentCheck>
@@ -113,7 +127,7 @@ function SignUp() {
             <></>
           ) : (
             <ContentCheck>
-              6글자 이내의 한글, 영어, 숫자 조합만 가능합니다.
+              닉네임은 한글, 영어, 숫자 조합만 가능합니다.
             </ContentCheck>
           )}
           <InputGroup
@@ -185,6 +199,40 @@ const SignupFrame = styled.div`
 
   border-radius: 10px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.22);
+`;
+
+/** div - 구글 아이디로 로그인 */
+const SocialContainer = styled.div`
+  .social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+
+    width: 395px;
+    height: 50px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #dddddd;
+    transition: 0.3s;
+  }
+
+  .social:hover {
+    opacity: 1;
+    transition: 0.3s;
+  }
+  .google-icon {
+    margin-right: 10px;
+    font-size: 25px;
+  }
+  .google-p {
+    font-size: 20px;
+    font-weight: bolder;
+    color: gray;
+  }
+  a {
+    text-decoration: none;
+  }
 `;
 
 /** div - 회원가입 레이아웃 */
