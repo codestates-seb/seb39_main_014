@@ -22,14 +22,7 @@ function FirstPage() {
       </div>
 
       <div className="video-section">
-        <video
-          className="landing-video"
-          autoPlay
-          loop
-          muted
-          src={Video}
-          type="vidoe/mp4"
-        />
+        <video className="landing-video" autoPlay loop muted src={Video} />
       </div>
     </FirstPageStyle>
   );
@@ -66,23 +59,31 @@ const FirstPageStyle = styled.div`
   .content-layout {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     width: 80%;
     height: 80%;
     z-index: 2;
 
     h1 {
-      font-size: 100px;
-
+      font-size: 500%;
       color: black;
       white-space: nowrap;
     }
 
     .body {
-      margin-top: 100px;
-      margin-bottom: 100px;
-      font-size: 30px;
+      font-size: 200%;
       color: black;
+    }
+  }
+
+  @media screen and (max-width: 838px) {
+    .title > h1 {
+      font-size: 45px;
+    }
+
+    .body > div {
+      font-size: 15px;
     }
   }
 `;
