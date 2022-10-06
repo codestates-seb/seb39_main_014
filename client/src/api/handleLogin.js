@@ -18,7 +18,6 @@ const handleLogin = async (
     });
     console.log("login res : ", res);
     localStorage.setItem("token", res.headers["access-token"]);
-    // dispatch("LOGIN", localStorage.getItem("token"));
     window.location.replace("/board");
   } catch (error) {
     console.log(error);
