@@ -11,7 +11,8 @@ const handleSignup = async (
   email,
   name,
   nickname,
-  password
+  password,
+  setErrors
 ) => {
   try {
     const res = await axios.post(
@@ -29,6 +30,7 @@ const handleSignup = async (
     window.location.replace("/login");
   } catch (error) {
     console.log("error", error);
+    setErrors(error);
   }
 };
 
