@@ -96,17 +96,20 @@ function BoardPage({ group }) {
               {/* 스택 필터 리스트의 길이가 0이면 ? 전체글 : 필터링 글 */}
               {filterDatas.length === 0 &&
               stackFilter.length == 0 &&
-              isDone !== true &&
+              isDone === false &&
               group === "전체" ? (
-                datas.slice((page - 1) * 18, (page - 1) * 9 + 18).map((el) => (
-                  <Link
-                    key={el.id}
-                    to={`/board/${el.id}`}
-                    // eslint-disable-next-line prettier/prettier
-                    className="board-link">
-                    <Board key={el.id} data={el} />
-                  </Link>
-                ))
+                datas
+                  .filter((el) => el.recruitDone === isDone)
+                  .slice((page - 1) * 18, (page - 1) * 9 + 18)
+                  .map((el) => (
+                    <Link
+                      key={el.id}
+                      to={`/board/${el.id}`}
+                      // eslint-disable-next-line prettier/prettier
+                      className="board-link">
+                      <Board key={el.id} data={el} />
+                    </Link>
+                  ))
               ) : filterDatas.length === 0 ? (
                 <>
                   <div></div>
