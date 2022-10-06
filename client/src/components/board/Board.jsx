@@ -24,7 +24,7 @@ function Board({ data }) {
   });
 
   return (
-    <PostFrame>
+    <PostFrame className={data.recruitDone === true ? "" : "done"}>
       <PostLayout>
         <TopLayout>
           {data.location === "지역 무관" ? (
@@ -110,7 +110,6 @@ const PostFrame = styled.div`
   margin: 15px;
   padding: 20px 20px 20px 21px;
   background-color: white;
-
   box-shadow: rgba(149, 157, 165, 0.2) 1px 1px 6px 1px;
   height: 300px;
   width: 275px;
@@ -119,8 +118,13 @@ const PostFrame = styled.div`
 
   transition: 0.2s;
 
+  .done {
+    opacity: 0.7;
+  }
+
   cursor: pointer;
   &:hover {
+    opacity: 1;
     transform: translate(0, -10px);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
