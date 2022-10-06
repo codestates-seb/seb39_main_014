@@ -9,6 +9,7 @@ import GroupBoardPage from "./pages/boardpage/GroupBoardPage";
 import SignUpPage from "./pages/singupPage/SignUpPage";
 import BoardInquiryPage from "./pages/boardInquiryPage/BoardInquiryPage";
 import MyPage from "./pages/myPage/MyPage";
+import ErrorPage from "./pages/errorPage/ErrorPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/board/:boardId" element={<BoardInquiryPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/board/:boardId/modify" element={<WriteForm />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </>
   );
