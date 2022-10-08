@@ -20,6 +20,7 @@ import { GoX } from "react-icons/go";
 import CareerForm from "./CareerForm";
 import axios from "axios";
 import _ from "lodash";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
 
 function DivisionForm() {
   const { boardId } = useParams();
@@ -70,13 +71,14 @@ function DivisionForm() {
           setRecruitMethod(
             res.data.board.recruitMethod === "온라인" ? "ONLINE" : "OFFLINE"
           );
-          setLocation({
-            region: _.filter(regionLists, {
-              region: res.data.board.location,
-            })[0].region,
-            value: _.filter(regionLists, { region: res.data.board.location })[0]
-              .value,
-          });
+          setNewStackList(
+            newStackList.filter(
+              (prev) =>
+                !res.data.board.techStackNames
+                  .map((el) => el.techStackName)
+                  .includes(prev.stack)
+            )
+          );
           setSelectedStackList(
             res.data.board.techStackNames.map((el) => ({
               id: el.techStackName,
@@ -94,14 +96,13 @@ function DivisionForm() {
             value: _.filter(periodLists, { period: res.data.board.period })[0]
               .value,
           });
-          setNewStackList(
-            newStackList.filter(
-              (prev) =>
-                !res.data.board.techStackNames
-                  .map((el) => el.techStackName)
-                  .includes(prev.stack)
-            )
-          );
+          setLocation({
+            region: _.filter(regionLists, {
+              region: res.data.board.location,
+            })[0].region,
+            value: _.filter(regionLists, { region: res.data.board.location })[0]
+              .value,
+          });
         })
         .then((res) => {
           setLoading(false);
@@ -113,23 +114,6 @@ function DivisionForm() {
   }, []);
 
   /** 외부 클릭시 창 사라지는 기능 */
-  const useOutsideClick = (ref, callback) => {
-    const handleClick = (e) => {
-      if (ref && !ref.current.contains(e.target)) {
-        callback(false);
-      } else {
-        callback(true);
-      }
-    };
-
-    useEffect(() => {
-      document.addEventListener("mousedown", handleClick);
-
-      return () => {
-        document.removeEventListener("mousedown", handleClick);
-      };
-    });
-  };
 
   useOutsideClick(recuirtClickRef, setIsLocation);
   useOutsideClick(stackClickRef, setIsStack);

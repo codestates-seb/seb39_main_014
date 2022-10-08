@@ -19,6 +19,7 @@ import { AiOutlineDown } from "react-icons/ai";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
+import { BoardInfo } from "../boardInquiryPage/styled";
 
 export const levelData = [
   { level: "초보", value: "BEGINNER" },
@@ -57,7 +58,6 @@ function MyPage() {
   const [applyCheckLists, setApplyCheckLists] = useState([]);
 
   const careerClickRef = useRef();
-  const levelClickRef = useRef();
   const stackClickRef = useRef();
 
   /** 유저정보 get 요청 함수 */
@@ -183,10 +183,11 @@ function MyPage() {
     if (checked) {
       setState([...state, { boardId: id, title: title }]);
     } else {
-      setState(state.filter((el) => el !== id));
+      setState(state.filter((el) => el.boardId !== id));
     }
   };
-
+  console.log(applyList);
+  console.log(bookmarkList);
   const handleAllCheck = (checked, list, setState) => {
     if (checked) {
       const idArr = [];
@@ -208,7 +209,6 @@ function MyPage() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         data: { bookmarkList: bookmarkCheckLists },
-
       })
       .then((res) => {
         setBookmarkList(res.data.bookmarkList);
