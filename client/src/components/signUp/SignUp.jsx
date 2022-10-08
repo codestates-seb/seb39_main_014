@@ -169,13 +169,13 @@ function SignUp() {
           isNickName &&
           ispassword &&
           password2.length !== 0 &&
-
           isPasswordConfirm ? (
             <button
               type="button"
               className="allow-signup"
               // eslint-disable-next-line prettier/prettier
-              onClick={handleSubmit}>
+              onClick={handleSubmit}
+            >
               가입하기
             </button>
           ) : (

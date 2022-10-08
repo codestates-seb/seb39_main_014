@@ -9,7 +9,6 @@ import {
   Content,
   PostButton,
 } from "../../pages/writeForm/styled";
-import handleBoardSubmit from "../../api/handleBoardSubmit";
 import Swal from "sweetalert2";
 import axios from "axios";
 

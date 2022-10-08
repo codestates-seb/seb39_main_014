@@ -28,8 +28,7 @@ function Information() {
   const [dday, setDday] = useState(null);
   const [bookmarkCount, setBookmarkCount] = useState(0);
   const [isBookmark, setIsBookmark] = useState(false);
-  const [isApply, setIsApply] = useState(false);
-  const [apply, setApply] = useState([]);
+
   const [applicantList, setApplicantList] = useState([]);
   //지원하기 눌렀을때 -> 지원 취소
   //인원 다 찼을 때 -> 마감
@@ -42,8 +41,6 @@ function Information() {
       })
       .then((res) => {
         setApplicantList(res.data.board);
-
-        setLoading(false);
       });
   };
 
@@ -61,7 +58,6 @@ function Information() {
         const deadline = 30 - Number(result);
         setDday(deadline);
         setBookmarkCount(res.data.board.bookmarkCount);
-        getApply();
       })
       .catch((err) => console.log(err));
   };
@@ -69,7 +65,31 @@ function Information() {
   useEffect(() => {
     setLoading(true);
 
-    getBoard();
+    axios
+      .get(BOARD_URL)
+      .then((res) => {
+        setBoardInfo([res.data.board]);
+        setCreatedAt(res.data.board.createdAt.slice(0, 10));
+
+        const createdAtDay = new Date(res.data.board.createdAt);
+        const today = new Date();
+        const dayGap = today.getTime() - createdAtDay.getTime();
+        const result = Math.ceil(dayGap / (1000 * 60 * 60 * 24));
+        const deadline = 30 - Number(result);
+        setDday(deadline);
+        setBookmarkCount(res.data.board.bookmarkCount);
+      })
+      .catch((err) => console.log(err));
+
+    axios
+      .get(`${BOARD_URL}/apply`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        setApplicantList(res.data.board);
+      });
 
     axios
       .get(`${BOARD_URL}/bookmark`, {
@@ -83,7 +103,8 @@ function Information() {
         } else setIsBookmark(false);
       })
       .catch((err) => console.log(err));
-    getApply();
+
+    setLoading(false);
   }, []);
 
   /** 북마크 추가 */
@@ -217,10 +238,8 @@ function Information() {
       });
     }
   };
-  console.log(applicantList.map((el) => el.nickName).includes(user));
-  console.log(boardInfo);
-  console.log(applicantList);
-  if (loading) return null;
+
+  if (boardInfo.length === 0) return null;
   return (
     <>
       <Title>
@@ -272,8 +291,8 @@ function Information() {
           </li>
           <li>
             <span className="Subject">진행 방식</span>
-            <span className="Span-box">{boardInfo[0].recruitMethod}</span>
-            <span className="Span-box">{boardInfo[0].location}</span>
+            <span className="Span-box">{boardInfo[0]?.recruitMethod}</span>
+            <span className="Span-box">{boardInfo[0]?.location}</span>
           </li>
           <li className="Using-stack">
             <span className="Subject">사용 언어</span>
@@ -289,14 +308,13 @@ function Information() {
           </li>
           <li>
             <span className="Subject">연락 방법</span>
-            <span className="Contact-method">{boardInfo[0].contact}</span>
+            <span className="Contact-method">{boardInfo[0]?.contact}</span>
           </li>
           <li className="Applicants">
             <span className="Subject">모집 인원</span>
             <ul className="Applicants-list">
               {/**el.careerCurrentRecruit=== el.careerCurrentRecruit && user */}
               {boardInfo[0].boardCareers
-
                 ? boardInfo[0].boardCareers.map((el) => (
                     <li key={el.careerTotalRecruit}>
                       <div> {el.careerName}</div>

@@ -12,7 +12,6 @@ function WriteForm() {
           <DivisionForm />
         </FormContainer>
       </WriteFormContainer>
-      <Footer />
     </>
   );
 }
