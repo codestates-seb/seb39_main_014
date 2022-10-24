@@ -50,6 +50,9 @@ public class Member extends BaseTimeEntity {
     private String nickname;
 
     @Column
+    private Integer activityScore = 0;
+
+    @Column
     private LocalDateTime deletedAt;
 
     @Column
