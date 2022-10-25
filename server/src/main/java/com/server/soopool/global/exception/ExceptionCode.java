@@ -29,7 +29,12 @@ public enum ExceptionCode {
     CAN_NOT_MODIFY_BOARD(401,"게시글을 수정할 권한이 없습니다."),
     CAN_NOT_DELETE_BOARD(401,"게시글을 삭제할 권한이 없습니다."),
     ALREADY_RECRUIT(400, "이미 지원한 게시글입니다."),
-    NEEDED_LOGIN(401,"로그인이 필요한 서비스 입니다.");
+    NEEDED_LOGIN(401,"로그인이 필요한 서비스 입니다."),
+
+    //COMMUNICATION EXCEPTION
+
+    COMMUNICATION_NOT_FOUND(404,"게시글을 찾을 수 없습니다."),
+    CAN_NOT_MODIFY_COMMUNICATION(401,"게시글을 수정할 권한이 없습니다.");
 
 
     @Getter
