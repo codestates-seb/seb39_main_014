@@ -6,7 +6,7 @@ import WriteForm from "./pages/writeForm/WriteForm";
 import LoginPage from "./pages/loginpage/LoginPage";
 import GroupBoardPage from "./pages/boardpage/GroupBoardPage";
 import SignUpPage from "./pages/singupPage/SignUpPage";
-import BoardInquiryPage from "./pages/boardInquiryPage/BoardInquiryPage";
+import BoardInquiryPage from "./pages/boardDetailPage/BoardDetailPage";
 import MyPage from "./pages/myPage/MyPage";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 

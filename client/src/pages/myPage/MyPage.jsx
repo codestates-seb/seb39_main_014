@@ -19,7 +19,7 @@ import { AiOutlineDown } from "react-icons/ai";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
-import { BoardInfo } from "../boardInquiryPage/styled";
+import { BoardInfo } from "../boardDetailPage/styled";
 
 export const levelData = [
   { level: "초보", value: "BEGINNER" },
@@ -29,7 +29,7 @@ export const levelData = [
 
 function MyPage() {
   const navigate = useNavigate();
-  const MYPAGE_URL = `${process.env.REACT_APP_API_URL}/api/v1/my-page`;
+  const MYPAGE_URL = `${process.env.REACT_APP_API_URL}/my-page`;
   const [career, setCareer] = useState({
     name: "웹 프론트엔드",
     level: "초보",

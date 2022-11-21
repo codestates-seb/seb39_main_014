@@ -51,9 +51,9 @@ const modules = {
 
 function Editor({ newObject }) {
   const { boardId } = useParams();
-  const BOARD_URL = `${process.env.REACT_APP_API_URL}/api/v1/board/${boardId}`;
+  const BOARD_URL = `${process.env.REACT_APP_API_URL}/board/${boardId}`;
 
-  const WIRTEBOARD_URL = `${process.env.REACT_APP_API_URL}/api/v1/board/write`;
+  const WIRTEBOARD_URL = `${process.env.REACT_APP_API_URL}/board/write`;
 
   const [contents, setContents] = useState("");
   const [contact, setContact] = useState("");

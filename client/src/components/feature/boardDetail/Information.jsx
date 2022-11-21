@@ -9,7 +9,7 @@ import {
   UserInfo,
   BoardInfo,
   Body,
-} from "../../../pages/boardInquiryPage/styled";
+} from "../../../pages/boardDetailPage/styled";
 import { careerLists } from "../../../constants/WriteFormData";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -19,7 +19,7 @@ function Information() {
   const navigate = useNavigate();
   /** 로컬스토리지에서 로그인한 유저 nickname */
   const user = localStorage.getItem("nickname");
-  const BOARD_URL = `${process.env.REACT_APP_API_URL}/api/v1/board/${boardId}`;
+  const BOARD_URL = `${process.env.REACT_APP_API_URL}/board/${boardId}`;
 
   const [boardInfo, setBoardInfo] = useState([]);
   const [createdAt, setCreatedAt] = useState("");
