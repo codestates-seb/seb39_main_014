@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Login from "../../components/login/Login";
+import Login from "../../components/feature/login/Login";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function LoginPage() {

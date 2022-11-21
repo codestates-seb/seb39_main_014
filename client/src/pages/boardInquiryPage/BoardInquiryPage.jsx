@@ -1,6 +1,6 @@
 import React from "react";
-import Information from "../../components/boardInquiry/Information";
-import Comment from "../../components/boardInquiry/Comment";
+import Information from "../../components/feature/boardInquiry/Information";
+import Comment from "../../components/feature/boardInquiry/Comment";
 import { InquiryContainer, ContentContainer, ContentWrapper } from "./styled";
 
 function BoardInquiryPage() {

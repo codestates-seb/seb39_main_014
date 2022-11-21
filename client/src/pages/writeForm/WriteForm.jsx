@@ -1,18 +1,15 @@
 import React from "react";
 import { WriteFormContainer, FormContainer } from "./styled";
 
-import DivisionForm from "../../components/writeForm/DivisionForm";
-import Footer from "../../components/footer/Footer";
+import DivisionForm from "../../components/feature/writeForm/DivisionForm";
 
 function WriteForm() {
   return (
-    <>
-      <WriteFormContainer>
-        <FormContainer>
-          <DivisionForm />
-        </FormContainer>
-      </WriteFormContainer>
-    </>
+    <WriteFormContainer>
+      <FormContainer>
+        <DivisionForm />
+      </FormContainer>
+    </WriteFormContainer>
   );
 }
 

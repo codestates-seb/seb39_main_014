@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Footer from "../../components/footer/Footer";
-import Board from "../../components/board/Board";
-import Stack from "../../components/stack/Stack";
-import Paging from "../../components/pagenation/Pagenation";
-import PopStack from "../../components/popStack/PopStack";
-import TopButton from "../../components/topButton/TopButton";
-import IsLoading from "../../components/isLoading/IsLoading";
+import Footer from "../../components/layout/footer/Footer";
+import Board from "../../components/feature/board/Board";
+import Stack from "../../components/feature/stack/Stack";
+import Paging from "../../components/layout/pagenation/Pagenation";
+import PopStack from "../../components/feature/popStack/PopStack";
+import TopButton from "../../components/shared/topButton/TopButton";
+import IsLoading from "../../components/shared/isLoading/IsLoading";
 import getBoard from "../../api/getBoard";
 import getMember from "../../api/getMember";
-import NotExistBoard from "../../components/board/NotExistBoard";
-import { handleFilter } from "../../lib/handleFilter";
-import Toggle from "../../components/toggle/Toggle";
+import NotExistBoard from "../../components/feature/board/NotExistBoard";
+import { handleFilter } from "../../utils/handleFilter";
+import Toggle from "../../components/shared/toggle/Toggle";
 
 function BoardPage({ group }) {
   // const BOARD_URL = {
@@ -57,7 +57,7 @@ function BoardPage({ group }) {
               </StackArea>
               {/* 로딩컴포넌트 */}
               <IsLoading />
-              <PageNationArea></PageNationArea>
+              <PageNationArea />
             </Center>
             <Side>
               <TopButton />
@@ -99,38 +99,40 @@ function BoardPage({ group }) {
               isDone === false &&
               group === "전체" ? (
                 datas
-                  .filter((el) => el.recruitDone === isDone)
+                  .filter(el => el.recruitDone === isDone)
                   .slice((page - 1) * 18, (page - 1) * 9 + 18)
-                  .map((el) => (
+                  .map(el => (
                     <Link
                       key={el.id}
                       to={`/board/${el.id}`}
                       // eslint-disable-next-line prettier/prettier
-                      className="board-link">
+                      className="board-link"
+                    >
                       <Board key={el.id} data={el} />
                     </Link>
                   ))
               ) : filterDatas.length === 0 ? (
                 <>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <NotExistBoard></NotExistBoard>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
+                  <div />
+                  <div />
+                  <div />
+                  <div />
+                  <NotExistBoard />
+                  <div />
+                  <div />
+                  <div />
+                  <div />
                 </>
               ) : (
                 filterDatas
                   .slice((page - 1) * 18, (page - 1) * 9 + 18)
-                  .map((el) => (
+                  .map(el => (
                     <Link
                       key={el.id}
                       to={`/board/${el.id}`}
                       // eslint-disable-next-line prettier/prettier
-                      className="board-link">
+                      className="board-link"
+                    >
                       <Board key={el.id} data={el} />
                     </Link>
                   ))

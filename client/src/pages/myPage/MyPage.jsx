@@ -13,7 +13,7 @@ import {
   careerLists,
   levelLists,
   stackLists,
-} from "../../pages/writeForm/WriteFormData";
+} from "../../constants/WriteFormData";
 import { GoX } from "react-icons/go";
 import { AiOutlineDown } from "react-icons/ai";
 import axios from "axios";
@@ -68,18 +68,18 @@ function MyPage() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
-      .then((res) => {
+      .then(res => {
         setInfo(res.data);
         setNickname(res.data.nickname);
         setTechStack(
-          res.data.techStack.map((el) => ({ name: el.name, id: el.name }))
+          res.data.techStack.map(el => ({ name: el.name, id: el.name }))
         );
         setCareer({
           name: res.data.career[0].name,
           level: res.data.career[0].level,
         });
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   };
 
   /** 북마크 get 요청 함수 */
@@ -90,10 +90,10 @@ function MyPage() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
-      .then((res) => {
+      .then(res => {
         setBookmarkList(res.data.bookmarkList);
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   };
 
   /** 지원한 게시글 get 요청 함수 */
@@ -104,10 +104,10 @@ function MyPage() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
-      .then((res) => {
+      .then(res => {
         setApplyList(res.data.boardApplyList);
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   };
 
   useEffect(() => {
@@ -123,14 +123,14 @@ function MyPage() {
   useOutsideClick(stackClickRef, setIsTechStackList);
 
   /** 스택 검색 필터 */
-  const searchStack = newStackList.filter((prev) => {
+  const searchStack = newStackList.filter(prev => {
     if (search === "") {
       return prev;
     } else return prev.stack.toLowerCase().includes(search.toLowerCase());
   });
 
   /** 마이페이지 변경 완료 */
-  const handleMypageSubmit = (e) => {
+  const handleMypageSubmit = e => {
     e.preventDefault();
     Swal.fire({
       title: "정보 수정을 완료 하시겠습니까?",
@@ -140,7 +140,7 @@ function MyPage() {
       cancelButtonColor: "#FF6464",
       confirmButtonText: "등록",
       cancelButtonText: "취소",
-    }).then((result) => {
+    }).then(result => {
       if (result.isConfirmed) {
         axios
           .post(
@@ -148,12 +148,12 @@ function MyPage() {
             {
               nickname: nickname,
               activeScore: 0,
-              techStack: techStack.map((el) => ({ name: el.name })),
+              techStack: techStack.map(el => ({ name: el.name })),
               career: [
                 {
                   name: career.name,
                   level: levelData.filter(
-                    (prev) => prev.level === career.level
+                    prev => prev.level === career.level
                   )[0].value,
                 },
               ],
@@ -164,12 +164,12 @@ function MyPage() {
               },
             }
           )
-          .catch((err) => console.log(err));
+          .catch(err => console.log(err));
         Swal.fire({
           title: "수정 완료!",
           icon: "success",
           confirmButtonColor: "#69D06F",
-        }).then((res) => {
+        }).then(res => {
           if (res.isConfirmed) {
             navigate("/board");
           }
@@ -183,7 +183,7 @@ function MyPage() {
     if (checked) {
       setState([...state, { boardId: id, title: title }]);
     } else {
-      setState(state.filter((el) => el.boardId !== id));
+      setState(state.filter(el => el.boardId !== id));
     }
   };
   console.log(applyList);
@@ -191,9 +191,7 @@ function MyPage() {
   const handleAllCheck = (checked, list, setState) => {
     if (checked) {
       const idArr = [];
-      list.forEach((el) =>
-        idArr.push({ boardId: el.boardId, title: el.title })
-      );
+      list.forEach(el => idArr.push({ boardId: el.boardId, title: el.title }));
       setState(idArr);
     } else {
       setState([]);
@@ -201,7 +199,7 @@ function MyPage() {
   };
   // { bookmarkList: checkListState }
   /** 북마크 리스트 삭제 */
-  const handleBookmarkListDelete = (e) => {
+  const handleBookmarkListDelete = e => {
     e.preventDefault();
     axios
       .delete(`${MYPAGE_URL}/bookmark`, {
@@ -210,15 +208,15 @@ function MyPage() {
         },
         data: { bookmarkList: bookmarkCheckLists },
       })
-      .then((res) => {
+      .then(res => {
         setBookmarkList(res.data.bookmarkList);
         setBookmarkCheckLists([]);
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   };
 
   /** 지원 리스트 삭제 */
-  const handleApplyListDelete = (e) => {
+  const handleApplyListDelete = e => {
     e.preventDefault();
     axios
       .delete(`${MYPAGE_URL}/apply`, {
@@ -227,22 +225,22 @@ function MyPage() {
         },
         data: { applyList: applyCheckLists },
       })
-      .then((res) => {
+      .then(res => {
         setApplyList(res.data.applyList);
         setApplyCheckLists([]);
         getApply();
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   };
 
   /** 북마크 지원 탭 클릭 핸들러 */
-  const handleTabClick = (el) => {
+  const handleTabClick = el => {
     el.preventDefault();
     setIsTab(el);
   };
 
   /** 회원 탈퇴 */
-  const handleWithdrawalDelete = (e) => {
+  const handleWithdrawalDelete = e => {
     e.preventDefault();
     Swal.fire({
       title: "회원 탈퇴 하시겠습니까?",
@@ -253,7 +251,7 @@ function MyPage() {
       confirmButtonText: "확인",
       cancelButtonText: "취소",
     })
-      .then((res) => {
+      .then(res => {
         if (res.isConfirmed) {
           axios
             .delete(`${MYPAGE_URL}/delete`, {
@@ -261,16 +259,16 @@ function MyPage() {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
               },
             })
-            .catch((err) => console.log(err));
+            .catch(err => console.log(err));
         }
       })
-      .then((res) => {
+      .then(res => {
         if (res.isConfirmed) {
           Swal.fire({
             title: "탈퇴 완료!",
             icon: "success",
             confirmButtonColor: "#69D06F",
-          }).then((res) => {
+          }).then(res => {
             navigate("/board");
           });
         }
@@ -292,12 +290,12 @@ function MyPage() {
               className="Nickname"
               type="text"
               defaultValue={info.nickname}
-              onChange={(e) => setNickname(e.target.value)}
+              onChange={e => setNickname(e.target.value)}
             />
             <div
               className="Career"
               ref={outSection}
-              onClick={(e) => {
+              onClick={e => {
                 if (outSection.current === e.target) {
                   setIsCareer(!isCareer);
                 }
@@ -309,11 +307,11 @@ function MyPage() {
               {isCareer ? (
                 <div className="Career-level-lists" ref={careerClickRef}>
                   <ul className="Career-list">
-                    {careerLists.map((el) => (
+                    {careerLists.map(el => (
                       <li
                         key={el.id}
                         onClick={() =>
-                          setCareer((prev) => {
+                          setCareer(prev => {
                             return { ...prev, name: el.career };
                           })
                         }
@@ -323,11 +321,11 @@ function MyPage() {
                     ))}
                   </ul>
                   <ul className="Level-list">
-                    {levelLists.map((el) => (
+                    {levelLists.map(el => (
                       <li
                         key={el.id}
                         onClick={() =>
-                          setCareer((prev) => {
+                          setCareer(prev => {
                             return { ...prev, level: el.level };
                           })
                         }
@@ -344,7 +342,7 @@ function MyPage() {
             <label className="Stack-label">기술 스택</label>
             <div
               className="Registration-box"
-              onClick={(e) => {
+              onClick={e => {
                 e.preventDefault();
                 setIsTechStackList(!istechStackList);
               }}
@@ -354,28 +352,28 @@ function MyPage() {
                 type="text"
                 placeholder="기술 스택을 등록하세요!"
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={e => setSearch(e.target.value)}
               />
               <AiOutlineDown
                 className="AiOutlineDown"
-                onClick={(e) => {
+                onClick={e => {
                   e.preventDefault();
                   setIsTechStackList(!istechStackList);
                 }}
               />{" "}
               {istechStackList ? (
                 <ul className="Stacklist" ref={stackClickRef}>
-                  {searchStack.map((el) => (
+                  {searchStack.map(el => (
                     <li
                       key={el.id}
-                      onClick={(e) => {
+                      onClick={e => {
                         setTechStack([
                           ...techStack,
                           { name: el.stack, id: stackRef.current },
                         ]);
                         stackRef.current = stackRef.current + 1;
                         setNewStackList(
-                          newStackList.filter((prev) => prev.stack !== el.stack)
+                          newStackList.filter(prev => prev.stack !== el.stack)
                         );
                       }}
                     >
@@ -388,14 +386,14 @@ function MyPage() {
 
             <div className="Stack">
               {techStack
-                ? techStack.map((el) => (
+                ? techStack.map(el => (
                     <div key={el.id}>
                       <img alt={el.name} src={`/assets/stack/${el.name}.svg`} />
                       <GoX
                         className="Gox"
                         onClick={() => {
                           setTechStack(
-                            techStack.filter((prev) => prev.id !== el.id)
+                            techStack.filter(prev => prev.id !== el.id)
                           );
                           setNewStackList([
                             ...newStackList,
@@ -431,11 +429,11 @@ function MyPage() {
               {isTab ? (
                 bookmarkList ? (
                   <>
-                    {bookmarkList.map((el) => (
+                    {bookmarkList.map(el => (
                       <div className="Checkboard" key={el.boardId}>
                         <input
                           type="checkbox"
-                          onChange={(e) =>
+                          onChange={e =>
                             handleSingleCheck(
                               e.target.checked,
                               el.boardId,
@@ -446,7 +444,7 @@ function MyPage() {
                           }
                           checked={
                             bookmarkCheckLists
-                              .map((el) => el.boardId)
+                              .map(el => el.boardId)
                               .includes(el.boardId)
                               ? true
                               : false
@@ -461,7 +459,7 @@ function MyPage() {
                       <div>
                         <input
                           type="checkbox"
-                          onChange={(e) =>
+                          onChange={e =>
                             handleAllCheck(
                               e.target.checked,
                               bookmarkList,
@@ -482,11 +480,11 @@ function MyPage() {
                 ) : null
               ) : applyList ? (
                 <>
-                  {applyList.map((el) => (
+                  {applyList.map(el => (
                     <div className="Checkboard" key={el.boardId}>
                       <input
                         type="checkbox"
-                        onChange={(e) =>
+                        onChange={e =>
                           handleSingleCheck(
                             e.target.checked,
                             el.boardId,
@@ -497,7 +495,7 @@ function MyPage() {
                         }
                         checked={
                           applyCheckLists
-                            .map((el) => el.boardId)
+                            .map(el => el.boardId)
                             .includes(el.boardId)
                             ? true
                             : false
@@ -512,7 +510,7 @@ function MyPage() {
                     <div>
                       <input
                         type="checkbox"
-                        onChange={(e) =>
+                        onChange={e =>
                           handleAllCheck(
                             e.target.checked,
                             applyList,

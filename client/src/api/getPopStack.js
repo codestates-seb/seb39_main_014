@@ -7,7 +7,7 @@ export default function getPopStack(POPSTACK_URL, setState) {
       //   Authorization: `Bearer ${localStorage.getItem("token")}`,
       // },
     })
-    .then((res) => {
+    .then(res => {
       // console.log(res.data);
       setState(res.data);
     });

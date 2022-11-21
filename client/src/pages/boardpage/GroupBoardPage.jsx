@@ -5,8 +5,8 @@ import handleLogout from "../../api/handleLogout";
 
 import styled from "styled-components";
 import BoardPage from "../../pages/boardpage/BoardPage";
-import Profile from "../../components/navigation/Profile";
-import Hambuger from "../../components/navigation/Hambuger";
+import Profile from "../../components/layout/navigation/Profile";
+import Hambuger from "../../components/layout/navigation/Hambuger";
 
 // true일경우 로그인된 상태
 const isLogin = Boolean(localStorage.getItem("token"));
@@ -18,7 +18,7 @@ function GroupBoardPage() {
   const [currentGroup, setCurrentGroup] = useState("전체");
   const [isOpen, setIsOpen] = useState(false); // 메뉴의 초기값을 false로 설정
 
-  const handleGroup = (e) => {
+  const handleGroup = e => {
     setCurrentGroup(e.target.innerText);
   };
 
@@ -37,14 +37,15 @@ function GroupBoardPage() {
             </StyledLink>
             <LeftMenu>
               {/* 게시판 nav바 전체, 스터디, 프로젝트 컴포넌트 */}
-              {group.map((el) => (
+              {group.map(el => (
                 <StyledLink to="/board" key={el}>
                   <div
                     onClick={handleGroup}
                     className={
                       currentGroup === el ? "selectedList" : "not-selectedList"
                       // eslint-disable-next-line prettier/prettier
-                    }>
+                    }
+                  >
                     {el}
                   </div>
                 </StyledLink>

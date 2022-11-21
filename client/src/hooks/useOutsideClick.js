@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 /** 외부 클릭시 드롭박스 사라지는 cumtom hook */
 export const useOutsideClick = (ref, callback) => {
-  const handleClick = (e) => {
+  const handleClick = e => {
     if (ref && !ref.current.contains(e.target)) {
       callback(false);
     } else {

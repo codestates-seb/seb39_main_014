@@ -5,7 +5,7 @@ import styled from "styled-components";
 function ErrorPage() {
   return (
     <ErrorPageLayout>
-      <img src={`/assets/error/errorpage.jpg`} alt="404 Not Found" />
+      <img src="/assets/error/errorpage.jpg" alt="404 Not Found" />
       <br />
       <h1>PAGE NOT FOUND</h1>
       <div>찾을 수 없는 페이지 입니다.</div>

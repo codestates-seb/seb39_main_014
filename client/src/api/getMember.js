@@ -7,10 +7,10 @@ export default function getMember(MEMBER_URL) {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     })
-    .then((res) => {
+    .then(res => {
       localStorage.setItem("nickname", res.data.nickname);
     })
-    .catch((err) => {
+    .catch(err => {
       console.log(err);
     });
 }
