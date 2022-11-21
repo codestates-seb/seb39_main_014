@@ -1,17 +1,27 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
+
+interface InputGroupProps {
+  className?: string;
+  type?: string;
+  placeholder?: string;
+  value: string;
+  error: string | undefined;
+  setValue: (str: string) => void;
+  setErrors: (str: string) => void;
+}
 
 const InputGroup = ({
-  type = "text",
-  placeholder = "",
+  type = 'text',
+  placeholder = '',
   error,
   value,
   setValue,
   setErrors,
-}) => {
+}: InputGroupProps) => {
   const resetInputClick = () => {
-    setErrors("");
-    setValue("");
+    setErrors('');
+    setValue('');
   };
   return (
     <InputLayout>
@@ -21,10 +31,9 @@ const InputGroup = ({
             type={type}
             placeholder={placeholder}
             value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={e => setValue(e.target.value)}
             onClick={resetInputClick}
             className="input"
-            atuocomplete="off"
           />
           <small> {error} </small>
         </div>
