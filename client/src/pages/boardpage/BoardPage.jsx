@@ -21,8 +21,8 @@ function BoardPage({ group }) {
   //   PROJECT: `${process.env.REACT_APP_API_URL}/api/v1/board/project?page=1&size=100`,
   // };
 
-  const BOARD_URL = `${process.env.REACT_APP_API_URL}/api/v1/board/?page=1&size=100`;
-  const MEMBER_URL = `${process.env.REACT_APP_API_URL}/api/v1/member`;
+  const BOARD_URL = `${process.env.REACT_APP_API_URL}/board/?page=1&size=100`;
+  const MEMBER_URL = `${process.env.REACT_APP_API_URL}/member`;
   const [datas, setDatas] = useState([]); // 각 게시글 객체가 담긴 리스트
   const [isDone, setIsDone] = useState(false); // 모집중 모집완료
   const [stackFilter, setStackFilter] = useState([]); // 필터링할 스택 담긴 리스트
