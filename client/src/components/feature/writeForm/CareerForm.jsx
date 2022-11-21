@@ -10,7 +10,7 @@ import _ from "lodash";
 
 function CareerForm({ object }) {
   const { boardId } = useParams();
-  const BOARD_URL = `${process.env.REACT_APP_API_URL}/api/v1/board/${boardId}`;
+  const BOARD_URL = `${process.env.REACT_APP_API_URL}/board/${boardId}`;
 
   const [career, setCareer] = useState("모집 분류");
   const [isCareer, setIsCareer] = useState(false);

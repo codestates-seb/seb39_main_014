@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { WriteComment, Comments } from "../../../pages/boardInquiryPage/styled";
+import { WriteComment, Comments } from "../../../pages/boardDetailPage/styled";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { HiOutlinePencil } from "react-icons/hi";
+import { getComments } from "../../../api/boardComment";
 
 function CommentForm() {
   const { boardId } = useParams();
-  const BOARD_URL = `${process.env.REACT_APP_API_URL}/api/v1/board/${boardId}`;
+  const BOARD_URL = `${process.env.REACT_APP_API_URL}/board/${boardId}`;
 
-  const [comment, setComment] = useState("");
+  const [content, setContent] = useState("");
   const [commentList, setCommentList] = useState([]);
 
   const [groupNumber, setGroupNumber] = useState(null);
@@ -20,6 +21,7 @@ function CommentForm() {
 
   useEffect(() => {
     getComment();
+    getComments(boardId);
   }, []);
 
   const getComment = () => {
@@ -36,7 +38,7 @@ function CommentForm() {
     axios
       .post(
         `${BOARD_URL}/comment`,
-        { content: comment },
+        { content },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -45,7 +47,7 @@ function CommentForm() {
       )
       .then(res => {
         getComment();
-        setComment("");
+        setContent("");
       })
       .catch(err => console.log(err));
   };
@@ -107,9 +109,9 @@ function CommentForm() {
         <div>댓글&nbsp;{commentList.length}개</div>
         <textarea
           placeholder="댓글을 입력하세요"
-          value={comment}
+          value={content}
           // eslint-disable-next-line prettier/prettier
-          onChange={e => setComment(e.target.value)}
+          onChange={e => setContent(e.target.value)}
         />
         <div className="Submit">
           <button onClick={handleCommentSubmit}>등록</button>
@@ -130,7 +132,7 @@ function CommentForm() {
                     </div>
                   </div>
                   <span className="Delete-button">
-                    {user === el.nickname ? (
+                    {user === el.nickname && (
                       <>
                         <HiOutlinePencil
                           className="HiOutlinePencil"
@@ -144,7 +146,7 @@ function CommentForm() {
                           onClick={() => handlecCommentDelete(el.groupNumber)}
                         />
                       </>
-                    ) : null}
+                    )}
                   </span>
                 </div>
                 {groupNumber === el.groupNumber ? (

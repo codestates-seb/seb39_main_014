@@ -1,9 +1,8 @@
-import React from "react";
-import Information from "../../components/feature/boardInquiry/Information";
-import Comment from "../../components/feature/boardInquiry/Comment";
+import Information from "../../components/feature/boardDetail/Information";
+import Comment from "../../components/feature/boardDetail/Comment";
 import { InquiryContainer, ContentContainer, ContentWrapper } from "./styled";
 
-function BoardInquiryPage() {
+function BoardDetailPage() {
   return (
     <InquiryContainer>
       <ContentContainer>
@@ -16,4 +15,4 @@ function BoardInquiryPage() {
   );
 }
 
-export default BoardInquiryPage;
+export default BoardDetailPage;

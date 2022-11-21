@@ -24,7 +24,7 @@ import { useOutsideClick } from "../../../hooks/useOutsideClick";
 
 function DivisionForm() {
   const { boardId } = useParams();
-  const BOARD_URL = `${process.env.REACT_APP_API_URL}/api/v1/board/${boardId}`;
+  const BOARD_URL = `${process.env.REACT_APP_API_URL}/board/${boardId}`;
   const [modifyInfo, setModifyInfo] = useState([]);
 
   const [recruitCategory, setRecruitCategory] = useState("STUDY");
