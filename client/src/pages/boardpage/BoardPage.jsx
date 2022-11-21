@@ -15,29 +15,23 @@ import { handleFilter } from "../../utils/handleFilter";
 import Toggle from "../../components/shared/toggle/Toggle";
 
 function BoardPage({ group }) {
-  // const BOARD_URL = {
-  //   ALL: `${process.env.REACT_APP_API_URL}/api/v1/board/?page=1&size=100`,
-  //   STUDY: `${process.env.REACT_APP_API_URL}/api/v1/board/study?page=1&size=100`,
-  //   PROJECT: `${process.env.REACT_APP_API_URL}/api/v1/board/project?page=1&size=100`,
-  // };
-
   const BOARD_URL = `${process.env.REACT_APP_API_URL}/board/?page=1&size=100`;
   const MEMBER_URL = `${process.env.REACT_APP_API_URL}/member`;
-  const [datas, setDatas] = useState([]); // 각 게시글 객체가 담긴 리스트
-  const [isDone, setIsDone] = useState(false); // 모집중 모집완료
-  const [stackFilter, setStackFilter] = useState([]); // 필터링할 스택 담긴 리스트
-  const [filterDatas, setFilterDatas] = useState([]); // datas를 stackfilter로 필터링
+  const [datas, setDatas] = useState([]);
+  const [isDone, setIsDone] = useState(false);
+  const [stackFilter, setStackFilter] = useState([]);
+  const [filterDatas, setFilterDatas] = useState([]);
   const [isNotExist, setIsNotExist] = useState(true);
-  const [page, setPage] = useState(1); // 페이지네이션
+  const [page, setPage] = useState(1);
 
   const isLoading = !datas.length;
 
   useEffect(() => {
-    getMember(MEMBER_URL); // 닉네임 로컬 스토리지 저장
-    getBoard(BOARD_URL, setDatas); // 게시글 가져오기
+    getMember(MEMBER_URL);
+    getBoard(BOARD_URL, setDatas);
 
     handleFilter(datas, stackFilter, setFilterDatas, isDone, group);
-  }, [stackFilter, , isDone, group, page]);
+  }, [stackFilter, isDone, group, page]);
 
   if (isLoading) {
     // 로딩중 화면

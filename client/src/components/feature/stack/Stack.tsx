@@ -2,8 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { IoCloseCircleOutline } from "react-icons/io5";
 
-const Stack = ({ selectedList, setSelectedList }) => {
-  // 모든 스택 이름
+const Stack = ({ selectedList, setSelectedList }: any) => {
   const stacks = {
     전체: [
       "JavaScript",

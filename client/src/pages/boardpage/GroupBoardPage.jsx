@@ -6,7 +6,7 @@ import handleLogout from "../../api/handleLogout";
 import styled from "styled-components";
 import BoardPage from "../../pages/boardpage/BoardPage";
 import Profile from "../../components/layout/navigation/Profile";
-import Hambuger from "../../components/layout/navigation/Hambuger";
+import Hambuger from "../../components/layout/navigation/Hambuger.tsx";
 
 // true일경우 로그인된 상태
 const isLogin = Boolean(localStorage.getItem("token"));
