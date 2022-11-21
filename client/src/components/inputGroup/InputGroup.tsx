@@ -1,6 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
+interface InputGroupProps {
+  className?: string;
+  type?: string;
+  placeholder?: string;
+  value: string;
+  error: string | undefined;
+  setValue: (str: string) => void;
+  setErrors: (str: string) => void;
+}
+
 const InputGroup = ({
   type = 'text',
   placeholder = '',
@@ -8,7 +18,7 @@ const InputGroup = ({
   value,
   setValue,
   setErrors,
-}) => {
+}: InputGroupProps) => {
   const resetInputClick = () => {
     setErrors('');
     setValue('');
@@ -24,7 +34,6 @@ const InputGroup = ({
             onChange={e => setValue(e.target.value)}
             onClick={resetInputClick}
             className="input"
-            atuocomplete="off"
           />
           <small> {error} </small>
         </div>
