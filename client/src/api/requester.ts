@@ -21,6 +21,6 @@ export default async function requester<Payload>(option: AxiosRequestConfig) {
   return {
     status: response.status,
     headers: response.headers,
-    payloda: response.data,
+    payload: response.data,
   };
 }
