@@ -1,7 +1,6 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import Nav from "./components/navigation/Nav";
+import Nav from "./components/layout/navigation/Nav";
 import Home from "./pages/home/Home";
 import WriteForm from "./pages/writeForm/WriteForm";
 import LoginPage from "./pages/loginpage/LoginPage";
