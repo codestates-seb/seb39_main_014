@@ -76,7 +76,6 @@ export const FirstRight = styled.div`
       cursor: pointer;
       &:checked {
         accent-color: green;
-        /* accent-color: #69d06f; */
       }
     }
     .Location-box {
