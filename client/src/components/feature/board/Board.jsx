@@ -44,18 +44,16 @@ function Board({ data }) {
         </TitleLayout>
         <TagLayout>{/* advanced */}</TagLayout>
         <StackLayout>
-          {data.techStackNames ? (
-            data.techStackNames.map(el => (
-              <img
-                key={el.techStackName}
-                className="stack-logo"
-                src={`/assets/stack/${el.techStackName}.svg`}
-                alt={`${el}`}
-              />
-            ))
-          ) : (
-            <></>
-          )}
+          {data.techStackNames
+            ? data.techStackNames.map(el => (
+                <img
+                  key={el.techStackName}
+                  className="stack-logo"
+                  src={`/assets/stack/${el.techStackName}.svg`}
+                  alt={`${el}`}
+                />
+              ))
+            : null}
         </StackLayout>
         <RecruitmentLayout>
           <div className="recruitment">

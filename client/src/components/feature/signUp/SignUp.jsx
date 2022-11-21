@@ -20,7 +20,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 
 function SignUp() {
   // const SIGNUP_URL = "http://183.106.239.239:8080/api/v1/sign-up";
-  const SIGNUP_URL = `${process.env.REACT_APP_API_URL}/api/v1/sign-up`;
+  const SIGNUP_URL = `${process.env.REACT_APP_API_URL}/sign-up`;
   // const AUTH_LOGIN_URL = `${process.env.REACT_APP_API_URL}/oauth2/authorization/google`;
   const AUTH_LOGIN_URL = `/oauth2/authorization/google`;
 
