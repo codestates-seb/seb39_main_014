@@ -18,5 +18,6 @@ export const API_PATH = {
   board: {
     board: "/board",
     write: "/write",
+    comment: "/comment",
   },
 };
