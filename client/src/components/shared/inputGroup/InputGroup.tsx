@@ -6,7 +6,7 @@ interface InputGroupProps {
   type?: string;
   placeholder?: string;
   value: string;
-  error: string | undefined;
+  error?: string | undefined;
   setValue: (str: string) => void;
   setErrors: (str: string) => void;
 }
@@ -23,21 +23,18 @@ const InputGroup = ({
     setErrors("");
     setValue("");
   };
+
   return (
     <InputLayout>
-      <div>
-        <div>
-          <input
-            type={type}
-            placeholder={placeholder}
-            value={value}
-            onChange={e => setValue(e.target.value)}
-            onClick={resetInputClick}
-            className="input"
-          />
-          <small> {error} </small>
-        </div>
-      </div>
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={e => setValue(e.target.value)}
+        onClick={resetInputClick}
+        className="input"
+      />
+      <small> {error} </small>
     </InputLayout>
   );
 };
