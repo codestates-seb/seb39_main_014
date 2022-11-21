@@ -3,41 +3,40 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import handleLogout from "../../../api/handleLogout";
 
-function Hambuger(login, isOpen, setIsOpen) {
+function Hambuger() {
+  // const { setIsOpen } = props;
   const isLogin = Boolean(localStorage.getItem("token"));
-  const handleClose = () => {
-    setIsOpen(false);
-  };
+  // const handleClose = () => {
+  //   setIsOpen(false);
+  // };
 
   return (
-    <>
+    <div>
       {isLogin ? (
-        <>
-          <HambugerContainer>
-            <StyledLink to="/mypage" onClick={handleClose}>
-              <div>마이페이지</div>
-            </StyledLink>
-            <StyledLink to="/board/write" onClick={handleClose}>
-              <div>모집하기</div>
-            </StyledLink>
-            <StyledLink>
-              <div className="log-out" onClick={handleLogout}>
-                로그아웃
-              </div>
-            </StyledLink>
-          </HambugerContainer>
-        </>
+        <HambugerContainer>
+          <StyledLink to="/mypage">
+            <div>마이페이지</div>
+          </StyledLink>
+          <StyledLink to="/board/write">
+            <div>모집하기</div>
+          </StyledLink>
+          <StyledLink>
+            <div className="log-out" onClick={handleLogout}>
+              로그아웃
+            </div>
+          </StyledLink>
+        </HambugerContainer>
       ) : (
         <HambugerContainer>
-          <StyledLink to="/login" onClick={handleClose}>
+          <StyledLink to="/login">
             <div>로그인</div>
           </StyledLink>
-          <StyledLink to="/board/write" onClick={handleClose}>
+          <StyledLink to="/board/write">
             <div>모집하기</div>
           </StyledLink>
         </HambugerContainer>
       )}
-    </>
+    </div>
   );
 }
 

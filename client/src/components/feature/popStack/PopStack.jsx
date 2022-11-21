@@ -4,7 +4,7 @@ import { useState } from "react";
 import getPopStack from "../../../api/getPopStack";
 
 function PopStack() {
-  const POPSTACK_URL = `${process.env.REACT_APP_API_URL}/api/v1/board/popstack`;
+  const POPSTACK_URL = `${process.env.REACT_APP_API_URL}/board/popstack`;
   const [popStack, setPopStack] = useState([]);
 
   useEffect(() => {

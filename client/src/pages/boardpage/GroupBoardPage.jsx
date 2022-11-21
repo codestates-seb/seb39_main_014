@@ -13,10 +13,9 @@ const isLogin = Boolean(localStorage.getItem("token"));
 
 const group = ["전체", "스터디", "프로젝트"];
 
-/** Nav, BoardPage 합성 컴포넌트 */
 function GroupBoardPage() {
   const [currentGroup, setCurrentGroup] = useState("전체");
-  const [isOpen, setIsOpen] = useState(false); // 메뉴의 초기값을 false로 설정
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleGroup = e => {
     setCurrentGroup(e.target.innerText);
@@ -83,10 +82,9 @@ function GroupBoardPage() {
             }}
           />
 
-          {isOpen ? <Hambuger login={isLogin} /> : <></>}
+          {isOpen ? <Hambuger login={isLogin} /> : null}
         </NavContainer>
       </NavFrame>
-      {/*BoardPage 컴포넌트 */}
       <BoardPage group={currentGroup} />
     </>
   );

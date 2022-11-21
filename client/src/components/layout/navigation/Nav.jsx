@@ -7,12 +7,11 @@ import styled from "styled-components";
 import Hambuger from "./Hambuger";
 import Profile from "./Profile";
 
-// true일경우 로그인된 상태
 const isLogin = Boolean(localStorage.getItem("token"));
 
 function Nav() {
   const locationNow = useLocation();
-  const [isOpen, setIsOpen] = useState(false); // 메뉴의 초기값을 false로 설정
+  const [isOpen, setIsOpen] = useState(false);
   const hambugerClickRef = useRef();
 
   if (locationNow.pathname === "/board") return null;
@@ -57,12 +56,9 @@ function Nav() {
           onClick={() => {
             setIsOpen(!isOpen);
           }}
-          setIsOpen={setIsOpen}
-          isOpen={isOpen}
-          isLogin={isLogin}
         />
 
-        {isOpen ? <Hambuger login={isLogin} /> : <></>}
+        {isOpen ? <Hambuger login={isLogin} /> : null}
       </NavContainer>
     </NavFrame>
   );

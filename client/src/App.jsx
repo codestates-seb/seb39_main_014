@@ -15,15 +15,17 @@ function App() {
     <>
       <Nav />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/board/write" element={<WriteForm />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/board" element={<GroupBoardPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/board/:boardId" element={<BoardInquiryPage />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/board/:boardId/modify" element={<WriteForm />} />
-        <Route path="*" element={<ErrorPage />} />
+        <>
+          <Route path="/" element={<Home />} />
+          <Route path="/board/write" element={<WriteForm />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/board" element={<GroupBoardPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/board/:boardId" element={<BoardInquiryPage />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/board/:boardId/modify" element={<WriteForm />} />
+          <Route path="*" element={<ErrorPage />} />
+        </>
       </Routes>
     </>
   );
