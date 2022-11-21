@@ -1,17 +1,17 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const InputGroup = ({
-  type = "text",
-  placeholder = "",
+  type = 'text',
+  placeholder = '',
   error,
   value,
   setValue,
   setErrors,
 }) => {
   const resetInputClick = () => {
-    setErrors("");
-    setValue("");
+    setErrors('');
+    setValue('');
   };
   return (
     <InputLayout>
@@ -21,7 +21,7 @@ const InputGroup = ({
             type={type}
             placeholder={placeholder}
             value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={e => setValue(e.target.value)}
             onClick={resetInputClick}
             className="input"
             atuocomplete="off"

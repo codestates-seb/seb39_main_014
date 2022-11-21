@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const Toggle = ({ isDone, setIsDone }) => {
   const handleDone = () => {
@@ -7,12 +7,10 @@ const Toggle = ({ isDone, setIsDone }) => {
   };
 
   return (
-    <>
-      <CheckBoxWrapper>
-        <CheckBox id="checkbox" type="checkbox" onClick={handleDone} />
-        <CheckBoxLabel htmlFor="checkbox" />
-      </CheckBoxWrapper>
-    </>
+    <CheckBoxWrapper>
+      <CheckBox id="checkbox" type="checkbox" onClick={handleDone} />
+      <CheckBoxLabel htmlFor="checkbox" />
+    </CheckBoxWrapper>
   );
 };
 
@@ -32,7 +30,7 @@ const CheckBoxLabel = styled.label`
   align-items: center;
   cursor: pointer;
   &::after {
-    content: "";
+    content: '';
     display: block;
     border-radius: 50%;
     width: 20px;
@@ -52,7 +50,7 @@ const CheckBox = styled.input`
   &:checked + ${CheckBoxLabel} {
     background: #bebebe;
     &::after {
-      content: "";
+      content: '';
       display: block;
       border-radius: 50%;
       width: 20px;
