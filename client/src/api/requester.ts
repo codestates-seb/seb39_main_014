@@ -1,3 +1,4 @@
+import { removeLocalStorage } from "./../utils/storage";
 import { ACCESS_TOKEN } from "./common";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { getLocalStorage } from "../utils/storage";
@@ -12,7 +13,7 @@ const createAxiosInstance = () => {
 const axiosInstance = createAxiosInstance();
 
 export default async function requester<Payload>(option: AxiosRequestConfig) {
-  const accessToken = getLocalStorage(ACCESS_TOKEN);
+  const accessToken = getLocalStorage("token");
   const response: AxiosResponse<Payload> = await axiosInstance(
     accessToken
       ? { headers: { Authorization: `Bearer ${accessToken}` }, ...option }
@@ -24,3 +25,24 @@ export default async function requester<Payload>(option: AxiosRequestConfig) {
     payload: response.data,
   };
 }
+
+axiosInstance.interceptors.request.use(
+  function (config) {
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
+
+axiosInstance.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    if (error.response.status === 401) {
+      removeLocalStorage("token");
+    }
+    return Promise.reject(error);
+  }
+);
