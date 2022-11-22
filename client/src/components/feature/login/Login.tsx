@@ -1,45 +1,21 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import InputGroup from "../../shared/inputGroup/InputGroup";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import handleLogin from "../../../api/handleLogin";
-import getMember from "../../../api/getMember";
-import { GoogleLogin } from "@react-oauth/google";
-
-import { useGoogleLogin } from "@react-oauth/google";
 
 function Login() {
   const LOGIN_URL = `${process.env.REACT_APP_API_URL}/log-in`;
-  const AUTH_LOGIN_URL = `${process.env.REACT_APP_API_URL}/oauth2/authorization/google`;
-  // const AUTH_LOGIN_URL = `http://183.106.239.239:8080/oauth2/authorization/google`;
-
-  // const LOGIN_URL = "http://183.106.239.239:8080/api/v1/log-in"; // 테스트용 승윤님 서버
 
   const [userId, setuserId] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
-  const [isConfirm, setIsConfirm] = useState(false);
-  // const [success, setSuccess] = useState(false);
-  const passwordKeyPress = e => {
-    if (e.getModifierState("CapsLock")) {
-      setIsConfirm(true);
-      return;
-    } else {
-      setIsConfirm(false);
-    }
-  };
-  /** 로그인 제출 함수 */
-  const handleSubmit = async event => {
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleLogin(LOGIN_URL, userId, password, setErrors);
-    // getMember(MEMBER_URL);
   };
-
-  const googlelogin = useGoogleLogin({
-    onSuccess: tokenResponse =>
-      localStorage.setItem("token", tokenResponse.access_token),
-  });
 
   return (
     <LoginFrame>
@@ -49,9 +25,7 @@ function Login() {
         <SocialContainer>
           <div className="social">
             <FcGoogle className="google-icon" />
-            <div onClick={googlelogin} className="googgle-login">
-              구글 계정으로 로그인
-            </div>
+            <div className="googgle-login">구글 계정으로 로그인</div>
           </div>
         </SocialContainer>
 
@@ -62,7 +36,7 @@ function Login() {
             placeholder="아이디"
             value={userId}
             setValue={setuserId}
-            // error={error.userId}
+            setErrors={setErrors}
           />
 
           <InputGroup
@@ -70,8 +44,7 @@ function Login() {
             value={password}
             setValue={setPassword}
             type="password"
-            onKeyPress={passwordKeyPress}
-            // error={error.email}
+            setErrors={setErrors}
           />
 
           {errors.length !== 0 ? (
@@ -79,9 +52,7 @@ function Login() {
               <small>아이디 또는 비밀번호를 잘못 입력하셨습니다.</small>
               <small>입력하신 내용을 다시 확인해주세요.</small>
             </>
-          ) : (
-            <></>
-          )}
+          ) : null}
 
           <LoginButton>로그인</LoginButton>
         </LoginForm>

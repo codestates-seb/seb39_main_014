@@ -4,11 +4,7 @@ import styled from "styled-components";
 import handleLogout from "../../../api/handleLogout";
 
 function Hambuger() {
-  // const { setIsOpen } = props;
   const isLogin = Boolean(localStorage.getItem("token"));
-  // const handleClose = () => {
-  //   setIsOpen(false);
-  // };
 
   return (
     <div>
@@ -20,11 +16,9 @@ function Hambuger() {
           <StyledLink to="/board/write">
             <div>모집하기</div>
           </StyledLink>
-          <StyledLink>
-            <div className="log-out" onClick={handleLogout}>
-              로그아웃
-            </div>
-          </StyledLink>
+          <div className="log-out" onClick={handleLogout}>
+            로그아웃
+          </div>
         </HambugerContainer>
       ) : (
         <HambugerContainer>

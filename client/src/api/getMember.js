@@ -10,7 +10,5 @@ export default function getMember(MEMBER_URL) {
     .then(res => {
       localStorage.setItem("nickname", res.data.nickname);
     })
-    .catch(err => {
-      console.log(err);
-    });
+    .catch(err => {});
 }
