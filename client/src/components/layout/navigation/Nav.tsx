@@ -64,7 +64,7 @@ function Nav() {
 
 const NavFrame = styled.nav`
   background: white;
-  height: 60px;
+  height: 4rem;
 
   display: flex;
   align-items: center;
