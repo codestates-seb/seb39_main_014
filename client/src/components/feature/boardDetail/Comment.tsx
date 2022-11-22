@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { HiOutlinePencil } from "react-icons/hi";
 
@@ -13,6 +12,7 @@ import {
 import useCommentQuery from "../../../hooks/useCommentQuery";
 import { ConfirmModal, SuccessModal } from "../../shared/modal/Modal";
 import { getLocalStorage } from "../../../utils/storage";
+import useBoardMutation from "../../../hooks/useBoradMutation";
 
 function CommentForm() {
   const { boardId } = useParams<string>();
@@ -23,25 +23,9 @@ function CommentForm() {
 
   const contentRef = useRef() as React.MutableRefObject<HTMLTextAreaElement>;
 
-  const QueryClient = useQueryClient();
-
-  const updateMutate = useMutation(updateComments, {
-    onSuccess: () => {
-      QueryClient.invalidateQueries(["getComments"], { refetchType: "all" });
-    },
-  });
-
-  const postMutate = useMutation(postComments, {
-    onSuccess: () => {
-      QueryClient.invalidateQueries(["getComments"], { refetchType: "all" });
-    },
-  });
-
-  const deleteMutate = useMutation(deleteComments, {
-    onSuccess: () => {
-      QueryClient.invalidateQueries(["getComments"], { refetchType: "all" });
-    },
-  });
+  const updateMutate = useBoardMutation(updateComments, "getComments");
+  const postMutate = useBoardMutation(postComments, "getComments");
+  const deleteMutate = useBoardMutation(deleteComments, "getComments");
 
   const user = getLocalStorage("nickname");
 
