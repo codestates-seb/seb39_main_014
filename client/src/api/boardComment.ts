@@ -13,8 +13,8 @@ export const getComments = async (boardId: number) => {
   });
   return payload;
 };
-
-export const postComments = async (boardId: number, content: string) => {
+type Post = { boardId: number; content: string };
+export const postComments = async ({ boardId, content }: Post) => {
   const {
     board: { board, comment },
   } = API_PATH;
@@ -27,11 +27,12 @@ export const postComments = async (boardId: number, content: string) => {
   return payload;
 };
 
-export const updateComments = async (
-  boardId: number,
-  groupNumber: number,
-  content: string
-) => {
+type Update = { boardId: number; groupNumber: number; content: string };
+export const updateComments = async ({
+  boardId,
+  groupNumber,
+  content,
+}: Update) => {
   const {
     board: { board, comment },
   } = API_PATH;
@@ -44,7 +45,8 @@ export const updateComments = async (
   return payload;
 };
 
-export const deleteComments = async (boardId: number, groupNumber: number) => {
+type Delete = { boardId: number; groupNumber: number };
+export const deleteComments = async ({ boardId, groupNumber }: Delete) => {
   const {
     board: { board, comment },
   } = API_PATH;
