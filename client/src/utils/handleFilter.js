@@ -34,13 +34,11 @@ export const handleFilter = (
   group,
   setIsNotExist
 ) => {
-  // 스텍 필터 기준으로 true, false
   const isIncludeList = datas
     .map(e => e.techStackNames)
     .map(el => el.map(el => el.techStackName))
     .map(elm => stackFilter.some(r => elm.indexOf(r) >= 0));
 
-  // 전체 o
   if (group === "전체") {
     const makeFilterdList = () => {
       const stackResult = [];

@@ -2,23 +2,21 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import handleLogout from "../../api/handleLogout";
-
 import styled from "styled-components";
-import BoardPage from "../../pages/boardpage/BoardPage";
+import BoardPage from "./BoardPage";
 import Profile from "../../components/layout/navigation/Profile";
-import Hambuger from "../../components/layout/navigation/Hambuger.tsx";
+import Hambuger from "../../components/layout/navigation/Hambuger";
 
-// true일경우 로그인된 상태
 const isLogin = Boolean(localStorage.getItem("token"));
-
 const group = ["전체", "스터디", "프로젝트"];
 
 function GroupBoardPage() {
   const [currentGroup, setCurrentGroup] = useState("전체");
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleGroup = e => {
-    setCurrentGroup(e.target.innerText);
+  const handleGroup = (event: React.MouseEvent<HTMLElement>) => {
+    const eventTarget = event.target as HTMLElement;
+    setCurrentGroup(eventTarget.innerText);
   };
 
   return (
@@ -35,14 +33,12 @@ function GroupBoardPage() {
               />
             </StyledLink>
             <LeftMenu>
-              {/* 게시판 nav바 전체, 스터디, 프로젝트 컴포넌트 */}
               {group.map(el => (
                 <StyledLink to="/board" key={el}>
                   <div
                     onClick={handleGroup}
                     className={
                       currentGroup === el ? "selectedList" : "not-selectedList"
-                      // eslint-disable-next-line prettier/prettier
                     }
                   >
                     {el}
@@ -58,9 +54,7 @@ function GroupBoardPage() {
                 <div>모집하기</div>
               </StyledLink>
 
-              <StyledLink className="logout-button" onClick={handleLogout}>
-                <div>로그아웃</div>
-              </StyledLink>
+              <div onClick={handleLogout}>로그아웃</div>
 
               <Profile />
             </RightMenu>
@@ -82,7 +76,7 @@ function GroupBoardPage() {
             }}
           />
 
-          {isOpen ? <Hambuger login={isLogin} /> : null}
+          {isOpen ? <Hambuger /> : null}
         </NavContainer>
       </NavFrame>
       <BoardPage group={currentGroup} />

@@ -14,14 +14,23 @@ import NotExistBoard from "../../components/feature/board/NotExistBoard";
 import { handleFilter } from "../../utils/handleFilter";
 import Toggle from "../../components/shared/toggle/Toggle";
 
-function BoardPage({ group }) {
+interface BoardPageProps {
+  group: string;
+}
+
+interface Datas {
+  id: number;
+  recruitDone: boolean;
+}
+
+function BoardPage({ group }: BoardPageProps) {
   const BOARD_URL = `${process.env.REACT_APP_API_URL}/board/?page=1&size=100`;
   const MEMBER_URL = `${process.env.REACT_APP_API_URL}/member`;
   const [datas, setDatas] = useState([]);
   const [isDone, setIsDone] = useState(false);
   const [stackFilter, setStackFilter] = useState([]);
   const [filterDatas, setFilterDatas] = useState([]);
-  const [isNotExist, setIsNotExist] = useState(true);
+  // const [isNotExist, setIsNotExist] = useState(true);
   const [page, setPage] = useState(1);
 
   const isLoading = !datas.length;
@@ -34,7 +43,6 @@ function BoardPage({ group }) {
   }, [stackFilter, isDone, group, page]);
 
   if (isLoading) {
-    // 로딩중 화면
     return (
       <>
         <BoardPageLayout>
@@ -49,7 +57,6 @@ function BoardPage({ group }) {
                   setSelectedList={setStackFilter}
                 />
               </StackArea>
-              {/* 로딩컴포넌트 */}
               <IsLoading />
               <PageNationArea />
             </Center>
@@ -63,7 +70,6 @@ function BoardPage({ group }) {
     );
   }
 
-  //로딩 끝난후 컴포넌트
   return (
     <>
       <BoardPageLayout>
@@ -78,6 +84,7 @@ function BoardPage({ group }) {
                 setSelectedList={setStackFilter}
               />
             </StackArea>
+
             <ToggleArea>
               {isDone ? (
                 <div className="done">모집완료</div>
@@ -86,20 +93,19 @@ function BoardPage({ group }) {
               )}
               <Toggle isDone={isDone} setIsDone={setIsDone} />
             </ToggleArea>
+
             <Content>
-              {/* 스택 필터 리스트의 길이가 0이면 ? 전체글 : 필터링 글 */}
               {filterDatas.length === 0 &&
-              stackFilter.length == 0 &&
+              stackFilter.length === 0 &&
               isDone === false &&
               group === "전체" ? (
                 datas
-                  .filter(el => el.recruitDone === isDone)
+                  .filter((el: Datas) => el.recruitDone === isDone)
                   .slice((page - 1) * 18, (page - 1) * 9 + 18)
-                  .map(el => (
+                  .map((el: Datas) => (
                     <Link
                       key={el.id}
                       to={`/board/${el.id}`}
-                      // eslint-disable-next-line prettier/prettier
                       className="board-link"
                     >
                       <Board key={el.id} data={el} />
@@ -120,11 +126,10 @@ function BoardPage({ group }) {
               ) : (
                 filterDatas
                   .slice((page - 1) * 18, (page - 1) * 9 + 18)
-                  .map(el => (
+                  .map((el: Datas) => (
                     <Link
                       key={el.id}
                       to={`/board/${el.id}`}
-                      // eslint-disable-next-line prettier/prettier
                       className="board-link"
                     >
                       <Board key={el.id} data={el} />
@@ -133,7 +138,6 @@ function BoardPage({ group }) {
               )}
             </Content>
             <PageNationArea>
-              {/* 페이지네이션 */}
               <Paging
                 page={page}
                 setPage={setPage}
@@ -142,7 +146,7 @@ function BoardPage({ group }) {
               />
             </PageNationArea>
           </Center>
-          <Side className>
+          <Side>
             <TopButton />
           </Side>
         </Main>

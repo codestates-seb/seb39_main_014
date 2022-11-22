@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import getPopStack from "../../../api/getPopStack";
@@ -6,7 +6,6 @@ import getPopStack from "../../../api/getPopStack";
 function PopStack() {
   const POPSTACK_URL = `${process.env.REACT_APP_API_URL}/board/popstack`;
   const [popStack, setPopStack] = useState([]);
-
   useEffect(() => {
     getPopStack(POPSTACK_URL, setPopStack);
   }, []);
@@ -28,7 +27,7 @@ function PopStack() {
         </Head>
         <Content>
           {popStack.map((el, idx) => (
-            <div key={el} className="content">
+            <div key={Object.keys(el)[0]} className="content">
               <p className="rank-color">
                 {idx + 1}. {Object.keys(el)}
               </p>
@@ -45,6 +44,9 @@ function PopStack() {
 const PopStackFrame = styled.div`
   width: 200px;
   height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   position: relative;
   top: 210px;
@@ -67,6 +69,7 @@ const Head = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 1.5rem;
 
   .title {
     color: #69d06f;
@@ -74,13 +77,14 @@ const Head = styled.div`
   }
 
   .pop-question {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-left: auto;
     border: 1px solid black;
     border-radius: 50%;
-    width: 15px;
-    height: 15px;
-    font-size: 12px;
+    width: 1.2rem;
+    height: 1.2rem;
   }
 
   .tooltip {
@@ -89,30 +93,15 @@ const Head = styled.div`
   }
 
   .tooltip-text {
-    /* text-align: left;
-    display: none;
-    position: absolute;
-    top: -25px;
-    bottom: 0px;
-    width: 120px;
-    height: 55px;
-    border: 1px black solid;
-    border-radius: 5px;
-    padding: 5px;
-    font-size: 15px;
-    background-color: white;
-    color: black;
-    z-index: 999; */
     text-align: left;
     position: absolute;
     background-color: #e9f7ed;
-    /* border: 1px black solid; */
     padding: 10px;
     border-radius: 5px;
     color: green;
     border-radius: 0.5em;
-    width: 125px;
-    height: 30px;
+    width: 12rem;
+    height: 3rem;
     display: none;
     left: 70px;
     top: -15px;

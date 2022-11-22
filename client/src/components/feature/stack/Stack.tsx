@@ -1,105 +1,54 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import { stackList } from "../../../constants/stackList";
 
 const Stack = ({ selectedList, setSelectedList }: any) => {
-  const stacks = {
-    전체: [
-      "JavaScript",
-      "TypeScript",
-      "React",
-      "Vue",
-      "Svelte",
-      "Next",
-      "Java",
-      "Spring",
-      "Node",
-      "Nest",
-      "Go",
-      "Kotlin",
-      "Express",
-      "MySQL",
-      "MongoDB",
-      "Python",
-      "Php",
-      "GraphQL",
-      "Flutter",
-      "Swift",
-      "ReactNative",
-      "Unity",
-      "Aws",
-      "Docker",
-    ],
-    프론트엔드: ["JavaScript", "TypeScript", "React", "Vue", "Svelte", "Next"],
-    백엔드: [
-      "Java",
-      "Spring",
-      "Node",
-      "Nest",
-      "Go",
-      "Kotlin",
-      "Express",
-      "MySQL",
-      "MongoDB",
-      "Python",
-      "Php",
-      "GraphQL",
-    ],
-    기타: ["Flutter", "Swift", "ReactNative", "Unity", "Aws", "Docker"],
-  };
+  const stackCategory = ["전체", "프론트엔드", "백엔드", "기타"];
 
   const [currentJob, setCurrentJob] = useState("전체");
-
-  /**프론트엔드 백엔드 기타 모두보기 탭*/
-  const handleJob = el => {
-    setCurrentJob(el.target.innerText);
-  };
-
-  /** 스택 선택 함수
-   * 이미 선택된 값일 경우 : filter로 selectedList에서 삭제
-   * 선택되지 않은 값일 경우 : selectedList에 추가*/
-  const handleStackClick = event => {
+  const handleStackClick = (event: string) => {
     if (selectedList.includes(event)) {
-      const deletedArr = selectedList.filter(el => el !== event);
+      const deletedArr = selectedList.filter((el: string) => el !== event);
       setSelectedList(deletedArr);
     } else {
-      setSelectedList(prev => [...prev, event]);
+      setSelectedList((prev: string[]) => [...prev, event]);
     }
   };
 
-  /** 스택 삭제 */
-  const handleStackDelete = index => {
-    const deletedArr = selectedList.filter((el, idx) => idx !== index);
+  const handleStackDelete = (index: number) => {
+    const deletedArr = selectedList.filter(
+      (el: string, idx: number) => idx !== index
+    );
     setSelectedList(deletedArr);
   };
 
-  /** 스택 초기화 */
   const handleStackReset = () => {
     setSelectedList([]);
+  };
+
+  const handleJob = (event: React.MouseEvent<HTMLElement>) => {
+    const eventTarget = event.target as HTMLElement;
+    setCurrentJob(eventTarget.innerText);
   };
 
   return (
     <StackFrame>
       <JobGroup className="tab">
-        {Object.keys(stacks).map(el => (
-          <h2
+        {stackCategory.map(el => (
+          <div
             key={el}
             onClick={handleJob}
-            // eslint-disable-next-line prettier/prettier
             className={currentJob === el ? "selectedList" : ""}
           >
             {el}
-          </h2>
+          </div>
         ))}
-        <h2
-          onClick={handleJob}
-          className={currentJob === "전체" ? "selectedList" : ""}
-        />
       </JobGroup>
+
       <StackContainer>
-        {/* 현재탭이 전체가 아닐 경우 */}
         {currentJob !== "전체"
-          ? stacks[currentJob].map(el => (
+          ? stackList[currentJob].map((el: any, idx: number) => (
               <StackImg
                 key={el}
                 src={`/assets/stack/${el}.svg`}
@@ -112,8 +61,7 @@ const Stack = ({ selectedList, setSelectedList }: any) => {
                 }
               />
             ))
-          : // 현재탭이 전체일 경우
-            [...stacks.전체].map(el => (
+          : [...stackList.전체].map(el => (
               <StackImg
                 src={`/assets/stack/${el}.svg`}
                 alt={`${el}`}
@@ -129,13 +77,11 @@ const Stack = ({ selectedList, setSelectedList }: any) => {
       </StackContainer>
       {selectedList.length ? (
         <SelectedContainer>
-          {selectedList.map((el, idx) => (
+          {selectedList.map((el: string, idx: number) => (
             <div key={el}>
               {el}
               <IoCloseCircleOutline
-                key={el}
                 className="del-icon"
-                // eslint-disable-next-line prettier/prettier
                 onClick={() => handleStackDelete(idx)}
               />
             </div>
@@ -166,15 +112,18 @@ const StackFrame = styled.div`
 const JobGroup = styled.div`
   display: flex;
   width: 100%;
+  font-size: 1.5rem;
+  font-weight: 700;
 
-  h2 {
+  div {
     color: gray;
     opacity: 0.7;
-    padding-right: 20px;
+    margin-right: 2rem;
+    margin-bottom: 1rem;
     cursor: pointer;
   }
 
-  h2:hover {
+  div:hover {
     opacity: 0.9;
   }
 
