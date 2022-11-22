@@ -1,4 +1,8 @@
-export const stackList = {
+interface StackType {
+  [prop: string]: any;
+}
+
+export const stackList: StackType = {
   전체: [
     "Aws",
     "Docker",

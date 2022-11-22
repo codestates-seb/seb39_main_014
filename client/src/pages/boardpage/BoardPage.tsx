@@ -14,33 +14,35 @@ import NotExistBoard from "../../components/feature/board/NotExistBoard";
 import { handleFilter } from "../../utils/handleFilter";
 import Toggle from "../../components/shared/toggle/Toggle";
 
-function BoardPage({ group }) {
-  // const BOARD_URL = {
-  //   ALL: `${process.env.REACT_APP_API_URL}/api/v1/board/?page=1&size=100`,
-  //   STUDY: `${process.env.REACT_APP_API_URL}/api/v1/board/study?page=1&size=100`,
-  //   PROJECT: `${process.env.REACT_APP_API_URL}/api/v1/board/project?page=1&size=100`,
-  // };
+interface BoardPageProps {
+  group: string;
+}
 
+interface Datas {
+  id: number;
+  recruitDone: boolean;
+}
+
+function BoardPage({ group }: BoardPageProps) {
   const BOARD_URL = `${process.env.REACT_APP_API_URL}/board/?page=1&size=100`;
   const MEMBER_URL = `${process.env.REACT_APP_API_URL}/member`;
-  const [datas, setDatas] = useState([]); // 각 게시글 객체가 담긴 리스트
-  const [isDone, setIsDone] = useState(false); // 모집중 모집완료
-  const [stackFilter, setStackFilter] = useState([]); // 필터링할 스택 담긴 리스트
-  const [filterDatas, setFilterDatas] = useState([]); // datas를 stackfilter로 필터링
-  const [isNotExist, setIsNotExist] = useState(true);
-  const [page, setPage] = useState(1); // 페이지네이션
+  const [datas, setDatas] = useState([]);
+  const [isDone, setIsDone] = useState(false);
+  const [stackFilter, setStackFilter] = useState([]);
+  const [filterDatas, setFilterDatas] = useState([]);
+  // const [isNotExist, setIsNotExist] = useState(true);
+  const [page, setPage] = useState(1);
 
   const isLoading = !datas.length;
 
   useEffect(() => {
-    getMember(MEMBER_URL); // 닉네임 로컬 스토리지 저장
-    getBoard(BOARD_URL, setDatas); // 게시글 가져오기
+    getMember(MEMBER_URL);
+    getBoard(BOARD_URL, setDatas);
 
     handleFilter(datas, stackFilter, setFilterDatas, isDone, group);
-  }, [stackFilter, , isDone, group, page]);
+  }, [stackFilter, isDone, group, page]);
 
   if (isLoading) {
-    // 로딩중 화면
     return (
       <>
         <BoardPageLayout>
@@ -55,7 +57,6 @@ function BoardPage({ group }) {
                   setSelectedList={setStackFilter}
                 />
               </StackArea>
-              {/* 로딩컴포넌트 */}
               <IsLoading />
               <PageNationArea />
             </Center>
@@ -69,7 +70,6 @@ function BoardPage({ group }) {
     );
   }
 
-  //로딩 끝난후 컴포넌트
   return (
     <>
       <BoardPageLayout>
@@ -84,6 +84,7 @@ function BoardPage({ group }) {
                 setSelectedList={setStackFilter}
               />
             </StackArea>
+
             <ToggleArea>
               {isDone ? (
                 <div className="done">모집완료</div>
@@ -92,20 +93,19 @@ function BoardPage({ group }) {
               )}
               <Toggle isDone={isDone} setIsDone={setIsDone} />
             </ToggleArea>
+
             <Content>
-              {/* 스택 필터 리스트의 길이가 0이면 ? 전체글 : 필터링 글 */}
               {filterDatas.length === 0 &&
-              stackFilter.length == 0 &&
+              stackFilter.length === 0 &&
               isDone === false &&
               group === "전체" ? (
                 datas
-                  .filter(el => el.recruitDone === isDone)
+                  .filter((el: Datas) => el.recruitDone === isDone)
                   .slice((page - 1) * 18, (page - 1) * 9 + 18)
-                  .map(el => (
+                  .map((el: Datas) => (
                     <Link
                       key={el.id}
                       to={`/board/${el.id}`}
-                      // eslint-disable-next-line prettier/prettier
                       className="board-link"
                     >
                       <Board key={el.id} data={el} />
@@ -126,11 +126,10 @@ function BoardPage({ group }) {
               ) : (
                 filterDatas
                   .slice((page - 1) * 18, (page - 1) * 9 + 18)
-                  .map(el => (
+                  .map((el: Datas) => (
                     <Link
                       key={el.id}
                       to={`/board/${el.id}`}
-                      // eslint-disable-next-line prettier/prettier
                       className="board-link"
                     >
                       <Board key={el.id} data={el} />
@@ -139,7 +138,6 @@ function BoardPage({ group }) {
               )}
             </Content>
             <PageNationArea>
-              {/* 페이지네이션 */}
               <Paging
                 page={page}
                 setPage={setPage}
@@ -148,7 +146,7 @@ function BoardPage({ group }) {
               />
             </PageNationArea>
           </Center>
-          <Side className>
+          <Side>
             <TopButton />
           </Side>
         </Main>

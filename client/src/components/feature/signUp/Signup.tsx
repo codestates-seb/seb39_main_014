@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import InputGroup from "../../shared/inputGroup/InputGroup";
@@ -13,16 +13,9 @@ import {
   checkUsername,
   cofirmPassword,
 } from "../../../utils/checkSignup";
-import { useGoogleLogin } from "@react-oauth/google";
 
-// 회원가입 : 이메일, 이름, 닉네임 비밀번호, 비밀번호 확인
-//http:ec2-13-125-239-56.ap-northeast-2.compute.amazonaws.com:8080/api/v1/sign-up
-
-function SignUp() {
-  // const SIGNUP_URL = "http://183.106.239.239:8080/api/v1/sign-up";
+function Signup() {
   const SIGNUP_URL = `${process.env.REACT_APP_API_URL}/sign-up`;
-  // const AUTH_LOGIN_URL = `${process.env.REACT_APP_API_URL}/oauth2/authorization/google`;
-  const AUTH_LOGIN_URL = `/oauth2/authorization/google`;
 
   const [userId, setUserId] = useState("");
   const [email, setEmail] = useState("");
@@ -32,8 +25,6 @@ function SignUp() {
   const [password2, setPassword2] = useState("");
   const [errors, setErrors] = useState("");
 
-  // 정합성 검사 state
-  // isEmail, isUsername, isNickName && ispassword && confirmPassword
   const [isUserId, setIsUserId] = useState(false);
   const [isEmail, setIsEmail] = useState(false);
   const [isUsername, setIsUsername] = useState(false);
@@ -41,7 +32,6 @@ function SignUp() {
   const [ispassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setPassWordConfirm] = useState(false);
 
-  // 커스텀 훅
   useCheck(checkId, userId, setIsUserId);
   useCheck(checkEmail, email, setIsEmail);
   useCheck(checkUsername, name, setIsUsername);
@@ -56,9 +46,7 @@ function SignUp() {
     }
   }, [password2]);
 
-  /** 회원가입 axios 요청 버튼 */
-  const handleSubmit = e => {
-    console.log("signup click");
+  const handleSubmit = () => {
     handleSignup(
       SIGNUP_URL,
       userId,
@@ -69,12 +57,6 @@ function SignUp() {
       setErrors
     );
   };
-
-  const googlelogin = useGoogleLogin({
-    onSuccess: tokenResponse =>
-      localStorage.setItem("token", tokenResponse.access_token),
-  });
-
   return (
     <SignupFrame>
       <SignUpLayout>
@@ -82,9 +64,7 @@ function SignUp() {
         <SocialContainer>
           <div className="social">
             <FcGoogle className="google-icon" />
-            <div onClick={googlelogin} className="google-login">
-              구글 계정으로 로그인
-            </div>
+            <div className="google-login">구글 계정으로 로그인</div>
           </div>
         </SocialContainer>
         <hr />
@@ -97,72 +77,64 @@ function SignUp() {
           />
           {errors.length !== 0 ? (
             <ContentCheck>중복된 아이디입니다.</ContentCheck>
-          ) : isUserId === true ? (
-            <></>
-          ) : (
+          ) : isUserId === true ? null : (
             <ContentCheck>아이디는 영어와 숫자 조합만 가능합니다.</ContentCheck>
           )}
           <InputGroup
             placeholder="이메일"
             value={email}
             setValue={setEmail}
-            // error={error.email}
+            setErrors={setErrors}
           />
-          {isEmail === true ? (
-            <></>
-          ) : (
+          {isEmail === true ? null : (
             <ContentCheck>올바른 형식의 이메일을 입력해주세요.</ContentCheck>
           )}
           <InputGroup
             placeholder="이름"
             value={name}
             setValue={setUsername}
-            // error={errors.name}
+            setErrors={setErrors}
           />
-          {isUsername === true ? (
-            <></>
-          ) : (
+          {isUsername === true ? null : (
             <ContentCheck>이름은 한글만 입력가능합니다.</ContentCheck>
           )}
+
           <InputGroup
             placeholder="닉네임"
             value={nickname}
             setValue={setNick}
-            // error={errors.name}
+            setErrors={setErrors}
           />
-          {isNickName === true ? (
-            <></>
-          ) : (
+          {isNickName === true ? null : (
             <ContentCheck>
               닉네임은 한글, 영어, 숫자 조합만 가능합니다.
             </ContentCheck>
           )}
+
           <InputGroup
             placeholder="비밀번호"
             value={password}
             setValue={setPassword}
+            setErrors={setErrors}
             type="password"
-            // error={errors.password}
           />
-          {ispassword === true ? (
-            <></>
-          ) : (
+          {ispassword === true ? null : (
             <ContentCheck>
               8~16자 영문 대 소문자, 숫자를 사용하세요.
             </ContentCheck>
           )}
+
           <InputGroup
             placeholder="비밀번호 확인"
             type="password"
             value={password2}
             setValue={setPassword2}
-            // error={errors.password}
+            setErrors={setErrors}
           />
-          {isPasswordConfirm === true ? (
-            <></>
-          ) : (
+          {isPasswordConfirm === true ? null : (
             <ContentCheck>비밀번호가 일치하지 않습니다.</ContentCheck>
           )}
+
           {isUserId &&
           isEmail &&
           isUsername &&
@@ -173,7 +145,6 @@ function SignUp() {
             <button
               type="button"
               className="allow-signup"
-              // eslint-disable-next-line prettier/prettier
               onClick={handleSubmit}
             >
               가입하기
@@ -184,6 +155,7 @@ function SignUp() {
             </button>
           )}
         </form>
+
         <div className="sign-up">
           <div>이미 아이디가 있으신가요?</div>
           <div className="move-sign-up">
@@ -383,4 +355,4 @@ const ContentCheck = styled.p`
   opacity: 0.8;
 `;
 
-export default SignUp;
+export default Signup;
