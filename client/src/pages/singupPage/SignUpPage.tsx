@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Signup from "../../components/feature/signup/Signup";
 
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Signup from "../../components/feature/signUp/Signup";
 
 function SignUpPage() {
   return (
