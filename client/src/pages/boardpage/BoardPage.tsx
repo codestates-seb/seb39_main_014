@@ -14,16 +14,41 @@ import NotExistBoard from "../../components/feature/board/NotExistBoard";
 import { handleFilter } from "../../utils/handleFilter";
 import Toggle from "../../components/shared/toggle/Toggle";
 
-interface BoardPageProps {
-  group: string;
+interface Career {
+  careerCurrentRecruit: number;
+  careerName: string;
+  careerTotalRecruit: number;
+}
+
+interface TechStack {
+  techStackName: string;
 }
 
 interface Datas {
+  bookmarkCount: number;
+  commentAmount: number;
+  contact: string;
+  contents: string;
+  createdAt: string;
+  currentRecruit: number;
+  deleted: boolean;
+  deletedAt: null;
   id: number;
+  location: string;
+  modifiedAt: string;
+  nickName: string;
+  period: string;
+  recruitCategory: string;
   recruitDone: boolean;
+  recruitMethod: string;
+  title: string;
+  totalRecruit: number;
+  viewCount: number;
+  boardCareers: Array<Career>;
+  techStackNames: Array<TechStack>;
 }
 
-function BoardPage({ group }: BoardPageProps) {
+function BoardPage({ group }: { group: string }) {
   const BOARD_URL = `${process.env.REACT_APP_API_URL}/board/?page=1&size=100`;
   const MEMBER_URL = `${process.env.REACT_APP_API_URL}/member`;
   const [datas, setDatas] = useState([]);
