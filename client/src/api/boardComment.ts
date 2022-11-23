@@ -2,7 +2,7 @@ import { httpMehthod, API_PATH } from "./common";
 import requester from "./requester";
 import { Comments } from "../types/api";
 
-export const getComments = async (boardId: number) => {
+export const getComments = async (boardId?: string) => {
   const {
     board: { board, comment },
   } = API_PATH;
@@ -13,7 +13,7 @@ export const getComments = async (boardId: number) => {
   });
   return payload;
 };
-type Post = { boardId: number; content: string };
+type Post = { boardId?: string; content: string };
 export const postComments = async ({ boardId, content }: Post) => {
   const {
     board: { board, comment },
@@ -27,7 +27,7 @@ export const postComments = async ({ boardId, content }: Post) => {
   return payload;
 };
 
-type Update = { boardId: number; groupNumber: number; content: string };
+type Update = { boardId?: string; groupNumber: number; content: string };
 export const updateComments = async ({
   boardId,
   groupNumber,
@@ -45,7 +45,7 @@ export const updateComments = async ({
   return payload;
 };
 
-type Delete = { boardId: number; groupNumber: number };
+type Delete = { boardId?: string; groupNumber: number };
 export const deleteComments = async ({ boardId, groupNumber }: Delete) => {
   const {
     board: { board, comment },

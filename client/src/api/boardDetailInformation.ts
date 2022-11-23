@@ -1,8 +1,9 @@
 import requester from "./requester";
 import { httpMehthod, API_PATH } from "./common";
 import { BoardDetail } from "../types/api";
+import { Submit } from "../types/createBoard";
 
-export const getInformation = async (boardId: number) => {
+export const getBoard = async (boardId?: string) => {
   const {
     board: { board },
   } = API_PATH;
@@ -14,7 +15,7 @@ export const getInformation = async (boardId: number) => {
   return payload;
 };
 
-type BoardId = { boardId: number };
+type BoardId = { boardId?: string };
 export const deleteBoard = async ({ boardId }: BoardId) => {
   const {
     board: { board },
@@ -23,6 +24,19 @@ export const deleteBoard = async ({ boardId }: BoardId) => {
   const { payload } = await requester<BoardDetail>({
     method: httpMehthod.DELETE,
     url: `${board}/${boardId}`,
+  });
+  return payload;
+};
+
+export const updateBoard = async (boardId: string, submitForm: Submit) => {
+  const {
+    board: { board },
+  } = API_PATH;
+
+  const { payload } = await requester<BoardDetail>({
+    method: httpMehthod.PATCH,
+    url: `${board}/${boardId}`,
+    data: submitForm,
   });
   return payload;
 };
@@ -41,7 +55,7 @@ export const postBookmark = async ({ boardId }: BoardId) => {
 
 type ApplyList = { board: [{ careerName: string; nickName: string }] };
 
-export const getApply = async (boardId: number) => {
+export const getApply = async (boardId?: string) => {
   const {
     board: { board, apply },
   } = API_PATH;
@@ -53,7 +67,7 @@ export const getApply = async (boardId: number) => {
   return payload;
 };
 
-type PostApply = { boardId: number; careerId: number };
+type PostApply = { boardId?: string; careerId: number };
 
 export const postApply = async ({ boardId, careerId }: PostApply) => {
   const {
