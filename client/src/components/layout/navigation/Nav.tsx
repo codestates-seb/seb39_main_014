@@ -34,7 +34,9 @@ function Nav() {
             <StyledLink to="/board/write">
               <div>모집하기</div>
             </StyledLink>
-            <div onClick={handleLogout}>로그아웃</div>
+            <div className="logout-button" onClick={handleLogout}>
+              로그아웃
+            </div>
             <Profile />
           </RightMenu>
         ) : (
@@ -138,9 +140,12 @@ const RightMenu = styled.div`
   margin-right: 0px;
   align-items: center;
 
+  .logout-button {
+    margin-left: 20px;
+  }
+
   .logout-button:hover {
     color: #ff7d85;
-    margin-left: 20px;
     cursor: pointer;
   }
 
