@@ -11,6 +11,7 @@
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
+    "@types/react-js-pagination": "^3.0.4",
     "@types/react-router": "^5.1.19",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^0.27.2",
@@ -67,6 +68,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "file-loader": "^6.2.0",
     "prettier": "^2.7.1",
     "prettier-eslint": "^15.0.1",
     "react-scripts": "5.0.1"

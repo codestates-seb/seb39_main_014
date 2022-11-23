@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import InputGroup from "../../shared/inputGroup/InputGroup";
 import { FcGoogle } from "react-icons/fc";
 import useCheck from "../../../hooks/useCheck";
-import handleSignup from "../../../api/handleSignup";
+import handleSignup from "../../../api/signup";
 import {
   checkId,
   checkEmail,
@@ -47,15 +47,15 @@ function Signup() {
   }, [password2]);
 
   const handleSubmit = () => {
-    handleSignup(
+    handleSignup({
       SIGNUP_URL,
       userId,
       email,
       name,
       nickname,
       password,
-      setErrors
-    );
+      setErrors,
+    });
   };
   return (
     <SignupFrame>

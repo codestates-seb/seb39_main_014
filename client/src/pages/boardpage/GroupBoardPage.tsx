@@ -54,7 +54,9 @@ function GroupBoardPage() {
                 <div>모집하기</div>
               </StyledLink>
 
-              <div onClick={handleLogout}>로그아웃</div>
+              <div className="logout-button" onClick={handleLogout}>
+                로그아웃
+              </div>
 
               <Profile />
             </RightMenu>
