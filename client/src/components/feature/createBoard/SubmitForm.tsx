@@ -3,7 +3,7 @@ import ReactQuill from "react-quill";
 import styled from "styled-components";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { formats, modules } from "../../../utils/reactQuill";
+import { formats, modules } from "../../../constants/reactQuill";
 import * as S from "../../../pages/writeForm/styled";
 import { postBoard, updateBoard } from "../../../api/board";
 import { getBoard } from "../../../api/boardDetail";
