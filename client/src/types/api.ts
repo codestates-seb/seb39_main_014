@@ -1,12 +1,45 @@
 export type Comments = {
-  boardId: number;
-  content: {
-    nickname: string;
-    content: string;
-    groupNumber: number;
-    groupSeq?: string;
-    createdAt: string;
+  content: [
+    {
+      nickname: string;
+      content: string;
+      groupNumber: number;
+      groupSeq: string;
+      createdAt: string;
+      modifiedAt: string;
+      groupDepth: boolean;
+    }
+  ];
+};
+
+export type BoardDetail = {
+  board: {
+    id: number;
+    boardCareers: [
+      {
+        careerName: string;
+        careerCurrentRecruit: number;
+        careerTotalRecruit: number;
+      }
+    ];
+    bookmarkCount: number;
+    commentAmount: number;
+    contact: string;
+    contents: string;
+    createdAt?: string | undefined;
     modifiedAt: string;
-    groupDepth: boolean;
-  }[];
+    currentRecruit: number;
+    deleted: boolean;
+    deletedAt?: string;
+    location: string;
+    nickName: string;
+    period: string;
+    recruitCategory: string;
+    recruitDone: boolean;
+    recruitMethod: string;
+    techStackNames: [{ techStackName: string }];
+    title: string;
+    totalRecruit: number;
+    viewCount: number;
+  };
 };
