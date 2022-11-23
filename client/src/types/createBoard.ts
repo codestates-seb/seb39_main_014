@@ -1,4 +1,4 @@
-∂export interface Object {
+export interface Object {
   object: {
     recruitCategory: string;
     recruitMethod: string;

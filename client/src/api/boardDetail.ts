@@ -1,7 +1,6 @@
 import requester from "./requester";
-import { httpMehthod, API_PATH } from "./common";
+import { httpMethod, API_PATH } from "./common";
 import { BoardDetail } from "../types/api";
-import { Submit } from "../types/createBoard";
 
 export const getBoard = async (boardId?: string) => {
   const {
@@ -9,7 +8,7 @@ export const getBoard = async (boardId?: string) => {
   } = API_PATH;
 
   const { payload } = await requester<BoardDetail>({
-    method: httpMehthod.GET,
+    method: httpMethod.GET,
     url: `${board}/${boardId}`,
   });
   return payload;
@@ -22,21 +21,8 @@ export const deleteBoard = async ({ boardId }: BoardId) => {
   } = API_PATH;
 
   const { payload } = await requester<BoardDetail>({
-    method: httpMehthod.DELETE,
+    method: httpMethod.DELETE,
     url: `${board}/${boardId}`,
-  });
-  return payload;
-};
-
-export const updateBoard = async (boardId: string, submitForm: Submit) => {
-  const {
-    board: { board },
-  } = API_PATH;
-
-  const { payload } = await requester<BoardDetail>({
-    method: httpMehthod.PATCH,
-    url: `${board}/${boardId}`,
-    data: submitForm,
   });
   return payload;
 };
@@ -47,7 +33,7 @@ export const postBookmark = async ({ boardId }: BoardId) => {
   } = API_PATH;
 
   const { payload } = await requester<BoardDetail>({
-    method: httpMehthod.POST,
+    method: httpMethod.POST,
     url: `${board}/${boardId}${bookmark}`,
   });
   return payload;
@@ -61,7 +47,7 @@ export const getApply = async (boardId?: string) => {
   } = API_PATH;
 
   const { payload } = await requester<ApplyList>({
-    method: httpMehthod.GET,
+    method: httpMethod.GET,
     url: `${board}/${boardId}${apply}`,
   });
   return payload;
@@ -75,7 +61,7 @@ export const postApply = async ({ boardId, careerId }: PostApply) => {
   } = API_PATH;
 
   const { payload } = await requester<BoardDetail>({
-    method: httpMehthod.POST,
+    method: httpMethod.POST,
     url: `${board}/${boardId}${apply}`,
     data: { careerId },
   });
@@ -88,7 +74,7 @@ export const deleteApply = async ({ boardId }: BoardId) => {
   } = API_PATH;
 
   const { payload } = await requester<BoardDetail>({
-    method: httpMehthod.DELETE,
+    method: httpMethod.DELETE,
     url: `${board}/${boardId}${apply}`,
   });
   return payload;
