@@ -14,9 +14,10 @@ export const ConfirmModal = (title: string) => {
 };
 
 export const SuccessModal = (title: string) => {
-  Swal.fire({
+  const res = Swal.fire({
     title,
     icon: "success",
     confirmButtonColor: "#69D06F",
   });
+  return res;
 };
