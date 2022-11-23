@@ -16,7 +16,7 @@ import useBoardMutation from "../../../hooks/useBoradMutation";
 
 function CommentForm() {
   const { boardId } = useParams<string>();
-  const { commentLists } = useCommentQuery(Number(boardId));
+  const { commentLists } = useCommentQuery(boardId);
 
   const [groupNumber, setGroupNumber] = useState<number | null>(null);
   const [input, setInput] = useState("");
@@ -33,7 +33,7 @@ function CommentForm() {
     e.preventDefault();
     if (contentRef.current.value) {
       postMutate.mutate({
-        boardId: Number(boardId),
+        boardId,
         content: contentRef.current.value,
       });
       contentRef.current.value = "";
@@ -46,7 +46,7 @@ function CommentForm() {
 
   const handleModificationSubmit = (number: number) => {
     updateMutate.mutate({
-      boardId: Number(boardId),
+      boardId,
       groupNumber: number,
       content: input,
     });
@@ -56,7 +56,7 @@ function CommentForm() {
   const handlecCommentDelete = (groupNumber: number) => {
     ConfirmModal("댓글을 삭제 하시겠습니까?").then(res => {
       if (res.isConfirmed) {
-        deleteMutate.mutate({ boardId: Number(boardId), groupNumber });
+        deleteMutate.mutate({ boardId, groupNumber });
         SuccessModal("삭제 완료!");
       }
     });

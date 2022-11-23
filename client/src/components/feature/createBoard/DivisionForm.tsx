@@ -1,13 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import {
-  FirstDivision,
-  FirstLeft,
-  FirstRight,
-  SecondDivision,
-  SecondLeft,
-  SecondRight,
-} from "../../../pages/writeForm/styled";
+import * as S from "../../../pages/writeForm/styled";
 import {
   regionLists,
   stackLists,
@@ -18,14 +11,14 @@ import {
 import { AiOutlineDown } from "react-icons/ai";
 import { GoX } from "react-icons/go";
 import CareerForm from "./CareerForm";
-import axios from "axios";
+import { getBoard } from "../../../api/boardDetail";
 import _ from "lodash";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 
+import { SelectedStack, TechStack } from "../../../types/createBoard";
+
 function DivisionForm() {
   const { boardId } = useParams();
-  const BOARD_URL = `${process.env.REACT_APP_API_URL}/board/${boardId}`;
-  const [modifyInfo, setModifyInfo] = useState([]);
 
   const [recruitCategory, setRecruitCategory] = useState("STUDY");
   const [recruitMethod, setRecruitMethod] = useState("ONLINE");
@@ -39,15 +32,17 @@ function DivisionForm() {
   const [stack, setStack] = useState("");
   const [isStack, setIsStack] = useState(false);
   const [newStackList, setNewStackList] = useState(stackLists);
-  const [selectedStackList, setSelectedStackList] = useState([]);
-  const [techStacks, setTechStacks] = useState([]);
+  const [selectedStackList, setSelectedStackList] = useState<SelectedStack[]>(
+    []
+  );
+  const [techStacks, setTechStacks] = useState<TechStack[]>([]);
 
   const [search, setSearch] = useState("");
 
   /** 외부클릭 관련 ref */
-  const recuirtClickRef = useRef();
-  const stackClickRef = useRef();
-  const periodClickRef = useRef();
+  const recuirtClickRef = useRef() as React.MutableRefObject<HTMLDivElement>;
+  const stackClickRef = useRef() as React.MutableRefObject<HTMLDivElement>;
+  const periodClickRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   const stackRef = useRef(0);
   const newStackRef = useRef(9);
@@ -61,46 +56,43 @@ function DivisionForm() {
   useEffect(() => {
     setLoading(true);
     if (boardId) {
-      axios
-        .get(BOARD_URL)
+      getBoard(boardId)
         .then(res => {
-          setModifyInfo(res.data.board);
           setRecruitCategory(
-            res.data.board.recruitCategory === "스터디" ? "STUDY" : "PROJECT"
+            res.board.recruitCategory === "스터디" ? "STUDY" : "PROJECT"
           );
           setRecruitMethod(
-            res.data.board.recruitMethod === "온라인" ? "ONLINE" : "OFFLINE"
+            res.board.recruitMethod === "온라인" ? "ONLINE" : "OFFLINE"
           );
           setNewStackList(
             newStackList.filter(
               prev =>
-                !res.data.board.techStackNames
+                !res.board.techStackNames
                   .map(el => el.techStackName)
                   .includes(prev.stack)
             )
           );
           setSelectedStackList(
-            res.data.board.techStackNames.map(el => ({
+            res.board.techStackNames.map(el => ({
               id: el.techStackName,
               techStackName: stackNumbers[0][el.techStackName],
             }))
           );
           setTechStacks(
-            res.data.board.techStackNames.map(el => ({
+            res.board.techStackNames.map(el => ({
               techStackId: stackNumbers[0][el.techStackName],
             }))
           );
           setPeriodValue({
-            period: _.filter(periodLists, { period: res.data.board.period })[0]
+            period: _.filter(periodLists, { period: res.board.period })[0]
               .period,
-            value: _.filter(periodLists, { period: res.data.board.period })[0]
-              .value,
+            value: _.filter(periodLists, { period: res.board.period })[0].value,
           });
           setLocation({
             region: _.filter(regionLists, {
-              region: res.data.board.location,
+              region: res.board.location,
             })[0].region,
-            value: _.filter(regionLists, { region: res.data.board.location })[0]
+            value: _.filter(regionLists, { region: res.board.location })[0]
               .value,
           });
         })
@@ -128,31 +120,32 @@ function DivisionForm() {
     period: periodValue.value,
   };
 
-  const handleStackListClick = e => {
+  const handleStackListClick = (e: React.MouseEvent<HTMLLIElement>) => {
     e.preventDefault();
-    setStack(e.target.innerText);
+    const event = e.target as HTMLLIElement;
+    setStack(event.innerText);
     if (selectedStackList.length < 7) {
       setSelectedStackList([
         ...selectedStackList,
         {
           id: stackRef.current,
-          techStackName: stackNumbers[0][e.target.innerText],
+          techStackName: stackNumbers[0][event.innerText],
         },
       ]);
       stackRef.current = stackRef.current + 1;
       setTechStacks([
         ...techStacks,
-        { techStackId: stackNumbers[0][e.target.innerText] },
+        { techStackId: stackNumbers[0][event.innerText] },
       ]);
       setIsStack(!isStack);
       setNewStackList(
-        newStackList.filter(prev => prev.stack !== e.target.innerText)
+        newStackList.filter(prev => prev.stack !== event.innerText)
       );
     }
   };
 
   /** 선택된 스택 추가 및 선택된 스택 기존 목록에서 제거*/
-  const handleStackListRemove = id => {
+  const handleStackListRemove = (id: number | string) => {
     // target의 id
     const newSelectedStackList = selectedStackList.filter(
       prev => prev.id === id
@@ -169,7 +162,7 @@ function DivisionForm() {
   };
 
   /** 기간 변경 */
-  const handlePeriodClick = e => {
+  const handlePeriodClick = (e: { period: string; value: string }) => {
     setIsPeriod(!isPeriod);
     setPeriodValue(prev => {
       return { ...prev, period: e.period, value: e.value };
@@ -187,8 +180,8 @@ function DivisionForm() {
 
   return (
     <>
-      <FirstDivision>
-        <FirstLeft>
+      <S.FirstDivision>
+        <S.FirstLeft>
           <label htmlFor="repo">모집 구분</label>
           <div className="Check-box">
             <input
@@ -208,8 +201,8 @@ function DivisionForm() {
             />
             <label htmlFor="PROJECT">프로젝트</label>
           </div>
-        </FirstLeft>
-        <FirstRight>
+        </S.FirstLeft>
+        <S.FirstRight>
           <label htmlFor="ONLINE">모임 방식</label>
           <div className="Check-box">
             <input
@@ -228,14 +221,13 @@ function DivisionForm() {
               onChange={e => setRecruitMethod(e.target.value)}
             />
             <label htmlFor="OFFLINE">오프라인</label>
-            <div className="Location-box">
-              {recruitMethod === "OFFLINE" ? (
+            <div className="Location-box" ref={recuirtClickRef}>
+              {recruitMethod === "OFFLINE" && (
                 <div className="Location-button">
                   <button
                     onClick={e => {
                       e.preventDefault();
                       setIsLocation(!isLocation);
-                      // eslint-disable-next-line prettier/prettier
                     }}
                   >
                     {location.region}
@@ -248,14 +240,9 @@ function DivisionForm() {
                     }}
                   />
                 </div>
-              ) : null}
-              {isLocation && recruitMethod === "OFFLINE" ? (
-                <ul
-                  className="location"
-                  ref={recuirtClickRef}
-                  // eslint-disable-next-line prettier/prettier
-                  value={isLocation}
-                >
+              )}
+              {isLocation && recruitMethod === "OFFLINE" && (
+                <ul className="location">
                   {regionLists.map(el => (
                     <li
                       key={el.id}
@@ -268,20 +255,19 @@ function DivisionForm() {
                             value: el.value,
                           };
                         });
-                        // eslint-disable-next-line prettier/prettier
                       }}
                     >
                       {el.region}
                     </li>
                   ))}
                 </ul>
-              ) : null}
+              )}
             </div>
           </div>
-        </FirstRight>
-      </FirstDivision>
-      <SecondDivision>
-        <SecondLeft>
+        </S.FirstRight>
+      </S.FirstDivision>
+      <S.SecondDivision>
+        <S.SecondLeft ref={stackClickRef}>
           <label htmlFor="classification">기술 스택 (최대 7개)</label>
           <div
             onClick={e => {
@@ -306,7 +292,7 @@ function DivisionForm() {
             />
           </div>
           {isStack ? (
-            <ul className="Stacklists" ref={stackClickRef}>
+            <ul className="Stacklists">
               {searchStack.map(el => {
                 return (
                   <li key={el.id} onClick={handleStackListClick}>
@@ -316,7 +302,7 @@ function DivisionForm() {
               })}
             </ul>
           ) : null}
-          {selectedStackList ? (
+          {selectedStackList && (
             <span className="Added-stack-list">
               {selectedStackList.map(el => (
                 <div key={el.id}>
@@ -332,16 +318,15 @@ function DivisionForm() {
                 </div>
               ))}
             </span>
-          ) : null}
-        </SecondLeft>
-        <SecondRight>
+          )}
+        </S.SecondLeft>
+        <S.SecondRight ref={periodClickRef}>
           <label htmlFor="period">기간</label>
           <div>
             <div
               onClick={e => {
                 e.preventDefault();
                 setIsPeriod(!isPeriod);
-                // eslint-disable-next-line prettier/prettier
               }}
             >
               {periodValue.period}
@@ -354,17 +339,17 @@ function DivisionForm() {
               }}
             />
           </div>
-          {isPeriod ? (
-            <ul className="Periodlists" ref={periodClickRef}>
+          {isPeriod && (
+            <ul className="Periodlists">
               {periodLists.map(el => (
                 <li key={el.id} onClick={() => handlePeriodClick(el)}>
                   {el.period}
                 </li>
               ))}
             </ul>
-          ) : null}
-        </SecondRight>
-      </SecondDivision>
+          )}
+        </S.SecondRight>
+      </S.SecondDivision>
       <CareerForm object={object} />
     </>
   );

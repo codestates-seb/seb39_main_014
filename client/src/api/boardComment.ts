@@ -1,33 +1,33 @@
-import { httpMehthod, API_PATH } from "./common";
+import { httpMethod, API_PATH } from "./common";
 import requester from "./requester";
 import { Comments } from "../types/api";
 
-export const getComments = async (boardId: number) => {
+export const getComments = async (boardId?: string) => {
   const {
     board: { board, comment },
   } = API_PATH;
 
   const { payload } = await requester<Comments>({
-    method: httpMehthod.GET,
+    method: httpMethod.GET,
     url: `${board}/${boardId}${comment}`,
   });
   return payload;
 };
-type Post = { boardId: number; content: string };
+type Post = { boardId?: string; content: string };
 export const postComments = async ({ boardId, content }: Post) => {
   const {
     board: { board, comment },
   } = API_PATH;
 
   const { payload } = await requester<Comments>({
-    method: httpMehthod.POST,
+    method: httpMethod.POST,
     url: `${board}/${boardId}${comment}`,
     data: { content },
   });
   return payload;
 };
 
-type Update = { boardId: number; groupNumber: number; content: string };
+type Update = { boardId?: string; groupNumber: number; content: string };
 export const updateComments = async ({
   boardId,
   groupNumber,
@@ -38,21 +38,21 @@ export const updateComments = async ({
   } = API_PATH;
 
   const { payload } = await requester<Comments>({
-    method: httpMehthod.PATCH,
+    method: httpMethod.PATCH,
     url: `${board}/${boardId}${comment}`,
     data: { groupNumber, content },
   });
   return payload;
 };
 
-type Delete = { boardId: number; groupNumber: number };
+type Delete = { boardId?: string; groupNumber: number };
 export const deleteComments = async ({ boardId, groupNumber }: Delete) => {
   const {
     board: { board, comment },
   } = API_PATH;
 
   const { payload } = await requester<Comments>({
-    method: httpMehthod.DELETE,
+    method: httpMethod.DELETE,
     url: `${board}/${boardId}${comment}`,
     data: { groupNumber },
   });

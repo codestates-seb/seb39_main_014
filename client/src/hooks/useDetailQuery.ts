@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { getInformation } from "../api/boardDetailInformation";
+import { getBoard } from "../api/boardDetail";
 
-const useDetailQuery = (boardId: number) => {
+const useDetailQuery = (boardId?: string) => {
   const { data: detailInfo } = useQuery(
-    ["getInformation", boardId],
-    () => getInformation(boardId),
+    ["getBoard", boardId],
+    () => getBoard(boardId),
     { select: data => data.board }
   );
   return { detailInfo };

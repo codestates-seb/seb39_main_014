@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getComments } from "../api/boardComment";
 
-const useCommentQuery = (boardId: number) => {
+const useCommentQuery = (boardId?: string) => {
   const { data: commentLists } = useQuery(
     ["getComments", boardId],
     () => getComments(boardId),
