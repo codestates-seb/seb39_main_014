@@ -14,12 +14,12 @@ import {
   deleteBoard,
   postApply,
   postBookmark,
-} from "../../../api/boardDetailInformation";
+} from "../../../api/boardDetail";
 import { getLocalStorage } from "../../../utils/storage";
 import useApplyQuery from "../../../hooks/useApplyQuery";
 
 function Information() {
-  const { boardId } = useParams();
+  const { boardId } = useParams<string>();
   const navigate = useNavigate();
 
   const user = getLocalStorage("nickname");
@@ -27,18 +27,18 @@ function Information() {
   const [bookmarkCount, setBookmarkCount] = useState(0);
   const [isBookmark, setIsBookmark] = useState(false);
 
-  const { detailInfo } = useDetailQuery(Number(boardId));
-  const { applyList } = useApplyQuery(Number(boardId));
-  const deleteBoardMutate = useBoardMutation(deleteBoard, "getInformation");
+  const { detailInfo } = useDetailQuery(boardId);
+  const { applyList } = useApplyQuery(boardId);
+  const deleteBoardMutate = useBoardMutation(deleteBoard, "getBoard");
 
-  const postBookmarkMutate = useBoardMutation(postBookmark, "getInformation");
-  const postApplyMutate = useBoardMutation(postApply, "getInformation");
-  const deleteApplyMutate = useBoardMutation(deleteApply, "getInformation");
+  const postBookmarkMutate = useBoardMutation(postBookmark, "getBoard");
+  const postApplyMutate = useBoardMutation(postApply, "getBoard");
+  const deleteApplyMutate = useBoardMutation(deleteApply, "getBoard");
   const deadline = useDeadline(detailInfo?.createdAt);
 
   /** 북마크 추가 관련 수정 필요 */
   const handleBookmarkClick = () => {
-    postBookmarkMutate.mutate({ boardId: Number(boardId) });
+    postBookmarkMutate.mutate({ boardId });
     setIsBookmark(!isBookmark);
     isBookmark
       ? setBookmarkCount(bookmarkCount - 1)
@@ -49,7 +49,7 @@ function Information() {
     e.preventDefault();
     ConfirmModal("게시글을 삭제 하시겠습니까?").then(res => {
       if (res.isConfirmed) {
-        deleteBoardMutate.mutate({ boardId: Number(boardId) });
+        deleteBoardMutate.mutate({ boardId });
         SuccessModal("삭제 완료!");
         window.location.replace("/board");
       }
@@ -68,7 +68,7 @@ function Information() {
             SuccessModal("로그인이 필요합니다.");
           } else {
             postApplyMutate.mutate({
-              boardId: Number(boardId),
+              boardId,
               careerId: careerLists.filter(
                 prev => prev.career === careerName
               )[0].id,
@@ -80,7 +80,7 @@ function Information() {
     } else if (event.innerText === "지원 취소") {
       ConfirmModal("지원 취소 하시겠습니까?").then(res => {
         if (res.isConfirmed) {
-          deleteApplyMutate.mutate({ boardId: Number(boardId) });
+          deleteApplyMutate.mutate({ boardId });
           SuccessModal("지원을 취소 했습니다.");
         }
       });
@@ -95,7 +95,9 @@ function Information() {
         <S.Buttons>
           <div className="Recruitment-classification">
             <span>{detailInfo.recruitCategory}</span>
-            <button>{deadline ? `D-${deadline}` : `모집 마감`}</button>
+            <button>
+              {deadline && deadline > 0 ? `D-${deadline}` : `모집 마감`}
+            </button>
           </div>
           {user === detailInfo.nickName ? (
             <div className="Patch-delete">

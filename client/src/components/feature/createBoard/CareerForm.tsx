@@ -1,38 +1,46 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { careerLists } from "../../../constants/WriteFormData";
 import { Career, Crew } from "../../../pages/writeForm/styled";
-
+import { getBoard } from "../../../api/boardDetail";
 import { AiOutlineDown } from "react-icons/ai";
+import {
+  Object,
+  CrewState,
+  CareersState,
+  CareerState,
+} from "../../../types/createBoard";
 import SubmitForm from "./SubmitForm";
-import axios from "axios";
 import _ from "lodash";
 
-function CareerForm({ object }) {
+function CareerForm({ object }: Object) {
   const { boardId } = useParams();
-  const BOARD_URL = `${process.env.REACT_APP_API_URL}/board/${boardId}`;
 
-  const [career, setCareer] = useState("모집 분류");
+  const [career, setCareer] = useState<CareerState>({
+    career: "모집 분류",
+    value: 0,
+  });
   const [isCareer, setIsCareer] = useState(false);
 
   const [count, setCount] = useState(1);
-  const [crew, setCrew] = useState([]);
-  const [careers, setCareers] = useState([]);
+  const [crew, setCrew] = useState<CrewState[]>([]);
+  const [careers, setCareers] = useState<CareersState[]>([]);
   const [newCareerList, setNewCareerList] = useState(careerLists);
 
   const [loading, setLoading] = useState(false);
 
   const idCount = useRef(0);
-  const careerClickRef = useRef();
+  const careerClickRef = useRef() as React.MutableRefObject<HTMLDivElement>;
+  useOutsideClick(careerClickRef, setIsCareer);
 
   useEffect(() => {
     if (boardId) {
       setLoading(true);
-      axios
-        .get(BOARD_URL)
+      getBoard(boardId)
         .then(res => {
           setCrew(
-            res.data.board.boardCareers.map(el => ({
+            res.board.boardCareers.map(el => ({
               id: el.careerName,
               career: el.careerName,
               careerTotalRecruit: el.careerTotalRecruit,
@@ -42,7 +50,7 @@ function CareerForm({ object }) {
             }))
           );
           setCareers(
-            res.data.board.boardCareers.map(el => ({
+            res.board.boardCareers.map(el => ({
               careerId: _.filter(careerLists, {
                 career: el.careerName,
               })[0].value,
@@ -52,54 +60,38 @@ function CareerForm({ object }) {
           setNewCareerList(
             newCareerList.filter(
               prev =>
-                !res.data.board.boardCareers
+                !res.board.boardCareers
                   .map(el => el.careerName)
                   .includes(prev.career)
             )
           );
         })
         .then(res => setLoading(false));
-    } else setLoading(false);
-  }, []);
-
-  /** 외부 클릭시 창 사라지는 기능 */
-  const handleClickOutside = event => {
-    if (careerClickRef && !careerClickRef.current.contains(event.target)) {
-      setIsCareer(false);
-    } else {
-      setIsCareer(true);
     }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  });
+  }, []);
 
   /** props 전달할 객체 */
   const newObject = { ...object, boardCareers: careers };
 
   /** 인원 증가 감소 버튼 */
-  const onCountHandler = e => {
+  const onCountHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (e.target.value === "-") {
+    const event = e.target as HTMLButtonElement;
+    if (event.value === "-") {
       if (count === 1) {
         setCount(1);
       } else {
         setCount(prev => prev - 1);
       }
-    } else if (e.target.value === "+") {
+    } else if (event.value === "+") {
       setCount(prev => prev + 1);
     }
   };
 
   /** 추가 버튼 핸들러 */
-  const onCrewAdditionHandler = e => {
+  const onCrewAdditionHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (career !== "모집 분류") {
+    if (career.career !== "모집 분류") {
       setCrew([
         ...crew,
         {
@@ -117,7 +109,7 @@ function CareerForm({ object }) {
         },
       ]);
       setCount(1);
-      setCareer("모집 분류");
+      setCareer({ career: "모집 분류", value: 0 });
       setNewCareerList(
         newCareerList.filter(prev => prev.career !== career.career)
       );
@@ -126,7 +118,7 @@ function CareerForm({ object }) {
   };
 
   /** 삭제 버튼 핸들러 */
-  const onDeleteHandler = (careerId, career) => {
+  const onDeleteHandler = (careerId: number, career: string) => {
     setCrew(crew.filter(prev => prev.careerId !== careerId));
     setCareers(careers.filter(prev => prev.careerId !== careerId));
     setNewCareerList([
@@ -141,18 +133,13 @@ function CareerForm({ object }) {
     <>
       <Career>
         <label htmlFor="categorization">모집 분류 / 인원</label>
-
         <div className="Bundle">
-          <div className="Select-option">
+          <div className="Select-option" ref={careerClickRef}>
             <div className="Career-select">
               <button
                 onClick={e => {
                   e.preventDefault();
                   setIsCareer(!isCareer);
-                  // eslint-disable-next-line prettier/prettier
-                  // eslint-disable-next-line prettier/prettier
-                  // eslint-disable-next-line prettier/prettier
-                  // eslint-disable-next-line prettier/prettier
                 }}
               >
                 {career.career ? career.career : `모집 분류`}
@@ -166,22 +153,21 @@ function CareerForm({ object }) {
                 }}
               />
             </div>
-            {isCareer ? (
-              <ul className="Careerlists" ref={careerClickRef}>
+            {isCareer && (
+              <ul className="Careerlists">
                 {newCareerList.map(el => (
                   <li
                     key={el.id}
                     onClick={() => {
                       setIsCareer(!isCareer);
                       setCareer({ career: el.career, value: el.value });
-                      // eslint-disable-next-line prettier/prettier
                     }}
                   >
                     {el.career}
                   </li>
                 ))}
               </ul>
-            ) : null}
+            )}
           </div>
           <div className="BundleButton">
             <button className="Count minus" value="-" onClick={onCountHandler}>
@@ -196,22 +182,17 @@ function CareerForm({ object }) {
             </button>
           </div>
         </div>
-        {crew
-          ? crew.map(el => (
-              <Crew key={el.careerId}>
-                <div>
-                  {el.career} : {el.careerTotalRecruit}명
-                </div>
-                <button
-                  crew={crew}
-                  // eslint-disable-next-line prettier/prettier
-                  onClick={() => onDeleteHandler(el.careerId, el.career)}
-                >
-                  삭제
-                </button>
-              </Crew>
-            ))
-          : null}
+        {crew &&
+          crew.map(el => (
+            <Crew key={el.careerId}>
+              <div>
+                {el.career} : {el.careerTotalRecruit}명
+              </div>
+              <button onClick={() => onDeleteHandler(el.careerId, el.career)}>
+                삭제
+              </button>
+            </Crew>
+          ))}
       </Career>
       <SubmitForm newObject={newObject} />
     </>

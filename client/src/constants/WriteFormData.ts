@@ -27,7 +27,12 @@ export const stackLists = [
   { id: 25, stack: "Firebase" },
   { id: 26, stack: "Figma" },
 ];
-export const stackNumbers = [
+
+interface StackNum {
+  [key: string]: number;
+}
+
+export const stackNumbers: StackNum[] = [
   {
     Java: 1,
     JavaScript: 2,
@@ -57,7 +62,12 @@ export const stackNumbers = [
     Figma: 26,
   },
 ];
-export const stackReverse = [
+
+interface StackRev {
+  [key: number]: string;
+}
+
+export const stackReverse: StackRev[] = [
   {
     1: "Java",
     2: "JavaScript",
@@ -100,7 +110,13 @@ export const regionLists = [
   { id: 8, region: "제주", value: "JEJU" },
 ];
 
-export const periodLists = [
+interface Period {
+  id: number;
+  period: string;
+  value: string;
+}
+
+export const periodLists: Period[] = [
   { id: 1, period: "미정", value: "NO_CHOICE" },
   { id: 2, period: "1개월", value: "ONE_MONTH" },
   { id: 3, period: "2개월", value: "TWO_MONTH" },

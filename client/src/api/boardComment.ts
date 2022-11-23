@@ -1,4 +1,4 @@
-import { httpMehthod, API_PATH } from "./common";
+import { httpMethod, API_PATH } from "./common";
 import requester from "./requester";
 import { Comments } from "../types/api";
 
@@ -8,7 +8,7 @@ export const getComments = async (boardId?: string) => {
   } = API_PATH;
 
   const { payload } = await requester<Comments>({
-    method: httpMehthod.GET,
+    method: httpMethod.GET,
     url: `${board}/${boardId}${comment}`,
   });
   return payload;
@@ -20,7 +20,7 @@ export const postComments = async ({ boardId, content }: Post) => {
   } = API_PATH;
 
   const { payload } = await requester<Comments>({
-    method: httpMehthod.POST,
+    method: httpMethod.POST,
     url: `${board}/${boardId}${comment}`,
     data: { content },
   });
@@ -38,7 +38,7 @@ export const updateComments = async ({
   } = API_PATH;
 
   const { payload } = await requester<Comments>({
-    method: httpMehthod.PATCH,
+    method: httpMethod.PATCH,
     url: `${board}/${boardId}${comment}`,
     data: { groupNumber, content },
   });
@@ -52,7 +52,7 @@ export const deleteComments = async ({ boardId, groupNumber }: Delete) => {
   } = API_PATH;
 
   const { payload } = await requester<Comments>({
-    method: httpMehthod.DELETE,
+    method: httpMethod.DELETE,
     url: `${board}/${boardId}${comment}`,
     data: { groupNumber },
   });

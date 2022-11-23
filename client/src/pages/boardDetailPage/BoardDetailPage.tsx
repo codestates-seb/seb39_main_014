@@ -1,5 +1,5 @@
-import Information from "../../components/feature/boardDetail/Information";
-import Comment from "../../components/feature/boardDetail/Comment";
+import Information from "../../components/feature/detailBoard/Information";
+import Comment from "../../components/feature/detailBoard/Comment";
 import { InquiryContainer, ContentContainer, ContentWrapper } from "./styled";
 
 function BoardDetailPage() {

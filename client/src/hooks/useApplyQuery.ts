@@ -1,7 +1,7 @@
-import { getApply } from "./../api/boardDetailInformation";
+import { getApply } from "../api/boardDetail";
 import { useQuery } from "@tanstack/react-query";
 
-const useApplyQuery = (boardId: number) => {
+const useApplyQuery = (boardId?: string) => {
   const { data: applyList } = useQuery(
     ["getApply", boardId],
     () => getApply(boardId),
