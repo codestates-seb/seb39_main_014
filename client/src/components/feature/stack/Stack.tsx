@@ -48,7 +48,7 @@ const Stack = ({ selectedList, setSelectedList }: any) => {
 
       <StackContainer>
         {currentJob !== "전체"
-          ? stackList[currentJob].map((el: any, idx: number) => (
+          ? stackList[currentJob].map((el: string, idx: number) => (
               <StackImg
                 key={el}
                 src={`/assets/stack/${el}.svg`}
@@ -90,9 +90,7 @@ const Stack = ({ selectedList, setSelectedList }: any) => {
             초기화
           </button>
         </SelectedContainer>
-      ) : (
-        ""
-      )}
+      ) : null}
     </StackFrame>
   );
 };

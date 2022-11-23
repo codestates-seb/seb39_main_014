@@ -1,21 +1,39 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import { AiOutlineEye, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import Toggle from "../../shared/toggle/Toggle";
 
-//로컬스토리지 저장된 토큰 사용 -> localStorage.getItem("token");
-//로컬스토리지 저장된
+// interface techStack {
+//   techStackName: string;
+// }
 
-/** 게시글 컴포넌트 */
-function Board({ data }) {
+// interface BoardProps {
+//   data: {
+//     id: number;
+//     recruitDone: boolean;
+//     location: string;
+//     period: string;
+//     title: string;
+//     currentRecruit: number;
+//     totalRecruit: number;
+//     createdAt: string;
+//     nickName: string;
+//     viewCount: number;
+//     commentAmount: number;
+//     isBookmarked: string;
+//     bookmarkCount: number;
+//     techStackNames: Array<techStack>;
+//   };
+// }
+
+function Board({ data }: any) {
   const [createdAt, setCreatedAt] = useState("");
-  const [dday, setDday] = useState(null);
+  const [dday, setDday] = useState<number>();
 
   useEffect(() => {
-    setCreatedAt(data.createdAt.slice(0, 10));
+    setCreatedAt(createdAt.slice(0, 10));
 
-    const createdAtDay = new Date(data.createdAt);
+    const createdAtDay = new Date(createdAt);
     const today = new Date();
     const dayGap = today.getTime() - createdAtDay.getTime();
     const result = Math.ceil(dayGap / (1000 * 60 * 60 * 24));
@@ -45,7 +63,7 @@ function Board({ data }) {
         <TagLayout>{/* advanced */}</TagLayout>
         <StackLayout>
           {data.techStackNames
-            ? data.techStackNames.map(el => (
+            ? data.techStackNames.map((el: any) => (
                 <img
                   key={el.techStackName}
                   className="stack-logo"
@@ -62,7 +80,7 @@ function Board({ data }) {
             <p> / </p>
             <p> {data.totalRecruit}</p>
             <p>▿</p>
-            <div className="created-at">{data.createdAt.slice(0, 10)}</div>
+            <div className="created-at">{createdAt.slice(0, 10)}</div>
           </div>
         </RecruitmentLayout>
         <Boundary>
@@ -103,7 +121,6 @@ function Board({ data }) {
   );
 }
 
-/** div - 각 게시글의 프레임 */
 const PostFrame = styled.div`
   display: flex;
   align-items: center;
@@ -133,7 +150,6 @@ const PostFrame = styled.div`
     margin: 5px;
   }
 `;
-/** div - board 요소 정렬용 레이아웃*/
 const PostLayout = styled.div`
   display: grid;
   grid-template-rows: 2fr 4fr 1.5fr 2fr 1fr 0.1fr 1fr;
@@ -142,7 +158,6 @@ const PostLayout = styled.div`
   align-items: center;
 `;
 
-/** div - 지역, 활동 기간, 모집 기한 */
 const TopLayout = styled.div`
   display: flex;
   align-items: center;
@@ -150,7 +165,6 @@ const TopLayout = styled.div`
   width: 270px;
   font-size: 12px;
 
-  /* 지역 | 온 / 오프라인 | 기간 */
   div {
     display: flex;
     align-items: center;
@@ -167,7 +181,6 @@ const TopLayout = styled.div`
     margin-left: -70px;
   }
 
-  /* 모집기한 */
   .info-deadline {
     display: flex;
     align-items: center;
@@ -181,7 +194,6 @@ const TopLayout = styled.div`
   }
 `;
 
-/** div - 제목 */
 const TitleLayout = styled.div`
   h3 {
     font-weight: 400;
@@ -193,15 +205,13 @@ const TitleLayout = styled.div`
     word-break: break-word;
 
     display: -webkit-box;
-    -webkit-line-clamp: 2; // 원하는 라인수
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
 `;
 
-/** div - Advanced : 태그 기능 */
 const TagLayout = styled.div``;
 
-/** div - 기술 스택 */
 const StackLayout = styled.div`
   padding-left: 10px;
   .stack-logo {
@@ -209,7 +219,6 @@ const StackLayout = styled.div`
   }
 `;
 
-/** div - 모집인원 */
 const RecruitmentLayout = styled.div`
   display: flex;
   align-items: center;
@@ -231,7 +240,6 @@ const RecruitmentLayout = styled.div`
   }
 `;
 
-/** div - 경계선 */
 const Boundary = styled.div`
   .boundary-line {
     margin-top: -10px;
@@ -241,8 +249,7 @@ const Boundary = styled.div`
   }
 `;
 
-/** div - 프로필, 닉네임, 조회수, 댓글 수, 북마크 수 */
-// 리팩토링 화면 구성 마치고 나서 리팩토링 필요
+// TODO: 리팩토링 화면 구성 마치고 나서 리팩토링 필요
 const BottomLayout = styled.div`
   display: flex;
   width: 290px;
@@ -250,7 +257,6 @@ const BottomLayout = styled.div`
   justify-content: space-between;
 `;
 
-/** div - (Bottom) 프로필사진, 닉네임  */
 const ProfileArea = styled.div`
   display: flex;
   align-items: center;
@@ -269,7 +275,6 @@ const ProfileArea = styled.div`
   }
 `;
 
-/** div - (BottomLayout) 조회수, 댓글수, 북마크수 */
 const CntArea = styled.div`
   display: flex;
   align-items: center;

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import handleLogout from "../../../api/handleLogout";
@@ -12,7 +12,6 @@ const isLogin = Boolean(localStorage.getItem("token"));
 function Nav() {
   const locationNow = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  // const hambugerClickRef = useRef();
 
   if (locationNow.pathname === "/board") return null;
   return (
@@ -64,7 +63,7 @@ function Nav() {
 
 const NavFrame = styled.nav`
   background: white;
-  height: 60px;
+  height: 4rem;
 
   display: flex;
   align-items: center;

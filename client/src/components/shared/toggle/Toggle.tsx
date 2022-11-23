@@ -1,7 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-const Toggle = ({ isDone, setIsDone }) => {
+interface DoneProps {
+  setIsDone: (arg: boolean) => void;
+  isDone: boolean;
+}
+
+const Toggle = ({ isDone, setIsDone }: DoneProps) => {
   const handleDone = () => {
     setIsDone(!isDone);
   };
