@@ -1,10 +1,15 @@
-import React, { useState } from "react";
 import Pagination from "react-js-pagination";
 import styled from "styled-components";
 import { scrollToTop } from "../../shared/topButton/TopButton";
 
-const Paging = ({ page, setPage, datas, filterDatas }) => {
-  const handlePageChange = page => {
+interface PageProps {
+  page: number;
+  setPage: (arg: number) => void;
+  datas: Array<any>;
+  filterDatas: Array<any>;
+}
+const Paging = ({ page, setPage, datas, filterDatas }: PageProps) => {
+  const handlePageChange = (page: number) => {
     setPage(page);
     scrollToTop();
   };
