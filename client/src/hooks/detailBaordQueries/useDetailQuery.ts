@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getBoard } from "../api/boardDetail";
+import { getBoard } from "../../apis/detailBoardApis/detailBoard";
 
 const useDetailQuery = (boardId?: string) => {
   const { data: detailInfo } = useQuery(

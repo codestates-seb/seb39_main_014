@@ -1,6 +1,6 @@
-import { httpMethod, API_PATH } from "./common";
-import requester from "./requester";
-import { Comments } from "../types/api";
+import { httpMethod, API_PATH } from "../common";
+import requester from "../requester";
+import { Comments } from "../../types/api";
 
 export const getComments = async (boardId?: string) => {
   const {

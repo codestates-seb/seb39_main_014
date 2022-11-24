@@ -5,8 +5,8 @@ import "react-quill/dist/quill.snow.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { formats, modules } from "../../../constants/reactQuill";
 import * as S from "../../../pages/writeForm/styled";
-import { postBoard, updateBoard } from "../../../api/board";
-import { getBoard } from "../../../api/boardDetail";
+import { postBoard, updateBoard } from "../../../apis/board";
+import { getBoard } from "../../../apis/detailBoardApis/detailBoard";
 import { ConfirmModal, SuccessModal } from "../../shared/modal/Modal";
 import { NewObj } from "../../../types/createBoard";
 

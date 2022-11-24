@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
-import handleLogout from "../../../api/handleLogout";
+import handleLogout from "../../../apis/handleLogout";
 
 import styled from "styled-components";
 import Hambuger from "./Hambuger";

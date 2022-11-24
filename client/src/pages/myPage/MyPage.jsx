@@ -19,7 +19,10 @@ import { AiOutlineDown } from "react-icons/ai";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
-import { BoardInfo } from "../boardDetailPage/styled";
+import {
+  ConfirmModal,
+  SuccessModal,
+} from "../../components/shared/modal/Modal";
 
 export const levelData = [
   { level: "초보", value: "BEGINNER" },
@@ -132,15 +135,7 @@ function MyPage() {
   /** 마이페이지 변경 완료 */
   const handleMypageSubmit = e => {
     e.preventDefault();
-    Swal.fire({
-      title: "정보 수정을 완료 하시겠습니까?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#69D06F",
-      cancelButtonColor: "#FF6464",
-      confirmButtonText: "등록",
-      cancelButtonText: "취소",
-    }).then(result => {
+    ConfirmModal("정보 수정을 완료 하시겠습니까?").then(result => {
       if (result.isConfirmed) {
         axios
           .post(
@@ -165,11 +160,7 @@ function MyPage() {
             }
           )
           .catch(err => console.log(err));
-        Swal.fire({
-          title: "수정 완료!",
-          icon: "success",
-          confirmButtonColor: "#69D06F",
-        }).then(res => {
+        SuccessModal("수정 완료!").then(res => {
           if (res.isConfirmed) {
             navigate("/board");
           }
@@ -186,8 +177,7 @@ function MyPage() {
       setState(state.filter(el => el.boardId !== id));
     }
   };
-  console.log(applyList);
-  console.log(bookmarkList);
+
   const handleAllCheck = (checked, list, setState) => {
     if (checked) {
       const idArr = [];
@@ -242,15 +232,7 @@ function MyPage() {
   /** 회원 탈퇴 */
   const handleWithdrawalDelete = e => {
     e.preventDefault();
-    Swal.fire({
-      title: "회원 탈퇴 하시겠습니까?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#69D06F",
-      cancelButtonColor: "#FF6464",
-      confirmButtonText: "확인",
-      cancelButtonText: "취소",
-    })
+    ConfirmModal("회원 탈퇴 하시겠습니까?")
       .then(res => {
         if (res.isConfirmed) {
           axios
@@ -264,11 +246,7 @@ function MyPage() {
       })
       .then(res => {
         if (res.isConfirmed) {
-          Swal.fire({
-            title: "탈퇴 완료!",
-            icon: "success",
-            confirmButtonColor: "#69D06F",
-          }).then(res => {
+          SuccessModal("탈퇴 완료!").then(res => {
             navigate("/board");
           });
         }
@@ -304,7 +282,7 @@ function MyPage() {
               <p onClick={() => setIsCareer(!isCareer)}>
                 {career.name} / {career.level}
               </p>
-              {isCareer ? (
+              {isCareer && (
                 <div className="Career-level-lists" ref={careerClickRef}>
                   <ul className="Career-list">
                     {careerLists.map(el => (
@@ -335,7 +313,7 @@ function MyPage() {
                     ))}
                   </ul>
                 </div>
-              ) : null}
+              )}
             </div>
             <label className="Activity-label">활동 점수</label>
             <div className="Activity">{activeScore}점</div>

@@ -8,8 +8,8 @@ import {
   deleteComments,
   postComments,
   updateComments,
-} from "../../../api/boardComment";
-import useCommentQuery from "../../../hooks/useCommentQuery";
+} from "../../../apis/detailBoardApis/commentBoard";
+import useCommentQuery from "../../../hooks/detailBaordQueries/useCommentQuery";
 import { ConfirmModal, SuccessModal } from "../../shared/modal/Modal";
 import { getLocalStorage } from "../../../utils/storage";
 import useBoardMutation from "../../../hooks/useBoradMutation";

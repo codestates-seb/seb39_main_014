@@ -1,7 +1,6 @@
-import React from "react";
 import { WriteFormContainer, FormContainer } from "./styled";
 
-import DivisionForm from "../../components/feature/writeForm/DivisionForm";
+import DivisionForm from "../../components/feature/createBoard/DivisionForm";
 
 function WriteForm() {
   return (

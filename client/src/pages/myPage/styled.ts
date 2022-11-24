@@ -27,6 +27,7 @@ export const Content = styled.div`
 export const UserInfoWrapper = styled.div`
   display: grid;
   align-items: center;
+  padding-top: 1.6rem;
   grid-template-columns: 2fr 1fr 2fr 2fr;
   grid-template-rows: auto repeat(3, 1fr);
   width: 100%;
