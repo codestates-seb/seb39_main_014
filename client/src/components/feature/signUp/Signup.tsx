@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import InputGroup from "../../shared/inputGroup/InputGroup";
 import { FcGoogle } from "react-icons/fc";
 import useCheck from "../../../hooks/useCheck";
-import handleSignup from "../../../api/signup";
+import handleSignup from "../../../apis/signup";
 import {
   checkId,
   checkEmail,

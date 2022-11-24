@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { careerLists } from "../../../constants/WriteFormData";
 import { Career, Crew } from "../../../pages/writeForm/styled";
-import { getBoard } from "../../../api/boardDetail";
+import { getBoard } from "../../../apis/detailBoardApis/detailBoard";
 import { AiOutlineDown } from "react-icons/ai";
 import {
   Object,

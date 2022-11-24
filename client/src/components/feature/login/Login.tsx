@@ -3,7 +3,7 @@ import styled from "styled-components";
 import InputGroup from "../../shared/inputGroup/InputGroup";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-import handleLogin from "../../../api/login";
+import handleLogin from "../../../apis/login";
 
 function Login() {
   const LOGIN_URL = `${process.env.REACT_APP_API_URL}/log-in`;

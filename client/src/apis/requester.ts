@@ -1,4 +1,4 @@
-import { removeLocalStorage } from "./../utils/storage";
+import { removeLocalStorage } from "../utils/storage";
 import { ACCESS_TOKEN } from "./common";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { getLocalStorage } from "../utils/storage";

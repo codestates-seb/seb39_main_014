@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import handleLogout from "../../../api/handleLogout";
+import handleLogout from "../../../apis/handleLogout";
 
 function Hambuger() {
   const isLogin = Boolean(localStorage.getItem("token"));

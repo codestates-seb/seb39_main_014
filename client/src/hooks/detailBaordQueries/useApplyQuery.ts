@@ -1,4 +1,4 @@
-import { getApply } from "../api/boardDetail";
+import { getApply } from "../../apis/detailBoardApis/detailBoard";
 import { useQuery } from "@tanstack/react-query";
 
 const useApplyQuery = (boardId?: string) => {

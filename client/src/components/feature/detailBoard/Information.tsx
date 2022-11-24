@@ -6,7 +6,7 @@ import { BiArrowBack } from "react-icons/bi";
 import * as S from "../../../pages/boardDetailPage/styled";
 import { careerLists } from "../../../constants/WriteFormData";
 import { ConfirmModal, SuccessModal } from "../../shared/modal/Modal";
-import useDetailQuery from "../../../hooks/useDetailQuery";
+import useDetailQuery from "../../../hooks/detailBaordQueries/useDetailQuery";
 import useDeadline from "../../../hooks/useDeadline";
 import useBoardMutation from "../../../hooks/useBoradMutation";
 import {
@@ -14,9 +14,9 @@ import {
   deleteBoard,
   postApply,
   postBookmark,
-} from "../../../api/boardDetail";
+} from "../../../apis/detailBoardApis/detailBoard";
 import { getLocalStorage } from "../../../utils/storage";
-import useApplyQuery from "../../../hooks/useApplyQuery";
+import useApplyQuery from "../../../hooks/detailBaordQueries/useApplyQuery";
 
 function Information() {
   const { boardId } = useParams<string>();

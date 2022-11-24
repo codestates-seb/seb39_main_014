@@ -11,7 +11,7 @@ import {
 import { AiOutlineDown } from "react-icons/ai";
 import { GoX } from "react-icons/go";
 import CareerForm from "./CareerForm";
-import { getBoard } from "../../../api/boardDetail";
+import { getBoard } from "../../../apis/detailBoardApis/detailBoard";
 import _ from "lodash";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 
