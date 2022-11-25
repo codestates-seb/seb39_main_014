@@ -1,14 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, MutableRefObject } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  MypageContainer,
-  ContentWrapper,
-  Content,
-  UserInfoWrapper,
-  Profile,
-  UserBoardWrapper,
-  UserBoard,
-} from "./styled";
+import * as S from "./styled";
 import {
   careerLists,
   levelLists,
@@ -16,13 +8,19 @@ import {
 } from "../../constants/WriteFormData";
 import { GoX } from "react-icons/go";
 import { AiOutlineDown } from "react-icons/ai";
-import axios from "axios";
-import Swal from "sweetalert2";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import {
   ConfirmModal,
   SuccessModal,
 } from "../../components/shared/modal/Modal";
+import { useMypage, useMypageBookmark } from "../../hooks/myPageQueries";
+import {
+  deleteMypageApply,
+  getMypageApply,
+} from "../../apis/myPageApis/myPageApply";
+import { deleteUser, postMypageInfo } from "../../apis/myPageApis/myPageApi";
+import { Check, List, Mypage, TechStack } from "../../types/mypage";
+import { deleteMypageBookmark } from "../../apis/myPageApis/myPageBookMark";
 
 export const levelData = [
   { level: "초보", value: "BEGINNER" },
@@ -32,19 +30,18 @@ export const levelData = [
 
 function MyPage() {
   const navigate = useNavigate();
-  const MYPAGE_URL = `${process.env.REACT_APP_API_URL}/my-page`;
   const [career, setCareer] = useState({
     name: "웹 프론트엔드",
     level: "초보",
   });
+  const { mypageInfo, isLoading } = useMypage();
+  const { mypageBookmark, bookmarkLoading } = useMypageBookmark();
   const [isCareer, setIsCareer] = useState(false);
   const outSection = useRef();
-  const [info, setInfo] = useState([]);
 
-  const [nickname, setNickname] = useState("");
-  const [activeScore, setActiveScore] = useState(0);
+  const [nickname, setNickname] = useState<string | undefined>("");
 
-  const [techStack, setTechStack] = useState([]);
+  const [techStack, setTechStack] = useState<TechStack[]>([]);
   const [newStackList, setNewStackList] = useState(stackLists);
   const [istechStackList, setIsTechStackList] = useState(false);
   const stackRef = useRef(0);
@@ -53,72 +50,45 @@ function MyPage() {
   const [search, setSearch] = useState("");
 
   const [isTab, setIsTab] = useState(true);
-  const [bookmarkList, setBookmarkList] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [applyList, setApplyList] = useState([]);
+  const [bookmarkList, setBookmarkList] = useState<List[]>([]);
+  const [applyList, setApplyList] = useState<List[]>([]);
 
   const [bookmarkCheckLists, setBookmarkCheckLists] = useState([]);
   const [applyCheckLists, setApplyCheckLists] = useState([]);
 
-  const careerClickRef = useRef();
-  const stackClickRef = useRef();
+  const careerClickRef = useRef() as MutableRefObject<HTMLDivElement>;
+  const stackClickRef = useRef() as MutableRefObject<HTMLDivElement>;
 
   /** 유저정보 get 요청 함수 */
   const getMypage = () => {
-    axios
-      .get(`${MYPAGE_URL}/info`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-      .then(res => {
-        setInfo(res.data);
-        setNickname(res.data.nickname);
-        setTechStack(
-          res.data.techStack.map(el => ({ name: el.name, id: el.name }))
-        );
-        setCareer({
-          name: res.data.career[0].name,
-          level: res.data.career[0].level,
-        });
-      })
-      .catch(err => console.log(err));
+    setNickname(mypageInfo.nickname);
+    setTechStack(
+      mypageInfo.techStack.map(el => ({ name: el.name, id: el.name }))
+    );
+    setCareer({
+      name: mypageInfo.career[0].name,
+      level: mypageInfo.career[0].level,
+    });
   };
 
   /** 북마크 get 요청 함수 */
   const getBookmark = () => {
-    axios
-      .get(`${MYPAGE_URL}/bookmark`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-      .then(res => {
-        setBookmarkList(res.data.bookmarkList);
-      })
-      .catch(err => console.log(err));
+    setBookmarkList(mypageBookmark.bookmarkList);
   };
 
   /** 지원한 게시글 get 요청 함수 */
   const getApply = () => {
-    axios
-      .get(`${MYPAGE_URL}/apply`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
+    getMypageApply()
       .then(res => {
-        setApplyList(res.data.boardApplyList);
+        setApplyList(res.boardApplyList);
       })
       .catch(err => console.log(err));
   };
 
   useEffect(() => {
-    setLoading(true);
     getMypage();
     getBookmark();
     getApply();
-    setLoading(false);
   }, []);
 
   /** 외부 클릭시 창 사라지는 기능 */
@@ -132,34 +102,24 @@ function MyPage() {
     } else return prev.stack.toLowerCase().includes(search.toLowerCase());
   });
 
+  const postApplyForm: Mypage = {
+    nickname: nickname,
+    activeScore: 0,
+    techStack: techStack.map(el => ({ name: el.name })),
+    career: [
+      {
+        name: career.name,
+        level: levelData.filter(prev => prev.level === career.level)[0].value,
+      },
+    ],
+  };
+
   /** 마이페이지 변경 완료 */
-  const handleMypageSubmit = e => {
+  const handleMypageSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     ConfirmModal("정보 수정을 완료 하시겠습니까?").then(result => {
       if (result.isConfirmed) {
-        axios
-          .post(
-            `${MYPAGE_URL}/info`,
-            {
-              nickname: nickname,
-              activeScore: 0,
-              techStack: techStack.map(el => ({ name: el.name })),
-              career: [
-                {
-                  name: career.name,
-                  level: levelData.filter(
-                    prev => prev.level === career.level
-                  )[0].value,
-                },
-              ],
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
-            }
-          )
-          .catch(err => console.log(err));
+        postMypageInfo(postApplyForm).catch(err => console.log(err));
         SuccessModal("수정 완료!").then(res => {
           if (res.isConfirmed) {
             navigate("/board");
@@ -170,104 +130,83 @@ function MyPage() {
   };
 
   /** 북마크,지원 체크 리스트 */
-  const handleSingleCheck = (checked, id, title, state, setState) => {
-    if (checked) {
+  const handleSingleCheck = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: number,
+    title: string,
+    state: List[],
+    setState: React.Dispatch<React.SetStateAction<List[]>>
+  ) => {
+    const event = e.target as HTMLInputElement;
+    if (event.checked) {
       setState([...state, { boardId: id, title: title }]);
     } else {
       setState(state.filter(el => el.boardId !== id));
     }
   };
 
-  const handleAllCheck = (checked, list, setState) => {
-    if (checked) {
-      const idArr = [];
-      list.forEach(el => idArr.push({ boardId: el.boardId, title: el.title }));
+  const handleAllCheck = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    state: List[],
+    setState: React.Dispatch<React.SetStateAction<List[]>>
+  ) => {
+    const event = e.target as HTMLInputElement;
+    if (event.checked) {
+      const idArr: List[] = [];
+      state.forEach(el => idArr.push({ boardId: el.boardId, title: el.title }));
       setState(idArr);
     } else {
       setState([]);
     }
   };
-  // { bookmarkList: checkListState }
+
   /** 북마크 리스트 삭제 */
-  const handleBookmarkListDelete = e => {
-    e.preventDefault();
-    axios
-      .delete(`${MYPAGE_URL}/bookmark`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        data: { bookmarkList: bookmarkCheckLists },
-      })
+  const handleBookmarkListDelete = () => {
+    deleteMypageBookmark(bookmarkCheckLists)
       .then(res => {
-        setBookmarkList(res.data.bookmarkList);
+        setBookmarkList(res.bookmarkList);
         setBookmarkCheckLists([]);
       })
       .catch(err => console.log(err));
   };
 
   /** 지원 리스트 삭제 */
-  const handleApplyListDelete = e => {
-    e.preventDefault();
-    axios
-      .delete(`${MYPAGE_URL}/apply`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        data: { applyList: applyCheckLists },
-      })
+  const handleApplyListDelete = () => {
+    deleteMypageApply(applyList)
       .then(res => {
-        setApplyList(res.data.applyList);
+        setApplyList(res.boardApplyList);
         setApplyCheckLists([]);
         getApply();
       })
       .catch(err => console.log(err));
   };
 
-  /** 북마크 지원 탭 클릭 핸들러 */
-  const handleTabClick = el => {
-    el.preventDefault();
-    setIsTab(el);
-  };
-
   /** 회원 탈퇴 */
-  const handleWithdrawalDelete = e => {
+  const handleWithdrawalDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    ConfirmModal("회원 탈퇴 하시겠습니까?")
-      .then(res => {
-        if (res.isConfirmed) {
-          axios
-            .delete(`${MYPAGE_URL}/delete`, {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
-            })
-            .catch(err => console.log(err));
-        }
-      })
-      .then(res => {
-        if (res.isConfirmed) {
-          SuccessModal("탈퇴 완료!").then(res => {
-            navigate("/board");
-          });
-        }
-      });
+    ConfirmModal("회원 탈퇴 하시겠습니까?").then(res => {
+      if (res.isConfirmed) {
+        deleteUser().catch(err => console.log(err));
+        SuccessModal("탈퇴 완료!").then(res => navigate("/board"));
+      }
+    });
   };
 
-  if (loading) return null;
+  if (isLoading || bookmarkLoading) return <div>로딩중!</div>;
 
   return (
-    <MypageContainer>
-      <ContentWrapper>
-        <Content>
-          <UserInfoWrapper>
-            <Profile>
+    <S.MypageContainer>
+      <S.ContentWrapper>
+        <S.Content>
+          <S.UserInfoWrapper>
+            <S.Profile>
               <img alt="profile" src="/assets/logo/only_logo.svg" />
-            </Profile>
+            </S.Profile>
             <label className="Nickname-label">닉네임</label>
             <input
               className="Nickname"
               type="text"
-              defaultValue={info.nickname}
+              defaultValue={mypageInfo?.nickname}
               onChange={e => setNickname(e.target.value)}
             />
             <div
@@ -316,7 +255,7 @@ function MyPage() {
               )}
             </div>
             <label className="Activity-label">활동 점수</label>
-            <div className="Activity">{activeScore}점</div>
+            <div className="Activity">{mypageInfo.activeScore}점</div>
             <label className="Stack-label">기술 스택</label>
             <div
               className="Registration-box"
@@ -324,6 +263,7 @@ function MyPage() {
                 e.preventDefault();
                 setIsTechStackList(!istechStackList);
               }}
+              ref={stackClickRef}
             >
               <input
                 className="Registration"
@@ -339,8 +279,8 @@ function MyPage() {
                   setIsTechStackList(!istechStackList);
                 }}
               />{" "}
-              {istechStackList ? (
-                <ul className="Stacklist" ref={stackClickRef}>
+              {istechStackList && (
+                <ul className="Stacklist">
                   {searchStack.map(el => (
                     <li
                       key={el.id}
@@ -359,37 +299,36 @@ function MyPage() {
                     </li>
                   ))}
                 </ul>
-              ) : null}
+              )}
             </div>
 
             <div className="Stack">
-              {techStack
-                ? techStack.map(el => (
-                    <div key={el.id}>
-                      <img alt={el.name} src={`/assets/stack/${el.name}.svg`} />
-                      <GoX
-                        className="Gox"
-                        onClick={() => {
-                          setTechStack(
-                            techStack.filter(prev => prev.id !== el.id)
-                          );
-                          setNewStackList([
-                            ...newStackList,
-                            {
-                              id: newStackRef.current,
-                              stack: el.name,
-                            },
-                          ]);
-                          newStackRef.current = newStackRef.current + 1;
-                        }}
-                      />
-                    </div>
-                  ))
-                : null}
+              {techStack &&
+                techStack.map(el => (
+                  <div key={el.id}>
+                    <img alt={el.name} src={`/assets/stack/${el.name}.svg`} />
+                    <GoX
+                      className="Gox"
+                      onClick={() => {
+                        setTechStack(
+                          techStack.filter(prev => prev.id !== el.id)
+                        );
+                        setNewStackList([
+                          ...newStackList,
+                          {
+                            id: newStackRef.current,
+                            stack: el.name,
+                          },
+                        ]);
+                        newStackRef.current = newStackRef.current + 1;
+                      }}
+                    />
+                  </div>
+                ))}
             </div>
-          </UserInfoWrapper>
-          <UserBoardWrapper>
-            <UserBoard>
+          </S.UserInfoWrapper>
+          <S.UserBoardWrapper>
+            <S.UserBoard>
               <div className="Myboard">
                 <div
                   className={isTab ? "Bookmark" : ""}
@@ -413,7 +352,7 @@ function MyPage() {
                           type="checkbox"
                           onChange={e =>
                             handleSingleCheck(
-                              e.target.checked,
+                              e,
                               el.boardId,
                               el.title,
                               bookmarkCheckLists,
@@ -439,7 +378,7 @@ function MyPage() {
                           type="checkbox"
                           onChange={e =>
                             handleAllCheck(
-                              e.target.checked,
+                              e,
                               bookmarkList,
                               setBookmarkCheckLists
                             )
@@ -456,57 +395,55 @@ function MyPage() {
                     </div>
                   </>
                 ) : null
-              ) : applyList ? (
-                <>
-                  {applyList.map(el => (
-                    <div className="Checkboard" key={el.boardId}>
-                      <input
-                        type="checkbox"
-                        onChange={e =>
-                          handleSingleCheck(
-                            e.target.checked,
-                            el.boardId,
-                            el.title,
-                            applyCheckLists,
-                            setApplyCheckLists
-                          )
-                        }
-                        checked={
-                          applyCheckLists
-                            .map(el => el.boardId)
-                            .includes(el.boardId)
-                            ? true
-                            : false
-                        }
-                      />
-                      <div onClick={() => navigate(`/board/${el.boardId}`)}>
-                        {el.title}
+              ) : (
+                applyList && (
+                  <>
+                    {applyList.map(el => (
+                      <div className="Checkboard" key={el.boardId}>
+                        <input
+                          type="checkbox"
+                          onChange={e =>
+                            handleSingleCheck(
+                              e,
+                              el.boardId,
+                              el.title,
+                              applyCheckLists,
+                              setApplyCheckLists
+                            )
+                          }
+                          checked={
+                            applyCheckLists
+                              .map(el => el.boardId)
+                              .includes(el.boardId)
+                              ? true
+                              : false
+                          }
+                        />
+                        <div onClick={() => navigate(`/board/${el.boardId}`)}>
+                          {el.title}
+                        </div>
                       </div>
+                    ))}
+                    <div className="Select-all">
+                      <div>
+                        <input
+                          type="checkbox"
+                          onChange={e =>
+                            handleAllCheck(e, applyList, setApplyCheckLists)
+                          }
+                          checked={
+                            applyCheckLists.length === applyList.length
+                              ? true
+                              : false
+                          }
+                        />
+                        <div>전체 선택</div>
+                      </div>
+                      <button onClick={handleApplyListDelete}>삭제</button>
                     </div>
-                  ))}
-                  <div className="Select-all">
-                    <div>
-                      <input
-                        type="checkbox"
-                        onChange={e =>
-                          handleAllCheck(
-                            e.target.checked,
-                            applyList,
-                            setApplyCheckLists
-                          )
-                        }
-                        checked={
-                          applyCheckLists.length === applyList.length
-                            ? true
-                            : false
-                        }
-                      />
-                      <div>전체 선택</div>
-                    </div>
-                    <button onClick={handleApplyListDelete}>삭제</button>
-                  </div>
-                </>
-              ) : null}
+                  </>
+                )
+              )}
 
               <div className="Modification">
                 <button onClick={handleMypageSubmit}>완료</button>
@@ -514,11 +451,11 @@ function MyPage() {
                   회원 탈퇴
                 </button>
               </div>
-            </UserBoard>
-          </UserBoardWrapper>
-        </Content>
-      </ContentWrapper>
-    </MypageContainer>
+            </S.UserBoard>
+          </S.UserBoardWrapper>
+        </S.Content>
+      </S.ContentWrapper>
+    </S.MypageContainer>
   );
 }
 
