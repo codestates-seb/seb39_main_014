@@ -63,9 +63,9 @@ function Board({ data }: any) {
         <TagLayout>{/* advanced */}</TagLayout>
         <StackLayout>
           {data.techStackNames
-            ? data.techStackNames.map((el: any) => (
+            ? data.techStackNames.map((el: any, idx: number) => (
                 <img
-                  key={el.techStackName}
+                  key={el.techStackName + idx}
                   className="stack-logo"
                   src={`/assets/stack/${el.techStackName}.svg`}
                   alt={`${el}`}
