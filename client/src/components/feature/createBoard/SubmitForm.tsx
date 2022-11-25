@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import ReactQuill from "react-quill";
+
 import styled from "styled-components";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { formats, modules } from "../../../constants/reactQuill";
-import * as S from "../../../pages/writeForm/styled";
+
+import * as S from "../../../pages/boardCreatePage/styled";
 import { postBoard, updateBoard } from "../../../apis/board";
 import { getBoard } from "../../../apis/detailBoardApis/detailBoard";
 import { ConfirmModal, SuccessModal } from "../../shared/modal/Modal";
 import { NewObj } from "../../../types/createBoard";
+import ReactQuillEditor from "../../shared/reactQuill/ReactQuillEditor";
 
 function Editor({ newObject }: NewObj) {
   const { boardId } = useParams();
@@ -93,14 +94,7 @@ function Editor({ newObject }: NewObj) {
       <S.Content>
         <label htmlFor="input">내용</label>
         <QuillContainer>
-          <ReactQuill
-            placeholder="글을 작성 해주세요."
-            value={contents}
-            onChange={setContents}
-            theme="snow"
-            modules={modules}
-            formats={formats}
-          />
+          <ReactQuillEditor contents={contents} setContents={setContents} />
         </QuillContainer>
       </S.Content>
       <S.PostButton>
