@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { careerLists } from "../../../constants/WriteFormData";
-import { Career, Crew } from "../../../pages/writeForm/styled";
+import { Career, Crew } from "../../../pages/boardCreatePage/styled";
 import { getBoard } from "../../../apis/detailBoardApis/detailBoard";
 import { AiOutlineDown } from "react-icons/ai";
 import {

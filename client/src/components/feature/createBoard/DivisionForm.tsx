@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import * as S from "../../../pages/writeForm/styled";
+import * as S from "../../../pages/boardCreatePage/styled";
 import {
   regionLists,
   stackLists,

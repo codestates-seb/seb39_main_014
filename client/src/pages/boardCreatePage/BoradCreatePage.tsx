@@ -2,7 +2,7 @@ import { WriteFormContainer, FormContainer } from "./styled";
 
 import DivisionForm from "../../components/feature/createBoard/DivisionForm";
 
-function WriteForm() {
+function BoardCreatePage() {
   return (
     <WriteFormContainer>
       <FormContainer>
@@ -12,4 +12,4 @@ function WriteForm() {
   );
 }
 
-export default WriteForm;
+export default BoardCreatePage;
