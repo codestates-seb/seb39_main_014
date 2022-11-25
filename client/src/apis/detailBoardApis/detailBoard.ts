@@ -29,7 +29,8 @@ export const deleteBoard = async ({ boardId }: BoardId) => {
 
 export const postBookmark = async ({ boardId }: BoardId) => {
   const {
-    board: { board, bookmark },
+    board: { board },
+    bookmark,
   } = API_PATH;
 
   const { payload } = await requester<BoardDetail>({
@@ -43,7 +44,8 @@ type ApplyList = { board: [{ careerName: string; nickName: string }] };
 
 export const getApply = async (boardId?: string) => {
   const {
-    board: { board, apply },
+    board: { board },
+    apply,
   } = API_PATH;
 
   const { payload } = await requester<ApplyList>({
@@ -57,7 +59,8 @@ type PostApply = { boardId?: string; careerId: number };
 
 export const postApply = async ({ boardId, careerId }: PostApply) => {
   const {
-    board: { board, apply },
+    board: { board },
+    apply,
   } = API_PATH;
 
   const { payload } = await requester<BoardDetail>({
@@ -70,7 +73,8 @@ export const postApply = async ({ boardId, careerId }: PostApply) => {
 
 export const deleteApply = async ({ boardId }: BoardId) => {
   const {
-    board: { board, apply },
+    board: { board },
+    apply,
   } = API_PATH;
 
   const { payload } = await requester<BoardDetail>({

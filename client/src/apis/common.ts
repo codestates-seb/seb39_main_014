@@ -19,7 +19,11 @@ export const API_PATH = {
     board: "/board",
     write: "/write",
     comment: "/comment",
-    bookmark: "/bookmark",
-    apply: "/apply",
   },
+  mypage: {
+    mypage: "/my-page",
+    info: "/info",
+  },
+  bookmark: "/bookmark",
+  apply: "/apply",
 };
