@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Nav from "./components/layout/navigation/Nav";
 import Home from "./pages/home/Home";
-import WriteForm from "./pages/writeForm/WriteForm";
+import WriteForm from "./pages/boardCreatePage/BoradCreatePage";
 import LoginPage from "./pages/loginpage/LoginPage";
 import GroupBoardPage from "./pages/boardpage/GroupBoardPage";
 import SignUpPage from "./pages/singupPage/SignUpPage";

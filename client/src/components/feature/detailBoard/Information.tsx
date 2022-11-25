@@ -16,7 +16,7 @@ import {
   postBookmark,
 } from "../../../apis/detailBoardApis/detailBoard";
 import { getLocalStorage } from "../../../utils/storage";
-import useApplyQuery from "../../../hooks/detailBaordQueries/useApplyQuery";
+import useApplyQuery from "../../../hooks/detailBaordQueries/useBoardApply";
 
 function Information() {
   const { boardId } = useParams<string>();
