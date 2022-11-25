@@ -29,4 +29,5 @@ export interface Datas {
   viewCount: number;
   boardCareers: Array<Career>;
   techStackNames: Array<TechStack>;
+  isBookmarked?: string;
 }
