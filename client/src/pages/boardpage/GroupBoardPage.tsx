@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
-import handleLogout from "../../apis/handleLogout";
+import handleLogout from "../../apis/logout";
 import styled from "styled-components";
 import BoardPage from "./BoardPage";
 import Profile from "../../components/layout/navigation/Profile";

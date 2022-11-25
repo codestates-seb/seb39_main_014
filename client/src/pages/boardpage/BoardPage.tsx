@@ -13,40 +13,7 @@ import getMember from "../../apis/getMember";
 import NotExistBoard from "../../components/feature/board/NotExistBoard";
 import { handleFilter } from "../../utils/handleFilter";
 import Toggle from "../../components/shared/toggle/Toggle";
-
-interface Career {
-  careerCurrentRecruit: number;
-  careerName: string;
-  careerTotalRecruit: number;
-}
-
-interface TechStack {
-  techStackName: string;
-}
-
-interface Datas {
-  bookmarkCount: number;
-  commentAmount: number;
-  contact: string;
-  contents: string;
-  createdAt: string;
-  currentRecruit: number;
-  deleted: boolean;
-  deletedAt: null;
-  id: number;
-  location: string;
-  modifiedAt: string;
-  nickName: string;
-  period: string;
-  recruitCategory: string;
-  recruitDone: boolean;
-  recruitMethod: string;
-  title: string;
-  totalRecruit: number;
-  viewCount: number;
-  boardCareers: Array<Career>;
-  techStackNames: Array<TechStack>;
-}
+import { Datas } from "../../types/board";
 
 function BoardPage({ group }: { group: string }) {
   const BOARD_URL = `${process.env.REACT_APP_API_URL}/board/?page=1&size=100`;
@@ -55,7 +22,6 @@ function BoardPage({ group }: { group: string }) {
   const [isDone, setIsDone] = useState(false);
   const [stackFilter, setStackFilter] = useState([]);
   const [filterDatas, setFilterDatas] = useState([]);
-  // const [isNotExist, setIsNotExist] = useState(true);
   const [page, setPage] = useState(1);
 
   const isLoading = !datas.length;
