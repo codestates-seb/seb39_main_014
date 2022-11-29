@@ -1,15 +1,41 @@
-import { useEffect } from "react";
 import styled from "styled-components";
-import { useState } from "react";
-import getPopStack from "../../../apis/getPopStack";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import Loading from "../../shared/Loading/Loading";
 
 function PopStack() {
   const POPSTACK_URL = `${process.env.REACT_APP_API_URL}/board/popstack`;
-  const [popStack, setPopStack] = useState([]);
-  useEffect(() => {
-    getPopStack(POPSTACK_URL, setPopStack);
-  }, []);
 
+  const queryPopStack = async () => {
+    const res = await axios.get(POPSTACK_URL);
+    return res.data;
+  };
+
+  const { data, isLoading } = useQuery(["popStack"], queryPopStack);
+
+  if (isLoading) {
+    return (
+      <PopStackFrame>
+        <PopStackLayout>
+          <Head>
+            <h3 className="title"># 인기스택</h3>
+            <div className="pop-question">
+              <span className="tooltip">
+                ?
+                <span className="tooltip-text">
+                  수풀에서 인기 있는 <br />
+                  기술 스택을 확인해보세요!
+                </span>
+              </span>
+            </div>
+          </Head>
+          <Content>
+            <Loading />
+          </Content>
+        </PopStackLayout>
+      </PopStackFrame>
+    );
+  }
   return (
     <PopStackFrame>
       <PopStackLayout>
@@ -26,7 +52,7 @@ function PopStack() {
           </div>
         </Head>
         <Content>
-          {popStack.map((el, idx) => (
+          {data.map((el: string, idx: number) => (
             <div key={Object.keys(el)[0]} className="content">
               <p className="rank-color">
                 {idx + 1}. {Object.keys(el)}
@@ -117,6 +143,7 @@ const Head = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: stretch;
 
   .content {
     display: flex;

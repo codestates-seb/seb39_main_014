@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-function IsLoading() {
+function Loading() {
   return (
     <LoadingFrame>
       <div className="loading_spinner_box">
@@ -53,4 +53,4 @@ const LoadingFrame = styled.div`
   }
 `;
 
-export default IsLoading;
+export default Loading;
