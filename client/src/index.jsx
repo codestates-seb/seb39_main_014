@@ -6,6 +6,7 @@ import { ThemeProvider } from "styled-components";
 import App from "./App";
 import "./index.css";
 import { GlobalStyle, theme } from "./styles";
+import GlobalFonts from "./styles/fonts";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ root.render(
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
+          <GlobalFonts />
           <App />
         </ThemeProvider>
       </BrowserRouter>
