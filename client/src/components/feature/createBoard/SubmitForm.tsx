@@ -46,7 +46,7 @@ function Editor({ newObject }: NewObj) {
         setTitle(res.board.title);
       });
     }
-  }, []);
+  }, [boardId]);
 
   /** 완료 버튼 클릭 핸들러 */
   const handleSubmitClick = (e: React.MouseEvent<HTMLButtonElement>) => {

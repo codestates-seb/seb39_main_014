@@ -7,7 +7,7 @@ import {
   periodLists,
   stackNumbers,
   stackReverse,
-} from "../../../constants/WriteFormData";
+} from "../../../constants/createBoardData";
 import { AiOutlineDown } from "react-icons/ai";
 import { GoX } from "react-icons/go";
 import CareerForm from "./CareerForm";
@@ -16,6 +16,7 @@ import _ from "lodash";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 
 import { SelectedStack, TechStack } from "../../../types/createBoard";
+import DropDownButton from "../../shared/dropDown/dropDownButton/DropDownButton";
 
 function DivisionForm() {
   const { boardId } = useParams();
@@ -29,7 +30,6 @@ function DivisionForm() {
   });
   const [isLocation, setIsLocation] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [stack, setStack] = useState("");
   const [isStack, setIsStack] = useState(false);
   const [newStackList, setNewStackList] = useState(stackLists);
   const [selectedStackList, setSelectedStackList] = useState<SelectedStack[]>(
@@ -39,7 +39,6 @@ function DivisionForm() {
 
   const [search, setSearch] = useState("");
 
-  /** 외부클릭 관련 ref */
   const recuirtClickRef = useRef() as React.MutableRefObject<HTMLDivElement>;
   const stackClickRef = useRef() as React.MutableRefObject<HTMLDivElement>;
   const periodClickRef = useRef() as React.MutableRefObject<HTMLDivElement>;
@@ -98,12 +97,11 @@ function DivisionForm() {
         })
         .then(res => {
           setLoading(false);
-        })
-        .catch(err => console.log(err));
+        });
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [boardId, newStackList]);
 
   /** 외부 클릭시 창 사라지는 기능 */
 
@@ -123,7 +121,7 @@ function DivisionForm() {
   const handleStackListClick = (e: React.MouseEvent<HTMLLIElement>) => {
     e.preventDefault();
     const event = e.target as HTMLLIElement;
-    setStack(event.innerText);
+
     if (selectedStackList.length < 7) {
       setSelectedStackList([
         ...selectedStackList,
@@ -223,23 +221,9 @@ function DivisionForm() {
             <label htmlFor="OFFLINE">오프라인</label>
             <div className="Location-box" ref={recuirtClickRef}>
               {recruitMethod === "OFFLINE" && (
-                <div className="Location-button">
-                  <button
-                    onClick={e => {
-                      e.preventDefault();
-                      setIsLocation(!isLocation);
-                    }}
-                  >
-                    {location.region}
-                  </button>
-                  <AiOutlineDown
-                    className="AiOutlineDown"
-                    onClick={e => {
-                      e.preventDefault();
-                      setIsLocation(!isLocation);
-                    }}
-                  />
-                </div>
+                <DropDownButton isState={isLocation} setIsState={setIsLocation}>
+                  {location.region}
+                </DropDownButton>
               )}
               {isLocation && recruitMethod === "OFFLINE" && (
                 <ul className="location">
@@ -273,7 +257,6 @@ function DivisionForm() {
             onClick={e => {
               e.preventDefault();
               setIsStack(!isStack);
-              // eslint-disable-next-line prettier/prettier
             }}
           >
             <input
@@ -291,7 +274,7 @@ function DivisionForm() {
               }}
             />
           </div>
-          {isStack ? (
+          {isStack && (
             <ul className="Stacklists">
               {searchStack.map(el => {
                 return (
@@ -301,7 +284,7 @@ function DivisionForm() {
                 );
               })}
             </ul>
-          ) : null}
+          )}
           {selectedStackList && (
             <span className="Added-stack-list">
               {selectedStackList.map(el => (
@@ -322,23 +305,9 @@ function DivisionForm() {
         </S.SecondLeft>
         <S.SecondRight ref={periodClickRef}>
           <label htmlFor="period">기간</label>
-          <div>
-            <div
-              onClick={e => {
-                e.preventDefault();
-                setIsPeriod(!isPeriod);
-              }}
-            >
-              {periodValue.period}
-            </div>
-            <AiOutlineDown
-              className="AiOutlineDown"
-              onClick={e => {
-                e.preventDefault();
-                setIsPeriod(!isPeriod);
-              }}
-            />
-          </div>
+          <DropDownButton isState={isPeriod} setIsState={setIsPeriod}>
+            {periodValue.period}
+          </DropDownButton>
           {isPeriod && (
             <ul className="Periodlists">
               {periodLists.map(el => (

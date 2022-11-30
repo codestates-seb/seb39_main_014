@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
-import { careerLists } from "../../../constants/WriteFormData";
+import { careerLists } from "../../../constants/createBoardData";
 import { Career, Crew } from "../../../pages/boardCreatePage/styled";
 import { getBoard } from "../../../apis/detailBoardApis/detailBoard";
-import { AiOutlineDown } from "react-icons/ai";
+
 import {
   Object,
   CrewState,
@@ -13,6 +13,7 @@ import {
 } from "../../../types/createBoard";
 import SubmitForm from "./SubmitForm";
 import _ from "lodash";
+import DropDownButton from "../../shared/dropDown/dropDownButton/DropDownButton";
 
 function CareerForm({ object }: Object) {
   const { boardId } = useParams();
@@ -68,7 +69,7 @@ function CareerForm({ object }: Object) {
         })
         .then(res => setLoading(false));
     }
-  }, []);
+  }, [boardId, newCareerList]);
 
   /** props 전달할 객체 */
   const newObject = { ...object, boardCareers: careers };
@@ -135,24 +136,9 @@ function CareerForm({ object }: Object) {
         <label htmlFor="categorization">모집 분류 / 인원</label>
         <div className="Bundle">
           <div className="Select-option" ref={careerClickRef}>
-            <div className="Career-select">
-              <button
-                onClick={e => {
-                  e.preventDefault();
-                  setIsCareer(!isCareer);
-                }}
-              >
-                {career.career ? career.career : `모집 분류`}
-              </button>
-
-              <AiOutlineDown
-                className="AiOutlineDown"
-                onClick={e => {
-                  e.preventDefault();
-                  setIsCareer(!isCareer);
-                }}
-              />
-            </div>
+            <DropDownButton isState={isCareer} setIsState={setIsCareer}>
+              {career.career ? career.career : `모집 분류`}
+            </DropDownButton>
             {isCareer && (
               <ul className="Careerlists">
                 {newCareerList.map(el => (

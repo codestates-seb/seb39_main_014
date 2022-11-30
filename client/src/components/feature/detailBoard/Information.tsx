@@ -4,7 +4,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { BiArrowBack } from "react-icons/bi";
 
 import * as S from "../../../pages/boardDetailPage/styled";
-import { careerLists } from "../../../constants/WriteFormData";
+import { careerLists } from "../../../constants/createBoardData";
 import { ConfirmModal, SuccessModal } from "../../shared/modal/Modal";
 import useDetailQuery from "../../../hooks/detailBaordQueries/useDetailQuery";
 import useDeadline from "../../../hooks/useDeadline";
@@ -86,36 +86,35 @@ function Information() {
       });
     }
   };
-
-  if (!detailInfo) return null;
+  if (!detailInfo) return <div>로딩중</div>;
   return (
     <>
       <S.Title>
         <BiArrowBack className="BiArrowBack" onClick={() => navigate(-1)} />
         <S.Buttons>
           <div className="Recruitment-classification">
-            <span>{detailInfo.recruitCategory}</span>
+            <span>{detailInfo?.recruitCategory}</span>
             <button>
               {deadline && deadline > 0 ? `D-${deadline}` : `모집 마감`}
             </button>
           </div>
-          {user === detailInfo.nickName ? (
+          {user === detailInfo?.nickName && (
             <div className="Patch-delete">
               <button onClick={() => navigate(`/board/${boardId}/modify`)}>
                 수정
               </button>
               <button onClick={handleFormDelete}>삭제</button>
             </div>
-          ) : null}
+          )}
         </S.Buttons>
-        <p>{detailInfo.title}</p>
+        <p>{detailInfo?.title}</p>
       </S.Title>
       <S.InformationContainer>
         <S.UserInfo>
           <div className="User-info">
             <img src="/assets/logo/only_logo.svg" alt="profile" />
-            <div>{detailInfo.nickName}</div>
-            <div>{detailInfo.createdAt?.slice(0, 10)}</div>
+            <div>{detailInfo?.nickName}</div>
+            <div>{detailInfo?.createdAt?.slice(0, 10)}</div>
           </div>
           <div className="Board-info">
             <div className="Bookmark">
@@ -130,24 +129,24 @@ function Information() {
                   onClick={handleBookmarkClick}
                 />
               )}
-              <span>{detailInfo.bookmarkCount}</span>
+              <span>{detailInfo?.bookmarkCount}</span>
             </div>
           </div>
         </S.UserInfo>
         <S.BoardInfo>
           <li>
             <span className="Subject">모임 기간</span>
-            <span className="Span-box">{detailInfo.period}</span>
+            <span className="Span-box">{detailInfo?.period}</span>
           </li>
           <li>
             <span className="Subject">진행 방식</span>
-            <span className="Span-box">{detailInfo.recruitMethod}</span>
-            <span className="Span-box">{detailInfo.location}</span>
+            <span className="Span-box">{detailInfo?.recruitMethod}</span>
+            <span className="Span-box">{detailInfo?.location}</span>
           </li>
           <li className="Using-stack">
             <span className="Subject">사용 언어</span>
 
-            {detailInfo.techStackNames.map(el => (
+            {detailInfo?.techStackNames.map(el => (
               <span key={el.techStackName} className="Stack">
                 <img
                   src={`/assets/stack/${el.techStackName}.svg`}
@@ -163,9 +162,8 @@ function Information() {
           <li className="Applicants">
             <span className="Subject">모집 인원</span>
             <ul className="Applicants-list">
-              {/**key 값 변경해야됨 */}
-              {detailInfo.boardCareers &&
-                detailInfo.boardCareers.map(el => (
+              {detailInfo?.boardCareers &&
+                detailInfo?.boardCareers.map(el => (
                   <li key={el.careerName}>
                     <div> {el.careerName}</div>
                     <div>

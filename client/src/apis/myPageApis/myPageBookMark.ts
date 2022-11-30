@@ -14,8 +14,8 @@ export const getMypageBookmark = async () => {
   });
   return payload;
 };
-
-export const deleteMypageBookmark = async (bookmarkList: List[]) => {
+type BookmarkList = { bookmarkList: List[] };
+export const deleteMypageBookmark = async ({ bookmarkList }: BookmarkList) => {
   const {
     mypage: { mypage },
     bookmark,
@@ -24,7 +24,7 @@ export const deleteMypageBookmark = async (bookmarkList: List[]) => {
   const { payload } = await requester<Bookmark>({
     method: httpMethod.DELETE,
     url: `${mypage}${bookmark}`,
-    data: bookmarkList,
+    data: { bookmarkList },
   });
   return payload;
 };

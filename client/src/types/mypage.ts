@@ -10,7 +10,7 @@ export type TechStack = {
 
 export type Mypage = {
   activeScore: number;
-  career: { name: string; level?: string }[];
+  career: { name: string; level: string }[];
   nickname: string;
   techStack: { name: string; imageUri?: string | null }[];
 };

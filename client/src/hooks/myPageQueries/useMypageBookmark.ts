@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 const useMypageBookmark = () => {
   const { data: mypageBookmark, isLoading: bookmarkLoading } = useQuery(
     ["getMypageBookmark"],
-    getMypageBookmark
+    () => getMypageBookmark()
   );
   return { mypageBookmark, bookmarkLoading };
 };

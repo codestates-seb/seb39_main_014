@@ -14,8 +14,8 @@ export const getMypageApply = async () => {
   });
   return payload;
 };
-
-export const deleteMypageApply = async (applyList: List[]) => {
+type ApplyList = { applyList: List[] };
+export const deleteMypageApply = async ({ applyList }: ApplyList) => {
   const {
     mypage: { mypage },
     apply,
@@ -24,7 +24,7 @@ export const deleteMypageApply = async (applyList: List[]) => {
   const { payload } = await requester<Apply>({
     method: httpMethod.DELETE,
     url: `${mypage}${apply}`,
-    data: applyList,
+    data: { applyList },
   });
   return payload;
 };
