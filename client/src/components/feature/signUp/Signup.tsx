@@ -60,7 +60,7 @@ function Signup() {
   return (
     <SignupFrame>
       <SignUpLayout>
-        <h1>회원가입</h1>
+        <h1 className="title">회원가입</h1>
         <SocialContainer>
           <div className="social">
             <FcGoogle className="google-icon" />
@@ -229,6 +229,14 @@ const SignUpLayout = styled.div`
     flex-direction: column;
     padding: 0px;
     text-align: center;
+  }
+
+  .title {
+    font-weight: 700;
+    font-size: 2rem;
+    margin-right: 300px;
+    margin-bottom: 20px;
+    margin-top: 50px;
   }
 
   h1 {

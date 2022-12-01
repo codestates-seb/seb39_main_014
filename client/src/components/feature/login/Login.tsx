@@ -20,7 +20,7 @@ function Login() {
   return (
     <LoginFrame>
       <LoginContainer>
-        <h1>로그인</h1>
+        <h1 className="title">로그인</h1>
 
         <SocialContainer>
           <div className="social">
@@ -96,9 +96,12 @@ const LoginContainer = styled.div`
   max-width: 100%;
   min-height: 480px;
 
-  h1 {
-    margin-top: 50px;
+  .title {
+    font-weight: 700;
+    font-size: 2rem;
     margin-right: 300px;
+    margin-bottom: 20px;
+    margin-top: 50px;
   }
 
   hr {
