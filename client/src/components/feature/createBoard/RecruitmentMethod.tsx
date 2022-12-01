@@ -10,7 +10,7 @@ import {
 } from "../../../constants/createBoardData";
 import { AiOutlineDown } from "react-icons/ai";
 import { GoX } from "react-icons/go";
-import CareerForm from "./CareerForm";
+import RecruitmentCareer from "./RecruitmentCareer";
 import { getBoard } from "../../../apis/detailBoardApis/detailBoard";
 import _ from "lodash";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
@@ -18,7 +18,7 @@ import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { SelectedStack, TechStack } from "../../../types/createBoard";
 import DropDownButton from "../../shared/dropDown/dropDownButton/DropDownButton";
 
-function DivisionForm() {
+export default function RecruitmentMethod() {
   const { boardId } = useParams();
 
   const [recruitCategory, setRecruitCategory] = useState("STUDY");
@@ -103,13 +103,10 @@ function DivisionForm() {
     }
   }, [boardId, newStackList]);
 
-  /** 외부 클릭시 창 사라지는 기능 */
-
   useOutsideClick(recuirtClickRef, setIsLocation);
   useOutsideClick(stackClickRef, setIsStack);
   useOutsideClick(periodClickRef, setIsPeriod);
 
-  /** props 내릴 데이터 */
   const object = {
     recruitCategory: recruitCategory,
     recruitMethod: recruitMethod,
@@ -142,9 +139,7 @@ function DivisionForm() {
     }
   };
 
-  /** 선택된 스택 추가 및 선택된 스택 기존 목록에서 제거*/
   const handleStackListRemove = (id: number | string) => {
-    // target의 id
     const newSelectedStackList = selectedStackList.filter(
       prev => prev.id === id
     );
@@ -159,7 +154,6 @@ function DivisionForm() {
     setSelectedStackList(selectedStackList.filter(prev => prev.id !== id));
   };
 
-  /** 기간 변경 */
   const handlePeriodClick = (e: { period: string; value: string }) => {
     setIsPeriod(!isPeriod);
     setPeriodValue(prev => {
@@ -167,7 +161,6 @@ function DivisionForm() {
     });
   };
 
-  /** 검색으로 스택 찾기 */
   const searchStack = newStackList.filter(prev => {
     if (search === "") {
       return prev;
@@ -319,9 +312,7 @@ function DivisionForm() {
           )}
         </S.SecondRight>
       </S.SecondDivision>
-      <CareerForm object={object} />
+      <RecruitmentCareer object={object} />
     </>
   );
 }
-
-export default DivisionForm;

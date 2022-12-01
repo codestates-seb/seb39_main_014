@@ -1,12 +1,12 @@
 import { WriteFormContainer, FormContainer } from "./styled";
 
-import DivisionForm from "../../components/feature/createBoard/DivisionForm";
+import RecruitmentMethod from "../../components/feature/createBoard/RecruitmentMethod";
 
 function BoardCreatePage() {
   return (
     <WriteFormContainer>
       <FormContainer>
-        <DivisionForm />
+        <RecruitmentMethod />
       </FormContainer>
     </WriteFormContainer>
   );

@@ -15,7 +15,7 @@ import SubmitForm from "./SubmitForm";
 import _ from "lodash";
 import DropDownButton from "../../shared/dropDown/dropDownButton/DropDownButton";
 
-function CareerForm({ object }: Object) {
+export default function RecruitmentCareer({ object }: Object) {
   const { boardId } = useParams();
 
   const [career, setCareer] = useState<CareerState>({
@@ -71,10 +71,8 @@ function CareerForm({ object }: Object) {
     }
   }, [boardId, newCareerList]);
 
-  /** props 전달할 객체 */
   const newObject = { ...object, boardCareers: careers };
 
-  /** 인원 증가 감소 버튼 */
   const onCountHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const event = e.target as HTMLButtonElement;
@@ -118,7 +116,6 @@ function CareerForm({ object }: Object) {
     }
   };
 
-  /** 삭제 버튼 핸들러 */
   const onDeleteHandler = (careerId: number, career: string) => {
     setCrew(crew.filter(prev => prev.careerId !== careerId));
     setCareers(careers.filter(prev => prev.careerId !== careerId));
@@ -184,5 +181,3 @@ function CareerForm({ object }: Object) {
     </>
   );
 }
-
-export default CareerForm;
