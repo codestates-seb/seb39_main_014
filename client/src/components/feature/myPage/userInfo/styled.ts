@@ -30,7 +30,7 @@ export const UserInfoWrapper = styled.div`
     display: flex;
     justify-content: center;
     padding: 1rem 0;
-    background-color: #f0f0f0;
+    background-color: ${({ theme }) => theme.colors.white};
     border-radius: 5px;
     @media screen and (max-width: 415px) {
       font-size: 0.8rem;
@@ -38,7 +38,7 @@ export const UserInfoWrapper = styled.div`
   }
   > input {
     width: 100%;
-    border: 1px solid #c7c7c7;
+    border: 1px solid ${({ theme }) => theme.colors.gray[200]};
     border-radius: 10px;
     padding: 1rem 0 1rem 0.5rem;
   }
@@ -73,9 +73,9 @@ export const UserInfoWrapper = styled.div`
       width: 20%;
       min-width: 140px;
       font-size: 0.8rem;
-      color: #009f47;
+      color: ${({ theme }) => theme.colors.green[400]};
       border-radius: 10px;
-      background-color: #e5f8ed;
+      background-color: ${({ theme }) => theme.colors.green[100]};
       cursor: pointer;
     }
     .Career-level-lists {
@@ -92,7 +92,7 @@ export const UserInfoWrapper = styled.div`
         position: absolute;
         justify-content: center;
         flex-direction: column;
-        border: 1px solid #a6a6a6;
+        border: 1px solid ${({ theme }) => theme.colors.gray[300]};
         border-radius: 10px;
         padding: 0;
         top: -5px;
@@ -112,7 +112,7 @@ export const UserInfoWrapper = styled.div`
           cursor: pointer;
           &:hover {
             border-radius: 10px;
-            background-color: #e5f8ed;
+            background-color: ${({ theme }) => theme.colors.green[100]};
           }
         }
       }
@@ -140,7 +140,7 @@ export const UserInfoWrapper = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
-    border: 1px solid #c7c7c7;
+    border: 1px solid ${({ theme }) => theme.colors.gray[200]};
     border-radius: 10px;
     padding: 1rem 0 1rem 0.5rem;
     > input {
@@ -161,7 +161,7 @@ export const UserInfoWrapper = styled.div`
     max-height: 200px;
     right: 0px;
     top: 40px;
-    border: 1px solid #c7c7c7;
+    border: 1px solid ${({ theme }) => theme.colors.gray[200]};
     border-radius: 10px;
     padding: 0;
     background-color: white;
@@ -171,7 +171,7 @@ export const UserInfoWrapper = styled.div`
       border-radius: 10px;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: #c7c7c7;
+      background-color: ${({ theme }) => theme.colors.gray[200]};
       border-radius: 10px;
     }
 
@@ -181,7 +181,7 @@ export const UserInfoWrapper = styled.div`
       cursor: pointer;
 
       &:hover {
-        background-color: #e5f8ed;
+        background-color: ${({ theme }) => theme.colors.green[100]};
         border-radius: 10px;
       }
     }

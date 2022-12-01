@@ -33,7 +33,7 @@ export const Title = styled.div`
   }
   .BiArrowBack {
     font-size: 2rem;
-    color: #959595;
+    color: ${({ theme }) => theme.colors.gray[400]};
     cursor: pointer;
   }
   > p {
@@ -55,7 +55,7 @@ export const Buttons = styled.div`
   .Patch-delete {
     > button {
       background-color: white;
-      border: 1px solid #bdbdbd;
+      border: 1px solid ${({ theme }) => theme.colors.gray[200]};
       border-radius: 5px;
       margin-left: 0.5rem;
       padding: 0.5rem 0.6rem;
@@ -73,8 +73,8 @@ export const Buttons = styled.div`
       height: 2.5rem;
       border-radius: 5px;
       font-size: 1rem;
-      color: #009f47;
-      background-color: #e5f8ed;
+      color: ${({ theme }) => theme.colors.green[400]};
+      background-color: ${({ theme }) => theme.colors.green[100]};
     }
     > button {
       margin-left: 1rem;
@@ -111,7 +111,7 @@ export const UserInfo = styled.div`
     align-items: center;
     > img {
       padding: 0.3rem;
-      border: 1px solid #d9d9d9;
+      border: 1px solid ${({ theme }) => theme.colors.gray[200]};
       border-radius: 50%;
       @media screen and (max-width: 476px) {
         width: 2rem;
@@ -121,11 +121,11 @@ export const UserInfo = styled.div`
     > div {
       padding: 0 1rem;
       &:nth-child(2) {
-        border-right: 1px solid #9d9d9d;
+        border-right: 1px solid ${({ theme }) => theme.colors.gray[400]};
       }
       &:nth-child(3) {
         font-size: 0.8rem;
-        color: #9d9d9d;
+        color: ${({ theme }) => theme.colors.gray[400]};
       }
       @media screen and (max-width: 476px) {
         padding: 0 0.4rem;
@@ -165,8 +165,8 @@ export const UserInfo = styled.div`
       height: 3rem;
       border-radius: 5px;
       font-size: 1rem;
-      color: #009f47;
-      background-color: #e5f8ed;
+      color: ${({ theme }) => theme.colors.green[400]};
+      background-color: ${({ theme }) => theme.colors.gray[200]};
     }
     > button {
       margin-left: 1rem;
@@ -190,8 +190,8 @@ export const BoardInfo = styled.ul`
   grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
   /* grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr auto; */
-  border-bottom: 1.5px solid #bababa;
-  border-top: 1.5px solid #bababa;
+  border-bottom: 1.5px solid ${({ theme }) => theme.colors.gray[200]};
+  border-top: 1.5px solid ${({ theme }) => theme.colors.gray[200]};
   list-style: none;
   padding: 1rem 0;
   margin: 0.5rem 0;
@@ -212,12 +212,12 @@ export const BoardInfo = styled.ul`
       width: 20%;
       font-size: 1.3rem;
       min-width: 4rem;
-      color: #989898;
+      color: ${({ theme }) => theme.colors.gray[400]};
       margin-right: 2rem;
       @media screen and (max-width: 476px) {
         font-size: 1rem;
         min-width: 4rem;
-        color: #989898;
+        color: ${({ theme }) => theme.colors.gray[400]};
         margin-right: 2rem;
         min-width: 2.5rem;
         margin-right: 1rem;
@@ -241,8 +241,8 @@ export const BoardInfo = styled.ul`
   }
   .Contact-method {
     padding: 0 0.6rem;
-    background-color: #f2f4f8;
-    color: #4a5e75;
+    background-color: ${({ theme }) => theme.colors.blue[100]};
+    color: ${({ theme }) => theme.colors.blue[200]};
     border-radius: 5px;
     @media screen and (max-width: 476px) {
       padding: 0.2rem 0.4rem;
@@ -283,7 +283,7 @@ export const BoardInfo = styled.ul`
           width: 80%;
           min-width: 5rem;
           height: 1.8rem;
-          border: 1px solid #b1b1b1;
+          border: 1px solid ${({ theme }) => theme.colors.gray[300]};
           border-radius: 3px;
           font-size: 0.8rem;
           cursor: pointer;
@@ -301,7 +301,7 @@ export const BoardInfo = styled.ul`
 export const Body = styled.span`
   padding: 1rem 0 1rem 0.6rem;
   min-height: 300px;
-  color: #4b5563;
+  color: ${({ theme }) => theme.colors.blue[400]};
   letter-spacing: 0.1rem;
   @media screen and (max-width: 476px) {
     font-size: 0.8rem;
@@ -336,8 +336,8 @@ export const WriteComment = styled.div`
       width: 10%;
       border: none;
       border-radius: 5px;
-      background-color: #e5f8ed;
-      color: #009f47;
+      background-color: ${({ theme }) => theme.colors.gray[200]};
+      color: ${({ theme }) => theme.colors.green[400]};
       cursor: pointer;
     }
   }
@@ -352,12 +352,12 @@ export const Comments = styled.div`
     font-size: 0.8rem;
   }
   &:first-child {
-    border-top: 1px solid #b1b1b1;
+    border-top: 1px solid ${({ theme }) => theme.colors.gray[300]};
   }
   .Comment-list {
     width: 100%;
     padding: 1rem 0;
-    border-bottom: 1px solid #b1b1b1;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.gray[300]};
     > p {
       padding-left: 0.5rem;
     }
@@ -385,8 +385,8 @@ export const Comments = styled.div`
           width: 10%;
           border: none;
           border-radius: 5px;
-          background-color: #e5f8ed;
-          color: #009f47;
+          background-color: ${({ theme }) => theme.colors.gray[200]};
+          color: ${({ theme }) => theme.colors.green[400]};
           cursor: pointer;
         }
       }
@@ -401,7 +401,7 @@ export const Comments = styled.div`
 
       > img {
         padding: 0.3rem;
-        border: 1px solid #d9d9d9;
+        border: 1px solid ${({ theme }) => theme.colors.gray[200]};
         border-radius: 50%;
         @media screen and (max-width: 476px) {
           width: 2rem;
@@ -415,7 +415,7 @@ export const Comments = styled.div`
         padding-left: 0.3rem;
         .Createdat {
           font-size: 0.5rem;
-          color: #b1b1b1;
+          color: ${({ theme }) => theme.colors.gray[300]};
         }
       }
     }

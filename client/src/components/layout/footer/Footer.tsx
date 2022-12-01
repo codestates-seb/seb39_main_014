@@ -87,7 +87,7 @@ function Footer() {
 }
 
 const FooterContainer = styled.footer`
-  background-color: #595959;
+  background-color: ${({ theme }) => theme.colors.gray[600]};
   display: flex;
   min-height: 7rem;
   position: relative;
@@ -135,7 +135,7 @@ const FooterLeft = styled.div`
     font-size: 1em;
     padding-top: 0.9rem;
     padding-left: 1rem;
-    color: white;
+    color: ${({ theme }) => theme.colors.white};
     @media screen and (max-width: 768px) {
       display: flex;
       font-size: 0.8em;
@@ -150,7 +150,7 @@ const Repository = styled.a`
   padding-right: 0.2rem;
   font-size: 2rem;
   text-decoration: none;
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
   justify-content: flex-end;
   @media screen and (max-width: 768px) {
     font-size: 1.3rem;
@@ -172,7 +172,7 @@ const GithubLink = styled.a`
   display: flex;
   flex-direction: column;
   padding: 0.5rem 0 0.5rem 0.8rem;
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
   text-decoration: none;
 `;
 const GithubIcon = styled.div`

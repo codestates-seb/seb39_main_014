@@ -25,14 +25,14 @@ export const UserBoard = styled.div`
       cursor: pointer;
     }
     .Bookmark {
-      background-color: #f0f0f0;
+      background-color: ${({ theme }) => theme.colors.white};
       border-radius: 5px;
     }
   }
 
   .Checkboard {
     width: 100%;
-    border-bottom: 1px solid #c2c2c2;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
     > input {
       width: 1.5rem;
       height: 1.5rem;
@@ -59,7 +59,7 @@ export const UserBoard = styled.div`
       padding: 0.5rem 1rem;
       border: none;
       border-radius: 5px;
-      background-color: #f0f0f0;
+      background-color: ${({ theme }) => theme.colors.blue[200]};
       cursor: pointer;
     }
   }
@@ -68,8 +68,8 @@ export const UserBoard = styled.div`
     justify-content: center;
 
     .Withdrawal {
-      color: #ff7d85;
-      background-color: #ffe3e4;
+      color: ${({ theme }) => theme.colors.red[200]};
+      background-color: ${({ theme }) => theme.colors.red[100]};
     }
     > button {
       display: flex;
