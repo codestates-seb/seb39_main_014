@@ -11,7 +11,7 @@ import { ConfirmModal, SuccessModal } from "../../shared/modal/Modal";
 import { NewObj } from "../../../types/createBoard";
 import ReactQuillEditor from "../../shared/reactQuill/ReactQuillEditor";
 
-function Editor({ newObject }: NewObj) {
+export default function SubmitForm({ newObject }: NewObj) {
   const { boardId } = useParams();
 
   const [contents, setContents] = useState("");
@@ -46,9 +46,8 @@ function Editor({ newObject }: NewObj) {
         setTitle(res.board.title);
       });
     }
-  }, []);
+  }, [boardId]);
 
-  /** 완료 버튼 클릭 핸들러 */
   const handleSubmitClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (Object.values(submitForm).some(el => el.length === 0)) {
@@ -119,5 +118,3 @@ const QuillContainer = styled.div`
     min-height: 200px;
   }
 `;
-
-export default Editor;

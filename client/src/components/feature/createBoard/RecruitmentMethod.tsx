@@ -7,17 +7,18 @@ import {
   periodLists,
   stackNumbers,
   stackReverse,
-} from "../../../constants/WriteFormData";
+} from "../../../constants/createBoardData";
 import { AiOutlineDown } from "react-icons/ai";
 import { GoX } from "react-icons/go";
-import CareerForm from "./CareerForm";
+import RecruitmentCareer from "./RecruitmentCareer";
 import { getBoard } from "../../../apis/detailBoardApis/detailBoard";
 import _ from "lodash";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 
 import { SelectedStack, TechStack } from "../../../types/createBoard";
+import DropDownButton from "../../shared/dropDown/dropDownButton/DropDownButton";
 
-function DivisionForm() {
+export default function RecruitmentMethod() {
   const { boardId } = useParams();
 
   const [recruitCategory, setRecruitCategory] = useState("STUDY");
@@ -29,7 +30,6 @@ function DivisionForm() {
   });
   const [isLocation, setIsLocation] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [stack, setStack] = useState("");
   const [isStack, setIsStack] = useState(false);
   const [newStackList, setNewStackList] = useState(stackLists);
   const [selectedStackList, setSelectedStackList] = useState<SelectedStack[]>(
@@ -39,7 +39,6 @@ function DivisionForm() {
 
   const [search, setSearch] = useState("");
 
-  /** 외부클릭 관련 ref */
   const recuirtClickRef = useRef() as React.MutableRefObject<HTMLDivElement>;
   const stackClickRef = useRef() as React.MutableRefObject<HTMLDivElement>;
   const periodClickRef = useRef() as React.MutableRefObject<HTMLDivElement>;
@@ -98,20 +97,16 @@ function DivisionForm() {
         })
         .then(res => {
           setLoading(false);
-        })
-        .catch(err => console.log(err));
+        });
     } else {
       setLoading(false);
     }
-  }, []);
-
-  /** 외부 클릭시 창 사라지는 기능 */
+  }, [boardId, newStackList]);
 
   useOutsideClick(recuirtClickRef, setIsLocation);
   useOutsideClick(stackClickRef, setIsStack);
   useOutsideClick(periodClickRef, setIsPeriod);
 
-  /** props 내릴 데이터 */
   const object = {
     recruitCategory: recruitCategory,
     recruitMethod: recruitMethod,
@@ -123,7 +118,7 @@ function DivisionForm() {
   const handleStackListClick = (e: React.MouseEvent<HTMLLIElement>) => {
     e.preventDefault();
     const event = e.target as HTMLLIElement;
-    setStack(event.innerText);
+
     if (selectedStackList.length < 7) {
       setSelectedStackList([
         ...selectedStackList,
@@ -144,9 +139,7 @@ function DivisionForm() {
     }
   };
 
-  /** 선택된 스택 추가 및 선택된 스택 기존 목록에서 제거*/
   const handleStackListRemove = (id: number | string) => {
-    // target의 id
     const newSelectedStackList = selectedStackList.filter(
       prev => prev.id === id
     );
@@ -161,7 +154,6 @@ function DivisionForm() {
     setSelectedStackList(selectedStackList.filter(prev => prev.id !== id));
   };
 
-  /** 기간 변경 */
   const handlePeriodClick = (e: { period: string; value: string }) => {
     setIsPeriod(!isPeriod);
     setPeriodValue(prev => {
@@ -169,7 +161,6 @@ function DivisionForm() {
     });
   };
 
-  /** 검색으로 스택 찾기 */
   const searchStack = newStackList.filter(prev => {
     if (search === "") {
       return prev;
@@ -223,23 +214,9 @@ function DivisionForm() {
             <label htmlFor="OFFLINE">오프라인</label>
             <div className="Location-box" ref={recuirtClickRef}>
               {recruitMethod === "OFFLINE" && (
-                <div className="Location-button">
-                  <button
-                    onClick={e => {
-                      e.preventDefault();
-                      setIsLocation(!isLocation);
-                    }}
-                  >
-                    {location.region}
-                  </button>
-                  <AiOutlineDown
-                    className="AiOutlineDown"
-                    onClick={e => {
-                      e.preventDefault();
-                      setIsLocation(!isLocation);
-                    }}
-                  />
-                </div>
+                <DropDownButton isState={isLocation} setIsState={setIsLocation}>
+                  {location.region}
+                </DropDownButton>
               )}
               {isLocation && recruitMethod === "OFFLINE" && (
                 <ul className="location">
@@ -273,7 +250,6 @@ function DivisionForm() {
             onClick={e => {
               e.preventDefault();
               setIsStack(!isStack);
-              // eslint-disable-next-line prettier/prettier
             }}
           >
             <input
@@ -291,7 +267,7 @@ function DivisionForm() {
               }}
             />
           </div>
-          {isStack ? (
+          {isStack && (
             <ul className="Stacklists">
               {searchStack.map(el => {
                 return (
@@ -301,7 +277,7 @@ function DivisionForm() {
                 );
               })}
             </ul>
-          ) : null}
+          )}
           {selectedStackList && (
             <span className="Added-stack-list">
               {selectedStackList.map(el => (
@@ -322,23 +298,9 @@ function DivisionForm() {
         </S.SecondLeft>
         <S.SecondRight ref={periodClickRef}>
           <label htmlFor="period">기간</label>
-          <div>
-            <div
-              onClick={e => {
-                e.preventDefault();
-                setIsPeriod(!isPeriod);
-              }}
-            >
-              {periodValue.period}
-            </div>
-            <AiOutlineDown
-              className="AiOutlineDown"
-              onClick={e => {
-                e.preventDefault();
-                setIsPeriod(!isPeriod);
-              }}
-            />
-          </div>
+          <DropDownButton isState={isPeriod} setIsState={setIsPeriod}>
+            {periodValue.period}
+          </DropDownButton>
           {isPeriod && (
             <ul className="Periodlists">
               {periodLists.map(el => (
@@ -350,9 +312,7 @@ function DivisionForm() {
           )}
         </S.SecondRight>
       </S.SecondDivision>
-      <CareerForm object={object} />
+      <RecruitmentCareer object={object} />
     </>
   );
 }
-
-export default DivisionForm;

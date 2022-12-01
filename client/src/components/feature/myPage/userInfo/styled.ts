@@ -1,29 +1,5 @@
 import styled from "styled-components";
 
-export const MypageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-`;
-
-export const ContentWrapper = styled.div`
-  display: flex;
-  width: 90%;
-  padding: 0 3rem;
-  max-width: 1080px;
-  @media screen and (max-width: 760px) {
-    width: 100%;
-    padding: 0 1.5rem;
-  }
-`;
-
-export const Content = styled.div`
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  justify-content: space-around;
-`;
-
 export const UserInfoWrapper = styled.div`
   display: grid;
   align-items: center;
