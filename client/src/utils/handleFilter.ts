@@ -3,7 +3,7 @@ import { Datas } from "../types/board";
 export const handleFilter = (
   boards: Datas[],
   stackFilter: string[],
-  setFilterDatas: (arg: Datas[]) => void,
+  setFilterDatas: any,
   isDone: boolean,
   group: string
 ) => {

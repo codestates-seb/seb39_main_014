@@ -21,7 +21,7 @@ function BoardPage({ group }: { group: string }) {
   const [datas, setDatas] = useState([]);
   const [isDone, setIsDone] = useState(false);
   const [stackFilter, setStackFilter] = useState([]);
-  const [filterDatas, setFilterDatas] = useState([]);
+  const [filterDatas, setFilterDatas] = useState<Datas[]>([]);
   const [page, setPage] = useState(1);
 
   const isLoading = !datas.length;
