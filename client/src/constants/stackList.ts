@@ -4,7 +4,7 @@ interface StackType {
 
 export const stackList: StackType = {
   전체: [
-    "Aws",
+    "AWS",
     "Docker",
     "Express",
     "Figma",
@@ -47,5 +47,5 @@ export const stackList: StackType = {
     "GraphQL",
     "Firebase",
   ],
-  기타: ["Aws", "Swift", "ReactNative", "Unity", "Docker", "Figma", "Flutter"],
+  기타: ["AWS", "Swift", "ReactNative", "Unity", "Docker", "Figma", "Flutter"],
 };
