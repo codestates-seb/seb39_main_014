@@ -88,12 +88,12 @@ export const FirstRight = styled.div`
       align-items: center;
 
       width: 100%;
-      border: 1px solid #a6a6a6;
+      border: 1px solid ${({ theme }) => theme.colors.gray[300]};
       padding-left: 1rem;
       border-radius: 10px;
 
       &:hover {
-        border: 1px solid #69d06f;
+        border: 1px solid ${({ theme }) => theme.colors.green[300]};
       }
       > button {
         width: 100%;
@@ -117,7 +117,7 @@ export const FirstRight = styled.div`
       left: 80px;
       margin: 0;
       padding: 0;
-      border: 1px solid #a6a6a6;
+      border: 1px solid ${({ theme }) => theme.colors.gray[300]};
       border-radius: 10px;
       @media screen and (max-width: 710px) {
         left: 0;
@@ -130,7 +130,7 @@ export const FirstRight = styled.div`
         font-size: 0.8rem;
         cursor: pointer;
         &:hover {
-          background-color: #e5f8ed;
+          background-color: ${({ theme }) => theme.colors.green[100]};
           border-radius: 10px;
         }
       }
@@ -182,11 +182,11 @@ export const SecondLeft = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
-    border: 1px solid #a6a6a6;
+    border: 1px solid ${({ theme }) => theme.colors.gray[300]};
     padding-left: 1rem;
     border-radius: 10px;
     &:hover {
-      border: 1px solid #69d06f;
+      border: 1px solid ${({ theme }) => theme.colors.green[300]};
     }
     > input {
       width: 100%;
@@ -217,15 +217,15 @@ export const SecondLeft = styled.div`
     margin: 0;
     padding: 0;
     background-color: white;
-    border: 1px solid #a6a6a6;
+    border: 1px solid ${({ theme }) => theme.colors.gray[300]};
     border-radius: 10px;
     &::-webkit-scrollbar {
       background-color: white;
       border-radius: 10px;
-      border-left: 1px solid #a6a6a6;
+      border-left: 1px solid ${({ theme }) => theme.colors.gray[300]};
     }
     &::-webkit-scrollbar-thumb {
-      background-color: #c7c7c7;
+      background-color: ${({ theme }) => theme.colors.gray[200]};
       border-radius: 10px;
     }
 
@@ -233,7 +233,7 @@ export const SecondLeft = styled.div`
       padding: 0.8rem 0 0.8rem 1rem;
       cursor: pointer;
       &:hover {
-        background-color: #e5f8ed;
+        background-color: ${({ theme }) => theme.colors.green[100]};
         border-radius: 10px;
       }
     }
@@ -263,11 +263,11 @@ export const SecondRight = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
-    border: 1px solid #a6a6a6;
+    border: 1px solid ${({ theme }) => theme.colors.gray[300]};
     padding-left: 1rem;
     border-radius: 10px;
     &:hover {
-      border: 1px solid #69d06f;
+      border: 1px solid ${({ theme }) => theme.colors.green[300]};
     }
     > div {
       display: flex;
@@ -293,13 +293,13 @@ export const SecondRight = styled.div`
     z-index: 3;
     margin: 0;
     padding: 0;
-    border: 1px solid #a6a6a6;
+    border: 1px solid ${({ theme }) => theme.colors.gray[300]};
     border-radius: 10px;
     > li {
       padding: 0.8rem 0 0.8rem 1rem;
       cursor: pointer;
       &:hover {
-        background-color: #e5f8ed;
+        background-color: ${({ theme }) => theme.colors.green[100]};
         border-radius: 10px;
       }
     }
@@ -327,11 +327,11 @@ export const Career = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
-    border: 1px solid #a6a6a6;
+    border: 1px solid ${({ theme }) => theme.colors.gray[300]};
     padding-left: 1rem;
     border-radius: 10px;
     &:hover {
-      border: 1px solid #69d06f;
+      border: 1px solid ${({ theme }) => theme.colors.green[300]};
     }
     > button {
       width: 100%;
@@ -356,13 +356,13 @@ export const Career = styled.div`
     margin: 0;
     padding: 0;
     background-color: white;
-    border: 1px solid #a6a6a6;
+    border: 1px solid ${({ theme }) => theme.colors.gray[300]};
     border-radius: 10px;
     > li {
       padding: 0.8rem 0 0.8rem 1rem;
       cursor: pointer;
       &:hover {
-        background-color: #e5f8ed;
+        background-color: ${({ theme }) => theme.colors.green[100]};
         border-radius: 10px;
       }
     }
@@ -394,8 +394,8 @@ export const Career = styled.div`
       width: 1.8rem;
       height: 1.8rem;
       margin: 0 1rem;
-      color: #595959;
-      border: 1px solid #595959;
+      color: ${({ theme }) => theme.colors.gray[600]};
+      border: 1px solid ${({ theme }) => theme.colors.gray[600]};
       border-radius: 50%;
       background-color: white;
       font-size: 1.5rem;
@@ -415,8 +415,8 @@ export const Career = styled.div`
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      background-color: #e5f8ed;
-      color: #009f47;
+      background-color: ${({ theme }) => theme.colors.green[100]};
+      color: ${({ theme }) => theme.colors.green[400]};
     }
   }
 `;
@@ -442,8 +442,8 @@ export const Crew = styled.div`
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #ffe3e4;
-    color: #ff7d85;
+    background-color: ${({ theme }) => theme.colors.red[100]};
+    color: ${({ theme }) => theme.colors.red[200]};
   }
 `;
 
@@ -455,7 +455,7 @@ export const Contact = styled.div`
 
   > input {
     width: 49%;
-    border: 1px solid #a6a6a6;
+    border: 1px solid ${({ theme }) => theme.colors.gray[300]};
     border-radius: 10px;
     @media screen and (max-width: 710px) {
       width: 100%;
@@ -480,7 +480,7 @@ export const Title = styled.div`
   > input {
     width: 100%;
     padding: 0.8rem 0 0.8rem 0.5rem;
-    border: 1px solid #a6a6a6;
+    border: 1px solid ${({ theme }) => theme.colors.gray[300]};
     border-radius: 10px;
     margin: 0.7rem 0 1rem 0;
     &::placeholder {
@@ -518,12 +518,12 @@ export const PostButton = styled.div`
     border: none;
     cursor: pointer;
     &.cancel {
-      background-color: #e4e4e4;
+      background-color: ${({ theme }) => theme.colors.gray[100]};
     }
 
     &.complete {
-      background-color: #e5f8ed;
-      color: #009f47;
+      background-color: ${({ theme }) => theme.colors.green[100]};
+      color: ${({ theme }) => theme.colors.green[400]};
     }
   }
 `;
