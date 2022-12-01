@@ -5,8 +5,8 @@ import { stackList } from "../../../constants/stackList";
 
 const Stack = ({ selectedList, setSelectedList }: any) => {
   const stackCategory = ["전체", "프론트엔드", "백엔드", "기타"];
-
   const [currentJob, setCurrentJob] = useState("전체");
+
   const handleStackClick = (event: string) => {
     if (selectedList.includes(event)) {
       const deletedArr = selectedList.filter((el: string) => el !== event);

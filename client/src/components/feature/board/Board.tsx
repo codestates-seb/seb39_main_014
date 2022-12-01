@@ -36,13 +36,13 @@ function Board({ data }: DatasObject) {
           {data.recruitDone ? (
             <div className="info-deadline">모집완료</div>
           ) : (
-            <div className="info-deadline">D - {dday}</div>
+            <div className="info-deadline">모집중</div>
           )}
         </TopLayout>
         <TitleLayout>
           <h3>{data.title}</h3>
         </TitleLayout>
-        <TagLayout>{/* advanced */}</TagLayout>
+        <TagLayout>{/* TODO advanced */}</TagLayout>
         <StackLayout>
           {data.techStackNames
             ? data.techStackNames.map((el: any, idx: number) => (
