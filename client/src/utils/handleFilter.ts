@@ -1,13 +1,13 @@
 import { Datas } from "../types/board";
 
 export const handleFilter = (
-  datas: Datas[],
+  boards: Datas[],
   stackFilter: string[],
-  setFilterDatas: any,
+  setFilterDatas: (arg: Datas[]) => void,
   isDone: boolean,
   group: string
 ) => {
-  const isIncludeList = datas
+  const isIncludeList = boards
     .map(item => item.techStackNames)
     .map(techStackNames =>
       techStackNames.map(techStackNames => techStackNames.techStackName)
@@ -18,12 +18,12 @@ export const handleFilter = (
     const makeFilterdList = () => {
       const stackResult: any = [];
       if (stackFilter.length === 0) {
-        const doneResult = datas.filter(el => el.recruitDone === isDone);
+        const doneResult = boards.filter(el => el.recruitDone === isDone);
         setFilterDatas(doneResult);
       } else {
         isIncludeList.map((el: boolean, idx: number) => {
           if (el === true) {
-            stackResult.push(datas[idx]);
+            stackResult.push(boards[idx]);
           }
         });
         const doneResult = stackResult.filter(
@@ -39,7 +39,7 @@ export const handleFilter = (
     makeFilterdList();
   } else if (stackFilter.length === 0) {
     const makeFilterdList = () => {
-      const doneResult = datas.filter(el => el.recruitDone === isDone);
+      const doneResult = boards.filter(el => el.recruitDone === isDone);
       const groupResult = doneResult.filter(el => el.recruitCategory === group);
       setFilterDatas(groupResult);
       if (groupResult.length !== 0) {
@@ -47,7 +47,7 @@ export const handleFilter = (
     };
     makeFilterdList();
   } else if (stackFilter.length !== 0 && group !== "전체") {
-    const isIncludeList = datas
+    const isIncludeList = boards
       .map(item => item.techStackNames)
       .map(el => el.map(el => el.techStackName))
       .map(elm => stackFilter.some(r => elm.indexOf(r) >= 0));
@@ -56,7 +56,7 @@ export const handleFilter = (
       const stackResult: any = [];
       isIncludeList.map((el, idx) => {
         if (el === true) {
-          stackResult.push(datas[idx]);
+          stackResult.push(boards[idx]);
         }
       });
 

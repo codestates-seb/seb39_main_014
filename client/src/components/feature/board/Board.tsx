@@ -1,37 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import { AiOutlineEye, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { Datas } from "../../../types/board";
 
-// interface techStack {
-//   techStackName: string;
-// }
+export interface DatasObject {
+  data: Datas;
+}
 
-// interface BoardProps {
-//   data: {
-//     id: number;
-//     recruitDone: boolean;
-//     location: string;
-//     period: string;
-//     title: string;
-//     currentRecruit: number;
-//     totalRecruit: number;
-//     createdAt: string;
-//     nickName: string;
-//     viewCount: number;
-//     commentAmount: number;
-//     isBookmarked: string;
-//     bookmarkCount: number;
-//     techStackNames: Array<techStack>;
-//   };
-// }
-
-function Board({ data }: any) {
+function Board({ data }: DatasObject) {
   const [createdAt, setCreatedAt] = useState("");
   const [dday, setDday] = useState<number>();
 
   useEffect(() => {
-    setCreatedAt(createdAt.slice(0, 10));
+    setCreatedAt(data.createdAt.slice(0, 10));
 
     const createdAtDay = new Date(createdAt);
     const today = new Date();
@@ -80,7 +62,7 @@ function Board({ data }: any) {
             <p> / </p>
             <p> {data.totalRecruit}</p>
             <p>▿</p>
-            <div className="created-at">{createdAt.slice(0, 10)}</div>
+            <div className="created-at">{data.createdAt.slice(0, 10)}</div>
           </div>
         </RecruitmentLayout>
         <Boundary>

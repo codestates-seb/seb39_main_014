@@ -7,7 +7,7 @@ import Stack from "../../components/feature/stack/Stack";
 import Paging from "../../components/layout/pagenation/Pagenation";
 import PopStack from "../../components/feature/popStack/PopStack";
 import TopButton from "../../components/shared/topButton/TopButton";
-import IsLoading from "../../components/shared/isLoading/IsLoading";
+import Loading from "../../components/shared/Loading/Loading";
 import getBoard from "../../apis/getBoard";
 import getMember from "../../apis/getMember";
 import NotExistBoard from "../../components/feature/board/NotExistBoard";
@@ -48,7 +48,7 @@ function BoardPage({ group }: { group: string }) {
                   setSelectedList={setStackFilter}
                 />
               </StackArea>
-              <IsLoading />
+              <Loading />
               <PageNationArea />
             </Center>
             <Side>

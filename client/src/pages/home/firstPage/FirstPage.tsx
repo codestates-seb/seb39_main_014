@@ -8,13 +8,13 @@ function FirstPage() {
     <FirstPageStyle>
       <div className="content-layout">
         <div className="title">
-          <h1>개발 스터디와 프로젝트</h1>
+          <h1>스터디와 프로젝트 모집</h1>
           <h1>수풀에서 쉽고 간편하게</h1>
         </div>
 
         <div className="body">
-          <div>어디에서 스터디를 구하고 프로젝트를 개설하실지</div>
-          <div>막막하시다면 수풀에서 찾아보세요!</div>
+          <div>어디에서 개발 스터디를 구하고 프로젝트를 </div>
+          <div>개설하실지 막막하시다면 수풀에서 찾아보세요!</div>
         </div>
         <StartSoopool>
           <Link to="/board">시작하기</Link>
@@ -65,13 +65,15 @@ const FirstPageStyle = styled.div`
     height: 80%;
     z-index: 2;
 
-    h1 {
+    .title > h1 {
       font-size: 500%;
       color: black;
       white-space: nowrap;
+      margin-bottom: 1.5rem;
     }
 
-    .body {
+    .body > div {
+      margin: 1rem;
       font-size: 200%;
       color: black;
     }
