@@ -5,6 +5,9 @@ import com.server.soopool.boardApply.entity.BoardApply;
 import com.server.soopool.bookmark.entity.Bookmark;
 import com.server.soopool.careerMember.entity.CareerMember;
 import com.server.soopool.comment.entity.Comment;
+import com.server.soopool.communication.entity.Communication;
+import com.server.soopool.communicationBookmark.entity.CommunicationBookmark;
+import com.server.soopool.communicationComment.entity.CommunicationComment;
 import com.server.soopool.global.baseTime.BaseTimeEntity;
 import com.server.soopool.memberTechstack.entity.MemberTechStack;
 import lombok.*;
@@ -45,6 +48,9 @@ public class Member extends BaseTimeEntity {
 
     @Column(length = 100)
     private String nickname;
+
+    @Column
+    private Integer activityScore = 0;
 
     @Column
     private LocalDateTime deletedAt;
@@ -107,6 +113,30 @@ public class Member extends BaseTimeEntity {
     public void add(Comment comment) {
         comment.setMember(this);
         getComments().add(comment);
+    }
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Communication> communications;
+
+    public void add(Communication communication) {
+        communication.setMember(this);
+        getCommunications().add(communication);
+    }
+
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<CommunicationBookmark> communicationBookmarks;
+    public void add(CommunicationBookmark communicationBookmark) {
+        communicationBookmark.setMember(this);
+        getCommunicationBookmarks().add(communicationBookmark);
+    }
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<CommunicationComment> communicationComments;
+
+    public void add(CommunicationComment communicationComment) {
+        communicationComment.setMember(this);
+        getCommunicationComments().add(communicationComment);
     }
 
     @OneToMany(mappedBy = "member")
