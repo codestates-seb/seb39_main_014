@@ -336,7 +336,7 @@ export const WriteComment = styled.div`
       width: 10%;
       border: none;
       border-radius: 5px;
-      background-color: ${({ theme }) => theme.colors.gray[200]};
+      background-color: ${({ theme }) => theme.colors.green[100]};
       color: ${({ theme }) => theme.colors.green[400]};
       cursor: pointer;
     }
