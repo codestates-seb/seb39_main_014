@@ -25,7 +25,7 @@ export default function WithDrawal({ ...props }: Props) {
     career: [
       {
         name: props.career.name,
-        level: levelData.filter(prev => prev.level === props.career.level)[0]
+        level: levelData?.filter(prev => prev.level === props?.career?.level)[0]
           .value,
       },
     ],
@@ -54,6 +54,7 @@ export default function WithDrawal({ ...props }: Props) {
       }
     });
   };
+
   return (
     <S.Container>
       <S.Button onClick={handleMypageSubmit}>완료</S.Button>

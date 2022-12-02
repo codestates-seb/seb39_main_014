@@ -50,10 +50,11 @@ function MyPage() {
       setLoading(true);
       setNickname(res.nickname);
       setTechStack(res.techStack.map(el => ({ name: el.name, id: el.name })));
-      setCareer({
-        name: res.career[0].name,
-        level: res.career[0].level,
-      });
+      res.career[0].name &&
+        setCareer({
+          name: res.career[0].name,
+          level: res.career[0].level,
+        });
       setLoading(false);
     });
   };
