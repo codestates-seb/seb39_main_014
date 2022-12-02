@@ -5,7 +5,7 @@ export const useOutsideClick = <T extends HTMLElement>(
   callback: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   const handleClick = (e: React.BaseSyntheticEvent | MouseEvent) => {
-    if (ref && !ref.current.contains(e.target)) {
+    if (ref && !ref?.current?.contains(e.target)) {
       callback(false);
     }
   };

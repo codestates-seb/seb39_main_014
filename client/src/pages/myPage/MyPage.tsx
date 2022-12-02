@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect, MutableRefObject } from "react";
+import { useNavigate } from "react-router";
 import { GoX } from "react-icons/go";
 import { AiOutlineDown } from "react-icons/ai";
 
@@ -11,13 +12,19 @@ import {
 
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 
+import { getLocalStorage } from "../../utils/storage";
 import { getMypageInfo } from "../../apis/myPageApis/myPageApi";
 import { TechStack } from "../../types/mypage";
 
 import WithDrawal from "../../components/feature/myPage/withDrawal/WithDrawal";
 import UserBoard from "../../components/feature/myPage/userBoard/UserBoard";
+import { SuccessModal } from "../../components/shared/modal/Modal";
 
 function MyPage() {
+  const [loading, setLoading] = useState(false);
+  const token = getLocalStorage("token");
+  const navigate = useNavigate();
+
   const [career, setCareer] = useState({
     name: "웹 프론트엔드",
     level: "초보",
@@ -38,32 +45,39 @@ function MyPage() {
   const careerClickRef = useRef() as MutableRefObject<HTMLDivElement>;
   const stackClickRef = useRef() as MutableRefObject<HTMLDivElement>;
 
-  /** 유저정보 get 요청 함수 */
   const getMypage = () => {
     getMypageInfo().then(res => {
+      setLoading(true);
       setNickname(res.nickname);
       setTechStack(res.techStack.map(el => ({ name: el.name, id: el.name })));
       setCareer({
         name: res.career[0].name,
         level: res.career[0].level,
       });
+      setLoading(false);
     });
   };
   useEffect(() => {
     getMypage();
-  }, []);
+    if (!token) {
+      SuccessModal("로그인이 필요합니다.").then(res => {
+        if (res.isConfirmed) {
+          navigate("/board");
+        }
+      });
+    }
+  }, [token, navigate]);
 
-  /** 외부 클릭시 창 사라지는 기능 */
   useOutsideClick(careerClickRef, setIsCareer);
   useOutsideClick(stackClickRef, setIsTechStackList);
 
-  /** 스택 검색 필터 */
   const searchStack = newStackList.filter(prev => {
     if (search === "") {
       return prev;
     } else return prev.stack.toLowerCase().includes(search.toLowerCase());
   });
 
+  if (loading) return null;
   return (
     <S.MypageContainer>
       <S.ContentWrapper>
