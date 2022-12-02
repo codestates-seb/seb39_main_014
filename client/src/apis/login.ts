@@ -1,18 +1,14 @@
 import axios from "axios";
 
 interface LoginArgs {
-  LOGIN_URL: string;
   userId: string;
   password: string;
   setErrors: any;
 }
 
-const handleLogin = async ({
-  LOGIN_URL,
-  userId,
-  password,
-  setErrors,
-}: LoginArgs) => {
+const LOGIN_URL = `${process.env.REACT_APP_API_URL}/log-in`;
+
+const handleLogin = async ({ userId, password, setErrors }: LoginArgs) => {
   try {
     const res = await axios.post(LOGIN_URL, {
       userId,

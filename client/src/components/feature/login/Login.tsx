@@ -6,28 +6,39 @@ import { FcGoogle } from "react-icons/fc";
 import handleLogin from "../../../apis/login";
 
 function Login() {
-  const LOGIN_URL = `${process.env.REACT_APP_API_URL}/log-in`;
-
   const [userId, setuserId] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    handleLogin({ LOGIN_URL, userId, password, setErrors });
+  const GuestId = {
+    userId: "guest",
+    password: "guest1234",
+    setErrors,
   };
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    handleLogin({ userId, password, setErrors });
+  };
   return (
     <LoginFrame>
       <LoginContainer>
         <h1 className="title">로그인</h1>
 
-        <SocialContainer>
+        <GusetContainer>
+          <div className="social">
+            <div className="googgle-login" onClick={() => handleLogin(GuestId)}>
+              게스트 계정으로 로그인
+            </div>
+          </div>
+        </GusetContainer>
+
+        <GusetContainer>
           <div className="social">
             <FcGoogle className="google-icon" />
             <div className="googgle-login">구글 계정으로 로그인</div>
           </div>
-        </SocialContainer>
+        </GusetContainer>
 
         <hr />
 
@@ -94,7 +105,7 @@ const LoginContainer = styled.div`
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   width: 500px;
   max-width: 100%;
-  min-height: 480px;
+  min-height: 500px;
 
   .title {
     font-weight: 700;
@@ -114,7 +125,7 @@ const LoginContainer = styled.div`
 `;
 
 /** div - 구글 아이디로 로그인 */
-const SocialContainer = styled.div`
+const GusetContainer = styled.div`
   .social {
     display: flex;
     align-items: center;
