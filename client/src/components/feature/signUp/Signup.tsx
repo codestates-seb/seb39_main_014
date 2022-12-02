@@ -64,7 +64,7 @@ function Signup() {
         <SocialContainer>
           <div className="social">
             <FcGoogle className="google-icon" />
-            <div className="google-login">구글 계정으로 로그인</div>
+            <div className="google-login">구글 계정으로 회원가입</div>
           </div>
         </SocialContainer>
         <hr />
