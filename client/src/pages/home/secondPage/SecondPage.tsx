@@ -24,18 +24,19 @@ function SecondPage() {
 }
 
 const SecondPageStyle = styled.div`
+  background-color: #e5ece7;
+  white-space: nowrap;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
   padding: 0 30px;
   height: 95vh;
   position: relative;
-  z-index: 1;
-  background-color: #e5ece7;
-  min-height: 500px;
+  text-size-adjust: auto;
 
   .title {
-    min-width: 450px;
     font-size: 5rem;
     margin-bottom: 1rem;
   }
@@ -59,8 +60,9 @@ const SecondPageStyle = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    h1 {
-      font-size: 80rem;
+    .title {
+      font-weight: 700;
+      font-size: 350%;
     }
 
     .body {

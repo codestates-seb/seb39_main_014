@@ -3,7 +3,7 @@ import styled from "styled-components";
 import InputGroup from "../../shared/inputGroup/InputGroup";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-import handleLogin from "../../../apis/login";
+import { handleLogin, handleAuthLogin } from "../../../apis/login";
 
 function Login() {
   const [userId, setuserId] = useState("");
@@ -36,7 +36,9 @@ function Login() {
         <GusetContainer>
           <div className="social">
             <FcGoogle className="google-icon" />
-            <div className="googgle-login">구글 계정으로 로그인</div>
+            <div className="googgle-login" onClick={handleAuthLogin}>
+              구글 계정으로 로그인
+            </div>
           </div>
         </GusetContainer>
 
