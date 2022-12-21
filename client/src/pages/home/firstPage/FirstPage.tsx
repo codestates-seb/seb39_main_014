@@ -8,8 +8,8 @@ function FirstPage() {
     <FirstPageStyle>
       <div className="content-layout">
         <div className="title">
-          <h1>스터디와 프로젝트 모집</h1>
-          <h1>수풀에서 쉽고 간편하게</h1>
+          <p>스터디와 프로젝트 모집</p>
+          <p>수풀에서 쉽고 간편하게</p>
         </div>
 
         <div className="body">
@@ -32,6 +32,8 @@ const FirstPageStyle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  white-space: nowrap;
+
   padding: 0 30px;
   height: 95vh;
   position: relative;
@@ -64,28 +66,30 @@ const FirstPageStyle = styled.div`
     width: 80%;
     height: 80%;
     z-index: 2;
-
-    .title > h1 {
-      font-size: 500%;
-      color: black;
-      white-space: nowrap;
-      margin-bottom: 1.5rem;
-    }
-
-    .body > div {
-      margin: 1rem;
-      font-size: 200%;
-      color: black;
-    }
+  }
+  .title {
+    font-weight: 700;
+    font-size: 500%;
+    color: black;
+    white-space: nowrap;
+    margin-bottom: 1.5rem;
   }
 
-  @media screen and (max-width: 838px) {
-    .title > h1 {
-      font-size: 45px;
+  .body {
+    margin: 1rem;
+    font-size: 200%;
+    color: black;
+  }
+
+  @media all and (max-width: 838px) {
+    .title {
+      font-weight: 700;
+      font-size: 220%;
     }
 
-    .body > div {
-      font-size: 15px;
+    .body {
+      font-size: 100%;
+      white-space: nowrap;
     }
   }
 `;
