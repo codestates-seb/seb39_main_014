@@ -7,12 +7,12 @@ import {
   careerLists,
   levelLists,
   stackLists,
-} from "../../../../constants/createBoardData";
+} from "@constants/createBoardData";
 
-import { useOutsideClick } from "../../../../hooks/useOutsideClick";
+import { useOutsideClick } from "@hooks/useOutsideClick";
 
-import { getMypageInfo } from "../../../../apis/myPageApis/myPageApi";
-import { TechStack } from "../../../../types/mypage";
+import { getMypageInfo } from "@apis/myPageApis/myPageApi";
+import { TechStack } from "types/mypage";
 
 type Props = {
   nickname: string;

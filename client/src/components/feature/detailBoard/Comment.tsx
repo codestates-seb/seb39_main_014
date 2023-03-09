@@ -3,16 +3,16 @@ import { useParams } from "react-router-dom";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { HiOutlinePencil } from "react-icons/hi";
 
-import { WriteComment, Comments } from "../../../pages/boardDetailPage/styled";
+import { WriteComment, Comments } from "@pages/boardDetailPage/styled";
 import {
   deleteComments,
   postComments,
   updateComments,
-} from "../../../apis/detailBoardApis/commentBoard";
-import useCommentQuery from "../../../hooks/detailBaordQueries/useCommentQuery";
-import { ConfirmModal, SuccessModal } from "../../shared/modal/Modal";
-import { getLocalStorage } from "../../../utils/storage";
-import useBoardMutation from "../../../hooks/useBoradMutation";
+} from "@apis/detailBoardApis/commentBoard";
+import useCommentQuery from "@hooks/detailBaordQueries/useCommentQuery";
+import { ConfirmModal, SuccessModal } from "@components/shared/modal/Modal";
+import { getLocalStorage } from "@utils/storage";
+import useBoardMutation from "@hooks/useBoradMutation";
 
 function CommentForm() {
   const { boardId } = useParams<string>();

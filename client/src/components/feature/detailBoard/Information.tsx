@@ -3,20 +3,20 @@ import { useParams, useNavigate } from "react-router-dom";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { BiArrowBack } from "react-icons/bi";
 
-import * as S from "../../../pages/boardDetailPage/styled";
-import { careerLists } from "../../../constants/createBoardData";
-import { ConfirmModal, SuccessModal } from "../../shared/modal/Modal";
-import useDetailQuery from "../../../hooks/detailBaordQueries/useDetailQuery";
-import useDeadline from "../../../hooks/useDeadline";
-import useBoardMutation from "../../../hooks/useBoradMutation";
+import * as S from "@pages/boardDetailPage/styled";
+import { careerLists } from "@constants/createBoardData";
+import { ConfirmModal, SuccessModal } from "@components/shared/modal/Modal";
+import useDetailQuery from "@hooks/detailBaordQueries/useDetailQuery";
+import useDeadline from "@hooks/useDeadline";
+import useBoardMutation from "@hooks/useBoradMutation";
 import {
   deleteApply,
   deleteBoard,
   postApply,
   postBookmark,
-} from "../../../apis/detailBoardApis/detailBoard";
-import { getLocalStorage } from "../../../utils/storage";
-import useApplyQuery from "../../../hooks/detailBaordQueries/useBoardApply";
+} from "@apis/detailBoardApis/detailBoard";
+import { getLocalStorage } from "@utils/storage";
+import useApplyQuery from "@hooks/detailBaordQueries/useBoardApply";
 
 function Information() {
   const { boardId } = useParams<string>();

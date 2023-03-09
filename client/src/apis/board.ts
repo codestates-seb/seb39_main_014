@@ -1,7 +1,7 @@
 import { API_PATH, httpMethod } from "./common";
 import requester from "./requester";
-import { Submit } from "../types/createBoard";
-import { BoardDetail } from "../types/api";
+import { Submit } from "types/createBoard";
+import { BoardDetail } from "types/api";
 
 export const postBoard = async (submitForm: Submit) => {
   const {

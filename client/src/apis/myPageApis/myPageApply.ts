@@ -1,4 +1,4 @@
-import { Apply, List } from "./../../types/mypage";
+import { Apply, List } from "types/mypage";
 import { httpMethod, API_PATH } from "../common";
 import requester from "../requester";
 

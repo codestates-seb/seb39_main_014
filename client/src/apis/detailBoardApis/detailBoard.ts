@@ -1,6 +1,6 @@
 import requester from "../requester";
 import { httpMethod, API_PATH } from "../common";
-import { BoardDetail } from "../../types/api";
+import { BoardDetail } from "types/api";
 
 export const getBoard = async (boardId?: string) => {
   const {

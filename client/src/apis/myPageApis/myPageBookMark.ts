@@ -1,6 +1,6 @@
 import { httpMethod, API_PATH } from "../common";
 import requester from "../requester";
-import { Bookmark, List } from "../../types/mypage";
+import { Bookmark, List } from "types/mypage";
 
 export const getMypageBookmark = async () => {
   const {
