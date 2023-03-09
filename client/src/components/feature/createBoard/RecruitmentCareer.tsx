@@ -1,19 +1,19 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useOutsideClick } from "../../../hooks/useOutsideClick";
-import { careerLists } from "../../../constants/createBoardData";
-import { Career, Crew } from "../../../pages/boardCreatePage/styled";
-import { getBoard } from "../../../apis/detailBoardApis/detailBoard";
+import { useOutsideClick } from "@hooks/useOutsideClick";
+import { careerLists } from "@constants/createBoardData";
+import { Career, Crew } from "@pages/boardCreatePage/styled";
+import { getBoard } from "@apis/detailBoardApis/detailBoard";
 
 import {
   Object,
   CrewState,
   CareersState,
   CareerState,
-} from "../../../types/createBoard";
+} from "types/createBoard";
 import SubmitForm from "./SubmitForm";
 import _ from "lodash";
-import DropDownButton from "../../shared/dropDown/dropDownButton/DropDownButton";
+import DropDownButton from "@components/shared/dropDown/dropDownButton/DropDownButton";
 
 export default function RecruitmentCareer({ object }: Object) {
   const { boardId } = useParams();

@@ -1,12 +1,9 @@
 import { useNavigate } from "react-router";
 
-import {
-  deleteUser,
-  postMypageInfo,
-} from "../../../../apis/myPageApis/myPageApi";
-import { ConfirmModal, SuccessModal } from "../../../shared/modal/Modal";
-import { Mypage, TechStack } from "../../../../types/mypage";
-import { levelData } from "../../../../constants/myPageData";
+import { deleteUser, postMypageInfo } from "@apis/myPageApis/myPageApi";
+import { ConfirmModal, SuccessModal } from "@components/shared/modal/Modal";
+import { Mypage, TechStack } from "types/mypage";
+import { levelData } from "@constants/myPageData";
 import * as S from "./styled";
 
 type Props = {

@@ -1,14 +1,14 @@
 import { Routes, Route } from "react-router-dom";
 
-import Nav from "./components/layout/navigation/Nav";
-import Home from "./pages/home/Home";
-import WriteForm from "./pages/boardCreatePage/BoradCreatePage";
-import LoginPage from "./pages/loginpage/LoginPage";
-import GroupBoardPage from "./pages/boardpage/GroupBoardPage";
-import SignUpPage from "./pages/singupPage/SignUpPage";
-import BoardInquiryPage from "./pages/boardDetailPage/BoardDetailPage";
-import MyPage from "./pages/myPage/MyPage";
-import ErrorPage from "./pages/errorPage/ErrorPage";
+import Nav from "@components/layout/navigation/Nav";
+import Home from "@pages/home/Home";
+import WriteForm from "@pages/boardCreatePage/BoradCreatePage";
+import LoginPage from "@pages/loginpage/LoginPage";
+import GroupBoardPage from "@pages/boardpage/GroupBoardPage";
+import SignUpPage from "@pages/singupPage/SignUpPage";
+import BoardInquiryPage from "@pages/boardDetailPage/BoardDetailPage";
+import MyPage from "@pages/myPage/MyPage";
+import ErrorPage from "@pages/errorPage/ErrorPage";
 
 function App() {
   return (

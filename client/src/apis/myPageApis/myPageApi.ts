@@ -1,6 +1,6 @@
 import { httpMethod, API_PATH } from "../common";
 import requester from "../requester";
-import { Mypage } from "../../types/mypage";
+import { Mypage } from "types/mypage";
 
 export const getMypageInfo = async () => {
   const {

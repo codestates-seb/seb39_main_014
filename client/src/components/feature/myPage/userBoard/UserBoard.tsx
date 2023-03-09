@@ -1,16 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
-import {
-  useMypageBookmark,
-  useMypageApply,
-} from "../../../../hooks/myPageQueries";
-import { deleteMypageApply } from "../../../../apis/myPageApis/myPageApply";
+import { useMypageBookmark, useMypageApply } from "@hooks/myPageQueries";
+import { deleteMypageApply } from "@apis/myPageApis/myPageApply";
 
-import { deleteMypageBookmark } from "../../../../apis/myPageApis/myPageBookMark";
-import { List } from "../../../../types/mypage";
+import { deleteMypageBookmark } from "@apis/myPageApis/myPageBookMark";
+import { List } from "types/mypage";
 import * as S from "./styled";
-import useBoardMutation from "../../../../hooks/useBoradMutation";
+import useBoardMutation from "@hooks/useBoradMutation";
 
 const UserBoard = () => {
   const [isTab, setIsTab] = useState(true);

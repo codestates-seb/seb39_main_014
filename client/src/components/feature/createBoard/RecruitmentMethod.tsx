@@ -1,22 +1,22 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import * as S from "../../../pages/boardCreatePage/styled";
+import * as S from "@pages/boardCreatePage/styled";
 import {
   regionLists,
   stackLists,
   periodLists,
   stackNumbers,
   stackReverse,
-} from "../../../constants/createBoardData";
+} from "@constants/createBoardData";
 import { AiOutlineDown } from "react-icons/ai";
 import { GoX } from "react-icons/go";
 import RecruitmentCareer from "./RecruitmentCareer";
-import { getBoard } from "../../../apis/detailBoardApis/detailBoard";
+import { getBoard } from "@apis/detailBoardApis/detailBoard";
 import _ from "lodash";
-import { useOutsideClick } from "../../../hooks/useOutsideClick";
+import { useOutsideClick } from "@hooks/useOutsideClick";
 
-import { SelectedStack, TechStack } from "../../../types/createBoard";
-import DropDownButton from "../../shared/dropDown/dropDownButton/DropDownButton";
+import { SelectedStack, TechStack } from "types/createBoard";
+import DropDownButton from "@components/shared/dropDown/dropDownButton/DropDownButton";
 
 export default function RecruitmentMethod() {
   const { boardId } = useParams();

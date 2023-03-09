@@ -4,12 +4,12 @@ import styled from "styled-components";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate, useParams } from "react-router-dom";
 
-import * as S from "../../../pages/boardCreatePage/styled";
-import { postBoard, updateBoard } from "../../../apis/board";
-import { getBoard } from "../../../apis/detailBoardApis/detailBoard";
-import { ConfirmModal, SuccessModal } from "../../shared/modal/Modal";
-import { NewObj } from "../../../types/createBoard";
-import ReactQuillEditor from "../../shared/reactQuill/ReactQuillEditor";
+import * as S from "@pages/boardCreatePage/styled";
+import { postBoard, updateBoard } from "@apis/board";
+import { getBoard } from "@apis/detailBoardApis/detailBoard";
+import { ConfirmModal, SuccessModal } from "@components/shared/modal/Modal";
+import { NewObj } from "types/createBoard";
+import ReactQuillEditor from "@components/shared/reactQuill/ReactQuillEditor";
 
 export default function SubmitForm({ newObject }: NewObj) {
   const { boardId } = useParams();

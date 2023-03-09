@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import { AiOutlineEye, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { Datas } from "../../../types/board";
+import { Datas } from "types/board";
 
 export interface DatasObject {
   data: Datas;
