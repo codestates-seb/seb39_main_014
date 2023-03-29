@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useOutsideClick } from "../../../../hooks/useOutsideClick";
 import { careerLists } from "../../../../constants/createBoardData";
-import { Career, Crew } from "../../../../pages/boardCreatePage/styled";
+import * as S from "./styled";
 import { getBoard } from "../../../../apis/detailBoardApis/detailBoard";
 
 import {
@@ -15,7 +15,7 @@ import SubmitForm from "../SubmitForm";
 import _ from "lodash";
 import DropDownButton from "../../../shared/dropDown/dropDownButton/DropDownButton";
 
-export default function RecruitmentCareer({ object }: Object) {
+export default function Career({ object }: Object) {
   const { boardId } = useParams();
 
   const [career, setCareer] = useState<CareerState>({
@@ -129,7 +129,7 @@ export default function RecruitmentCareer({ object }: Object) {
 
   return (
     <>
-      <Career>
+      <S.Career>
         <label htmlFor="categorization">모집 분류 / 인원</label>
         <div className="Bundle">
           <div className="Select-option" ref={careerClickRef}>
@@ -167,16 +167,16 @@ export default function RecruitmentCareer({ object }: Object) {
         </div>
         {crew &&
           crew.map(el => (
-            <Crew key={el.careerId}>
+            <S.Crew key={el.careerId}>
               <div>
                 {el.career} : {el.careerTotalRecruit}명
               </div>
               <button onClick={() => onDeleteHandler(el.careerId, el.career)}>
                 삭제
               </button>
-            </Crew>
+            </S.Crew>
           ))}
-      </Career>
+      </S.Career>
       <SubmitForm newObject={newObject} />
     </>
   );

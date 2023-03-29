@@ -4,7 +4,7 @@ import styled from "styled-components";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate, useParams } from "react-router-dom";
 
-import * as S from "@pages/boardCreatePage/styled";
+import * as S from "@pages/RecruitmentPage/styled";
 import { postBoard, updateBoard } from "@apis/board";
 import { getBoard } from "@apis/detailBoardApis/detailBoard";
 import { ConfirmModal, SuccessModal } from "@components/shared/modal/Modal";

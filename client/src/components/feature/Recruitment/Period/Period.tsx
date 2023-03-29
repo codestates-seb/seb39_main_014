@@ -7,7 +7,7 @@ import { getBoard } from "../../../../apis/detailBoardApis/detailBoard";
 import { periodLists } from "../../../../constants/createBoardData";
 import DropDownButton from "../../../shared/dropDown/dropDownButton/DropDownButton";
 
-export default function RecruitmentPeriod() {
+export default function Period() {
   const { boardId } = useParams();
 
   const periodClickRef = useRef() as React.MutableRefObject<HTMLDivElement>;

@@ -12,7 +12,7 @@ import {
 } from "../../../../constants/createBoardData";
 import { getBoard } from "../../../../apis/detailBoardApis/detailBoard";
 
-export default function RecruitmentStack() {
+export default function Stack() {
   const { boardId } = useParams();
 
   const [search, setSearch] = useState("");

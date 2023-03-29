@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useOutsideClick } from "@hooks/useOutsideClick";
 import { careerLists } from "@constants/createBoardData";
-import { Career, Crew } from "@pages/boardCreatePage/styled";
+import { Career, Crew } from "@pages/RecruitmentPage/styled";
 import { getBoard } from "@apis/detailBoardApis/detailBoard";
 
 import {
